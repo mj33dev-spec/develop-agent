@@ -10,22 +10,20 @@
       </button>
     </div>
     
-    <div class="room-list" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div class="room-list">
       <div *ngFor="let node of sidebarNodes" 
            class="sidebar-node" 
-           cdkDrag
-           [cdkDragData]="node"
+           draggable="true"
+           (dragstart)="onDragStart($event, node)"
+           (dragover)="onDragOver($event, node)"
+           (dragleave)="onDragLeave($event, node)"
+           (drop)="onDrop($event, node)"
            [style.padding-left.px]="node.level * 16"
            [class.is-folder]="node.type === 'folder'"
-           [class.active]="node.type === 'room' && activeRoomId === node.id">
-        
-        <!-- Drag Preview -->
-        <div *cdkDragPreview class="sidebar-drag-preview">
-          {{ node.name }}
-        </div>
-        
-        <!-- Placeholder -->
-        <div *cdkDragPlaceholder class="sidebar-drag-placeholder"></div>
+           [class.active]="node.type === 'room' && activeRoomId === node.id"
+           [class.drag-over-inside]="dragOverNodeId === node.id && dragOverMode === 'inside'"
+           [class.drag-over-before]="dragOverNodeId === node.id && dragOverMode === 'before'"
+           [class.drag-over-after]="dragOverNodeId === node.id && dragOverMode === 'after'">
         
         <!-- Folder Node -->
         <ng-container *ngIf="node.type === 'folder'">
@@ -54,6 +52,13 @@
       <div class="empty-rooms" *ngIf="sidebarNodes.length === 0">
         <p>생성된 방이나 폴더가 없습니다.</p>
       </div>
+    </div>
+    
+    <!-- Sidebar Footer (Logout) -->
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <i class="bx bx-log-out"></i> 로그아웃
+      </button>
     </div>
   </aside>
 

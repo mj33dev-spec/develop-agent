@@ -92,9 +92,37 @@ $primary: #007bff;
     
     .empty-rooms {
       text-align: center;
+      padding: 2rem 1rem;
       color: $text-muted;
-      font-size: 0.85rem;
-      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid $border-color;
+    
+    .logout-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #ef4444;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      
+      &:hover {
+        background-color: #fee2e2;
+      }
+      
+      i { font-size: 1.2rem; }
     }
   }
 }
@@ -245,6 +273,34 @@ $primary: #007bff;
 .sidebar-node {
   display: flex;
   flex-direction: column;
+  position: relative;
+  
+  &.drag-over-inside > .folder-header {
+    background-color: rgba(59, 130, 246, 0.2);
+    border: 1px dashed #3b82f6;
+  }
+  
+  &.drag-over-before::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #3b82f6;
+    z-index: 10;
+  }
+  
+  &.drag-over-after::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #3b82f6;
+    z-index: 10;
+  }
 }
 
 .folder-header {

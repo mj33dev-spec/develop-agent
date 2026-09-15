@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,7 +25,7 @@ import { DAlertService } from '../../core/services/d-alert.service';
           
           <div class="form-group">
             <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" [(ngModel)]="password" required minlength="6" placeholder="••••••••">
+            <input type="password" id="password" name="password" [(ngModel)]="password" (keyup.enter)="onSignIn()" required minlength="6" placeholder="••••••••">
           </div>
           
           <div class="button-group">
@@ -60,7 +60,7 @@ import { DAlertService } from '../../core/services/d-alert.service';
       
       <div class="form-group">
         <label for="signUpPassword">비밀번호</label>
-        <input type="password" id="signUpPassword" name="signUpPassword" [(ngModel)]="signUpPassword" required minlength="6" placeholder="6자리 이상">
+        <input type="password" id="signUpPassword" name="signUpPassword" [(ngModel)]="signUpPassword" (keyup.enter)="onSignUp()" required minlength="6" placeholder="6자리 이상">
       </div>
     </c-modal>
   `,
@@ -143,7 +143,7 @@ import { DAlertService } from '../../core/services/d-alert.service';
     }
   `]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   // 로그인 폼 상태
   email = '';
   password = '';
@@ -159,6 +159,15 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private dAlert = inject(DAlertService);
+
+  ngOnInit() {
+    // 자동 로그인 (세션이 이미 있으면 메인으로 리다이렉트)
+    this.authService.currentUser.subscribe(user => {
+      if (user) {
+        this.router.navigate(['/']);
+      }
+    });
+  }
 
   // 로그인 처리 로직
   async onSignIn() {

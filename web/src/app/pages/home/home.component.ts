@@ -10,6 +10,8 @@ import { CModalComponent } from '../../components/c-modal/c-modal.component';
 import { FolderService, Folder } from '../../core/services/folder.service';
 import { RoomService, ChatRoomRecord } from '../../core/services/room.service';
 import { DAlertService } from '../../core/services/d-alert.service';
+import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 export interface SidebarNode {
   type: 'folder' | 'room';
@@ -61,6 +63,8 @@ export class HomeComponent implements OnInit {
   private folderService = inject(FolderService);
   private roomService = inject(RoomService);
   private dAlert = inject(DAlertService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   async ngOnInit() {
     await this.loadData();
@@ -183,11 +187,17 @@ export class HomeComponent implements OnInit {
   }
 
   // --- Folder CRUD ---
-  openCreateFolderModal(parentId: string | null = null) {
-    this.folderModalMode = 'create';
-    this.folderFormName = '';
-    this.selectedParentId = parentId;
-    this.isFolderModalOpen = true;
+  async openCreateFolderModal(parentId: string | null = null) {
+    // 2. 모달 띄우지 않고 '새 폴더'로 즉시 생성
+    try {
+      const order = this.folders.filter(f => f.parent_id === parentId).length;
+      const newFolder = await this.folderService.createFolder('이름없음', parentId, order);
+      newFolder.isExpanded = true;
+      this.folders.push(newFolder);
+      this.buildSidebarNodes();
+    } catch (e) {
+      this.dAlert.error('폴더 생성에 실패했습니다.', '오류');
+    }
   }
 
   openEditFolderModal(folder: Folder) {
@@ -205,12 +215,7 @@ export class HomeComponent implements OnInit {
     if (!this.folderFormName.trim()) return;
     
     try {
-      if (this.folderModalMode === 'create') {
-        const order = this.folders.filter(f => f.parent_id === this.selectedParentId).length;
-        const newFolder = await this.folderService.createFolder(this.folderFormName, this.selectedParentId, order);
-        newFolder.isExpanded = true;
-        this.folders.push(newFolder);
-      } else if (this.folderModalMode === 'edit' && this.editingFolderId) {
+      if (this.folderModalMode === 'edit' && this.editingFolderId) {
         const updated = await this.folderService.updateFolder(this.editingFolderId, { name: this.folderFormName });
         const idx = this.folders.findIndex(f => f.id === this.editingFolderId);
         if (idx !== -1) {
@@ -220,7 +225,7 @@ export class HomeComponent implements OnInit {
       this.closeFolderModal();
       this.buildSidebarNodes();
     } catch (e) {
-      this.dAlert.error('폴더 저장에 실패했습니다.', '오류');
+      this.dAlert.error('폴더 이름 변경에 실패했습니다.', '오류');
     }
   }
 
@@ -237,65 +242,164 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async drop(event: CdkDragDrop<SidebarNode[]>) {
-    if (event.previousIndex === event.currentIndex) return;
-
-    const movedNode = this.sidebarNodes[event.previousIndex];
-    moveItemInArray(this.sidebarNodes, event.previousIndex, event.currentIndex);
-
-    // Determine new parent and level
-    let newParentId: string | null = null;
-    let newLevel = 0;
-
-    if (event.currentIndex > 0) {
-      const nodeAbove = this.sidebarNodes[event.currentIndex - 1];
-      if (nodeAbove.type === 'folder' && nodeAbove.isExpanded) {
-        newParentId = nodeAbove.id;
-        newLevel = nodeAbove.level + 1;
-      } else {
-        newParentId = nodeAbove.parent_id;
-        newLevel = nodeAbove.level;
-      }
+  // 로그아웃
+  async logout() {
+    try {
+      await this.authService.signOut();
+      this.router.navigate(['/auth/login']);
+    } catch (e) {
+      this.dAlert.error('로그아웃에 실패했습니다.', '오류');
     }
+  }
 
-    movedNode.parent_id = newParentId;
-    movedNode.level = newLevel;
+  draggedNode: SidebarNode | null = null;
+  dragOverNodeId: string | null = null;
+  dragOverMode: 'inside' | 'before' | 'after' | null = null;
 
-    // We need to sync order indices back to folders and rooms
-    // To do this, we get all siblings in the new parent and assign their index
-    const siblings = this.sidebarNodes.filter(n => n.parent_id === newParentId);
-    const folderUpdates = [];
-    const roomUpdates = [];
+  onDragStart(event: DragEvent, node: SidebarNode) {
+    this.draggedNode = node;
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', node.id);
+    }
+  }
+
+  onDragOver(event: DragEvent, targetNode: SidebarNode) {
+    event.preventDefault();
+    if (!this.draggedNode || this.draggedNode.id === targetNode.id) return;
     
-    for (let i = 0; i < siblings.length; i++) {
-      const sibling = siblings[i];
-      if (sibling.type === 'folder') {
-        const f = this.folders.find(f => f.id === sibling.id);
-        if (f) {
-          f.parent_id = newParentId;
-          f.order_index = i;
-          folderUpdates.push({ id: f.id, parent_id: newParentId, order_index: i });
+    // Prevent dropping a folder into its own children (circular dependency prevention logic could go here)
+    if (this.draggedNode.type === 'folder' && targetNode.parent_id === this.draggedNode.id) {
+        return;
+    }
+
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move';
+    }
+    this.dragOverNodeId = targetNode.id;
+
+    // Calculate mouse position relative to target to determine drop mode (inside, before, after)
+    const targetElement = (event.target as HTMLElement).closest('.sidebar-node');
+    if (targetElement) {
+      const rect = targetElement.getBoundingClientRect();
+      const y = event.clientY - rect.top;
+      
+      // If it's a folder, hovering in the middle 60% drops INSIDE.
+      // Hovering top 20% drops BEFORE. Bottom 20% drops AFTER.
+      if (targetNode.type === 'folder') {
+        if (y < rect.height * 0.2) {
+          this.dragOverMode = 'before';
+        } else if (y > rect.height * 0.8) {
+          this.dragOverMode = 'after';
+        } else {
+          this.dragOverMode = 'inside';
         }
       } else {
-        const r = this.rooms.find(r => r.id === sibling.id);
-        if (r) {
-          r.folder_id = newParentId;
-          r.order_index = i;
-          roomUpdates.push({ id: r.id, folder_id: newParentId, order_index: i });
+        // If it's a room, you can only drop BEFORE or AFTER (Rooms can't have children)
+        if (y < rect.height * 0.5) {
+          this.dragOverMode = 'before';
+        } else {
+          this.dragOverMode = 'after';
         }
       }
     }
+  }
 
-    // Call service to update DB
+  onDragLeave(event: DragEvent, targetNode: SidebarNode) {
+    if (this.dragOverNodeId === targetNode.id) {
+      this.dragOverNodeId = null;
+      this.dragOverMode = null;
+    }
+  }
+
+  async onDrop(event: DragEvent, targetNode: SidebarNode) {
+    event.preventDefault();
+    if (!this.draggedNode || this.draggedNode.id === targetNode.id || !this.dragOverMode) {
+      this.dragOverNodeId = null;
+      this.dragOverMode = null;
+      this.draggedNode = null;
+      return;
+    }
+
+    const mode = this.dragOverMode;
+    this.dragOverNodeId = null;
+    this.dragOverMode = null;
+
+    let newParentId = targetNode.parent_id;
+    let newOrderBaseIndex = 0;
+
+    // Determine new parent
+    if (mode === 'inside' && targetNode.type === 'folder') {
+      newParentId = targetNode.id;
+      // Get highest order_index in target folder
+      const siblings = this.sidebarNodes.filter(n => n.parent_id === newParentId);
+      newOrderBaseIndex = siblings.length;
+    } else {
+      // mode is before or after
+      const siblings = this.sidebarNodes.filter(n => n.parent_id === newParentId);
+      const targetIndex = siblings.findIndex(n => n.id === targetNode.id);
+      newOrderBaseIndex = mode === 'before' ? targetIndex : targetIndex + 1;
+    }
+
+    // Update parent temporarily
+    this.draggedNode.parent_id = newParentId;
+    
+    // Now we must recalculate ALL order_index in the new parent
+    // First, remove draggedNode from its old position in flat array
+    const oldIndex = this.sidebarNodes.findIndex(n => n.id === this.draggedNode!.id);
+    if (oldIndex !== -1) {
+      this.sidebarNodes.splice(oldIndex, 1);
+    }
+    
+    // Re-insert into flat array (this is just for immediate UI feedback before DB sync)
+    // Actually, we can just let `buildSidebarNodes` handle the flat array rebuilding,
+    // we only need to update the actual `folders` and `rooms` arrays and their order_indices.
+
+    // 1. Get all items in the new parent
+    const siblingsInNewParent = [...this.folders, ...this.rooms]
+      .filter(item => 
+        ('parent_id' in item ? item.parent_id : item.folder_id) === newParentId && item.id !== this.draggedNode!.id
+      )
+      .sort((a, b) => a.order_index - b.order_index);
+
+    // 2. Insert the dragged item at the correct position
+    const draggedItem = ('parent_id' in this.draggedNode.data) 
+      ? this.folders.find(f => f.id === this.draggedNode!.id) 
+      : this.rooms.find(r => r.id === this.draggedNode!.id);
+      
+    if (draggedItem) {
+      if ('parent_id' in draggedItem) {
+        draggedItem.parent_id = newParentId;
+      } else {
+        draggedItem.folder_id = newParentId;
+      }
+      siblingsInNewParent.splice(newOrderBaseIndex, 0, draggedItem);
+    }
+
+    // 3. Reassign order_index for all items in that parent
+    const folderUpdates: {id: string, parent_id: string | null, order_index: number}[] = [];
+    const roomUpdates: {id: string, folder_id: string | null, order_index: number}[] = [];
+
+    siblingsInNewParent.forEach((item, index) => {
+      item.order_index = index;
+      if ('parent_id' in item) {
+        folderUpdates.push({ id: item.id, parent_id: newParentId, order_index: index });
+      } else {
+        roomUpdates.push({ id: item.id, folder_id: newParentId, order_index: index });
+      }
+    });
+
+    this.draggedNode = null;
+    this.buildSidebarNodes(); // Optimistic UI update
+
+    // Save to DB
     try {
       if (folderUpdates.length > 0) await this.folderService.updateFolderOrders(folderUpdates);
       if (roomUpdates.length > 0) await this.roomService.updateRoomOrders(roomUpdates);
-      
-      // Reload from DB just to be safe, or just rebuild flat list
       await this.loadData();
     } catch (e) {
-      this.dAlert.error('순서 저장에 실패했습니다.', '오류');
-      await this.loadData(); // revert
+      this.dAlert.error('이동 및 순서 저장에 실패했습니다.', '오류');
+      await this.loadData();
     }
   }
 }
