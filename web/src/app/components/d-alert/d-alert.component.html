@@ -1,0 +1,65 @@
+<div class="alertOverlay" [ngClass]="[config.direction || 'center', animate ? 'active' : '']" (click)="handleCancel()">
+  <div class="alertBox" [ngClass]="[config.direction || 'center', animate ? 'active' : '']" (click)="$event.stopPropagation()">
+    <div class="alertContent">
+      <div class="iconWrapper" [ngClass]="config.type || 'info'">
+        <svg *ngIf="config.type === 'success'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        <svg *ngIf="config.type === 'warn'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <svg *ngIf="config.type === 'error'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
+        </svg>
+        <svg *ngIf="!config.type || config.type === 'info'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg>
+      </div>
+      
+      <div class="textDetails">
+        <h4 *ngIf="config.title" class="alertTitle">{{ config.title }}</h4>
+        <p class="alertMessage">{{ config.message }}</p>
+        
+        <input *ngIf="config.isPrompt"
+               class="alertInput"
+               type="text"
+               [(ngModel)]="inputValue"
+               [placeholder]="config.promptPlaceholder || ''"
+               (keydown.enter)="handleConfirm()"
+               autofocus>
+      </div>
+    </div>
+    
+    <div class="alertFooter">
+      <div class="buttonGroup">
+        <!-- Yes Only -->
+        <ng-container *ngIf="config.buttonType === 'yesOnly'">
+          <c-button [theme]="getConfirmTheme()" (onClick)="handleConfirm()">예</c-button>
+        </ng-container>
+
+        <!-- Yes No -->
+        <ng-container *ngIf="config.buttonType === 'yesNo'">
+          <c-button theme="neutral" (onClick)="handleCancel()">아니오</c-button>
+          <c-button [theme]="getConfirmTheme()" (onClick)="handleConfirm()">예</c-button>
+        </ng-container>
+
+        <!-- Ok Only -->
+        <ng-container *ngIf="!config.buttonType || config.buttonType === 'okOnly'">
+          <c-button [theme]="getConfirmTheme()" (onClick)="handleConfirm()">확인</c-button>
+        </ng-container>
+
+        <!-- Ok Cancel -->
+        <ng-container *ngIf="config.buttonType === 'okCancel'">
+          <c-button theme="neutral" (onClick)="handleCancel()">취소</c-button>
+          <c-button [theme]="getConfirmTheme()" (onClick)="handleConfirm()">확인</c-button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

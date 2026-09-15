@@ -1,0 +1,65 @@
+// 전역(Global) 스타일 - data 속성을 가진 요소들에 자동 적용됩니다.
+[data-tooltip-icon] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  &::after {
+    content: 'info';
+    font-size: 0.875rem;
+    font-family: 'Material Symbols Outlined' !important;
+    color: #6b7280;
+    display: inline-flex;
+    vertical-align: middle;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    -webkit-font-smoothing: antialiased;
+    -webkit-font-feature-settings: 'liga';
+    transition: color 0.2s;
+  }
+
+  &:hover::after {
+    color: #3b82f6; // 호버 시 아이콘 색상 변경
+  }
+}
+
+// 툴팁 박스 스타일
+.globalTooltip {
+  position: fixed; // 스크롤과 무관하게 viewport 기준 좌표(clientX/Y) 사용
+  z-index: 1050;
+  background: rgba(17, 17, 17, 0.9);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  white-space: normal;
+  max-width: 250px;
+  word-break: keep-all; // 한글 단어 잘림 방지
+  text-align: center;
+  pointer-events: none; // 툴팁이 마우스 이벤트를 뺏지 않도록 방지
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.15s ease-out forwards;
+
+  // 꼬리표(화살표) 생성
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0 5px;
+    border-style: solid;
+    border-color: rgba(17, 17, 17, 0.9) transparent transparent transparent;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 2px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 8px)); // 요소보다 살짝 위에 위치
+  }
+}

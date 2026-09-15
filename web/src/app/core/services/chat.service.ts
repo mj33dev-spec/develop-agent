@@ -4,13 +4,13 @@ import { map } from 'rxjs/operators';
 import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = 'https://bznbbefithulaeygelax.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_O_rZg-6Z8-36WiNaHQzQRQ_JP20poc4';
+const SUPABASE_KEY = 'sb_publishable_O_rZg-6Z8-36WiNaHQzQRQ_JP20poc4';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
-  private supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  private supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   sendMessage(prompt: string, provider: 'gemini' | 'groq' = 'gemini', model?: string): Observable<string> {
     const invokePromise = this.supabase.functions.invoke('chat', {

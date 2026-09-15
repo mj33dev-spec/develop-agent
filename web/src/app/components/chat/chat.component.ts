@@ -2,9 +2,9 @@ import { Component, inject, Input, OnChanges, SimpleChanges, ElementRef, ViewChi
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ChatService } from '../chat.service';
-import { CDropdownComponent, CDropdownOption } from '../components/c-dropdown/c-dropdown.component';
-import { CBadgeComponent } from '../components/c-badge/c-badge.component';
+import { ChatService } from '../../core/services/chat.service';
+import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.component';
+import { CBadgeComponent } from '../c-badge/c-badge.component';
 
 export interface Message {
   text: string;
