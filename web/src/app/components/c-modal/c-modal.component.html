@@ -1,0 +1,50 @@
+<div *ngIf="isOpen" class="modalOverlay" (click)="handleOverlayClick($event)">
+  <div class="modalContent" [style.width]="width" (click)="$event.stopPropagation()">
+    
+    <ng-container *ngIf="isForm; else noForm">
+      <form (submit)="handleSubmit($event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0;">
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+      </form>
+    </ng-container>
+    
+    <ng-template #noForm>
+      <div style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+      </div>
+    </ng-template>
+
+    <ng-template #contentTemplate>
+      <div class="modalHeader">
+        <h2 class="modalTitle">
+          <!-- Allow HTML or string for title using a container if needed, but usually it's string in Angular -->
+          <span [innerHTML]="title"></span>
+        </h2>
+      </div>
+      <p *ngIf="subTitle" class="modalSubTitle">{{ subTitle }}</p>
+
+      <div class="modalBody">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="formActions">
+        <ng-content select="[footer]"></ng-content>
+        
+        <ng-container *ngIf="!customFooter">
+          <c-button *ngIf="!hideCancel" theme="neutral" (onClick)="onClose.emit()">
+            {{ cancelLabel }}
+          </c-button>
+          
+          <c-button 
+            [type]="isForm ? 'submit' : 'button'" 
+            [theme]="submitTheme" 
+            [disabled]="submitDisabled"
+            (onClick)="!isForm ? handleSubmit() : null"
+          >
+            {{ submitLabel }}
+          </c-button>
+        </ng-container>
+      </div>
+    </ng-template>
+    
+  </div>
+</div>

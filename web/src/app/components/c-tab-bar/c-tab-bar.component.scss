@@ -1,0 +1,169 @@
+@use '../../../styles/config' as *;
+
+// --- Segment Variant ---
+.segmentContainer {
+  display: flex;
+  background-color: $color-light-grey;
+  padding: 4px;
+  border-radius: $radius-sm;
+  width: fit-content;
+}
+
+.segmentBtn {
+  padding: $spacing-6 $spacing-16;
+  border: none;
+  background-color: transparent;
+  color: $color-sub-text;
+  @include typo-body-3;
+  cursor: pointer;
+  border-radius: $radius-sm;
+  transition: all $transition-fast;
+
+  &.active {
+    background-color: $color-white;
+    color: $color-primary;
+    box-shadow: $shadow-sm;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+// --- Base Variant ---
+.baseContainer {
+  display: flex;
+  gap: $spacing-16;
+  border-bottom: 1px solid $color-border;
+  width: 100%;
+}
+
+.baseBtn {
+  padding: $spacing-8 $spacing-4;
+  border: none;
+  background-color: transparent;
+  color: $color-sub-text;
+  @include typo-body-3;
+  cursor: pointer;
+  position: relative;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-dark;
+  }
+
+  &.active {
+    color: $color-primary;
+    font-weight: $font-weight-bold;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: $color-primary;
+    }
+  }
+}
+
+// --- Folder Variant ---
+.folderContainer {
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-4;
+  width: 100%;
+}
+
+.folderBtn {
+  padding: $spacing-8 $spacing-16;
+  border: 1px solid $color-border;
+  background-color: $color-surface-alt;
+  color: $color-sub-text;
+  @include typo-body-3;
+  cursor: pointer;
+  border-radius: $radius-sm $radius-sm 0 0;
+  margin-right: -1px; // Collapse right border with next tab
+  margin-bottom: -1px; // Overlap with the container's top border
+  position: relative;
+  z-index: 1;
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    background-color: $color-surface;
+  }
+
+  &.active {
+    background-color: $color-white;
+    color: $color-dark;
+    font-weight: $font-weight-bold;
+    z-index: 2;
+    border-bottom-color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; // Cover the overlapping line
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: $color-white;
+    }
+  }
+}
+
+// --- Count Badge ---
+.count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 $spacing-4;
+  margin-left: $spacing-6;
+  border-radius: 999px;
+  background-color: $color-border;
+  color: $color-sub-text;
+  @include typo-caption-2;
+  line-height: 1;
+  vertical-align: middle;
+
+  .active & {
+    background-color: $color-primary;
+    color: $color-white;
+  }
+}
+
+// --- Size Modifiers ---
+// Applied via data-size attribute on the container.
+// Overrides padding and font-size for all button children.
+
+[data-size='small'] {
+  .segmentBtn {
+    padding: $spacing-4 $spacing-12;
+    @include typo-caption-1;
+  }
+  .baseBtn {
+    padding: $spacing-6 $spacing-4;
+    @include typo-caption-1;
+  }
+  .folderBtn {
+    padding: $spacing-6 $spacing-12;
+    @include typo-caption-1;
+  }
+}
+
+// data-size="basic" is the default — no overrides needed.
+
+[data-size='large'] {
+  .segmentBtn {
+    padding: $spacing-8 $spacing-20;
+    @include typo-body-2;
+  }
+  .baseBtn {
+    padding: $spacing-10 $spacing-4;
+    @include typo-body-2;
+  }
+  .folderBtn {
+    padding: $spacing-10 $spacing-20;
+    @include typo-body-2;
+  }
+}

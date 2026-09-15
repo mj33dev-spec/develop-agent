@@ -1,0 +1,68 @@
+<div #anchorRef class="dropdownContainer" style="position: relative;">
+  <!-- More Variant -->
+  <ng-container *ngIf="variant === 'more'">
+    <div class="dropdownWrapper">
+      <c-button size="more" (onClick)="toggleDropdown()" [disabled]="disabled"></c-button>
+    </div>
+  </ng-container>
+
+  <!-- Button/Multi Variant -->
+  <ng-container *ngIf="variant !== 'more' && (value !== undefined || variant === 'multi')">
+    <div class="dropdownWrapper" [style.width]="width">
+      <c-button
+        type="button"
+        [theme]="variant === 'fill' ? 'neutral' : 'outlinedNeutral'"
+        (onClick)="toggleDropdown()"
+        [style.width]="width ? '100%' : 'auto'"
+        [style.justifyContent]="width ? 'space-between' : 'center'"
+        [disabled]="disabled"
+      >
+        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          {{ value }}
+        </span>
+        <i class="bx bx-chevron-down" style="margin-left: 4px; margin-right: -8px;"></i>
+      </c-button>
+    </div>
+
+    <!-- Multi Chips -->
+    <div *ngIf="variant === 'multi'" class="multiSelectContainer">
+      <span *ngFor="let val of selectedValues" class="multiChip">
+        {{ val }}
+        <span class="material-symbols-outlined" (click)="$event.stopPropagation(); removeValue.emit(val)">
+          close
+        </span>
+      </span>
+    </div>
+  </ng-container>
+
+  <!-- Pure Anchor Variant -->
+  <ng-container *ngIf="variant !== 'more' && value === undefined && variant !== 'multi'">
+    <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;"></div>
+    <div (click)="toggleDropdown()" style="display: inline-block;">
+      <ng-content></ng-content>
+    </div>
+  </ng-container>
+
+  <!-- Dropdown Menu Portaled to Body (simulated by absolute positioning in fixed style) -->
+  <ng-container *ngIf="open">
+    <div 
+      [ngClass]="[variant === 'fill' ? 'fill' : 'outlinedDropdown', customClass]" 
+      [ngStyle]="dropdownStyle"
+    >
+      <ng-container *ngFor="let opt of options">
+        <hr *ngIf="isDivider(opt)" />
+        <button
+          *ngIf="!isDivider(opt)"
+          type="button"
+          class="dropdownItem"
+          [class.disabled]="isOptionDisabled(opt)"
+          [disabled]="isOptionDisabled(opt)"
+          (click)="handleItemClick($event, opt)"
+        >
+          <i *ngIf="getOptionIcon(opt)" class="bx dropdownItemIcon" [ngClass]="getOptionIcon(opt)"></i>
+          {{ getOptionLabel(opt) }}
+        </button>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

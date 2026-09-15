@@ -1,0 +1,23 @@
+<button 
+  [type]="type"
+  class="btn"
+  [ngClass]="[themeClass, sizeClass, customClass]"
+  [disabled]="disabled"
+  (click)="handleClick($event)"
+>
+  <ng-container *ngIf="size !== 'more'">
+    <ng-container *ngIf="iconAlign === 'left'">
+      <i *ngIf="icon" class="bx" [ngClass]="icon" style="font-size: 18px;"></i>
+    </ng-container>
+    
+    <ng-content></ng-content>
+    
+    <ng-container *ngIf="iconAlign === 'right'">
+      <i *ngIf="icon" class="bx" [ngClass]="icon" style="font-size: 18px;"></i>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="size === 'more'">
+    <span class="material-symbols-outlined">more_vert</span>
+  </ng-container>
+</button>

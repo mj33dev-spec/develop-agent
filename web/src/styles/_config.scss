@@ -1,0 +1,171 @@
+// ============================================
+// 선율 (Melody) Admin — Design Tokens
+// ============================================
+
+// ── Brand Colors ──────────────────────────────
+$color-primary: #4A86FF;
+$color-secondary: #6B5CE7;
+
+// ── Backgrounds ───────────────────────────────
+$color-bg: #FAFBFD;
+$color-surface: #F8FAFD;
+$color-surface-alt: #F1F4F9;
+$color-white: #FFFFFF;
+
+// ── Text ──────────────────────────────────────
+$color-dark: #17191A;
+$color-text: #17191A;
+$color-text-secondary: #757B80;
+$color-sub-text: #A4ADB2;
+
+// ── Neutrals ─────────────────────────────────
+$color-border: #E8EDF4;
+$color-light-grey: #F5F5F5;
+$color-grey: #EAEAEA;
+$color-dark-grey: #999999;
+$color-deep-grey: #414141;
+
+// ── Feedback ─────────────────────────────────
+$color-success: #04B014;
+$color-error: #DC0000;
+$color-warn: #E4AF00;
+
+// ── Typography ───────────────────────────────
+$font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// PC Typography Variables
+$font-size-pc-display-1: 64px;
+$font-size-pc-display-2: 56px;
+$font-size-pc-display-3: 48px;
+$font-size-pc-heading-1: 40px;
+$font-size-pc-heading-2: 32px;
+$font-size-pc-heading-3: 28px;
+$font-size-pc-title-1: 24px;
+$font-size-pc-title-2: 20px;
+$font-size-pc-title-3: 18px;
+$font-size-pc-subtitle-1: 18px;
+$font-size-pc-subtitle-2: 16px;
+$font-size-pc-body-1: 18px;
+$font-size-pc-body-2: 16px;
+$font-size-pc-body-3: 14px;
+$font-size-pc-caption-1: 13px;
+$font-size-pc-caption-2: 12px;
+
+// Mobile Typography Variables
+$font-size-mo-display-1: 40px;
+$font-size-mo-display-2: 32px;
+$font-size-mo-display-3: 28px; // Imputed based on scale
+$font-size-mo-heading-1: 28px;
+$font-size-mo-heading-2: 24px;
+$font-size-mo-heading-3: 20px;
+$font-size-mo-title-1: 18px;
+$font-size-mo-title-2: 16px;
+$font-size-mo-title-3: 16px; // Imputed based on scale
+$font-size-mo-subtitle-1: 16px;
+$font-size-mo-subtitle-2: 14px;
+$font-size-mo-body-1: 16px;
+$font-size-mo-body-2: 14px;
+$font-size-mo-body-3: 13px;
+$font-size-mo-caption-1: 12px;
+$font-size-mo-caption-2: 11px;
+
+// Typography Mixins
+@mixin typography($pc-size, $mo-size, $weight, $line-height: 140%, $letter-spacing) {
+  font-family: $font-family;
+  font-size: $pc-size;
+  font-weight: $weight;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+
+  @media (max-width: 768px) {
+    font-size: $mo-size;
+  }
+}
+
+// Display (Line-height: 1.3, Letter-spacing: -2%)
+@mixin typo-display-1 { @include typography($font-size-pc-display-1, $font-size-mo-display-1, $font-weight-bold, 1.4, -0.02em); }
+@mixin typo-display-2 { @include typography($font-size-pc-display-2, $font-size-mo-display-2, $font-weight-bold, 1.4, -0.02em); }
+@mixin typo-display-3 { @include typography($font-size-pc-display-3, $font-size-mo-display-3, $font-weight-bold, 1.4, -0.02em); }
+
+// Heading (Line-height: 1.4, Letter-spacing: -1.5%)
+@mixin typo-heading-1 { @include typography($font-size-pc-heading-1, $font-size-mo-heading-1, $font-weight-bold, 1.4, -0.015em); }
+@mixin typo-heading-2 { @include typography($font-size-pc-heading-2, $font-size-mo-heading-2, $font-weight-bold, 1.4, -0.015em); }
+@mixin typo-heading-3 { @include typography($font-size-pc-heading-3, $font-size-mo-heading-3, $font-weight-bold, 1.4, -0.015em); }
+
+// Title (Line-height: 1.4, Letter-spacing: -1%)
+@mixin typo-title-1 { @include typography($font-size-pc-title-1, $font-size-mo-title-1, $font-weight-bold, 1.4, -0.01em); }
+@mixin typo-title-2 { @include typography($font-size-pc-title-2, $font-size-mo-title-2, $font-weight-bold, 1.4, -0.01em); }
+@mixin typo-title-3 { @include typography($font-size-pc-title-3, $font-size-mo-title-3, $font-weight-bold, 1.4, -0.01em); }
+
+// Subtitle (Line-height: 1.5, Letter-spacing: -1%)
+@mixin typo-subtitle-1 { @include typography($font-size-pc-subtitle-1, $font-size-mo-subtitle-1, $font-weight-medium, 1.4, -0.01em); }
+@mixin typo-subtitle-2 { @include typography($font-size-pc-subtitle-2, $font-size-mo-subtitle-2, $font-weight-medium, 1.4, -0.01em); }
+
+// Body (Line-height: 1.6, Letter-spacing: -1%)
+@mixin typo-body-1 { @include typography($font-size-pc-body-1, $font-size-mo-body-1, $font-weight-regular, 1.4, -0.01em); }
+@mixin typo-body-2 { @include typography($font-size-pc-body-2, $font-size-mo-body-2, $font-weight-regular, 1.4, -0.01em); }
+@mixin typo-body-3 { @include typography($font-size-pc-body-3, $font-size-mo-body-3, $font-weight-regular, 1.4, -0.01em); }
+
+// Caption (Line-height: 1.5, Letter-spacing: -1%)
+@mixin typo-caption-1 { @include typography($font-size-pc-caption-1, $font-size-mo-caption-1, $font-weight-regular, 1.4, -0.01em); }
+@mixin typo-caption-2 { @include typography($font-size-pc-caption-2, $font-size-mo-caption-2, $font-weight-regular, 1.4, -0.01em); }
+
+// ── Spacing ──────────────────────────────────
+$spacing-4: 4px;
+$spacing-6: 6px;
+$spacing-8: 8px;
+$spacing-10: 10px;
+$spacing-12: 12px;
+$spacing-16: 16px;
+$spacing-20: 20px;
+$spacing-24: 24px;
+$spacing-32: 32px;
+$spacing-40: 40px;
+$spacing-48: 48px;
+$spacing-64: 64px;
+
+// ── Border Radius ────────────────────────────
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 20px;
+$radius-full: 9999px;
+
+// ── Shadows ──────────────────────────────────
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
+$shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.08);
+$shadow-xl: 0 8px 40px rgba(0, 0, 0, 0.1);
+$shadow-card: 0 1px 4px rgba(0, 0, 0, 0.04), 0 2px 12px rgba(0, 0, 0, 0.03);
+$shadow-hover: 0 4px 16px rgba(74, 134, 255, 0.12);
+
+// ── Admin Layout ─────────────────────────────
+$sidebar-width: 260px;
+$sidebar-width-collapsed: 72px;
+$header-height: 64px;
+$content-padding: 32px;
+
+// ── Transitions ──────────────────────────────
+$transition-fast: 150ms ease;
+$transition-base: 250ms ease;
+$transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+// ── Z-Index ──────────────────────────────────
+$z-sidebar: 200;
+$z-header: 210;
+$z-modal: 300;
+$z-dropdown: 1000;
+$z-tooltip: 1100;
+
+// ── Breakpoints ──────────────────────────────
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1440px;

@@ -1,0 +1,95 @@
+<div class="chat-container">
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="header-left">
+      <i class="bx bx-chevron-left" style="font-size: 32px; cursor: pointer;"></i>
+    </div>
+    
+    <div class="header-center">
+      <h2>AI Agent</h2>
+    </div>
+
+    <div class="header-right">
+      <i class="bx bx-search" style="font-size: 24px; cursor: pointer;"></i>
+      <i class="bx bx-menu" style="font-size: 24px; cursor: pointer;"></i>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-messages" #chatMessages>
+    <div *ngFor="let msg of room?.messages" 
+         class="message-wrapper" 
+         [class.user-message]="msg.isUser"
+         [class.agent-message]="!msg.isUser">
+      
+      <div *ngIf="!msg.isUser" class="agent-profile">
+        <div class="avatar-small">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 16v-4"></path>
+            <path d="M12 8h.01"></path>
+          </svg>
+        </div>
+      </div>
+
+      <div class="message-content">
+        <span *ngIf="!msg.isUser" class="agent-name">AI Agent</span>
+        
+        <div class="bubble-group">
+          <!-- User Time (Left of Bubble) -->
+          <div *ngIf="msg.isUser" class="time-stamp user-time">{{ formatTime(msg.timestamp) }}</div>
+
+          <div class="message-bubble" [class.loading]="msg.isLoading">
+            <ng-container *ngIf="!msg.isLoading; else loadingTemplate">
+              {{ msg.text }}
+            </ng-container>
+            <ng-template #loadingTemplate>
+              <div class="typing-indicator">
+                <span></span><span></span><span></span>
+              </div>
+            </ng-template>
+          </div>
+
+          <!-- Agent Time (Right of Bubble) -->
+          <div *ngIf="!msg.isUser" class="time-stamp agent-time">{{ formatTime(msg.timestamp) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="chat-input-area">
+    <div class="action-btn">
+      <i class="bx bx-plus" title="이미지 첨부"></i>
+    </div>
+    <div class="input-wrapper">
+      <textarea 
+             [(ngModel)]="userInput" 
+             (keydown.enter)="handleEnter($event)"
+             (input)="autoResize($event)"
+             placeholder="메시지를 입력하세요" 
+             [disabled]="isLoading"
+             rows="1">
+      </textarea>
+      
+      <div class="input-actions" style="display: flex; align-items: center; gap: 8px;">
+        <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up" align="right">
+          <c-badge variant="neutral" style="cursor: pointer; user-select: none;">
+            {{ selectedProvider }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
+          </c-badge>
+        </c-dropdown>
+        
+        <button *ngIf="!isLoading" (click)="sendMessage()" class="send-btn" [disabled]="!userInput.trim()" [class.active]="userInput.trim()">
+          <i class="bx bx-hash" *ngIf="!userInput.trim()"></i>
+          <svg *ngIf="userInput.trim()" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+          </svg>
+        </button>
+        
+        <button *ngIf="isLoading" (click)="stopGenerating()" class="stop-btn">
+          <div class="stop-square"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

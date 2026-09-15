@@ -1,0 +1,93 @@
+@use "sass:color";
+@use '../../../styles/config' as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-modal;
+}
+
+.modalContent {
+  padding: $spacing-24;
+  width: 480px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  background-color: $color-white;
+  border-radius: $radius-lg;
+  box-sizing: border-box;
+}
+
+.modalHeader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: $spacing-8;
+  margin-bottom: $spacing-16;
+}
+
+.modalTitle {
+  @include typo-title-2;
+  margin: 0;
+  color: $color-dark;
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+}
+
+
+.modalSubTitle {
+  @include typo-caption-1;
+  color: $color-text-secondary;
+  margin-bottom: 16px;
+  margin-top: -8px;
+  line-height: 1.5;
+}
+
+.modalBody {
+  overflow-y: auto;
+  margin-bottom: $spacing-20;
+  padding-right: $spacing-4;
+  flex: 1;
+  min-height: 0;
+
+  /* Custom scrollbar for premium look */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: $radius-full;
+  }
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-8;
+  border-top: 1px solid $color-border;
+  padding-top: $spacing-16;
+  margin-top: auto;
+
+  > button:disabled {
+    background-color: $color-light-grey;
+    border-color: transparent;
+    color: $color-grey;
+    cursor: not-allowed;
+    opacity: 1;
+  }
+}

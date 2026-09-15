@@ -1,0 +1,27 @@
+@use 'config' as *;
+
+@mixin hover {
+    cursor: pointer;
+    translate: 0.2s ease-in;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+@mixin section-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+
+  h3, label, .title {
+    @include typo-subtitle-2;
+    color: $color-dark;
+    margin: 0;
+  }
+
+  p, .desc {
+    @include typo-caption-1;
+    color: $color-sub-text;
+    margin: 0;
+  }
+}

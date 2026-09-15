@@ -1,0 +1,133 @@
+@use '../../../styles/config' as *;
+@use '../../../styles/mixins' as *;
+
+.dropdownWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.fill {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 180px;
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  padding: $spacing-4;
+  z-index: $z-dropdown;
+  animation: dropdownIn 150ms ease;
+  max-height: 320px;
+  overflow-y: auto;
+
+  hr {
+    height: 1px;
+    background: $color-border;
+    margin: $spacing-6 0;
+    border: none;
+  }
+}
+
+.outlinedDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 180px;
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: none;
+  padding: $spacing-4;
+  z-index: $z-dropdown;
+  animation: dropdownIn 150ms ease;
+  max-height: 320px;
+  overflow-y: auto;
+
+  hr {
+    height: 1px;
+    background: $color-border;
+    margin: $spacing-4 0;
+    border: none;
+  }
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-8;
+  width: 100%;
+  padding: $spacing-8 $spacing-12;
+  border-radius: $radius-sm;
+  @include typo-body-3;
+  color: $color-text;
+  transition: background $transition-fast;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover:not(.disabled) {
+    background: $color-surface;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: none;
+  }
+}
+
+.dropdownItemIcon {
+  @include typo-body-1;
+  color: $color-sub-text;
+}
+
+.bx-chevron-down {
+  border: 1px solid #000 !important;
+}
+
+.multiSelectContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-8;
+  align-items: center;
+}
+
+.multiChipWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-8;
+}
+
+.multiChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba($color-primary, 0.1);
+  color: $color-primary;
+  border-radius: 999px;
+  padding: 6px 12px;
+  @include typo-caption-2;
+
+  :global(.material-symbols-outlined) {
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include hover;
+  }
+}

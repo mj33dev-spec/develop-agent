@@ -1,0 +1,59 @@
+@use '../../../styles/config' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: $radius-full;
+  @include typo-caption-1;
+  line-height: 1.4;
+  white-space: nowrap;
+  
+  &[data-size="sm"] {
+    padding: 2px 8px;
+    @include typo-caption-2;
+    border-radius: 4px;
+  }
+  
+  &[data-size="md"] {
+    padding: 3px 6px;
+    @include typo-caption-1;
+    border-radius: 8px;
+  }
+  
+  &[data-size="lg"] {
+    padding: 4px 12px;
+    @include typo-body-2;
+    border-radius: $radius-full;
+  }
+  
+  &[data-variant="success"] {
+    color: $color-success;
+    background: rgba($color-success, 0.1);
+  }
+  
+  &[data-variant="warning"] {
+    color: $color-warn;
+    background: rgba($color-warn, 0.1);
+  }
+  
+  &[data-variant="danger"] {
+    color: $color-error;
+    background: rgba($color-error, 0.1);
+  }
+  
+  &[data-variant="info"] {
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+  }
+  
+  &[data-variant="neutral"] {
+    color: $color-text-secondary;
+    background: $color-light-grey;
+  }
+  
+  &[data-variant="purple"] {
+    color: $color-secondary;
+    background: rgba($color-secondary, 0.1);
+  }
+  }
