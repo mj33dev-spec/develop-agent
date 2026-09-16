@@ -197,6 +197,36 @@ export class CodeViewerComponent implements OnInit {
     return css;
   }
 
+  private cleanAngularTemplateForPreview(rawHtml: string): string {
+    if (!rawHtml) return '';
+    let html = rawHtml;
+
+    // 1. Process *ngFor elements (duplicate for sample rendering)
+    html = html.replace(/<([\w\-]+)\s+[^>]*\*ngFor="[^"]*"[^>]*>([\s\S]*?)<\/\1>/gi, (match) => {
+      const cleanMatch = match.replace(/\*ngFor="[^"]*"/gi, '');
+      const opt1 = cleanMatch.replace(/\{\{\s*[\w\.\?\s\|']+\s*\}\}/g, '옵션 1 (Angular)');
+      const opt2 = cleanMatch.replace(/\{\{\s*[\w\.\?\s\|']+\s*\}\}/g, '옵션 2 (React)');
+      const opt3 = cleanMatch.replace(/\{\{\s*[\w\.\?\s\|']+\s*\}\}/g, '옵션 3 (Vue)');
+      return `${opt1}\n${opt2}\n${opt3}`;
+    });
+
+    // 2. Process Angular Event bindings: (click)="toggle()" ➡️ onclick="..."
+    html = html.replace(/\(click\)="([^"]*)"/g, 'onclick="handlePreviewClick(this, \'$1\')"');
+
+    // 3. Process Angular Property/Attribute bindings: [class]="..." ➡️ class="..."
+    html = html.replace(/\[(class|style|id|src)\]="([^"]*)"/g, '$1="$2"');
+
+    // 4. Process Angular Interpolation: {{ selectedValue || '옵션 선택' }} ➡️ '옵션 선택'
+    html = html.replace(/\{\{\s*[^}]*?\|\|\s*['"]([^'"]+)['"]\s*\}\}/g, '$1');
+    html = html.replace(/\{\{\s*['"]([^'"]+)['"]\s*\}\}/g, '$1');
+    html = html.replace(/\{\{\s*[\w\.\?\s]+\s*\}\}/g, '선택된 옵션');
+
+    // 5. Replace *ngIf directive with initial display: none; for popup/dropdown elements
+    html = html.replace(/\*ngIf="[^"]*"/g, 'style="display: none;"');
+
+    return html;
+  }
+
   async openPreview() {
     if (!this.isHtmlFile) return;
 
@@ -218,25 +248,54 @@ export class CodeViewerComponent implements OnInit {
     const combinedCss = cssFiles.map(f => this.compileScssToCss(f.content || '')).join('\n\n');
     const combinedJs = jsFiles.map(f => f.content || '').join('\n\n');
 
+    const processedHtml = this.cleanAngularTemplateForPreview(this.file.content || '');
+
     const htmlContent = `
       <!DOCTYPE html>
       <html>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
         <style>
           body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 16px;
+            padding: 20px;
+            background: #e0e5ec;
+            color: #2d3748;
             box-sizing: border-box;
           }
           ${combinedCss}
         </style>
       </head>
       <body>
-        ${this.file.content || ''}
+        ${processedHtml}
         <script>
+          document.addEventListener('click', function(e) {
+            const trigger = e.target.closest('button, .dropdownTrigger, [class*="trigger"], [onclick]');
+            const allMenus = document.querySelectorAll('.dropdownMenu, .dropdown-menu');
+
+            if (trigger) {
+              const container = trigger.closest('.dropdownContainer, [class*="container"]') || trigger.parentElement;
+              const menu = container ? (container.querySelector('.dropdownMenu, .dropdown-menu') || container.querySelector('div:nth-child(2)')) : null;
+              if (menu) {
+                const currentDisplay = window.getComputedStyle(menu).display;
+                if (currentDisplay === 'none') {
+                  menu.style.display = 'block';
+                } else {
+                  menu.style.display = 'none';
+                }
+                return;
+              }
+            }
+
+            // Close when clicking outside or selecting an item
+            allMenus.forEach(function(m) {
+              m.style.display = 'none';
+            });
+          });
+
           try {
             ${combinedJs}
           } catch(e) {

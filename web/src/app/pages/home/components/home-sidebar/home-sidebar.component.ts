@@ -2,7 +2,10 @@ import { Component, OnInit, inject, Input, Output, EventEmitter, HostListener, V
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CDropdownOption } from '../../../../components/c-dropdown/c-dropdown.component';
+import { CDropdownComponent, CDropdownOption } from '../../../../components/c-dropdown/c-dropdown.component';
+import { CModalComponent } from '../../../../components/c-modal/c-modal.component';
+import { CButtonComponent } from '../../../../components/c-button/c-button.component';
+import { TEMPLATE_PRESETS, TemplatePreset, TemplateFilePreset } from '../../../../core/data/template-preset.data';
 import { FolderService, Folder } from '../../../../core/services/folder.service';
 import { RoomService, ChatRoomRecord } from '../../../../core/services/room.service';
 import { FileItemService, FileItem } from '../../../../core/services/file-item.service';
@@ -25,7 +28,7 @@ export interface SidebarNode {
 @Component({
   selector: 'app-home-sidebar',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CModalComponent, CButtonComponent, CDropdownComponent],
   templateUrl: './home-sidebar.component.html',
   styleUrl: './home-sidebar.component.scss'
 })
@@ -33,6 +36,34 @@ export class HomeSidebarComponent implements OnInit {
   @Input() activeRoomId: string | null = null;
   @Input() activeFileId: string | null = null;
   @Input() selectedModel: string = 'Gemini 3.6 Flash';
+
+  // --- Template Modal Direct State ---
+  isTemplateModalOpen = false;
+  templateModalMode: 'preset' | 'upload' = 'preset';
+
+  templateCategories = [
+    { value: 'all', label: '전체' },
+    { value: 'ui', label: 'UI 컴포넌트' },
+    { value: 'api', label: 'REST API' },
+    { value: 'css', label: 'CSS / 스타일' }
+  ];
+  selectedTemplateCategory: string = 'all';
+  templatePresets: TemplatePreset[] = TEMPLATE_PRESETS;
+  selectedPreset: TemplatePreset | null = TEMPLATE_PRESETS[0] || null;
+  selectedFrameworkIndex: number = 0;
+
+  // Custom Upload Form State
+  uploadGroupName: string = '';
+  selectedUploadFramework: string = 'Angular';
+  uploadFrameworkOptions: CDropdownOption[] = [
+    { label: 'Angular', value: 'angular', onClick: () => this.selectedUploadFramework = 'Angular' },
+    { label: 'React', value: 'react', onClick: () => this.selectedUploadFramework = 'React' },
+    { label: 'Vue', value: 'vue', onClick: () => this.selectedUploadFramework = 'Vue' },
+    { label: 'HTML / JS', value: 'html', onClick: () => this.selectedUploadFramework = 'HTML / JS' },
+    { label: '기타 (Other)', value: 'other', onClick: () => this.selectedUploadFramework = '기타 (Other)' }
+  ];
+  uploadDescription: string = '';
+  uploadedCustomFiles: { name: string; extension: string; content: string; size?: number }[] = [];
   
   @Output() activeRoomIdChange = new EventEmitter<string | null>();
   @Output() activeFileIdChange = new EventEmitter<string | null>();
@@ -153,7 +184,7 @@ export class HomeSidebarComponent implements OnInit {
     addNodes(null, 0);
   }
 
-  private getFileIcon(ext: string): string {
+  getFileIcon(ext: string): string {
     const e = (ext || '').toLowerCase();
     switch (e) {
       case 'html': case 'htm': return 'bx bxl-html5 text-orange';
@@ -196,6 +227,149 @@ export class HomeSidebarComponent implements OnInit {
 
   openNewChatMain() {
     this.selectRoom('');
+  }
+
+  // --- Template Modal Handlers ---
+  openTemplateModal() {
+    this.templateModalMode = 'preset';
+    this.selectedTemplateCategory = 'all';
+    this.selectedPreset = this.templatePresets[0] || null;
+    this.selectedFrameworkIndex = 0;
+    this.isTemplateModalOpen = true;
+  }
+
+  closeTemplateModal() {
+    this.isTemplateModalOpen = false;
+  }
+
+  get filteredPresets(): TemplatePreset[] {
+    if (this.selectedTemplateCategory === 'all') {
+      return this.templatePresets;
+    }
+    return this.templatePresets.filter(p => p.category === this.selectedTemplateCategory);
+  }
+
+  selectCategory(catValue: string) {
+    this.selectedTemplateCategory = catValue;
+    const filtered = this.filteredPresets;
+    if (filtered.length > 0) {
+      this.selectedPreset = filtered[0];
+      this.selectedFrameworkIndex = 0;
+    } else {
+      this.selectedPreset = null;
+      this.selectedFrameworkIndex = 0;
+    }
+  }
+
+  selectPreset(preset: TemplatePreset) {
+    this.selectedPreset = preset;
+    this.selectedFrameworkIndex = 0;
+  }
+
+  get currentPresetFramework() {
+    if (!this.selectedPreset || !this.selectedPreset.frameworks.length) return null;
+    return this.selectedPreset.frameworks[this.selectedFrameworkIndex] || this.selectedPreset.frameworks[0];
+  }
+
+  get generatedPresetGroupName(): string {
+    if (!this.selectedPreset || !this.currentPresetFramework) return '';
+    const fw = this.currentPresetFramework.framework;
+    return `${this.selectedPreset.id}-${fw}`;
+  }
+
+  async submitPresetTemplate() {
+    if (!this.selectedPreset || !this.currentPresetFramework) return;
+    const groupName = this.generatedPresetGroupName;
+    const files = this.currentPresetFramework.files;
+    await this.createTemplateBundle(groupName, files);
+  }
+
+  async onCustomFilesAttached(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    for (let i = 0; i < input.files.length; i++) {
+      const file = input.files[i];
+      const name = file.name;
+      const parts = name.split('.');
+      const ext = parts.length > 1 ? parts.pop()! : '';
+      const content = await this.readFileAsText(file);
+
+      this.uploadedCustomFiles.push({
+        name,
+        extension: ext,
+        content,
+        size: file.size
+      });
+    }
+
+    input.value = '';
+  }
+
+  removeCustomFile(index: number) {
+    this.uploadedCustomFiles.splice(index, 1);
+  }
+
+  async submitCustomUpload() {
+    if (!this.uploadGroupName.trim()) return;
+
+    const files: TemplateFilePreset[] = [];
+
+    // 1. Generate README.md automatically
+    const readmeContent = `# ${this.uploadGroupName}
+
+## 📌 프레임워크
+- **${this.selectedUploadFramework}**
+
+## 📝 템플릿 설명
+${this.uploadDescription || '등록된 설명이 없습니다.'}
+
+## 📁 포함된 파일 목록
+${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부된 파일 없음'}
+`;
+
+    files.push({
+      name: 'README.md',
+      extension: 'md',
+      content: readmeContent
+    });
+
+    // 2. Add uploaded custom files
+    for (const f of this.uploadedCustomFiles) {
+      files.push({
+        name: f.name,
+        extension: f.extension,
+        content: f.content
+      });
+    }
+
+    await this.createTemplateBundle(this.uploadGroupName.trim(), files);
+
+    // Reset upload form
+    this.uploadGroupName = '';
+    this.uploadDescription = '';
+    this.uploadedCustomFiles = [];
+  }
+
+  private async createTemplateBundle(groupName: string, files: TemplateFilePreset[]) {
+    this.dLoading.show(`'${groupName}' 템플릿 폴더 및 소스 코드를 생성하는 중입니다...`);
+    try {
+      const order = this.folders.filter(f => !f.parent_id).length;
+      const parentFolder = await this.folderService.createFolder(groupName, null, order);
+      parentFolder.isExpanded = true;
+
+      for (let i = 0; i < files.length; i++) {
+        const f = files[i];
+        await this.fileService.createFile(f.name, f.content, f.extension, parentFolder.id, f.content.length, i);
+      }
+
+      await this.loadData();
+      this.dLoading.dismiss('템플릿이 성공적으로 생성되었습니다.');
+      this.closeTemplateModal();
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('템플릿 생성 실패: ' + (e.message || ''), '오류');
+    }
   }
 
   // --- Context Menu ---
