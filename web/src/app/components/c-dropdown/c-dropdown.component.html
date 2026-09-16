@@ -28,9 +28,7 @@
     <div *ngIf="variant === 'multi'" class="multiSelectContainer">
       <span *ngFor="let val of selectedValues" class="multiChip">
         {{ val }}
-        <span class="material-symbols-outlined" (click)="$event.stopPropagation(); removeValue.emit(val)">
-          close
-        </span>
+        <i class="bx bx-x" (click)="$event.stopPropagation(); removeValue.emit(val)"></i>
       </span>
     </div>
   </ng-container>

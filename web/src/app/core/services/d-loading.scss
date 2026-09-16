@@ -40,8 +40,9 @@
 
     &.success {
       .success-icon {
-        @include typo-display-3;
+        font-size: 44px;
         color: #04b014;
+        display: inline-block;
         animation: scaleInBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
       }
     }

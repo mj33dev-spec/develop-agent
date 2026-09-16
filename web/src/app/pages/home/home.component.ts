@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,7 @@ import { CModalComponent } from '../../components/c-modal/c-modal.component';
 import { FolderService, Folder } from '../../core/services/folder.service';
 import { RoomService, ChatRoomRecord } from '../../core/services/room.service';
 import { DAlertService } from '../../core/services/d-alert.service';
+import { DLoadingService } from '../../core/services/d-loading.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -20,6 +21,7 @@ export interface SidebarNode {
   parent_id: string | null;
   level: number;
   isExpanded: boolean;
+  hasChildren?: boolean;
   data: any;
 }
 
@@ -56,6 +58,92 @@ export class HomeComponent implements OnInit {
   // Modals state
   isFolderModalOpen = false;
   folderModalMode: 'create' | 'edit' = 'create';
+
+  contextMenuVisible = false;
+  contextMenuPosition = { x: 0, y: 0 };
+  contextMenuOptions: CDropdownOption[] = [];
+  contextMenuNode: SidebarNode | null = null;
+
+  @HostListener('document:click')
+  closeContextMenu() {
+    this.contextMenuVisible = false;
+  }
+
+  onSidebarContextMenu(event: MouseEvent) {
+    event.preventDefault();
+    // 빈 영역 우클릭 시
+    this.contextMenuNode = null;
+    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+    this.contextMenuOptions = [
+      { 
+        label: '새 폴더 생성', 
+        icon: 'bx bx-folder-plus', 
+        onClick: () => this.openCreateFolderModal(null) 
+      },
+      { 
+        label: '새 채팅방 생성', 
+        icon: 'bx bx-edit-alt', 
+        onClick: () => this.createNewRoom(undefined, null) 
+      }
+    ];
+    this.contextMenuVisible = true;
+  }
+
+  onNodeContextMenu(event: MouseEvent, node: SidebarNode) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    this.contextMenuNode = node;
+    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+    
+    if (node.type === 'folder') {
+      this.contextMenuOptions = [
+        { 
+          label: '하위 폴더 추가', 
+          icon: 'bx bx-folder-plus', 
+          onClick: () => this.openCreateFolderModal(node.id) 
+        },
+        { 
+          label: '하위 채팅방 추가', 
+          icon: 'bx bx-edit-alt', 
+          onClick: () => this.createNewRoom(undefined, node.id) 
+        },
+        { 
+          label: '이름 변경', 
+          icon: 'bx bx-rename', 
+          onClick: () => this.startEditing(new Event('click'), node) 
+        },
+        { 
+          label: '폴더 삭제', 
+          icon: 'bx bx-trash', 
+          onClick: () => this.deleteFolder(node.data) 
+        }
+      ];
+    } else {
+      this.contextMenuOptions = [
+        { 
+          label: '이름 변경', 
+          icon: 'bx bx-rename', 
+          onClick: () => this.startEditing(new Event('click'), node) 
+        },
+        { 
+          label: '채팅방 삭제', 
+          icon: 'bx bx-trash', 
+          onClick: () => this.deleteRoom(node.data) 
+        }
+      ];
+    }
+    
+    this.contextMenuVisible = true;
+  }
+
+  onContextMenuOptionClick(opt: CDropdownOption) {
+    this.contextMenuVisible = false;
+    if (opt.onClick) {
+      opt.onClick();
+    }
+  }
+
   folderFormName = '';
   editingFolderId: string | null = null;
   selectedParentId: string | null = null;
@@ -63,6 +151,7 @@ export class HomeComponent implements OnInit {
   private folderService = inject(FolderService);
   private roomService = inject(RoomService);
   private dAlert = inject(DAlertService);
+  private dLoading = inject(DLoadingService);
   private authService = inject(AuthService);
   private router = inject(Router);
 
@@ -97,9 +186,8 @@ export class HomeComponent implements OnInit {
       for (const item of children) {
         if (item._type === 'folder') {
           const folder = item as any;
-          // preserve expanded state if it exists
-          const existingNode = this.sidebarNodes.find(n => n.type === 'folder' && n.id === folder.id);
           const isExpanded = folder.isExpanded !== undefined ? folder.isExpanded : true;
+          const hasChildren = this.folders.some(f => f.parent_id === folder.id) || this.rooms.some(r => r.folder_id === folder.id);
           
           this.sidebarNodes.push({
             type: 'folder',
@@ -108,6 +196,7 @@ export class HomeComponent implements OnInit {
             parent_id: folder.parent_id,
             level,
             isExpanded,
+            hasChildren,
             data: folder
           });
 
@@ -134,7 +223,7 @@ export class HomeComponent implements OnInit {
 
   toggleFolder(node: SidebarNode, event: Event) {
     event.stopPropagation();
-    if (node.type === 'folder') {
+    if (node.type === 'folder' && node.hasChildren) {
       const folder = this.folders.find(f => f.id === node.id);
       if (folder) {
         folder.isExpanded = !folder.isExpanded;
@@ -163,11 +252,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async createNewRoom(initialMessage?: string) {
+  async createNewRoom(initialMessage?: string, folderId: string | null = null) {
+    this.dLoading.show('채팅방을 생성하는 중입니다...');
     try {
       const title = `새로운 채팅 ${this.rooms.length + 1}`;
-      // Put in root by default, or could put in selected folder
-      const room = await this.roomService.createRoom(title, this.selectedModel, null, this.rooms.length);
+      const room = await this.roomService.createRoom(title, this.selectedModel, folderId, this.rooms.length);
       this.rooms.push(room);
       this.activeRoomId = room.id;
       this.buildSidebarNodes();
@@ -179,8 +268,10 @@ export class HomeComponent implements OnInit {
           if (textarea) textarea.style.height = 'auto';
         }, 0);
       }
-    } catch (e) {
-      this.dAlert.error('채팅방 생성에 실패했습니다.', '오류');
+      this.dLoading.dismiss('새 채팅방이 생성되었습니다.');
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('채팅방 생성에 실패했습니다: ' + (e.message || ''), '오류');
     }
   }
 
@@ -200,7 +291,6 @@ export class HomeComponent implements OnInit {
     event.stopPropagation();
     this.editingNodeId = node.id;
     this.editInputValue = node.name;
-    // Focus the input in the next tick
     setTimeout(() => {
       const input = document.getElementById(`edit-input-${node.id}`) as HTMLInputElement;
       if (input) {
@@ -214,12 +304,13 @@ export class HomeComponent implements OnInit {
     if (this.editingNodeId !== node.id) return;
     
     const newName = this.editInputValue.trim();
-    this.editingNodeId = null; // Exit edit mode immediately for better UX
+    this.editingNodeId = null;
     
     if (!newName || newName === node.name) {
       return;
     }
 
+    this.dLoading.show('이름을 변경하는 중입니다...');
     try {
       if (node.type === 'folder') {
         const updated = await this.folderService.updateFolder(node.id, { name: newName });
@@ -231,10 +322,11 @@ export class HomeComponent implements OnInit {
         if (room) room.title = updated.title;
       }
       this.buildSidebarNodes();
-      this.dAlert.success('이름이 변경되었습니다.', '변경 완료');
-    } catch (e) {
-      this.dAlert.error('이름 변경에 실패했습니다.', '오류');
-      this.buildSidebarNodes(); // revert on fail
+      this.dLoading.dismiss('이름이 변경되었습니다.');
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('이름 변경에 실패했습니다: ' + (e.message || ''), '오류');
+      this.buildSidebarNodes();
     }
   }
 
@@ -244,46 +336,68 @@ export class HomeComponent implements OnInit {
 
   // --- Folder CRUD ---
   async openCreateFolderModal(parentId: string | null = null) {
+    this.dLoading.show('폴더를 생성하는 중입니다...');
     try {
       const order = this.folders.filter(f => f.parent_id === parentId).length;
       const newFolder = await this.folderService.createFolder('이름없음', parentId, order);
       newFolder.isExpanded = true;
       this.folders.push(newFolder);
       this.buildSidebarNodes();
-      this.dAlert.success('새 폴더가 생성되었습니다.', '생성 완료');
+      this.dLoading.dismiss('새 폴더가 생성되었습니다.');
       
-      // Optionally start editing immediately
       const newNode = this.sidebarNodes.find(n => n.id === newFolder.id);
       if (newNode) {
-        // Mock an event just to satisfy the signature, we don't strictly need it if we refactor, but this works
         this.startEditing({ stopPropagation: () => {} } as Event, newNode);
       }
-    } catch (e) {
-      this.dAlert.error('폴더 생성에 실패했습니다.', '오류');
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('폴더 생성에 실패했습니다: ' + (e.message || ''), '오류');
     }
   }
 
   async deleteFolder(folder: Folder) {
-    if (confirm(`'${folder.name}' 폴더를 삭제하시겠습니까? (내부 채팅방도 모두 삭제됩니다)`)) {
+    this.dAlert.confirm(`'${folder.name}' 폴더를 삭제하시겠습니까? (하위 항목 포함)`, '폴더 삭제', async () => {
+      this.dLoading.show('폴더를 삭제하는 중입니다...');
       try {
         await this.folderService.deleteFolder(folder.id);
         this.folders = this.folders.filter(f => f.id !== folder.id);
         this.buildSidebarNodes();
-        this.dAlert.success('폴더가 삭제되었습니다.', '삭제 완료');
-      } catch (e) {
-        this.dAlert.error('폴더 삭제에 실패했습니다.', '오류');
+        this.dLoading.dismiss('폴더가 삭제되었습니다.');
+      } catch (e: any) {
+        this.dLoading.dismiss();
+        this.dAlert.error('폴더 삭제에 실패했습니다: ' + (e.message || ''), '오류');
       }
-    }
+    });
+  }
+
+  async deleteRoom(room: ChatRoomRecord) {
+    this.dAlert.confirm(`'${room.title}' 채팅방을 삭제하시겠습니까?`, '채팅방 삭제', async () => {
+      this.dLoading.show('채팅방을 삭제하는 중입니다...');
+      try {
+        await this.roomService.deleteRoom(room.id);
+        this.rooms = this.rooms.filter(r => r.id !== room.id);
+        if (this.activeRoomId === room.id) {
+          this.activeRoomId = null;
+        }
+        this.buildSidebarNodes();
+        this.dLoading.dismiss('채팅방이 삭제되었습니다.');
+      } catch (e: any) {
+        this.dLoading.dismiss();
+        this.dAlert.error('채팅방 삭제에 실패했습니다: ' + (e.message || ''), '오류');
+      }
+    });
   }
 
   // 로그아웃
   logout() {
     this.dAlert.confirm('정말 로그아웃 하시겠습니까?', '로그아웃 확인', async () => {
+      this.dLoading.show('로그아웃 중입니다...');
       try {
         await this.authService.signOut();
-        this.dAlert.success('안전하게 로그아웃 되었습니다.', '로그아웃');
+        this.dLoading.dismiss('로그아웃 되었습니다.');
         this.router.navigate(['/login']);
       } catch (e: any) {
+        this.dLoading.dismiss();
         this.dAlert.error('로그아웃에 실패했습니다: ' + (e.message || ''), '오류');
       }
     });
@@ -465,11 +579,14 @@ export class HomeComponent implements OnInit {
 
     // Save to DB
     try {
+      this.dLoading.show('위치를 변경하는 중입니다...');
       if (folderUpdates.length > 0) await this.folderService.updateFolderOrders(folderUpdates);
       if (roomUpdates.length > 0) await this.roomService.updateRoomOrders(roomUpdates);
       await this.loadData();
-    } catch (e) {
-      this.dAlert.error('이동 및 순서 저장에 실패했습니다.', '오류');
+      this.dLoading.dismiss('위치가 변경되었습니다.');
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('이동 및 순서 저장에 실패했습니다: ' + (e.message || ''), '오류');
       await this.loadData();
     }
   }

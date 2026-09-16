@@ -35,14 +35,14 @@ $primary: #007bff;
     padding: $padding-small;
     border-bottom: 1px solid $border-color;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: $spacing-8;
     
-    .new-chat-btn {
-      flex: 1;
+    .new-chat-btn, .new-folder-btn {
+      width: 100%;
       background: #ffffff;
       border: 1px solid $border-color;
-      padding: $spacing-12;
+      padding: $spacing-8 $spacing-12;
       border-radius: $radius-normal;
       @include typo-subtitle-2;
       color: $text-main;
@@ -50,32 +50,14 @@ $primary: #007bff;
       align-items: center;
       gap: $spacing-8;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s;
+      box-sizing: border-box;
       
-      i { font-size: $font-size-pc-title-3; }
+      i { font-size: 16px; color: #555; }
       
       &:hover {
         background: #fafafa;
         border-color: #ccc;
-      }
-    }
-    
-    .new-folder-btn {
-      padding: $spacing-8 $spacing-12;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #a1a1aa;
-      border-radius: $radius-normal;
-      transition: background 0.2s, color 0.2s;
-      
-      &:hover {
-        background: #e4e4e7;
-        color: #3f3f46;
-      }
-      
-      i {
-        font-size: $font-size-pc-title-2;
       }
     }
   }
@@ -86,10 +68,10 @@ $primary: #007bff;
     padding: $padding-small;
     display: flex;
     flex-direction: column;
-    gap: $spacing-8;
+    gap: $spacing-4;
 
     .room-item {
-      padding: $spacing-12 $padding-small;
+      padding: $spacing-8 $padding-small;
       border-radius: $radius-normal;
       cursor: pointer;
       display: flex;
@@ -98,7 +80,7 @@ $primary: #007bff;
       color: $text-main;
       transition: background 0.2s;
 
-      i { font-size: $font-size-pc-title-3; color: $text-muted; }
+      i { font-size: 15px; color: $text-muted; }
       .room-title { 
         @include typo-body-3;
         white-space: nowrap; 
@@ -109,10 +91,18 @@ $primary: #007bff;
       &:hover { background: $sidebar-hover; }
       
       &.active {
-        background: rgba($primary, 0.1);
-        color: $primary;
-        i { color: $primary; }
+        background: rgba(0, 0, 0, 0.08);
+        color: #18181b;
+        font-weight: 600;
+        i { color: #2563eb; }
       }
+    }
+
+    .sidebar-node.active .room-item {
+      background: rgba(0, 0, 0, 0.08);
+      color: #18181b;
+      font-weight: 600;
+      i { color: #2563eb; }
     }
     
     .empty-rooms {
@@ -131,7 +121,7 @@ $primary: #007bff;
       width: 100%;
       background: none;
       border: none;
-      padding: $spacing-12;
+      padding: $spacing-8 $spacing-12;
       border-radius: $radius-normal;
       @include typo-subtitle-2;
       color: #ef4444;
@@ -146,7 +136,7 @@ $primary: #007bff;
         background-color: #fee2e2;
       }
       
-      i { font-size: $font-size-pc-title-3; }
+      i { font-size: 16px; }
     }
   }
 }
@@ -328,29 +318,26 @@ $primary: #007bff;
 .folder-header {
   display: flex;
   align-items: center;
-  padding: $spacing-8 $spacing-12;
+  padding: 6px $spacing-12;
   cursor: pointer;
-  color: #d4d4d8;
+  color: #333333;
   border-radius: $radius-normal;
   border: 1px solid transparent;
   transition: all 0.2s;
   
   &:hover {
-    border: 1px solid #3f3f46;
-    .folder-actions {
-      opacity: 1;
-    }
+    background: $sidebar-hover;
   }
 
   i.bx-folder, i.bx-folder-open {
     margin-right: $spacing-8;
-    font-size: $font-size-pc-title-2;
-    color: #a1a1aa;
+    font-size: 16px;
+    color: #666;
   }
   
   i.bx-chevron-right, i.bx-chevron-down {
     margin-right: $spacing-4;
-    font-size: $font-size-pc-title-2;
+    font-size: 14px;
     color: #71717a;
   }
 
@@ -361,21 +348,60 @@ $primary: #007bff;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
 
-  .folder-actions {
+.custom-context-menu {
+  position: fixed;
+  z-index: 9999;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  animation: contextMenuFade 0.15s ease-out;
+
+  .context-menu-item {
     display: flex;
-    gap: 4px;
-    opacity: 0;
-    transition: opacity 0.2s;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #27272a;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease, color 0.15s ease;
     
     i {
-      padding: 4px;
-      border-radius: 4px;
-      &:hover {
-        background-color: #3f3f46;
-        color: #fff;
+      font-size: 15px;
+      color: #71717a;
+    }
+    
+    &:hover {
+      background: #f4f4f5;
+      color: #09090b;
+      
+      i {
+        color: #18181b;
       }
     }
+  }
+}
+
+@keyframes contextMenuFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -389,18 +415,17 @@ $primary: #007bff;
   top: -9999px;
   left: -9999px;
   z-index: 9999;
-  // background-color: #27272a;
   background-color: #fff;
   border: 1px solid #3f3f46;
   border-radius: 8px;
-  min-height: 42px;
+  // min-height: 42px;
 }
 
 .inline-edit-input {
   background: transparent;
   border: 1px solid #3b82f6;
   border-radius: 4px;
-  color: #d4d4d8;
+  color: #333333;
   @include typo-body-2;
   padding: 2px 6px;
   width: 100%;
@@ -409,7 +434,6 @@ $primary: #007bff;
   font-family: inherit;
   
   &:focus {
-    // background: #27272a;
     opacity: 0.8;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
   }

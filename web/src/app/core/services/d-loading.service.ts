@@ -44,7 +44,7 @@ export class DLoadingService {
     if (isSuccess) {
       this.loadingContainer.innerHTML = `
         <div class="d-loading-content success">
-          <span class="material-symbols-outlined success-icon">check_circle</span>
+          <i class="bx bx-check-circle success-icon"></i>
           <div class="d-loading-text">${message || '완료되었습니다.'}</div>
         </div>
       `;
@@ -131,16 +131,21 @@ export class DLoadingService {
       this.progressInterval = null;
     }
 
-    this.renderContent(message || '완료되었습니다.', true);
-    
-    this.fadeOutTimer = window.setTimeout(() => {
-      if (this.loadingContainer) {
-        this.loadingContainer.classList.add('fade-out');
-        
-        this.fadeOutTimer = window.setTimeout(() => {
-          this.destroyLoadingDOM();
-        }, 300);
-      }
-    }, 800);
+    if (message) {
+      this.renderContent(message, true);
+      this.fadeOutTimer = window.setTimeout(() => {
+        if (this.loadingContainer) {
+          this.loadingContainer.classList.add('fade-out');
+          this.fadeOutTimer = window.setTimeout(() => {
+            this.destroyLoadingDOM();
+          }, 300);
+        }
+      }, 700);
+    } else {
+      this.loadingContainer.classList.add('fade-out');
+      this.fadeOutTimer = window.setTimeout(() => {
+        this.destroyLoadingDOM();
+      }, 200);
+    }
   }
 }
