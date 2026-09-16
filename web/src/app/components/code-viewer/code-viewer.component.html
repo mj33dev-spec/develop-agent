@@ -1,0 +1,99 @@
+<div class="code-viewer-container">
+  <!-- Header -->
+  <div class="viewer-header">
+    <div class="header-left">
+      <button type="button" class="icon-btn" (click)="goBack()" title="닫기">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+
+      <div class="file-info">
+        <i [class]="fileIconClass" class="file-icon"></i>
+        <h2 class="file-name">{{ file.name }}</h2>
+        <span class="file-size">{{ formattedSize }}</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <!-- Play Preview Toggle Button for HTML Files -->
+      <button 
+        *ngIf="isHtmlFile" 
+        type="button" 
+        class="action-btn play-btn" 
+        [class.active]="isPreviewOpen"
+        (click)="togglePreview()" 
+        title="우측 split 미리보기 토글"
+      >
+        <i class="bx bx-play-circle"></i>
+        <span>{{ isPreviewOpen ? '미리보기 닫기' : '미리보기' }}</span>
+      </button>
+
+      <button type="button" class="action-btn" (click)="copyAllCode()" title="전체 복사">
+        <i class="bx bx-copy"></i>
+        <span>전체 복사</span>
+      </button>
+
+      <button type="button" class="action-btn primary" (click)="downloadFile()" title="다운로드">
+        <i class="bx bx-download"></i>
+        <span>다운로드</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Viewer Body (Split Layout) -->
+  <div class="viewer-body split-viewer-body" [class.is-resizing]="isResizing">
+    <!-- Left: Code Panel -->
+    <div class="code-panel-wrapper" [style.width]="isPreviewOpen ? leftWidthPercent + '%' : '100%'">
+      <div class="code-panel">
+        <table class="code-table">
+          <tbody>
+            <tr *ngFor="let line of lines; let i = index">
+              <td class="line-number">{{ i + 1 }}</td>
+              <td class="line-code"><code>{{ line || ' ' }}</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Center Resizer Divider -->
+    <div 
+      *ngIf="isPreviewOpen" 
+      class="resizer-divider" 
+      (mousedown)="startResizing($event)"
+      title="드래그하여 크기 조절"
+    >
+      <div class="resizer-handle"></div>
+    </div>
+
+    <!-- Right: Preview Panel -->
+    <div 
+      *ngIf="isPreviewOpen" 
+      class="preview-panel-wrapper" 
+      [style.width]="(100 - leftWidthPercent) + '%'"
+    >
+      <div class="preview-panel-header">
+        <span class="preview-panel-title">
+          <i class="bx bx-play-circle text-orange"></i> 미리보기
+        </span>
+        <div class="linked-badges">
+          <span *ngFor="let cssName of linkedCssNames" class="badge css-badge" [title]="cssName">
+            <i class="bx bxl-css3"></i> {{ cssName }}
+          </span>
+          <span *ngFor="let jsName of linkedJsNames" class="badge js-badge" [title]="jsName">
+            <i class="bx bxl-javascript"></i> {{ jsName }}
+          </span>
+          <span *ngIf="linkedCssNames.length === 0 && linkedJsNames.length === 0" class="badge none-badge">
+            연동 파일 없음
+          </span>
+        </div>
+      </div>
+      <div class="iframe-container">
+        <iframe 
+          [srcdoc]="previewSrcDoc" 
+          class="preview-iframe"
+          sandbox="allow-scripts allow-modals allow-forms allow-same-origin"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</div>

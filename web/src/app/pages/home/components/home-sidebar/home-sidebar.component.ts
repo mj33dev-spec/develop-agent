@@ -1,22 +1,24 @@
-import { Component, OnInit, inject, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, inject, Input, Output, EventEmitter, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CDropdownOption } from '../../../../components/c-dropdown/c-dropdown.component';
 import { FolderService, Folder } from '../../../../core/services/folder.service';
 import { RoomService, ChatRoomRecord } from '../../../../core/services/room.service';
+import { FileItemService, FileItem } from '../../../../core/services/file-item.service';
 import { DAlertService } from '../../../../core/services/d-alert.service';
 import { DLoadingService } from '../../../../core/services/d-loading.service';
 import { AuthService } from '../../../../core/services/auth.service';
 
 export interface SidebarNode {
-  type: 'folder' | 'room';
+  type: 'folder' | 'room' | 'file';
   id: string;
   name: string;
   parent_id: string | null;
   level: number;
   isExpanded: boolean;
   hasChildren?: boolean;
+  icon?: string;
   data: any;
 }
 
@@ -29,11 +31,17 @@ export interface SidebarNode {
 })
 export class HomeSidebarComponent implements OnInit {
   @Input() activeRoomId: string | null = null;
+  @Input() activeFileId: string | null = null;
   @Input() selectedModel: string = 'Gemini 3.6 Flash';
+  
   @Output() activeRoomIdChange = new EventEmitter<string | null>();
+  @Output() activeFileIdChange = new EventEmitter<string | null>();
+
+  @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
   folders: Folder[] = [];
   rooms: ChatRoomRecord[] = [];
+  files: FileItem[] = [];
   sidebarNodes: SidebarNode[] = [];
 
   contextMenuVisible = false;
@@ -48,9 +56,11 @@ export class HomeSidebarComponent implements OnInit {
   dragOverNodeId: string | null = null;
   dragOverMode: 'inside' | 'before' | 'after' | null = null;
   private dragGhost: HTMLElement | null = null;
+  private targetAttachFolderId: string | null = null;
 
   private folderService = inject(FolderService);
   private roomService = inject(RoomService);
+  private fileService = inject(FileItemService);
   private dAlert = inject(DAlertService);
   private dLoading = inject(DLoadingService);
   private authService = inject(AuthService);
@@ -69,6 +79,7 @@ export class HomeSidebarComponent implements OnInit {
     try {
       this.folders = await this.folderService.getFolders();
       this.rooms = await this.roomService.getRooms();
+      this.files = await this.fileService.getFiles();
       this.buildSidebarNodes();
     } catch (e: any) {
       console.error(e);
@@ -82,17 +93,21 @@ export class HomeSidebarComponent implements OnInit {
     const addNodes = (parentId: string | null, level: number) => {
       const childFolders = this.folders.filter(f => f.parent_id === parentId);
       const childRooms = this.rooms.filter(r => r.folder_id === parentId);
+      const childFiles = this.files.filter(f => f.folder_id === parentId);
       
       const children = [
         ...childFolders.map(f => ({ ...f, _type: 'folder' })),
-        ...childRooms.map(r => ({ ...r, _type: 'room' }))
-      ].sort((a: any, b: any) => a.order_index - b.order_index);
+        ...childRooms.map(r => ({ ...r, _type: 'room' })),
+        ...childFiles.map(f => ({ ...f, _type: 'file' }))
+      ].sort((a: any, b: any) => (a.order_index || 0) - (b.order_index || 0));
 
       for (const item of children) {
         if (item._type === 'folder') {
           const folder = item as any;
           const isExpanded = folder.isExpanded !== undefined ? folder.isExpanded : true;
-          const hasChildren = this.folders.some(f => f.parent_id === folder.id) || this.rooms.some(r => r.folder_id === folder.id);
+          const hasChildren = this.folders.some(f => f.parent_id === folder.id) 
+                           || this.rooms.some(r => r.folder_id === folder.id)
+                           || this.files.some(f => f.folder_id === folder.id);
           
           this.sidebarNodes.push({
             type: 'folder',
@@ -108,7 +123,7 @@ export class HomeSidebarComponent implements OnInit {
           if (isExpanded) {
             addNodes(folder.id, level + 1);
           }
-        } else {
+        } else if (item._type === 'room') {
           const room = item as any;
           this.sidebarNodes.push({
             type: 'room',
@@ -119,11 +134,39 @@ export class HomeSidebarComponent implements OnInit {
             isExpanded: false,
             data: room
           });
+        } else {
+          const file = item as any;
+          this.sidebarNodes.push({
+            type: 'file',
+            id: file.id,
+            name: file.name,
+            parent_id: file.folder_id,
+            level,
+            isExpanded: false,
+            icon: this.getFileIcon(file.extension),
+            data: file
+          });
         }
       }
     };
 
     addNodes(null, 0);
+  }
+
+  private getFileIcon(ext: string): string {
+    const e = (ext || '').toLowerCase();
+    switch (e) {
+      case 'html': case 'htm': return 'bx bxl-html5 text-orange';
+      case 'css': case 'scss': case 'less': return 'bx bxl-css3 text-blue';
+      case 'js': case 'jsx': return 'bx bxl-javascript text-yellow';
+      case 'ts': case 'tsx': return 'bx bxl-typescript text-blue';
+      case 'py': return 'bx bxl-python text-yellow';
+      case 'java': return 'bx bxl-java text-red';
+      case 'json': return 'bx bx-code-curly text-green';
+      case 'md': return 'bx bxl-markdown text-purple';
+      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': return 'bx bx-image text-green';
+      default: return 'bx bx-file text-sub';
+    }
   }
 
   toggleFolder(node: SidebarNode, event: Event) {
@@ -140,6 +183,19 @@ export class HomeSidebarComponent implements OnInit {
   selectRoom(roomId: string) {
     this.activeRoomId = roomId;
     this.activeRoomIdChange.emit(roomId);
+    this.activeFileId = null;
+    this.activeFileIdChange.emit(null);
+  }
+
+  selectFile(fileId: string) {
+    this.activeFileId = fileId;
+    this.activeFileIdChange.emit(fileId);
+    this.activeRoomId = null;
+    this.activeRoomIdChange.emit(null);
+  }
+
+  openNewChatMain() {
+    this.selectRoom('');
   }
 
   // --- Context Menu ---
@@ -149,14 +205,19 @@ export class HomeSidebarComponent implements OnInit {
     this.contextMenuPosition = { x: event.clientX, y: event.clientY };
     this.contextMenuOptions = [
       { 
-        label: '새 폴더 생성', 
+        label: '새 폴더', 
         icon: 'bx bx-folder-plus', 
         onClick: () => this.openCreateFolderModal(null) 
       },
       { 
-        label: '새 채팅방 생성', 
+        label: '새 채팅', 
         icon: 'bx bx-edit-alt', 
-        onClick: () => this.createNewRoom(undefined, null) 
+        onClick: () => this.openNewChatMain() 
+      },
+      {
+        label: '파일 첨부',
+        icon: 'bx bx-upload',
+        onClick: () => this.triggerFileUpload(null)
       }
     ];
     this.contextMenuVisible = true;
@@ -181,6 +242,11 @@ export class HomeSidebarComponent implements OnInit {
           icon: 'bx bx-edit-alt', 
           onClick: () => this.createNewRoom(undefined, node.id) 
         },
+        {
+          label: '파일 첨부',
+          icon: 'bx bx-upload',
+          onClick: () => this.triggerFileUpload(node.id)
+        },
         { 
           label: '이름 변경', 
           icon: 'bx bx-rename', 
@@ -192,7 +258,7 @@ export class HomeSidebarComponent implements OnInit {
           onClick: () => this.deleteFolder(node.data) 
         }
       ];
-    } else {
+    } else if (node.type === 'room') {
       this.contextMenuOptions = [
         { 
           label: '이름 변경', 
@@ -205,6 +271,19 @@ export class HomeSidebarComponent implements OnInit {
           onClick: () => this.deleteRoom(node.data) 
         }
       ];
+    } else {
+      this.contextMenuOptions = [
+        { 
+          label: '이름 변경', 
+          icon: 'bx bx-rename', 
+          onClick: () => this.startEditing(new Event('click'), node) 
+        },
+        { 
+          label: '파일 삭제', 
+          icon: 'bx bx-trash', 
+          onClick: () => this.deleteFile(node.data) 
+        }
+      ];
     }
     
     this.contextMenuVisible = true;
@@ -215,6 +294,59 @@ export class HomeSidebarComponent implements OnInit {
     if (opt.onClick) {
       opt.onClick();
     }
+  }
+
+  // --- File Upload ---
+  triggerFileUpload(folderId: string | null = null) {
+    this.targetAttachFolderId = folderId;
+    if (this.fileInputRef && this.fileInputRef.nativeElement) {
+      this.fileInputRef.nativeElement.value = '';
+      this.fileInputRef.nativeElement.click();
+    }
+  }
+
+  async onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+    const fileName = file.name;
+    const extParts = fileName.split('.');
+    const ext = extParts.length > 1 ? extParts.pop()! : '';
+    
+    this.dLoading.show(`'${fileName}' 파일을 읽는 중입니다...`);
+    try {
+      const content = await this.readFileAsText(file);
+      const folderId = this.targetAttachFolderId;
+      const order = this.files.filter(f => f.folder_id === folderId).length;
+
+      const createdFile = await this.fileService.createFile(
+        fileName,
+        content,
+        ext,
+        folderId,
+        file.size,
+        order
+      );
+
+      this.files.push(createdFile);
+      this.buildSidebarNodes();
+      this.selectFile(createdFile.id);
+
+      this.dLoading.dismiss('파일이 추가되었습니다.');
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('파일 추가 실패: ' + (e.message || ''), '오류');
+    }
+  }
+
+  private readFileAsText(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string || '');
+      reader.onerror = (err) => reject(err);
+      reader.readAsText(file);
+    });
   }
 
   // --- Inline Editing ---
@@ -247,10 +379,19 @@ export class HomeSidebarComponent implements OnInit {
         const updated = await this.folderService.updateFolder(node.id, { name: newName });
         const folder = this.folders.find(f => f.id === node.id);
         if (folder) folder.name = updated.name;
-      } else {
+      } else if (node.type === 'room') {
         const updated = await this.roomService.updateRoom(node.id, { title: newName });
         const room = this.rooms.find(r => r.id === node.id);
         if (room) room.title = updated.title;
+      } else {
+        const extParts = newName.split('.');
+        const ext = extParts.length > 1 ? extParts.pop()! : node.data.extension;
+        const updated = await this.fileService.updateFile(node.id, { name: newName, extension: ext });
+        const file = this.files.find(f => f.id === node.id);
+        if (file) {
+          file.name = updated.name;
+          file.extension = updated.extension;
+        }
       }
       this.buildSidebarNodes();
       this.dLoading.dismiss('이름이 변경되었습니다.');
@@ -277,19 +418,22 @@ export class HomeSidebarComponent implements OnInit {
         
       const room: any = await this.roomService.createRoom(title, this.selectedModel, folderId, this.rooms.length);
       
-      // 채팅 메시지 메모리 목록 초기화
-      room.messages = [
-        { text: '안녕하세요! 반갑습니다. 무엇을 도와드릴까요?', isUser: false, timestamp: new Date() }
-      ];
-
       if (initialMessage) {
-        room.messages.push({
-          text: initialMessage,
-          isUser: true,
-          timestamp: new Date(),
-          processed: false
-        });
+        room.messages = [
+          {
+            text: initialMessage,
+            isUser: true,
+            timestamp: new Date(),
+            processed: false
+          }
+        ];
+      } else {
+        room.messages = [
+          { text: '안녕하세요! 반갑습니다. 무엇을 도와드릴까요?', isUser: false, timestamp: new Date() }
+        ];
       }
+
+      await this.roomService.saveMessages(room.id, room.messages);
 
       this.rooms.push(room);
       this.selectRoom(room.id);
@@ -357,6 +501,24 @@ export class HomeSidebarComponent implements OnInit {
       } catch (e: any) {
         this.dLoading.dismiss();
         this.dAlert.error('채팅방 삭제에 실패했습니다: ' + (e.message || ''), '오류');
+      }
+    });
+  }
+
+  async deleteFile(file: FileItem) {
+    this.dAlert.confirm(`'${file.name}' 파일을 삭제하시겠습니까?`, '파일 삭제', async () => {
+      this.dLoading.show('파일을 삭제하는 중입니다...');
+      try {
+        await this.fileService.deleteFile(file.id);
+        this.files = this.files.filter(f => f.id !== file.id);
+        if (this.activeFileId === file.id) {
+          this.selectFile('');
+        }
+        this.buildSidebarNodes();
+        this.dLoading.dismiss('파일이 삭제되었습니다.');
+      } catch (e: any) {
+        this.dLoading.dismiss();
+        this.dAlert.error('파일 삭제에 실패했습니다: ' + (e.message || ''), '오류');
       }
     });
   }
@@ -466,67 +628,48 @@ export class HomeSidebarComponent implements OnInit {
     }
 
     const mode = this.dragOverMode;
+    const dragged = { ...this.draggedNode };
     this.dragOverNodeId = null;
     this.dragOverMode = null;
+    this.draggedNode = null;
 
     let newParentId = targetNode.parent_id;
-    let newOrderBaseIndex = 0;
-
     if (mode === 'inside' && targetNode.type === 'folder') {
       newParentId = targetNode.id;
-      const siblings = this.sidebarNodes.filter(n => n.parent_id === newParentId);
-      newOrderBaseIndex = siblings.length;
-    } else {
-      const siblings = this.sidebarNodes.filter(n => n.parent_id === newParentId);
-      const targetIndex = siblings.findIndex(n => n.id === targetNode.id);
-      newOrderBaseIndex = mode === 'before' ? targetIndex : targetIndex + 1;
     }
 
-    this.draggedNode.parent_id = newParentId;
-    
-    const oldIndex = this.sidebarNodes.findIndex(n => n.id === this.draggedNode!.id);
-    if (oldIndex !== -1) {
-      this.sidebarNodes.splice(oldIndex, 1);
-    }
-    
-    const siblingsInNewParent = [...this.folders, ...this.rooms]
-      .filter(item => 
-        ('parent_id' in item ? item.parent_id : item.folder_id) === newParentId && item.id !== this.draggedNode!.id
-      )
-      .sort((a, b) => a.order_index - b.order_index);
-
-    const draggedItem = ('parent_id' in this.draggedNode.data) 
-      ? this.folders.find(f => f.id === this.draggedNode!.id) 
-      : this.rooms.find(r => r.id === this.draggedNode!.id);
-      
-    if (draggedItem) {
-      if ('parent_id' in draggedItem) {
-        draggedItem.parent_id = newParentId;
-      } else {
-        draggedItem.folder_id = newParentId;
-      }
-      siblingsInNewParent.splice(newOrderBaseIndex, 0, draggedItem);
+    // 1. Update target item's parent id strictly by type
+    if (dragged.type === 'folder') {
+      const item = this.folders.find(f => f.id === dragged.id);
+      if (item) item.parent_id = newParentId;
+    } else if (dragged.type === 'room') {
+      const item = this.rooms.find(r => r.id === dragged.id);
+      if (item) item.folder_id = newParentId;
+    } else if (dragged.type === 'file') {
+      const item = this.files.find(f => f.id === dragged.id);
+      if (item) item.folder_id = newParentId;
     }
 
-    const folderUpdates: {id: string, parent_id: string | null, order_index: number}[] = [];
-    const roomUpdates: {id: string, folder_id: string | null, order_index: number}[] = [];
+    // 2. Re-calculate order_index for all items under newParentId
+    const childFolders = this.folders.filter(f => f.parent_id === newParentId);
+    const childRooms = this.rooms.filter(r => r.folder_id === newParentId);
+    const childFiles = this.files.filter(f => f.folder_id === newParentId);
 
-    siblingsInNewParent.forEach((item, index) => {
-      item.order_index = index;
-      if ('parent_id' in item) {
-        folderUpdates.push({ id: item.id, parent_id: newParentId, order_index: index });
-      } else {
-        roomUpdates.push({ id: item.id, folder_id: newParentId, order_index: index });
-      }
-    });
+    const folderUpdates = childFolders.map((f, i) => ({ id: f.id, parent_id: newParentId, order_index: i }));
+    const roomUpdates = childRooms.map((r, i) => ({ id: r.id, folder_id: newParentId, order_index: i }));
+    const fileUpdates = childFiles.map((f, i) => ({ id: f.id, folder_id: newParentId, order_index: i }));
 
-    this.draggedNode = null;
     this.buildSidebarNodes();
 
     try {
       this.dLoading.show('위치를 변경하는 중입니다...');
-      if (folderUpdates.length > 0) await this.folderService.updateFolderOrders(folderUpdates);
-      if (roomUpdates.length > 0) await this.roomService.updateRoomOrders(roomUpdates);
+      if (dragged.type === 'folder' && folderUpdates.length > 0) {
+        await this.folderService.updateFolderOrders(folderUpdates);
+      } else if (dragged.type === 'room' && roomUpdates.length > 0) {
+        await this.roomService.updateRoomOrders(roomUpdates);
+      } else if (dragged.type === 'file' && fileUpdates.length > 0) {
+        await this.fileService.updateFileOrders(fileUpdates);
+      }
       await this.loadData();
       this.dLoading.dismiss('위치가 변경되었습니다.');
     } catch (e: any) {

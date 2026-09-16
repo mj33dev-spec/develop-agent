@@ -1,25 +1,41 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, ViewChild, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChatComponent } from '../../components/chat/chat.component';
+import { CodeViewerComponent } from '../../components/code-viewer/code-viewer.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CDropdownComponent, CDropdownOption } from '../../components/c-dropdown/c-dropdown.component';
 import { CBadgeComponent } from '../../components/c-badge/c-badge.component';
 import { HomeSidebarComponent } from './components/home-sidebar/home-sidebar.component';
 import { RoomService, ChatRoomRecord } from '../../core/services/room.service';
+import { FileItemService, FileItem } from '../../core/services/file-item.service';
+import { ChatInputService } from '../../core/services/chat-input.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, FormsModule, ChatComponent, CDropdownComponent, CBadgeComponent, HomeSidebarComponent],
+  imports: [
+    RouterOutlet, 
+    CommonModule, 
+    FormsModule, 
+    ChatComponent, 
+    CodeViewerComponent, 
+    CDropdownComponent, 
+    CBadgeComponent, 
+    HomeSidebarComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   title = 'temp-web';
   
   activeRoomId: string | null = null;
   activeRoom: ChatRoomRecord | null = null;
+
+  activeFileId: string | null = null;
+  activeFile: FileItem | null = null;
+
   homeInput: string = '';
   
   selectedModel = 'Gemini 3.6 Flash';
@@ -30,13 +46,31 @@ export class HomeComponent {
     { label: 'Groq GPT-OSS', value: 'groq', onClick: () => this.selectedModel = 'Groq GPT-OSS' }
   ];
 
+  addMenuOptions: CDropdownOption[] = [];
+
   @ViewChild(HomeSidebarComponent) sidebarComponent!: HomeSidebarComponent;
 
   private roomService = inject(RoomService);
+  private fileService = inject(FileItemService);
+  private chatInputService = inject(ChatInputService);
+
+  ngOnInit() {
+    this.addMenuOptions = this.chatInputService.getAddMenuOptions(
+      (dataUrl, fileName) => {
+        const imageMarkdown = `![${fileName}](${dataUrl})\n`;
+        this.homeInput = (this.homeInput || '') + imageMarkdown;
+      },
+      (codeSnippet) => {
+        this.homeInput = (this.homeInput || '') + codeSnippet;
+      }
+    );
+  }
 
   async onActiveRoomIdChange(roomId: string | null) {
     this.activeRoomId = roomId;
     if (roomId) {
+      this.activeFileId = null;
+      this.activeFile = null;
       if (this.sidebarComponent) {
         const found = this.sidebarComponent.rooms.find(r => r.id === roomId);
         if (found) {
@@ -51,9 +85,30 @@ export class HomeComponent {
     }
   }
 
+  async onActiveFileIdChange(fileId: string | null) {
+    this.activeFileId = fileId;
+    if (fileId) {
+      this.activeRoomId = null;
+      this.activeRoom = null;
+      if (this.sidebarComponent) {
+        const found = this.sidebarComponent.files.find(f => f.id === fileId);
+        if (found) {
+          this.activeFile = found;
+          return;
+        }
+      }
+      const files = await this.fileService.getFiles();
+      this.activeFile = files.find(f => f.id === fileId) || null;
+    } else {
+      this.activeFile = null;
+    }
+  }
+
   onBackToHome() {
     this.activeRoomId = null;
     this.activeRoom = null;
+    this.activeFileId = null;
+    this.activeFile = null;
   }
 
   handleEnter(event: Event) {

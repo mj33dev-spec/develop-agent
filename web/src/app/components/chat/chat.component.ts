@@ -3,8 +3,13 @@ import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from '../../core/services/chat.service';
+import { RoomService } from '../../core/services/room.service';
+import { DAlertService } from '../../core/services/d-alert.service';
+import { DLoadingService } from '../../core/services/d-loading.service';
 import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.component';
 import { CBadgeComponent } from '../c-badge/c-badge.component';
+
+import { ChatInputService } from '../../core/services/chat-input.service';
 
 export interface Message {
   text: string;
@@ -24,6 +29,7 @@ export interface Message {
 export class ChatComponent implements OnChanges, OnDestroy {
   @Input() room: any;
   @Output() onBack = new EventEmitter<void>();
+  @Output() roomUpdated = new EventEmitter<any>();
   @ViewChild('chatMessages') chatMessagesRef!: ElementRef;
 
   goBack() {
@@ -31,10 +37,68 @@ export class ChatComponent implements OnChanges, OnDestroy {
   }
   
   private chatService = inject(ChatService);
+  private roomService = inject(RoomService);
+  private dAlert = inject(DAlertService);
+  private dLoading = inject(DLoadingService);
+  private chatInputService = inject(ChatInputService);
   private chatSubscription?: Subscription;
   
   userInput = '';
   isLoading = false;
+
+  addMenuOptions: CDropdownOption[] = [];
+
+  ngOnInit() {
+    this.addMenuOptions = this.chatInputService.getAddMenuOptions(
+      (dataUrl, fileName) => {
+        const imageMarkdown = `![${fileName}](${dataUrl})\n`;
+        this.userInput = (this.userInput || '') + imageMarkdown;
+      },
+      (codeSnippet) => {
+        this.userInput = (this.userInput || '') + codeSnippet;
+      }
+    );
+  }
+
+  // 헤더 제목 인라인 편집 상태 변수
+  isEditingTitle = false;
+  editingTitleValue = '';
+
+  startEditingTitle() {
+    if (!this.room) return;
+    this.isEditingTitle = true;
+    this.editingTitleValue = this.room.title || '새로운 채팅';
+    setTimeout(() => {
+      const input = document.getElementById('chat-title-input') as HTMLInputElement;
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    }, 0);
+  }
+
+  async saveEditingTitle() {
+    if (!this.isEditingTitle || !this.room) return;
+    const newTitle = this.editingTitleValue.trim();
+    this.isEditingTitle = false;
+
+    if (!newTitle || newTitle === this.room.title) return;
+
+    this.dLoading.show('채팅방 이름을 변경하는 중입니다...');
+    try {
+      const updated = await this.roomService.updateRoom(this.room.id, { title: newTitle });
+      this.room.title = updated.title;
+      this.dLoading.dismiss('채팅방 이름이 변경되었습니다.');
+      this.roomUpdated.emit(updated);
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('이름 변경 실패: ' + (e.message || ''), '오류');
+    }
+  }
+
+  cancelEditingTitle() {
+    this.isEditingTitle = false;
+  }
   
   selectedProvider = 'Gemini 3.6 Flash';
   modelOptions: CDropdownOption[] = [
@@ -51,22 +115,28 @@ export class ChatComponent implements OnChanges, OnDestroy {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges) {
     if (changes['room']) {
       this.userInput = '';
       this.isLoading = false;
-      this.scrollToBottom();
       
       if (this.room) {
-        if (!this.room.messages) {
-          this.room.messages = [
-            { text: '안녕하세요! 반갑습니다. 무엇을 도와드릴까요?', isUser: false, timestamp: new Date() }
-          ];
-        }
-
         if (this.room.provider) {
           this.selectedProvider = this.room.provider;
         }
+
+        // 항시 DB/LocalStorage의 최신 메시지 기록 조회
+        const savedMessages = await this.roomService.getMessages(this.room.id);
+        if (savedMessages && savedMessages.length > 0) {
+          this.room.messages = savedMessages;
+        } else if (!this.room.messages || this.room.messages.length === 0) {
+          this.room.messages = [
+            { text: '안녕하세요! 반갑습니다. 무엇을 도와드릴까요?', isUser: false, timestamp: new Date() }
+          ];
+          await this.roomService.saveMessages(this.room.id, this.room.messages);
+        }
+
+        this.scrollToBottom();
 
         // 미처리 유저 메시지가 있는 경우 즉시 AI 답변 생성 시작
         const lastMsg = this.room.messages[this.room.messages.length - 1];
@@ -108,12 +178,13 @@ export class ChatComponent implements OnChanges, OnDestroy {
     }
   }
 
-  sendMessage() {
+  async sendMessage() {
     if (!this.userInput.trim() || this.isLoading) return;
     const prompt = this.userInput.trim();
     this.userInput = '';
     
     this.room.messages.push({ text: prompt, isUser: true, timestamp: new Date(), processed: true });
+    await this.roomService.saveMessages(this.room.id, this.room.messages);
     
     // Reset textarea height
     if (this.chatMessagesRef && this.chatMessagesRef.nativeElement) {
@@ -153,16 +224,18 @@ export class ChatComponent implements OnChanges, OnDestroy {
     }
 
     this.chatSubscription = this.chatService.sendMessage(prompt, providerValue, modelValue).subscribe({
-      next: (response) => {
+      next: async (response) => {
         this.room.messages.pop(); // Remove loading message
         this.room.messages.push({ text: response, isUser: false, timestamp: new Date() });
         this.isLoading = false;
+        await this.roomService.saveMessages(this.room.id, this.room.messages);
         this.scrollToBottom();
       },
-      error: (err) => {
+      error: async (err) => {
         this.room.messages.pop(); // Remove loading message
         this.room.messages.push({ text: 'AI 서버에 연결할 수 없습니다. 서버가 켜져 있는지 확인해 주세요.', isUser: false, timestamp: new Date() });
         this.isLoading = false;
+        await this.roomService.saveMessages(this.room.id, this.room.messages);
         this.scrollToBottom();
       }
     });
@@ -170,7 +243,7 @@ export class ChatComponent implements OnChanges, OnDestroy {
     this.scrollToBottom();
   }
 
-  stopGenerating() {
+  async stopGenerating() {
     if (this.chatSubscription) {
       this.chatSubscription.unsubscribe();
       this.chatSubscription = undefined;
@@ -179,6 +252,7 @@ export class ChatComponent implements OnChanges, OnDestroy {
       this.isLoading = false;
       this.room.messages.pop(); // Remove the loading message
       this.room.messages.push({ text: '대답 생성이 중단되었습니다.', isUser: false, timestamp: new Date() });
+      await this.roomService.saveMessages(this.room.id, this.room.messages);
       this.scrollToBottom();
     }
   }

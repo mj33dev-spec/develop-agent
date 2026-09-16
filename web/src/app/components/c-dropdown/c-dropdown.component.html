@@ -1,4 +1,4 @@
-<div #anchorRef class="dropdownContainer" style="position: relative;">
+<div #anchorRef class="dropdownContainer">
   <!-- More Variant -->
   <ng-container *ngIf="variant === 'more'">
     <div class="dropdownWrapper">
@@ -35,17 +35,17 @@
 
   <!-- Pure Anchor Variant -->
   <ng-container *ngIf="variant !== 'more' && value === undefined && variant !== 'multi'">
-    <div style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;"></div>
     <div (click)="toggleDropdown()" style="display: inline-block;">
       <ng-content></ng-content>
     </div>
   </ng-container>
 
-  <!-- Dropdown Menu Portaled to Body (simulated by absolute positioning in fixed style) -->
+  <!-- Dropdown Menu Portaled to Body -->
   <ng-container *ngIf="open">
     <div 
+      class="dropdown-portal-menu"
       [ngClass]="[variant === 'fill' ? 'fill' : 'outlinedDropdown', customClass]" 
-      [ngStyle]="dropdownStyle"
+      [ngStyle]="dropdownCssVars"
     >
       <ng-container *ngFor="let opt of options">
         <hr *ngIf="isDivider(opt)" />

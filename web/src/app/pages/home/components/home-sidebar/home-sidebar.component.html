@@ -1,13 +1,12 @@
 <aside class="sidebar" (contextmenu)="onSidebarContextMenu($event)">
+  <!-- Hidden File Input for Attachments -->
+  <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;" />
+
   <div class="sidebar-header">
-    <button class="new-chat-btn" (click)="createNewRoom()">
+    <button class="new-chat-btn" (click)="openNewChatMain()">
       <i class="bx bx-edit-alt"></i> 
       새 채팅
     </button>
-    <!-- <button class="new-folder-btn" (click)="openCreateFolderModal(null)">
-      <i class="bx bx-folder-plus"></i> 
-      새 폴더
-    </button> -->
   </div>
   
   <div class="room-list">
@@ -23,7 +22,7 @@
          (dragend)="onDragEnd($event)"
          [style.padding-left.px]="node.level * 16"
          [class.is-folder]="node.type === 'folder'"
-         [class.active]="node.type === 'room' && activeRoomId === node.id"
+         [class.active]="(node.type === 'room' && activeRoomId === node.id) || (node.type === 'file' && activeFileId === node.id)"
          [class.drag-over-inside]="dragOverNodeId === node.id && dragOverMode === 'inside'"
          [class.drag-over-before]="dragOverNodeId === node.id && dragOverMode === 'before'"
          [class.drag-over-after]="dragOverNodeId === node.id && dragOverMode === 'after'">
@@ -52,6 +51,24 @@
           <i class="bx bx-message-square-detail"></i>
           
           <span *ngIf="editingNodeId !== node.id" class="room-title">{{ node.name }}</span>
+          <input *ngIf="editingNodeId === node.id"
+                 [id]="'edit-input-' + node.id"
+                 type="text"
+                 class="inline-edit-input"
+                 [(ngModel)]="editInputValue"
+                 (blur)="saveEditing(node)"
+                 (keyup.enter)="saveEditing(node)"
+                 (keyup.escape)="cancelEditing()"
+                 (click)="$event.stopPropagation()">
+        </div>
+      </ng-container>
+
+      <!-- File Node -->
+      <ng-container *ngIf="node.type === 'file'">
+        <div class="file-item" [class.active]="activeFileId === node.id" (click)="selectFile(node.id)">
+          <i [class]="node.icon || 'bx bx-file'"></i>
+          
+          <span *ngIf="editingNodeId !== node.id" class="file-title">{{ node.name }}</span>
           <input *ngIf="editingNodeId === node.id"
                  [id]="'edit-input-' + node.id"
                  type="text"

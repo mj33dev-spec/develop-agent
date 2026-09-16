@@ -1,54 +1,52 @@
 @use '../../../styles/config' as *;
 @use '../../../styles/mixins' as *;
 
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+}
+
 .dropdownWrapper {
   position: relative;
   display: inline-block;
 }
 
-.fill {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 180px;
+.dropdown-portal-menu {
+  position: fixed;
+  z-index: 10000;
+  top: var(--dropdown-top, auto);
+  bottom: var(--dropdown-bottom, auto);
+  left: var(--dropdown-left, auto);
+  right: var(--dropdown-right, auto);
+  width: var(--dropdown-width, auto);
+  min-width: var(--dropdown-min-width, auto);
+
   background: $neu-bg;
   border: none;
   border-radius: 18px;
-  box-shadow: 10px 10px 20px $neu-shadow-dark, -10px -10px 20px $neu-shadow-light;
   padding: $spacing-8;
-  z-index: $z-dropdown;
   animation: dropdownIn 150ms ease;
   max-height: 320px;
   overflow-y: auto;
 
-  hr {
-    height: 1px;
-    background: rgba(194, 209, 229, 0.6);
-    margin: $spacing-8 0;
-    border: none;
+  &.fill {
+    box-shadow: 10px 10px 20px $neu-shadow-dark, -10px -10px 20px $neu-shadow-light;
+    hr {
+      height: 1px;
+      background: rgba(194, 209, 229, 0.6);
+      margin: $spacing-8 0;
+      border: none;
+    }
   }
-}
 
-.outlinedDropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 180px;
-  background: $neu-bg;
-  border: none;
-  border-radius: 18px;
-  box-shadow: 8px 8px 16px $neu-shadow-dark, -8px -8px 16px $neu-shadow-light;
-  padding: $spacing-8;
-  z-index: $z-dropdown;
-  animation: dropdownIn 150ms ease;
-  max-height: 320px;
-  overflow-y: auto;
-
-  hr {
-    height: 1px;
-    background: rgba(194, 209, 229, 0.6);
-    margin: $spacing-4 0;
-    border: none;
+  &.outlinedDropdown {
+    box-shadow: 8px 8px 16px $neu-shadow-dark, -8px -8px 16px $neu-shadow-light;
+    hr {
+      height: 1px;
+      background: rgba(194, 209, 229, 0.6);
+      margin: $spacing-4 0;
+      border: none;
+    }
   }
 }
 

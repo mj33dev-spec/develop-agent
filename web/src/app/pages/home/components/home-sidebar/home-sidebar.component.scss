@@ -43,8 +43,8 @@ $sidebar-width: 260px;
       box-sizing: border-box;
       
       i { 
-        font-size: 18px; 
-        color: $neu-primary; 
+        font-size: 16px; 
+        color: inherit; 
       }
       
       &:hover {
@@ -114,7 +114,7 @@ $sidebar-width: 260px;
       i.bx {
         font-size: 20px;
         margin-right: 8px;
-        color: $neu-primary;
+        color: inherit;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -137,13 +137,13 @@ $sidebar-width: 260px;
       &.is-empty {
         color: $neu-text-secondary;
         i.bx {
-          color: $neu-text-secondary;
+          color: inherit;
           opacity: 0.7;
         }
       }
     }
 
-    .room-item {
+    .room-item, .file-item {
       padding: 10px 12px;
       border-radius: 12px;
       cursor: pointer;
@@ -153,15 +153,22 @@ $sidebar-width: 260px;
       color: $neu-text;
       transition: all 0.2s ease;
 
-      i.bx {
+      i {
         font-size: 18px;
-        color: $neu-primary;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        
+        &.text-orange { color: #e44d26; }
+        &.text-blue { color: #264de4; }
+        &.text-yellow { color: #d9a406; }
+        &.text-red { color: #ea2d2e; }
+        &.text-green { color: #43853d; }
+        &.text-purple { color: #083344; }
+        &.text-sub { color: $neu-text-secondary; }
       }
 
-      .room-title { 
+      .room-title, .file-title { 
         @include typo-body-2;
         font-weight: 500;
         white-space: nowrap; 
@@ -179,7 +186,7 @@ $sidebar-width: 260px;
         box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
         color: $neu-primary;
         font-weight: 600;
-        i { color: $neu-primary; }
+        i { color: inherit; }
       }
     }
 
@@ -189,7 +196,7 @@ $sidebar-width: 260px;
       box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
       color: $neu-primary;
       font-weight: 600;
-      i { color: $neu-primary; }
+      i { color: inherit; }
     }
     
     .empty-rooms {

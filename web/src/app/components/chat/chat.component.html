@@ -6,7 +6,21 @@
     </div>
     
     <div class="header-center">
-      <h2>AI Agent</h2>
+      <ng-container *ngIf="!isEditingTitle; else editTitleTemplate">
+        <h2 class="chat-title" (click)="startEditingTitle()" title="클릭하여 이름 변경">
+          <i class="bx bx-pencil edit-icon"></i>
+          {{ room?.title || 'AI Agent' }}
+        </h2>
+      </ng-container>
+      <ng-template #editTitleTemplate>
+        <input id="chat-title-input" 
+               type="text" 
+               class="chat-title-input"
+               [(ngModel)]="editingTitleValue" 
+               (keydown.enter)="saveEditingTitle()" 
+               (keydown.escape)="cancelEditingTitle()"
+               (blur)="saveEditingTitle()" />
+      </ng-template>
     </div>
 
     <div class="header-right">
@@ -24,11 +38,7 @@
       
       <div *ngIf="!msg.isUser" class="agent-profile">
         <div class="avatar-small">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 16v-4"></path>
-            <path d="M12 8h.01"></path>
-          </svg>
+          <img src="/assets/icons/ic-logo.svg" alt="AI Agent">
         </div>
       </div>
 
@@ -59,9 +69,12 @@
 
   <!-- Input Area -->
   <div class="chat-input-area">
-    <div class="action-btn">
-      <i class="bx bx-plus" title="이미지 첨부"></i>
-    </div>
+    <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
+      <button class="add-btn" type="button" title="추가 옵션">
+        <i class="bx bx-plus"></i>
+      </button>
+    </c-dropdown>
+    
     <div class="input-wrapper">
       <textarea 
              [(ngModel)]="userInput" 
@@ -72,7 +85,7 @@
              rows="1">
       </textarea>
       
-      <div class="input-actions" style="display: flex; align-items: center; gap: 8px;">
+      <div class="input-actions">
         <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up" align="right">
           <c-badge variant="neutral" style="cursor: pointer; user-select: none;">
             {{ selectedProvider }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
@@ -80,10 +93,7 @@
         </c-dropdown>
         
         <button *ngIf="!isLoading" (click)="sendMessage()" class="send-btn" [disabled]="!userInput.trim()" [class.active]="userInput.trim()">
-          <i class="bx bx-hash" *ngIf="!userInput.trim()"></i>
-          <svg *ngIf="userInput.trim()" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-          </svg>
+          <i class="bx bx-up-arrow-alt"></i>
         </button>
         
         <button *ngIf="isLoading" (click)="stopGenerating()" class="stop-btn">

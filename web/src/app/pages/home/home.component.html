@@ -1,18 +1,20 @@
 <div class="app-layout">
   <!-- Left Sidebar Component -->
   <app-home-sidebar 
-    [activeRoomId]="activeRoomId" 
+    [activeRoomId]="activeRoomId"
+    [activeFileId]="activeFileId"
     [selectedModel]="selectedModel"
-    (activeRoomIdChange)="onActiveRoomIdChange($event)">
+    (activeRoomIdChange)="onActiveRoomIdChange($event)"
+    (activeFileIdChange)="onActiveFileIdChange($event)">
   </app-home-sidebar>
 
   <!-- Right Main Area -->
   <main class="main-content">
     
-    <!-- Home View (Copilot Style) when no room is selected -->
-    <div class="home-view" *ngIf="!activeRoomId">
+    <!-- Home View (Copilot Style) when no room and no file is selected -->
+    <div class="home-view" *ngIf="!activeRoomId && !activeFileId">
       <div class="home-container">
-        <h1 class="greeting">안녕하세요, 33이민재 님. 오늘 무엇을 알아볼까요?</h1>
+        <h1 class="greeting">안녕하세요, 저는 전문가 전용 챗봇입니다.</h1>
         
         <div class="copilot-input-box">
           <div class="input-body">
@@ -26,7 +28,10 @@
             
             <div class="input-footer">
               <div class="footer-left">
-                <button class="add-btn"><i class="bx bx-plus"></i></button>
+                <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
+                  <button class="add-btn" type="button"><i class="bx bx-plus"></i></button>
+                </c-dropdown>
+
                 <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up">
                   <c-badge variant="neutral" style="cursor: pointer; user-select: none; padding: 4px 10px;">
                     {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
@@ -49,9 +54,14 @@
       </div>
     </div>
 
-    <!-- Chat View (Kakao Style) when a room is selected -->
+    <!-- Chat View when a room is selected -->
     <div class="chat-view" *ngIf="activeRoomId">
-      <app-chat [room]="activeRoom" (onBack)="onBackToHome()"></app-chat>
+      <app-chat [room]="activeRoom" (onBack)="onBackToHome()" (roomUpdated)="sidebarComponent?.loadData()"></app-chat>
+    </div>
+
+    <!-- Code Viewer when a file is selected -->
+    <div class="code-view" *ngIf="activeFileId && activeFile" style="height: 100%; width: 100%;">
+      <app-code-viewer [file]="activeFile" (onClose)="onBackToHome()"></app-code-viewer>
     </div>
     
   </main>

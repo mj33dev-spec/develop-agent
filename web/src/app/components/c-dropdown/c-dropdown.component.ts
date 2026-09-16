@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, HostListener, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CButtonComponent } from '../c-button/c-button.component';
 
@@ -8,7 +8,7 @@ export interface CDropdownOption {
   onClick?: () => void;
   disabled?: boolean;
   type?: 'divider' | 'item';
-  value?: any; // Added for Angular template tracking if needed
+  value?: any;
 }
 
 export type CDropdownVariant = 'outlined' | 'fill' | 'more' | 'multi';
@@ -20,7 +20,7 @@ export type CDropdownVariant = 'outlined' | 'fill' | 'more' | 'multi';
   templateUrl: './c-dropdown.component.html',
   styleUrls: ['./c-dropdown.component.scss']
 })
-export class CDropdownComponent implements AfterViewInit, OnChanges {
+export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() variant: CDropdownVariant = 'outlined';
   @Input() direction: 'up' | 'down' = 'down';
   @Input() align: 'left' | 'right' = 'left';
@@ -39,10 +39,9 @@ export class CDropdownComponent implements AfterViewInit, OnChanges {
   @ViewChild('anchorRef') anchorRef!: ElementRef<HTMLDivElement>;
   
   internalOpen = false;
-  dropdownStyle: Record<string, string> = {
-    position: 'fixed',
-    zIndex: '1000'
-  };
+  dropdownCssVars: Record<string, string> = {};
+
+  private menuElement?: HTMLElement;
 
   constructor(private elementRef: ElementRef) {}
 
@@ -57,33 +56,48 @@ export class CDropdownComponent implements AfterViewInit, OnChanges {
       this.internalOpen = val;
     }
     if (val) {
-      setTimeout(() => this.updatePosition(), 0);
+      setTimeout(() => {
+        this.updatePosition();
+        this.attachToBody();
+      }, 0);
+    } else {
+      this.detachFromBody();
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['isOpen'] && this.isOpen) {
-      setTimeout(() => this.updatePosition(), 0);
+    if (changes['isOpen']) {
+      if (this.isOpen) {
+        setTimeout(() => {
+          this.updatePosition();
+          this.attachToBody();
+        }, 0);
+      } else {
+        this.detachFromBody();
+      }
     }
   }
 
   ngAfterViewInit() {
     if (this.open) {
       this.updatePosition();
+      this.attachToBody();
     }
+  }
+
+  ngOnDestroy() {
+    this.detachFromBody();
   }
 
   @HostListener('window:resize')
   onResize() {
-    this.handleScrollOrResize();
+    if (this.open) {
+      this.updatePosition();
+    }
   }
 
   @HostListener('window:scroll')
   onScroll() {
-    this.handleScrollOrResize();
-  }
-
-  private handleScrollOrResize() {
     if (this.open) {
       this.updatePosition();
     }
@@ -91,40 +105,63 @@ export class CDropdownComponent implements AfterViewInit, OnChanges {
 
   @HostListener('document:mousedown', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (this.open && this.isOpen === undefined) {
-      // If click is outside this component, close it
-      if (!this.elementRef.nativeElement.contains(event.target)) {
-        this.open = false;
-      }
+    if (!this.open) return;
+    const target = event.target as Node;
+    const isInsideAnchor = this.elementRef.nativeElement.contains(target);
+    const isInsideMenu = this.menuElement ? this.menuElement.contains(target) : false;
+
+    if (!isInsideAnchor && !isInsideMenu) {
+      this.open = false;
     }
   }
 
   updatePosition() {
     if (!this.anchorRef || !this.anchorRef.nativeElement) return;
     
-    const rect = this.anchorRef.nativeElement.getBoundingClientRect();
+    const nativeEl = this.anchorRef.nativeElement;
+    const clickableChild = nativeEl.querySelector('.dropdownWrapper') || nativeEl.querySelector('button') || nativeEl;
+    const rect = clickableChild.getBoundingClientRect();
     
+    const vars: Record<string, string> = {};
+
     if (this.variant === 'more') {
-      this.dropdownStyle['minWidth'] = '180px';
-      this.dropdownStyle['width'] = this.width || 'max-content';
+      vars['--dropdown-min-width'] = '180px';
+      vars['--dropdown-width'] = this.width || 'max-content';
     } else {
-      this.dropdownStyle['width'] = this.width ? this.width : `${rect.width}px`;
+      vars['--dropdown-width'] = this.width ? this.width : `${rect.width}px`;
     }
 
     if (this.direction === 'up') {
-      this.dropdownStyle['bottom'] = `${window.innerHeight - rect.top + 8}px`;
-      this.dropdownStyle['top'] = 'auto';
+      vars['--dropdown-bottom'] = `${window.innerHeight - rect.top + 8}px`;
+      vars['--dropdown-top'] = 'auto';
     } else {
-      this.dropdownStyle['top'] = `${rect.bottom + 8}px`;
-      this.dropdownStyle['bottom'] = 'auto';
+      vars['--dropdown-top'] = `${rect.bottom + 8}px`;
+      vars['--dropdown-bottom'] = 'auto';
     }
 
     if (this.align === 'right') {
-      this.dropdownStyle['right'] = `${window.innerWidth - rect.right}px`;
-      this.dropdownStyle['left'] = 'auto';
+      vars['--dropdown-right'] = `${window.innerWidth - rect.right}px`;
+      vars['--dropdown-left'] = 'auto';
     } else {
-      this.dropdownStyle['left'] = `${rect.left}px`;
-      this.dropdownStyle['right'] = 'auto';
+      vars['--dropdown-left'] = `${rect.left}px`;
+      vars['--dropdown-right'] = 'auto';
+    }
+
+    this.dropdownCssVars = vars;
+  }
+
+  private attachToBody() {
+    const el = this.elementRef.nativeElement.querySelector('.dropdown-portal-menu') as HTMLElement;
+    if (el && el.parentElement !== document.body) {
+      this.menuElement = el;
+      document.body.appendChild(el);
+    }
+  }
+
+  private detachFromBody() {
+    if (this.menuElement && this.menuElement.parentElement === document.body) {
+      document.body.removeChild(this.menuElement);
+      this.menuElement = undefined;
     }
   }
 

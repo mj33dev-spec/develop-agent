@@ -157,6 +157,15 @@
   animation: roomEnter 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
+/* Code View */
+.code-view {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: roomEnter 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
 @keyframes roomEnter {
   from {
     opacity: 0;
