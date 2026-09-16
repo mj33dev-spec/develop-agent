@@ -51,7 +51,7 @@
 
     <!-- Chat View (Kakao Style) when a room is selected -->
     <div class="chat-view" *ngIf="activeRoomId">
-      <app-chat [room]="activeRoom"></app-chat>
+      <app-chat [room]="activeRoom" (onBack)="onBackToHome()"></app-chat>
     </div>
     
   </main>

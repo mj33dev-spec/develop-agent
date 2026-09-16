@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnChanges, SimpleChanges, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,12 @@ export interface Message {
 })
 export class ChatComponent implements OnChanges, OnDestroy {
   @Input() room: any;
+  @Output() onBack = new EventEmitter<void>();
   @ViewChild('chatMessages') chatMessagesRef!: ElementRef;
+
+  goBack() {
+    this.onBack.emit();
+  }
   
   private chatService = inject(ChatService);
   private chatSubscription?: Subscription;
@@ -52,14 +57,23 @@ export class ChatComponent implements OnChanges, OnDestroy {
       this.isLoading = false;
       this.scrollToBottom();
       
-      if (this.room && this.room.provider) {
-        this.selectedProvider = this.room.provider;
-      }
-      
-      // If room has an un-processed initial message, we should process it
-      if (this.room && this.room.messages.length === 2 && this.room.messages[1].isUser && !this.room.messages[1].processed) {
-        this.room.messages[1].processed = true;
-        this.processMessage(this.room.messages[1].text);
+      if (this.room) {
+        if (!this.room.messages) {
+          this.room.messages = [
+            { text: '안녕하세요! 반갑습니다. 무엇을 도와드릴까요?', isUser: false, timestamp: new Date() }
+          ];
+        }
+
+        if (this.room.provider) {
+          this.selectedProvider = this.room.provider;
+        }
+
+        // 미처리 유저 메시지가 있는 경우 즉시 AI 답변 생성 시작
+        const lastMsg = this.room.messages[this.room.messages.length - 1];
+        if (lastMsg && lastMsg.isUser && !lastMsg.processed) {
+          lastMsg.processed = true;
+          this.processMessage(lastMsg.text);
+        }
       }
     }
   }

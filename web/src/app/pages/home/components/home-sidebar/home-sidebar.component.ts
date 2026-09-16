@@ -266,20 +266,44 @@ export class HomeSidebarComponent implements OnInit {
   }
 
   // --- CRUD Operations ---
-  async createNewRoom(initialMessage?: string, folderId: string | null = null) {
-    this.dLoading.show('채팅방을 생성하는 중입니다...');
+  async createNewRoom(initialMessage?: string, folderId: string | null = null, silent: boolean = false) {
+    if (!silent) {
+      this.dLoading.show('채팅방을 생성하는 중입니다...');
+    }
     try {
-      const title = `새로운 채팅 ${this.rooms.length + 1}`;
-      const room = await this.roomService.createRoom(title, this.selectedModel, folderId, this.rooms.length);
+      const title = initialMessage 
+        ? (initialMessage.length > 18 ? initialMessage.substring(0, 18) + '...' : initialMessage) 
+        : `새로운 채팅 ${this.rooms.length + 1}`;
+        
+      const room: any = await this.roomService.createRoom(title, this.selectedModel, folderId, this.rooms.length);
+      
+      // 채팅 메시지 메모리 목록 초기화
+      room.messages = [
+        { text: '안녕하세요! 반갑습니다. 무엇을 도와드릴까요?', isUser: false, timestamp: new Date() }
+      ];
+
+      if (initialMessage) {
+        room.messages.push({
+          text: initialMessage,
+          isUser: true,
+          timestamp: new Date(),
+          processed: false
+        });
+      }
+
       this.rooms.push(room);
       this.selectRoom(room.id);
       this.buildSidebarNodes();
       
-      this.dLoading.dismiss('새 채팅방이 생성되었습니다.');
+      if (!silent) {
+        this.dLoading.dismiss('새 채팅방이 생성되었습니다.');
+      }
       return room;
     } catch (e: any) {
-      this.dLoading.dismiss();
-      this.dAlert.error('채팅방 생성에 실패했습니다: ' + (e.message || ''), '오류');
+      if (!silent) {
+        this.dLoading.dismiss();
+        this.dAlert.error('채팅방 생성에 실패했습니다: ' + (e.message || ''), '오류');
+      }
       return null;
     }
   }

@@ -37,11 +37,23 @@ export class HomeComponent {
   async onActiveRoomIdChange(roomId: string | null) {
     this.activeRoomId = roomId;
     if (roomId) {
+      if (this.sidebarComponent) {
+        const found = this.sidebarComponent.rooms.find(r => r.id === roomId);
+        if (found) {
+          this.activeRoom = found;
+          return;
+        }
+      }
       const rooms = await this.roomService.getRooms();
       this.activeRoom = rooms.find(r => r.id === roomId) || null;
     } else {
       this.activeRoom = null;
     }
+  }
+
+  onBackToHome() {
+    this.activeRoomId = null;
+    this.activeRoom = null;
   }
 
   handleEnter(event: Event) {
@@ -66,7 +78,7 @@ export class HomeComponent {
 
   async createRoomFromHome(initialMessage?: string) {
     if (!this.sidebarComponent) return;
-    const room = await this.sidebarComponent.createNewRoom(initialMessage, null);
+    const room = await this.sidebarComponent.createNewRoom(initialMessage, null, true);
     if (room && initialMessage) {
       setTimeout(() => {
         this.homeInput = '';
