@@ -27,7 +27,11 @@ export class CodeViewerComponent implements OnInit, OnChanges {
     { label: 'Gemini 3.6 Flash', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.6 Flash' },
     { label: 'Gemini 3.1 Pro', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.1 Pro' },
     { label: 'Groq Qwen 3.8', value: 'groq', onClick: () => this.selectedModel = 'Groq Qwen 3.8' },
-    { label: 'Groq GPT-OSS', value: 'groq', onClick: () => this.selectedModel = 'Groq GPT-OSS' }
+    { label: 'Groq GPT-OSS', value: 'groq', onClick: () => this.selectedModel = 'Groq GPT-OSS' },
+    { label: 'Groq Llama 3.3 70B', value: 'groq', onClick: () => this.selectedModel = 'Groq Llama 3.3 70B' },
+    { label: 'Groq DeepSeek R1 70B', value: 'groq', onClick: () => this.selectedModel = 'Groq DeepSeek R1 70B' },
+    { label: 'OpenRouter Gemma 4 31B (Free)', value: 'openrouter', onClick: () => this.selectedModel = 'OpenRouter Gemma 4 31B (Free)' },
+    { label: 'OpenRouter Cohere Code (Free)', value: 'openrouter', onClick: () => this.selectedModel = 'OpenRouter Cohere Code (Free)' }
   ];
   addMenuOptions: CDropdownOption[] = [];
 

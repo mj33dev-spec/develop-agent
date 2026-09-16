@@ -178,7 +178,11 @@ export class ChatComponent implements OnChanges, OnDestroy {
     { label: 'Gemini 3.6 Flash', value: 'gemini', onClick: () => this.updateProvider('Gemini 3.6 Flash') },
     { label: 'Gemini 3.1 Pro', value: 'gemini', onClick: () => this.updateProvider('Gemini 3.1 Pro') },
     { label: 'Groq Qwen 3.8', value: 'groq', onClick: () => this.updateProvider('Groq Qwen 3.8') },
-    { label: 'Groq GPT-OSS', value: 'groq', onClick: () => this.updateProvider('Groq GPT-OSS') }
+    { label: 'Groq GPT-OSS', value: 'groq', onClick: () => this.updateProvider('Groq GPT-OSS') },
+    { label: 'Groq Llama 3.3 70B', value: 'groq', onClick: () => this.updateProvider('Groq Llama 3.3 70B') },
+    { label: 'Groq DeepSeek R1 70B', value: 'groq', onClick: () => this.updateProvider('Groq DeepSeek R1 70B') },
+    { label: 'OpenRouter Gemma 4 31B (Free)', value: 'openrouter', onClick: () => this.updateProvider('OpenRouter Gemma 4 31B (Free)') },
+    { label: 'OpenRouter Cohere Code (Free)', value: 'openrouter', onClick: () => this.updateProvider('OpenRouter Cohere Code (Free)') }
   ];
 
   updateProvider(provider: string) {
@@ -301,7 +305,7 @@ export class ChatComponent implements OnChanges, OnDestroy {
     // 로딩 메시지 추가
     this.room.messages.push({ text: '', isUser: false, isLoading: true, timestamp: new Date(), model: currentModelName });
 
-    let providerValue: 'gemini' | 'groq' = 'gemini';
+    let providerValue: 'gemini' | 'groq' | 'openrouter' = 'gemini';
     let modelValue: string | undefined;
 
     switch (this.selectedProvider) {
@@ -321,6 +325,26 @@ export class ChatComponent implements OnChanges, OnDestroy {
         providerValue = 'groq';
         modelValue = 'openai/gpt-oss-20b';
         break;
+      case 'Groq Llama 3.3 70B':
+        providerValue = 'groq';
+        modelValue = 'llama-3.3-70b-versatile';
+        break;
+      case 'Groq DeepSeek R1 70B':
+        providerValue = 'groq';
+        modelValue = 'deepseek-r1-distill-llama-70b';
+        break;
+      case 'OpenRouter Gemma 4 31B (Free)':
+        providerValue = 'openrouter';
+        modelValue = 'google/gemma-2-9b-it:free';
+        break;
+      case 'OpenRouter Cohere Code (Free)':
+        providerValue = 'openrouter';
+        modelValue = 'qwen/qwen-2.5-coder-32b-instruct:free';
+        break;
+      default:
+        providerValue = 'gemini';
+        modelValue = undefined;
+        break;
     }
 
     this.chatSubscription = this.chatService.sendMessage(prompt, providerValue, modelValue).subscribe({
@@ -333,7 +357,8 @@ export class ChatComponent implements OnChanges, OnDestroy {
       },
       error: async (err) => {
         this.room.messages.pop(); // Remove loading message
-        this.room.messages.push({ text: 'AI 서버에 연결할 수 없습니다. 서버가 켜져 있는지 확인해 주세요.', isUser: false, timestamp: new Date(), model: currentModelName });
+        const errorText = err?.message ? `AI 서버 오류: ${err.message}` : 'AI 서버에 연결할 수 없습니다. 서버가 켜져 있는지 확인해 주세요.';
+        this.room.messages.push({ text: errorText, isUser: false, timestamp: new Date(), model: currentModelName });
         this.isLoading = false;
         await this.roomService.saveMessages(this.room.id, this.room.messages);
         this.scrollToBottom();

@@ -33,7 +33,7 @@ export class RoomService {
     if (!user) return this.getLocalRooms();
 
     const { data, error } = await this.supabase
-      .from('chat_rooms')
+      .from('rooms')
       .select('*')
       .eq('user_id', user.id)
       .order('order_index', { ascending: true });
@@ -50,7 +50,7 @@ export class RoomService {
     
     if (user) {
       const { data, error } = await this.supabase
-        .from('chat_rooms')
+        .from('rooms')
         .insert({
           user_id: user.id,
           title,
@@ -86,7 +86,7 @@ export class RoomService {
   async updateRoom(id: string, updates: Partial<ChatRoomRecord>): Promise<ChatRoomRecord> {
     try {
       const { data, error } = await this.supabase
-        .from('chat_rooms')
+        .from('rooms')
         .update(updates)
         .eq('id', id)
         .select()
@@ -119,7 +119,7 @@ export class RoomService {
     for (const update of updates) {
       try {
         await this.supabase
-          .from('chat_rooms')
+          .from('rooms')
           .update({ folder_id: update.folder_id, order_index: update.order_index })
           .eq('id', update.id);
       } catch (e) {}
