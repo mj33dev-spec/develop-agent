@@ -58,8 +58,14 @@ export class ChatComponent implements OnChanges, OnDestroy {
         this.userInput = (this.userInput || '') + textToInsert;
       },
       (dataUrl, fileName) => {
-        const imageMarkdown = `![${fileName}](${dataUrl})\n`;
-        this.userInput = (this.userInput || '') + imageMarkdown;
+        this.onSelectAttachedItem({
+          id: 'img_' + Date.now(),
+          type: 'image',
+          name: fileName,
+          icon: 'bx bx-image icon-image',
+          imageUrl: dataUrl,
+          content: `![${fileName}](${dataUrl})\n`
+        });
       },
       (item) => this.onSelectAttachedItem(item)
     );
@@ -82,13 +88,15 @@ export class ChatComponent implements OnChanges, OnDestroy {
     return (icon && icon !== 'bx bx-code-alt icon-other') ? icon : (item.icon || icon);
   }
 
-  // 디스플레이용 메시지 텍스트 파싱 (기존 [첨부 파일: ...] 긴 코드 블록 텍스트 숨김 처리)
+  // 디스플레이용 메시지 텍스트 파싱 (기존 [첨부 파일: ...] 및 ![이미지](dataUrl) 긴 텍스트 숨김 처리)
   getDisplayText(text: string): string {
     if (!text) return '';
-    return text.replace(/\n?\[(첨부 파일|참조 채팅방): [\s\S]*$/, '').trim();
+    let clean = text.replace(/\n?\[(첨부 파일|참조 채팅방): [\s\S]*$/, '');
+    clean = clean.replace(/\n?!\[[^\]]*\]\((data:image\/[^;]+;base64,[^)]+|https?:\/\/[^)]+)\)/g, '');
+    return clean.trim();
   }
 
-  // 메시지 텍스트에서 파싱된 임시 뱃지 정보 (기존 레거시 데이터 호환 포함)
+  // 메시지 텍스트에서 파싱된 임시 뱃지 정보 (기존 레거시 데이터 및 이미지 마크다운 파싱 포함)
   getParsedAttachments(msg: any): AttachedItem[] {
     let items: AttachedItem[] = [];
     if (msg.attachments && msg.attachments.length > 0) {
@@ -97,17 +105,24 @@ export class ChatComponent implements OnChanges, OnDestroy {
         icon: this.getItemIcon(att)
       }));
     } else if (msg.text) {
-      const match = msg.text.match(/\[첨부 파일: ([^\]]+)\]/);
-      if (match) {
-        const fileName = match[1];
-        const ext = fileName.includes('.') ? fileName.split('.').pop() || '' : '';
-        const icon = this.chatInputService.getFileIcon(ext);
-        items = [{ id: 'legacy-att', type: 'file', name: fileName, extension: ext, icon }];
+      const imgMatch = msg.text.match(/!\[([^\]]*)\]\((data:image\/[^;]+;base64,[^)]+|https?:\/\/[^)]+)\)/);
+      if (imgMatch) {
+        const altName = imgMatch[1] || '이미지 첨부';
+        const imgUrl = imgMatch[2];
+        items = [{ id: 'legacy-img', type: 'image', name: altName, imageUrl: imgUrl, icon: 'bx bx-image icon-image' }];
       } else {
-        const roomMatch = msg.text.match(/\[참조 채팅방: ([^\]]+)\]/);
-        if (roomMatch) {
-          const roomTitle = roomMatch[1];
-          items = [{ id: 'legacy-room', type: 'room', name: roomTitle, icon: 'bx bx-message-square-detail text-blue' }];
+        const match = msg.text.match(/\[첨부 파일: ([^\]]+)\]/);
+        if (match) {
+          const fileName = match[1];
+          const ext = fileName.includes('.') ? fileName.split('.').pop() || '' : '';
+          const icon = this.chatInputService.getFileIcon(ext);
+          items = [{ id: 'legacy-att', type: 'file', name: fileName, extension: ext, icon }];
+        } else {
+          const roomMatch = msg.text.match(/\[참조 채팅방: ([^\]]+)\]/);
+          if (roomMatch) {
+            const roomTitle = roomMatch[1];
+            items = [{ id: 'legacy-room', type: 'room', name: roomTitle, icon: 'bx bx-message-square-detail text-blue' }];
+          }
         }
       }
     }
@@ -272,11 +287,19 @@ export class ChatComponent implements OnChanges, OnDestroy {
     this.processMessage(fullPrompt);
   }
 
+  getAgentName(msg: any): string {
+    if (msg.model) return msg.model;
+    if (this.selectedProvider) return this.selectedProvider;
+    if (this.room && this.room.provider) return this.room.provider;
+    return 'Gemini 3.6 Flash';
+  }
+
   processMessage(prompt: string) {
     this.isLoading = true;
+    const currentModelName = this.selectedProvider || 'Gemini 3.6 Flash';
     
     // 로딩 메시지 추가
-    this.room.messages.push({ text: '', isUser: false, isLoading: true, timestamp: new Date() });
+    this.room.messages.push({ text: '', isUser: false, isLoading: true, timestamp: new Date(), model: currentModelName });
 
     let providerValue: 'gemini' | 'groq' = 'gemini';
     let modelValue: string | undefined;
@@ -303,14 +326,14 @@ export class ChatComponent implements OnChanges, OnDestroy {
     this.chatSubscription = this.chatService.sendMessage(prompt, providerValue, modelValue).subscribe({
       next: async (response) => {
         this.room.messages.pop(); // Remove loading message
-        this.room.messages.push({ text: response, isUser: false, timestamp: new Date() });
+        this.room.messages.push({ text: response, isUser: false, timestamp: new Date(), model: currentModelName });
         this.isLoading = false;
         await this.roomService.saveMessages(this.room.id, this.room.messages);
         this.scrollToBottom();
       },
       error: async (err) => {
         this.room.messages.pop(); // Remove loading message
-        this.room.messages.push({ text: 'AI 서버에 연결할 수 없습니다. 서버가 켜져 있는지 확인해 주세요.', isUser: false, timestamp: new Date() });
+        this.room.messages.push({ text: 'AI 서버에 연결할 수 없습니다. 서버가 켜져 있는지 확인해 주세요.', isUser: false, timestamp: new Date(), model: currentModelName });
         this.isLoading = false;
         await this.roomService.saveMessages(this.room.id, this.room.messages);
         this.scrollToBottom();
@@ -326,9 +349,10 @@ export class ChatComponent implements OnChanges, OnDestroy {
       this.chatSubscription = undefined;
     }
     if (this.isLoading) {
+      const currentModelName = this.selectedProvider || 'Gemini 3.6 Flash';
       this.isLoading = false;
       this.room.messages.pop(); // Remove the loading message
-      this.room.messages.push({ text: '대답 생성이 중단되었습니다.', isUser: false, timestamp: new Date() });
+      this.room.messages.push({ text: '대답 생성이 중단되었습니다.', isUser: false, timestamp: new Date(), model: currentModelName });
       await this.roomService.saveMessages(this.room.id, this.room.messages);
       this.scrollToBottom();
     }

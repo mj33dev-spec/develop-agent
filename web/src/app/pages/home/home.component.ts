@@ -62,8 +62,14 @@ export class HomeComponent implements OnInit {
         this.homeInput = (this.homeInput || '') + textToInsert;
       },
       (dataUrl, fileName) => {
-        const imageMarkdown = `![${fileName}](${dataUrl})\n`;
-        this.homeInput = (this.homeInput || '') + imageMarkdown;
+        this.onSelectAttachedItem({
+          id: 'img_' + Date.now(),
+          type: 'image',
+          name: fileName,
+          icon: 'bx bx-image icon-image',
+          imageUrl: dataUrl,
+          content: `![${fileName}](${dataUrl})\n`
+        });
       },
       (item) => this.onSelectAttachedItem(item)
     );

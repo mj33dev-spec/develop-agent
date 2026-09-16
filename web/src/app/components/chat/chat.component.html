@@ -50,7 +50,7 @@
         </div>
 
         <div class="message-content">
-          <span *ngIf="!msg.isUser" class="agent-name">AI Agent</span>
+          <span *ngIf="!msg.isUser" class="agent-name">{{ getAgentName(msg) }}</span>
           
           <div class="bubble-group">
             <div *ngIf="msg.isUser" class="time-stamp user-time">{{ formatTime(msg.timestamp) }}</div>
@@ -60,7 +60,8 @@
                 <!-- 메시지에 첨부된 뱃지 칩 목록 (파싱 호환 포함) -->
                 <div class="msg-attachments" *ngIf="getParsedAttachments(msg).length > 0">
                   <div class="attached-chip msg-chip" *ngFor="let att of getParsedAttachments(msg)">
-                    <i [class]="att.icon || 'bx bx-file'"></i>
+                    <img *ngIf="att.imageUrl" [src]="att.imageUrl" class="chip-thumb" />
+                    <i *ngIf="!att.imageUrl" [class]="att.icon || 'bx bx-file'"></i>
                     <span class="chip-name">{{ att.name }}</span>
                   </div>
                 </div>
@@ -85,10 +86,11 @@
   <div class="chat-footer-input">
     <div class="chat-input-box">
       <div class="input-body">
-        <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
+        <!-- 첨부된 파일/채팅방/이미지 칩 뱃지 목록 -->
         <div class="attached-items-container" *ngIf="attachedItems.length > 0">
           <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
-            <i [class]="item.icon || 'bx bx-file'"></i>
+            <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="chip-thumb" />
+            <i *ngIf="!item.imageUrl" [class]="item.icon || 'bx bx-file'"></i>
             <span class="chip-name">{{ item.name }}</span>
             <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
               <i class="bx bx-x"></i>

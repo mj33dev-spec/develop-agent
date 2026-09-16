@@ -53,8 +53,14 @@ export class CodeViewerComponent implements OnInit, OnChanges {
         this.userInput = (this.userInput || '') + textToInsert;
       },
       (dataUrl, fileName) => {
-        const imageMarkdown = `![${fileName}](${dataUrl})\n`;
-        this.userInput = (this.userInput || '') + imageMarkdown;
+        this.onSelectAttachedItem({
+          id: 'img_' + Date.now(),
+          type: 'image',
+          name: fileName,
+          icon: 'bx bx-image icon-image',
+          imageUrl: dataUrl,
+          content: `![${fileName}](${dataUrl})\n`
+        });
       },
       (item) => this.onSelectAttachedItem(item)
     );

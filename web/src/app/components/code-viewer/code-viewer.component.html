@@ -101,7 +101,8 @@
         <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
         <div class="attached-items-container" *ngIf="attachedItems.length > 0">
           <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
-            <i [class]="item.icon || 'bx bx-file'"></i>
+            <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="chip-thumb" />
+            <i *ngIf="!item.imageUrl" [class]="item.icon || 'bx bx-file'"></i>
             <span class="chip-name">{{ item.name }}</span>
             <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
               <i class="bx bx-x"></i>

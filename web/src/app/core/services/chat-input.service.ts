@@ -12,11 +12,12 @@ export interface ChatInputContext {
 
 export interface AttachedItem {
   id: string;
-  type: 'file' | 'room';
+  type: 'file' | 'room' | 'image';
   name: string;
   icon?: string;
   extension?: string;
   content?: string;
+  imageUrl?: string;
 }
 
 @Injectable({
