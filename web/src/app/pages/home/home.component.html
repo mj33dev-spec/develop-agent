@@ -5,8 +5,8 @@
       <button class="new-chat-btn" (click)="createNewRoom()">
         <i class="bx bx-edit-alt"></i> 새 채팅
       </button>
-      <button class="new-folder-btn" (click)="openCreateFolderModal(null)" style="margin-left: 8px; padding: 10px; background: none; border: none; cursor: pointer; color: #a1a1aa;">
-        <i class="bx bx-folder-plus" style="font-size: 1.25rem;"></i>
+      <button class="new-folder-btn" (click)="openCreateFolderModal(null)">
+        <i class="bx bx-folder-plus"></i>
       </button>
     </div>
     
@@ -18,6 +18,7 @@
            (dragover)="onDragOver($event, node)"
            (dragleave)="onDragLeave($event, node)"
            (drop)="onDrop($event, node)"
+           (dragend)="onDragEnd($event)"
            [style.padding-left.px]="node.level * 16"
            [class.is-folder]="node.type === 'folder'"
            [class.active]="node.type === 'room' && activeRoomId === node.id"
@@ -28,13 +29,22 @@
         <!-- Folder Node -->
         <ng-container *ngIf="node.type === 'folder'">
           <div class="folder-header" (click)="toggleFolder(node, $event)">
-            <i class="bx" [ngClass]="node.isExpanded ? 'bx-chevron-down' : 'bx-chevron-right'"></i>
-            <i class="bx bx-folder"></i>
-            <span class="node-name">{{ node.name }}</span>
-            <div class="folder-actions" (click)="$event.stopPropagation()">
-              <i class="bx bx-plus" (click)="openCreateFolderModal(node.id)" title="하위 폴더 추가"></i>
-              <i class="bx bx-edit" (click)="openEditFolderModal(node.data)" title="이름 변경"></i>
-              <i class="bx bx-trash" (click)="deleteFolder(node.data)" title="폴더 삭제"></i>
+            <i class="bx" [ngClass]="node.isExpanded ? 'bx-folder-open' : 'bx-folder'"></i>
+            
+            <span *ngIf="editingNodeId !== node.id" class="node-name" (click)="startEditing($event, node)">{{ node.name }}</span>
+            <input *ngIf="editingNodeId === node.id"
+                   [id]="'edit-input-' + node.id"
+                   type="text"
+                   class="inline-edit-input"
+                   [(ngModel)]="editInputValue"
+                   (blur)="saveEditing(node)"
+                   (keyup.enter)="saveEditing(node)"
+                   (keyup.escape)="cancelEditing()"
+                   (click)="$event.stopPropagation()">
+
+            <div class="folder-actions" *ngIf="editingNodeId !== node.id">
+              <i class="bx bx-plus" (click)="$event.stopPropagation(); openCreateFolderModal(node.id)" title="하위 폴더 추가"></i>
+              <i class="bx bx-trash" (click)="$event.stopPropagation(); deleteFolder(node.data)" title="폴더 삭제"></i>
             </div>
           </div>
         </ng-container>
@@ -43,7 +53,17 @@
         <ng-container *ngIf="node.type === 'room'">
           <div class="room-item" (click)="selectRoom(node.id)">
             <i class="bx bx-message-square-detail"></i>
-            <span class="room-title">{{ node.name }}</span>
+            
+            <span *ngIf="editingNodeId !== node.id" class="room-title" (click)="startEditing($event, node)">{{ node.name }}</span>
+            <input *ngIf="editingNodeId === node.id"
+                   [id]="'edit-input-' + node.id"
+                   type="text"
+                   class="inline-edit-input"
+                   [(ngModel)]="editInputValue"
+                   (blur)="saveEditing(node)"
+                   (keyup.enter)="saveEditing(node)"
+                   (keyup.escape)="cancelEditing()"
+                   (click)="$event.stopPropagation()">
           </div>
         </ng-container>
 
@@ -112,22 +132,3 @@
     
   </main>
 </div>
-
-<!-- 폴더 추가/수정 모달 -->
-<c-modal 
-  [isOpen]="isFolderModalOpen"
-  [title]="folderModalMode === 'create' ? '새 폴더 만들기' : '폴더 이름 변경'"
-  [isForm]="true"
-  submitLabel="저장"
-  cancelLabel="취소"
-  [submitDisabled]="!folderFormName.trim()"
-  (onClose)="closeFolderModal()"
-  (onSubmit)="submitFolderModal()">
-  
-  <div style="margin-bottom: 1.5rem;">
-    <label for="folderName" style="display: block; margin-bottom: 0.5rem; font-size: 0.875rem; color: #374151;">폴더 이름</label>
-    <input type="text" id="folderName" name="folderName" [(ngModel)]="folderFormName" required autofocus
-           style="width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; box-sizing: border-box;"
-           placeholder="새 폴더">
-  </div>
-</c-modal>

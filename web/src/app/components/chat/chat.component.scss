@@ -1,3 +1,5 @@
+@use "../../../styles/variables" as *;
+
 $kakao-bg: #b2c7d9;
 $kakao-yellow: #fae100;
 $kakao-text: #1a1a1a;
@@ -22,14 +24,14 @@ $border-color: #e5e5e5;
   max-width: 768px; /* Fixed width for tablet environments */
   margin: 0 auto;
   background-color: $kakao-bg;
-  font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  font-family: $font-family;
   position: relative;
   overflow: hidden;
 }
 
 .chat-header {
   background-color: transparent;
-  padding: 0.8rem 1rem;
+  padding: $spacing-12 $padding-small;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,8 +40,16 @@ $border-color: #e5e5e5;
   .header-left, .header-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: $spacing-12;
     color: #4a545c;
+  }
+  
+  .header-left i {
+    @include typo-heading-2;
+  }
+  
+  .header-right i {
+    @include typo-title-1;
   }
   
   .header-center {
@@ -49,18 +59,17 @@ $border-color: #e5e5e5;
     
     h2 {
       margin: 0;
-      font-size: 1.15rem;
-      font-weight: 600;
+      @include typo-title-3;
       color: #333;
     }
     
     .provider-toggle-mini {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.75rem;
+      gap: $spacing-8;
+      @include typo-caption-1;
       color: #666;
-      margin-top: 4px;
+      margin-top: $spacing-4;
       
       label {
         cursor: pointer;
@@ -74,7 +83,7 @@ $border-color: #e5e5e5;
           }
         }
       }
-      .divider { opacity: 0.3; font-size: 0.6rem; }
+      .divider { opacity: 0.3; @include typo-caption-2; }
     }
   }
 }
@@ -82,17 +91,17 @@ $border-color: #e5e5e5;
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
+  padding: $padding-small;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $padding-small;
   
   &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.15); border-radius: 10px; }
+  &::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.15); border-radius: $radius-normal; }
 
   .message-wrapper {
     display: flex;
-    gap: 8px;
+    gap: $spacing-8;
     max-width: 100%;
     
     &.user-message {
@@ -110,7 +119,7 @@ $border-color: #e5e5e5;
       .message-bubble {
         background: $kakao-yellow;
         color: $kakao-text;
-        border-radius: 6px;
+        border-radius: $radius-normal;
         position: relative;
         
         &::after {
@@ -135,7 +144,7 @@ $border-color: #e5e5e5;
       .message-bubble {
         background: $white;
         color: $kakao-text;
-        border-radius: 6px;
+        border-radius: $radius-normal;
         position: relative;
         
         &::before {
@@ -151,11 +160,11 @@ $border-color: #e5e5e5;
     }
 
     .agent-profile {
-      padding-top: 4px;
+      padding-top: $spacing-4;
       .avatar-small {
         width: 42px;
         height: 42px;
-        border-radius: 16px;
+        border-radius: $radius-deep;
         background: #e1e1e1;
         display: flex;
         align-items: center;
@@ -175,28 +184,27 @@ $border-color: #e5e5e5;
       }
       
       .agent-name {
-        font-size: 0.8rem;
+        @include typo-caption-1;
         color: #4a545c;
-        margin-bottom: 4px;
+        margin-bottom: $spacing-4;
         margin-left: 2px;
       }
       
       .bubble-group {
         display: flex;
         align-items: flex-end;
-        gap: 6px;
+        gap: $spacing-8;
         
         .time-stamp {
-          font-size: 0.65rem;
+          @include typo-caption-2;
           color: $kakao-time;
           white-space: nowrap;
           margin-bottom: 2px;
         }
         
         .message-bubble {
-          padding: 8px 12px;
-          line-height: 1.5;
-          font-size: 0.95rem;
+          padding: $spacing-8 $spacing-12;
+          @include typo-body-2;
           white-space: pre-wrap;
           word-break: break-word;
           box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -210,12 +218,12 @@ $border-color: #e5e5e5;
   background-color: $white;
   display: flex;
   align-items: center;
-  padding: 8px 12px;
-  gap: 12px;
+  padding: $spacing-8 $spacing-12;
+  gap: $spacing-12;
   
   .action-btn {
     i {
-      font-size: 28px;
+      @include typo-heading-3;
       color: #999;
       cursor: pointer;
     }
@@ -228,7 +236,7 @@ $border-color: #e5e5e5;
     background: $kakao-input-bg;
     border: 1px solid #e5e5e5;
     border-radius: 20px;
-    padding: 6px 12px;
+    padding: $spacing-8 $spacing-12;
     
     textarea {
       flex: 1;
@@ -236,13 +244,11 @@ $border-color: #e5e5e5;
       outline: none;
       background: transparent;
       resize: none;
-      padding: 4px 0;
-      font-size: 0.95rem;
+      padding: $spacing-4 0;
+      @include typo-body-2;
       max-height: 160px;
       min-height: 24px;
       overflow-y: hidden;
-      line-height: 1.4;
-      font-family: inherit;
       color: $kakao-text;
       
       &::placeholder {
@@ -256,7 +262,7 @@ $border-color: #e5e5e5;
       gap: 10px;
       
       i.bx-smile {
-        font-size: 24px;
+        @include typo-title-1;
         color: #b3b3b3;
         cursor: pointer;
       }
@@ -273,7 +279,7 @@ $border-color: #e5e5e5;
         cursor: pointer;
         transition: all 0.2s;
         
-        i { color: #aaa; font-size: 1.2rem; }
+        i { color: #aaa; @include typo-title-3; }
         svg { width: 16px; height: 16px; color: #fff; display: none; }
         
         &.active {

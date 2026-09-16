@@ -8,7 +8,7 @@
     gap: $spacing-4;
     min-height: 36px;
     border: 1px solid transparent;
-    border-radius: $radius-sm;
+    border-radius: $radius-normal;
     @include typo-caption-1;
     cursor: pointer;
     transition: 0.2s ease-in;
@@ -17,8 +17,12 @@
         opacity: 0.8;
     }
 
+    i.bx {
+        @include typo-title-3;
+    }
+
     &.btn-small {
-        padding: $spacing-4 $spacing-10;
+        padding: $spacing-4 $spacing-8;
         min-height: min-content;
         @include typo-caption-2;
     }
@@ -107,7 +111,7 @@
         width: 40px;
         height: 40px;
         padding: 0;
-        border-radius: $radius-md;
+        border-radius: $radius-normal;
         background-color: transparent;
         color: $color-deep-grey;
 

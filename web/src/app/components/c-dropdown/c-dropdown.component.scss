@@ -13,7 +13,7 @@
   width: 180px;
   background: $color-white;
   border: 1px solid $color-border;
-  border-radius: $radius-lg;
+  border-radius: $radius-deep;
   box-shadow: $shadow-lg;
   padding: $spacing-4;
   z-index: $z-dropdown;
@@ -24,7 +24,7 @@
   hr {
     height: 1px;
     background: $color-border;
-    margin: $spacing-6 0;
+    margin: $spacing-8 0;
     border: none;
   }
 }
@@ -36,7 +36,7 @@
   width: 180px;
   background: $color-white;
   border: 1px solid $color-border;
-  border-radius: $radius-md;
+  border-radius: $radius-normal;
   box-shadow: none;
   padding: $spacing-4;
   z-index: $z-dropdown;
@@ -70,7 +70,7 @@
   gap: $spacing-8;
   width: 100%;
   padding: $spacing-8 $spacing-12;
-  border-radius: $radius-sm;
+  border-radius: $radius-shallow;
   @include typo-body-3;
   color: $color-text;
   transition: background $transition-fast;
@@ -123,7 +123,7 @@
   @include typo-caption-2;
 
   :global(.material-symbols-outlined) {
-    font-size: 16px;
+    @include typo-body-2;
     cursor: pointer;
     display: flex;
     align-items: center;

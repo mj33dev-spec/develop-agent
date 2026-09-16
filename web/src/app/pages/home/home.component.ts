@@ -86,40 +86,46 @@ export class HomeComponent implements OnInit {
     
     // Recursive function to build flat list
     const addNodes = (parentId: string | null, level: number) => {
-      // Add folders first
-      const childFolders = this.folders.filter(f => f.parent_id === parentId).sort((a, b) => a.order_index - b.order_index);
-      for (const folder of childFolders) {
-        // preserve expanded state if it exists
-        const existingNode = this.sidebarNodes.find(n => n.type === 'folder' && n.id === folder.id);
-        const isExpanded = folder.isExpanded !== undefined ? folder.isExpanded : true;
-        
-        this.sidebarNodes.push({
-          type: 'folder',
-          id: folder.id,
-          name: folder.name,
-          parent_id: folder.parent_id,
-          level,
-          isExpanded,
-          data: folder
-        });
+      const childFolders = this.folders.filter(f => f.parent_id === parentId);
+      const childRooms = this.rooms.filter(r => r.folder_id === parentId);
+      
+      const children = [
+        ...childFolders.map(f => ({ ...f, _type: 'folder' })),
+        ...childRooms.map(r => ({ ...r, _type: 'room' }))
+      ].sort((a: any, b: any) => a.order_index - b.order_index);
 
-        if (isExpanded) {
-          addNodes(folder.id, level + 1);
+      for (const item of children) {
+        if (item._type === 'folder') {
+          const folder = item as any;
+          // preserve expanded state if it exists
+          const existingNode = this.sidebarNodes.find(n => n.type === 'folder' && n.id === folder.id);
+          const isExpanded = folder.isExpanded !== undefined ? folder.isExpanded : true;
+          
+          this.sidebarNodes.push({
+            type: 'folder',
+            id: folder.id,
+            name: folder.name,
+            parent_id: folder.parent_id,
+            level,
+            isExpanded,
+            data: folder
+          });
+
+          if (isExpanded) {
+            addNodes(folder.id, level + 1);
+          }
+        } else {
+          const room = item as any;
+          this.sidebarNodes.push({
+            type: 'room',
+            id: room.id,
+            name: room.title,
+            parent_id: room.folder_id,
+            level,
+            isExpanded: false,
+            data: room
+          });
         }
-      }
-
-      // Add rooms
-      const childRooms = this.rooms.filter(r => r.folder_id === parentId).sort((a, b) => a.order_index - b.order_index);
-      for (const room of childRooms) {
-        this.sidebarNodes.push({
-          type: 'room',
-          id: room.id,
-          name: room.title,
-          parent_id: room.folder_id,
-          level,
-          isExpanded: false,
-          data: room
-        });
       }
     };
 
@@ -186,56 +192,84 @@ export class HomeComponent implements OnInit {
     this.activeRoomId = roomId;
   }
 
+  // --- Inline Editing ---
+  editingNodeId: string | null = null;
+  editInputValue: string = '';
+
+  startEditing(event: Event, node: SidebarNode) {
+    event.stopPropagation();
+    this.editingNodeId = node.id;
+    this.editInputValue = node.name;
+    // Focus the input in the next tick
+    setTimeout(() => {
+      const input = document.getElementById(`edit-input-${node.id}`) as HTMLInputElement;
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    }, 0);
+  }
+
+  async saveEditing(node: SidebarNode) {
+    if (this.editingNodeId !== node.id) return;
+    
+    const newName = this.editInputValue.trim();
+    this.editingNodeId = null; // Exit edit mode immediately for better UX
+    
+    if (!newName || newName === node.name) {
+      return;
+    }
+
+    try {
+      if (node.type === 'folder') {
+        const updated = await this.folderService.updateFolder(node.id, { name: newName });
+        const folder = this.folders.find(f => f.id === node.id);
+        if (folder) folder.name = updated.name;
+      } else {
+        const updated = await this.roomService.updateRoom(node.id, { title: newName });
+        const room = this.rooms.find(r => r.id === node.id);
+        if (room) room.title = updated.title;
+      }
+      this.buildSidebarNodes();
+      this.dAlert.success('이름이 변경되었습니다.', '변경 완료');
+    } catch (e) {
+      this.dAlert.error('이름 변경에 실패했습니다.', '오류');
+      this.buildSidebarNodes(); // revert on fail
+    }
+  }
+
+  cancelEditing() {
+    this.editingNodeId = null;
+  }
+
   // --- Folder CRUD ---
   async openCreateFolderModal(parentId: string | null = null) {
-    // 2. 모달 띄우지 않고 '새 폴더'로 즉시 생성
     try {
       const order = this.folders.filter(f => f.parent_id === parentId).length;
       const newFolder = await this.folderService.createFolder('이름없음', parentId, order);
       newFolder.isExpanded = true;
       this.folders.push(newFolder);
       this.buildSidebarNodes();
+      this.dAlert.success('새 폴더가 생성되었습니다.', '생성 완료');
+      
+      // Optionally start editing immediately
+      const newNode = this.sidebarNodes.find(n => n.id === newFolder.id);
+      if (newNode) {
+        // Mock an event just to satisfy the signature, we don't strictly need it if we refactor, but this works
+        this.startEditing({ stopPropagation: () => {} } as Event, newNode);
+      }
     } catch (e) {
       this.dAlert.error('폴더 생성에 실패했습니다.', '오류');
     }
   }
 
-  openEditFolderModal(folder: Folder) {
-    this.folderModalMode = 'edit';
-    this.folderFormName = folder.name;
-    this.editingFolderId = folder.id;
-    this.isFolderModalOpen = true;
-  }
-
-  closeFolderModal() {
-    this.isFolderModalOpen = false;
-  }
-
-  async submitFolderModal() {
-    if (!this.folderFormName.trim()) return;
-    
-    try {
-      if (this.folderModalMode === 'edit' && this.editingFolderId) {
-        const updated = await this.folderService.updateFolder(this.editingFolderId, { name: this.folderFormName });
-        const idx = this.folders.findIndex(f => f.id === this.editingFolderId);
-        if (idx !== -1) {
-          this.folders[idx].name = updated.name;
-        }
-      }
-      this.closeFolderModal();
-      this.buildSidebarNodes();
-    } catch (e) {
-      this.dAlert.error('폴더 이름 변경에 실패했습니다.', '오류');
-    }
-  }
-
   async deleteFolder(folder: Folder) {
-    // Confirm via simple confirm for now
     if (confirm(`'${folder.name}' 폴더를 삭제하시겠습니까? (내부 채팅방도 모두 삭제됩니다)`)) {
       try {
         await this.folderService.deleteFolder(folder.id);
         this.folders = this.folders.filter(f => f.id !== folder.id);
         this.buildSidebarNodes();
+        this.dAlert.success('폴더가 삭제되었습니다.', '삭제 완료');
       } catch (e) {
         this.dAlert.error('폴더 삭제에 실패했습니다.', '오류');
       }
@@ -243,25 +277,62 @@ export class HomeComponent implements OnInit {
   }
 
   // 로그아웃
-  async logout() {
-    try {
-      await this.authService.signOut();
-      this.router.navigate(['/auth/login']);
-    } catch (e) {
-      this.dAlert.error('로그아웃에 실패했습니다.', '오류');
-    }
+  logout() {
+    this.dAlert.confirm('정말 로그아웃 하시겠습니까?', '로그아웃 확인', async () => {
+      try {
+        await this.authService.signOut();
+        this.dAlert.success('안전하게 로그아웃 되었습니다.', '로그아웃');
+        this.router.navigate(['/login']);
+      } catch (e: any) {
+        this.dAlert.error('로그아웃에 실패했습니다: ' + (e.message || ''), '오류');
+      }
+    });
   }
 
   draggedNode: SidebarNode | null = null;
   dragOverNodeId: string | null = null;
   dragOverMode: 'inside' | 'before' | 'after' | null = null;
+  private dragGhost: HTMLElement | null = null;
 
   onDragStart(event: DragEvent, node: SidebarNode) {
     this.draggedNode = node;
     if (event.dataTransfer) {
       event.dataTransfer.effectAllowed = 'move';
       event.dataTransfer.setData('text/plain', node.id);
+      
+      const target = (event.target as HTMLElement).querySelector('.folder-header, .room-item') as HTMLElement || event.target as HTMLElement;
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        const offsetX = event.clientX - rect.left;
+        const offsetY = event.clientY - rect.top;
+
+        this.dragGhost = target.cloneNode(true) as HTMLElement;
+        this.dragGhost.classList.add('drag-ghost-clone');
+        this.dragGhost.style.width = `${target.offsetWidth}px`;
+        
+        const actions = this.dragGhost.querySelector('.folder-actions') as HTMLElement;
+        if (actions) actions.style.display = 'none';
+
+        // 컴포넌트 CSS(캡슐화)를 유지하기 위해 DOM 트리 내부(부모)에 삽입
+        if (target.parentNode) {
+          target.parentNode.appendChild(this.dragGhost);
+        } else {
+          document.body.appendChild(this.dragGhost);
+        }
+        
+        event.dataTransfer.setDragImage(this.dragGhost, offsetX, offsetY);
+      }
     }
+  }
+
+  onDragEnd(event: DragEvent) {
+    if (this.dragGhost && this.dragGhost.parentNode) {
+      this.dragGhost.parentNode.removeChild(this.dragGhost);
+      this.dragGhost = null;
+    }
+    this.draggedNode = null;
+    this.dragOverNodeId = null;
+    this.dragOverMode = null;
   }
 
   onDragOver(event: DragEvent, targetNode: SidebarNode) {

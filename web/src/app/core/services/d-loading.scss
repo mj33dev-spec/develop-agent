@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as *;
+
 #d-loading-overlay {
   position: fixed;
   top: 0;
@@ -38,7 +40,7 @@
 
     &.success {
       .success-icon {
-        font-size: 3rem;
+        @include typo-display-3;
         color: #04b014;
         animation: scaleInBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
       }
@@ -55,7 +57,7 @@
   }
 
   .d-loading-text {
-    font-size: 0.875rem;
+    @include typo-body-3;
     font-weight: 500;
     color: #111827;
     text-align: center;

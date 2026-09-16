@@ -1,0 +1,79 @@
+@use '../../../styles/variables' as *;
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f3f4f6;
+}
+.login-box {
+  background: white;
+  padding: $padding-large;
+  border-radius: $radius-deep;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 400px;
+}
+h2 {
+  margin-top: 0;
+  margin-bottom: $spacing-8;
+  color: #111827;
+  text-align: center;
+  @include typo-title-2;
+}
+.subtitle {
+  color: #6b7280;
+  @include typo-body-2;
+  text-align: center;
+  margin-bottom: $spacing-32;
+}
+.form-group {
+  margin-bottom: $spacing-24;
+}
+label {
+  display: block;
+  margin-bottom: $spacing-8;
+  @include typo-body-2;
+  font-weight: 500;
+  color: #374151;
+}
+input {
+  width: 100%;
+  padding: $spacing-12;
+  border: 1px solid #d1d5db;
+  border-radius: $radius-normal;
+  @include typo-body-1;
+  box-sizing: border-box;
+}
+input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.button-group {
+  display: flex;
+  width: 100%;
+  margin-bottom: $spacing-16;
+}
+c-button {
+  display: block;
+  width: 100%;
+}
+::ng-deep .w-full {
+  width: 100%;
+}
+.extra-links {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-16;
+}
+.link-text {
+  color: #3b82f6;
+  @include typo-body-2;
+  cursor: pointer;
+  text-decoration: none;
+}
+.link-text:hover {
+  text-decoration: underline;
+}

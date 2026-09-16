@@ -133,14 +133,13 @@
 }
 
 .alertTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
+  @include typo-title-3;
   color: #111827;
   margin: 0 0 6px 0;
 }
 
 .alertMessage {
-  font-size: 0.875rem;
+  @include typo-body-3;
   color: #4b5563;
   line-height: 1.5;
   margin: 0;
@@ -153,7 +152,7 @@
   padding: 12px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
-  font-size: 0.875rem;
+  @include typo-body-3;
   color: #111827;
   box-sizing: border-box;
 

@@ -7,13 +7,13 @@
 >
   <ng-container *ngIf="size !== 'more'">
     <ng-container *ngIf="iconAlign === 'left'">
-      <i *ngIf="icon" class="bx" [ngClass]="icon" style="font-size: 18px;"></i>
+      <i *ngIf="icon" class="bx" [ngClass]="icon"></i>
     </ng-container>
     
     <ng-content></ng-content>
     
     <ng-container *ngIf="iconAlign === 'right'">
-      <i *ngIf="icon" class="bx" [ngClass]="icon" style="font-size: 18px;"></i>
+      <i *ngIf="icon" class="bx" [ngClass]="icon"></i>
     </ng-container>
   </ng-container>
 

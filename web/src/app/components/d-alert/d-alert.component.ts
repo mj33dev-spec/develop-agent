@@ -64,8 +64,8 @@ export class DAlertComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onKeydownHandler(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape')
+  onKeydownHandler() {
     if (this.config.buttonType !== 'yesOnly' && this.config.buttonType !== 'okOnly') {
       this.handleCancel();
     } else {

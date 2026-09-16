@@ -15,14 +15,15 @@
 }
 
 .modalContent {
-  padding: $spacing-24;
+  padding: $padding-large;
   width: 480px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
+  gap: $spacing-16;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
   background-color: $color-white;
-  border-radius: $radius-lg;
+  border-radius: $radius-deep;
   box-sizing: border-box;
 }
 
@@ -32,7 +33,6 @@
   align-items: center;
   justify-content: flex-start;
   gap: $spacing-8;
-  margin-bottom: $spacing-16;
 }
 
 .modalTitle {
@@ -48,14 +48,10 @@
 .modalSubTitle {
   @include typo-caption-1;
   color: $color-text-secondary;
-  margin-bottom: 16px;
-  margin-top: -8px;
-  line-height: 1.5;
 }
 
 .modalBody {
   overflow-y: auto;
-  margin-bottom: $spacing-20;
   padding-right: $spacing-4;
   flex: 1;
   min-height: 0;
@@ -71,7 +67,7 @@
 
   &::-webkit-scrollbar-thumb {
     background: $color-border;
-    border-radius: $radius-full;
+    border-radius: $radius-circle;
   }
 }
 

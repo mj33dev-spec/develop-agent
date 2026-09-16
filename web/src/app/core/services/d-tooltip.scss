@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as *;
+
 // 전역(Global) 스타일 - data 속성을 가진 요소들에 자동 적용됩니다.
 [data-tooltip-icon] {
   display: inline-flex;
@@ -6,7 +8,7 @@
 
   &::after {
     content: 'info';
-    font-size: 0.875rem;
+    @include typo-body-3;
     font-family: 'Material Symbols Outlined' !important;
     color: #6b7280;
     display: inline-flex;
@@ -30,7 +32,7 @@
   color: #ffffff;
   padding: 8px 12px;
   border-radius: 6px;
-  font-size: 0.75rem;
+  @include typo-caption-2;
   line-height: 1.4;
   white-space: normal;
   max-width: 250px;
