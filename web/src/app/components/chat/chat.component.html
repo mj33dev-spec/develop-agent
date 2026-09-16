@@ -57,7 +57,15 @@
 
             <div class="message-bubble" [class.loading]="msg.isLoading">
               <ng-container *ngIf="!msg.isLoading; else loadingTemplate">
-                {{ msg.text }}
+                <!-- 메시지에 첨부된 뱃지 칩 목록 (파싱 호환 포함) -->
+                <div class="msg-attachments" *ngIf="getParsedAttachments(msg).length > 0">
+                  <div class="attached-chip msg-chip" *ngFor="let att of getParsedAttachments(msg)">
+                    <i [class]="att.icon || 'bx bx-file'"></i>
+                    <span class="chip-name">{{ att.name }}</span>
+                  </div>
+                </div>
+
+                <div class="msg-text-content" *ngIf="getDisplayText(msg.text)">{{ getDisplayText(msg.text) }}</div>
               </ng-container>
               <ng-template #loadingTemplate>
                 <div class="typing-indicator">
@@ -77,6 +85,17 @@
   <div class="chat-footer-input">
     <div class="chat-input-box">
       <div class="input-body">
+        <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
+        <div class="attached-items-container" *ngIf="attachedItems.length > 0">
+          <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
+            <i [class]="item.icon || 'bx bx-file'"></i>
+            <span class="chip-name">{{ item.name }}</span>
+            <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+        </div>
+
         <textarea 
                [(ngModel)]="userInput" 
                (keydown.enter)="handleEnter($event)"

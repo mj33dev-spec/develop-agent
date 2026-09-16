@@ -17,9 +17,7 @@
     @for (node of sidebarNodes; track node.id) {
       <div class="sidebar-node" 
            [attr.data-id]="node.id"
-           draggable="true"
            (contextmenu)="onNodeContextMenu($event, node)"
-           (dragstart)="onDragStart($event, node)"
            (dragover)="onDragOver($event, node)"
            (dragleave)="onDragLeave($event, node)"
            (drop)="onDrop($event, node)"
@@ -34,7 +32,11 @@
         
         @switch (node.type) {
           @case ('folder') {
-            <div class="folder-header" [class.is-empty]="!node.hasChildren" (click)="toggleFolder(node, $event)">
+            <div class="folder-header" 
+                 draggable="true" 
+                 (dragstart)="onDragStart($event, node)" 
+                 [class.is-empty]="!node.hasChildren" 
+                 (click)="toggleFolder(node, $event)">
               <i class="bx" [ngClass]="(node.hasChildren && node.isExpanded) ? 'bx-folder-open' : 'bx-folder'"></i>
               
               @if (editingNodeId !== node.id) {
@@ -53,7 +55,11 @@
           }
 
           @case ('room') {
-            <div class="room-item" [class.active]="activeRoomId === node.id" (click)="selectRoom(node.id)">
+            <div class="room-item" 
+                 draggable="true" 
+                 (dragstart)="onDragStart($event, node)" 
+                 [class.active]="activeRoomId === node.id" 
+                 (click)="selectRoom(node.id)">
               <i class="bx bx-message-square-detail"></i>
               
               @if (editingNodeId !== node.id) {
@@ -72,7 +78,11 @@
           }
 
           @case ('file') {
-            <div class="file-item" [class.active]="activeFileId === node.id" (click)="selectFile(node.id)">
+            <div class="file-item" 
+                 draggable="true" 
+                 (dragstart)="onDragStart($event, node)" 
+                 [class.active]="activeFileId === node.id" 
+                 (click)="selectFile(node.id)">
               <i [class]="node.icon || 'bx bx-file'"></i>
               
               @if (editingNodeId !== node.id) {

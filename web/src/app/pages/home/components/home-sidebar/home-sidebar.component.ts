@@ -132,6 +132,7 @@ export class HomeSidebarComponent implements OnInit {
   
   @Output() activeRoomIdChange = new EventEmitter<string | null>();
   @Output() activeFileIdChange = new EventEmitter<string | null>();
+  @Output() dataChanged = new EventEmitter<void>();
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
@@ -177,6 +178,7 @@ export class HomeSidebarComponent implements OnInit {
       this.rooms = await this.roomService.getRooms();
       this.files = await this.fileService.getFiles();
       this.buildSidebarNodes();
+      this.dataChanged.emit();
     } catch (e: any) {
       console.error(e);
       this.dAlert.error('데이터 로드 실패: ' + (e.message || '알 수 없는 오류'), '오류');

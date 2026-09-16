@@ -452,6 +452,7 @@
             height: 40px;
             box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
             @include neu-circle-btn(38px);
+            background-color: $color-primary;
 
             i { color: $color-white; font-size: $font-size-pc-title-3; }
 

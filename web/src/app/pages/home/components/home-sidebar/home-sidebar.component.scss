@@ -151,6 +151,7 @@ $sidebar-width: 260px;
         cursor: pointer;
         color: $neu-text;
         border-radius: 12px;
+        background-color: $neu-bg;
         transition: all 0.2s ease;
 
         i.bx {
@@ -188,6 +189,7 @@ $sidebar-width: 260px;
       .room-item, .file-item {
         padding: 10px 12px;
         border-radius: 12px;
+        background-color: $neu-bg;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -873,4 +875,35 @@ aside.sidebar {
   margin: 0;
   @include typo-caption-2;
   color: $color-sub-text;
+}
+
+::ng-deep .cdk-drag-preview,
+.cdk-sidebar-drag-preview {
+  border-radius: 12px !important;
+  background-color: $neu-bg !important;
+  box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light, 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  color: $neu-text !important;
+  @include typo-body-2;
+  font-weight: 500 !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  pointer-events: none !important;
+
+  i {
+    font-size: 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: $neu-primary !important;
+  }
+
+  .preview-name {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
 }

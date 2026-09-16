@@ -5,7 +5,8 @@
     [activeFileId]="activeFileId"
     [selectedModel]="selectedModel"
     (activeRoomIdChange)="onActiveRoomIdChange($event)"
-    (activeFileIdChange)="onActiveFileIdChange($event)">
+    (activeFileIdChange)="onActiveFileIdChange($event)"
+    (dataChanged)="onSidebarDataChanged()">
   </app-home-sidebar>
 
   <!-- Right Main Area -->
@@ -18,6 +19,17 @@
         
         <div class="copilot-input-box">
           <div class="input-body">
+            <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
+            <div class="attached-items-container" *ngIf="attachedItems.length > 0">
+              <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
+                <i [class]="item.icon || 'bx bx-file'"></i>
+                <span class="chip-name">{{ item.name }}</span>
+                <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
+                  <i class="bx bx-x"></i>
+                </button>
+              </div>
+            </div>
+
             <textarea 
                    [(ngModel)]="homeInput" 
                    (keydown.enter)="handleEnter($event)"

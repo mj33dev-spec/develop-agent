@@ -9,7 +9,7 @@ import { DLoadingService } from '../../core/services/d-loading.service';
 import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.component';
 import { CBadgeComponent } from '../c-badge/c-badge.component';
 
-import { ChatInputService } from '../../core/services/chat-input.service';
+import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
 
 export interface Message {
   text: string;
@@ -44,6 +44,7 @@ export class ChatComponent implements OnChanges, OnDestroy {
   private chatSubscription?: Subscription;
   
   userInput = '';
+  attachedItems: AttachedItem[] = [];
   isLoading = false;
 
   addMenuOptions: CDropdownOption[] = [];
@@ -59,8 +60,58 @@ export class ChatComponent implements OnChanges, OnDestroy {
       (dataUrl, fileName) => {
         const imageMarkdown = `![${fileName}](${dataUrl})\n`;
         this.userInput = (this.userInput || '') + imageMarkdown;
-      }
+      },
+      (item) => this.onSelectAttachedItem(item)
     );
+  }
+
+  onSelectAttachedItem(item: AttachedItem) {
+    if (!this.attachedItems.some(i => i.id === item.id)) {
+      this.attachedItems.push(item);
+    }
+  }
+
+  removeAttachedItem(index: number) {
+    this.attachedItems.splice(index, 1);
+  }
+
+  getItemIcon(item: any): string {
+    const name = item.name || '';
+    const ext = item.extension || (name.includes('.') ? name.split('.').pop() || '' : '');
+    const icon = this.chatInputService.getFileIcon(ext);
+    return (icon && icon !== 'bx bx-code-alt icon-other') ? icon : (item.icon || icon);
+  }
+
+  // 디스플레이용 메시지 텍스트 파싱 (기존 [첨부 파일: ...] 긴 코드 블록 텍스트 숨김 처리)
+  getDisplayText(text: string): string {
+    if (!text) return '';
+    return text.replace(/\n?\[(첨부 파일|참조 채팅방): [\s\S]*$/, '').trim();
+  }
+
+  // 메시지 텍스트에서 파싱된 임시 뱃지 정보 (기존 레거시 데이터 호환 포함)
+  getParsedAttachments(msg: any): AttachedItem[] {
+    let items: AttachedItem[] = [];
+    if (msg.attachments && msg.attachments.length > 0) {
+      items = msg.attachments.map((att: any) => ({
+        ...att,
+        icon: this.getItemIcon(att)
+      }));
+    } else if (msg.text) {
+      const match = msg.text.match(/\[첨부 파일: ([^\]]+)\]/);
+      if (match) {
+        const fileName = match[1];
+        const ext = fileName.includes('.') ? fileName.split('.').pop() || '' : '';
+        const icon = this.chatInputService.getFileIcon(ext);
+        items = [{ id: 'legacy-att', type: 'file', name: fileName, extension: ext, icon }];
+      } else {
+        const roomMatch = msg.text.match(/\[참조 채팅방: ([^\]]+)\]/);
+        if (roomMatch) {
+          const roomTitle = roomMatch[1];
+          items = [{ id: 'legacy-room', type: 'room', name: roomTitle, icon: 'bx bx-message-square-detail text-blue' }];
+        }
+      }
+    }
+    return items;
   }
 
   ngOnInit() {
@@ -188,11 +239,21 @@ export class ChatComponent implements OnChanges, OnDestroy {
   }
 
   async sendMessage() {
-    if (!this.userInput.trim() || this.isLoading) return;
-    const prompt = this.userInput.trim();
-    this.userInput = '';
+    if ((!this.userInput.trim() && this.attachedItems.length === 0) || this.isLoading) return;
     
-    this.room.messages.push({ text: prompt, isUser: true, timestamp: new Date(), processed: true });
+    const userText = this.userInput.trim();
+    const attachments = [...this.attachedItems];
+
+    this.userInput = '';
+    this.attachedItems = [];
+    
+    this.room.messages.push({
+      text: userText,
+      isUser: true,
+      timestamp: new Date(),
+      processed: true,
+      attachments: attachments
+    });
     await this.roomService.saveMessages(this.room.id, this.room.messages);
     
     // Reset textarea height
@@ -201,7 +262,14 @@ export class ChatComponent implements OnChanges, OnDestroy {
       if (textarea) textarea.style.height = 'auto';
     }
 
-    this.processMessage(prompt);
+    // AI에게 전달할 전체 프롬프트 구성 (사용자 텍스트 + 첨부 데이터)
+    let fullPrompt = userText;
+    if (attachments.length > 0) {
+      const attachmentsContent = attachments.map(item => item.content || '').join('\n');
+      fullPrompt = (fullPrompt ? fullPrompt + '\n\n' : '') + attachmentsContent;
+    }
+
+    this.processMessage(fullPrompt);
   }
 
   processMessage(prompt: string) {

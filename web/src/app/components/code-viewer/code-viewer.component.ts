@@ -1,10 +1,10 @@
-import { Component, Input, Output, EventEmitter, inject, HostListener, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, HostListener, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FileItem, FileItemService } from '../../core/services/file-item.service';
 import { DAlertService } from '../../core/services/d-alert.service';
-import { ChatInputService } from '../../core/services/chat-input.service';
+import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
 import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.component';
 import { CBadgeComponent } from '../c-badge/c-badge.component';
 
@@ -15,13 +15,14 @@ import { CBadgeComponent } from '../c-badge/c-badge.component';
   templateUrl: './code-viewer.component.html',
   styleUrl: './code-viewer.component.scss'
 })
-export class CodeViewerComponent implements OnInit {
+export class CodeViewerComponent implements OnInit, OnChanges {
   @Input({ required: true }) file!: FileItem;
   @Input() selectedModel: string = 'Gemini 3.6 Flash';
   @Output() onClose = new EventEmitter<void>();
   @Output() sendFileQuestion = new EventEmitter<{ file: FileItem; question: string; model: string }>();
 
   userInput: string = '';
+  attachedItems: AttachedItem[] = [];
   modelOptions: CDropdownOption[] = [
     { label: 'Gemini 3.6 Flash', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.6 Flash' },
     { label: 'Gemini 3.1 Pro', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.1 Pro' },
@@ -54,12 +55,29 @@ export class CodeViewerComponent implements OnInit {
       (dataUrl, fileName) => {
         const imageMarkdown = `![${fileName}](${dataUrl})\n`;
         this.userInput = (this.userInput || '') + imageMarkdown;
-      }
+      },
+      (item) => this.onSelectAttachedItem(item)
     );
+  }
+
+  onSelectAttachedItem(item: AttachedItem) {
+    if (!this.attachedItems.some(i => i.id === item.id)) {
+      this.attachedItems.push(item);
+    }
+  }
+
+  removeAttachedItem(index: number) {
+    this.attachedItems.splice(index, 1);
   }
 
   ngOnInit() {
     this.loadAddMenuOptions();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['file']) {
+      this.loadAddMenuOptions();
+    }
   }
 
   get lines(): string[] {
@@ -154,10 +172,15 @@ export class CodeViewerComponent implements OnInit {
   }
 
   sendQuestion() {
-    const text = this.userInput.trim();
-    if (!text) return;
-    this.sendFileQuestion.emit({ file: this.file, question: text, model: this.selectedModel });
+    if (!this.userInput.trim() && this.attachedItems.length === 0) return;
+    let fullQuestion = this.userInput.trim();
+    if (this.attachedItems.length > 0) {
+      const attachmentsText = this.attachedItems.map(item => item.content || '').join('\n');
+      fullQuestion = (fullQuestion ? fullQuestion + '\n\n' : '') + attachmentsText;
+    }
+    this.sendFileQuestion.emit({ file: this.file, question: fullQuestion, model: this.selectedModel });
     this.userInput = '';
+    this.attachedItems = [];
     const textarea = document.querySelector('.viewer-textarea') as HTMLTextAreaElement;
     if (textarea) textarea.style.height = 'auto';
   }

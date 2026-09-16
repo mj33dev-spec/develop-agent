@@ -9,7 +9,7 @@ import { CBadgeComponent } from '../../components/c-badge/c-badge.component';
 import { HomeSidebarComponent } from './components/home-sidebar/home-sidebar.component';
 import { RoomService, ChatRoomRecord } from '../../core/services/room.service';
 import { FileItemService, FileItem } from '../../core/services/file-item.service';
-import { ChatInputService } from '../../core/services/chat-input.service';
+import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
 
 @Component({
   selector: 'app-home',
@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
   ];
 
   addMenuOptions: CDropdownOption[] = [];
+  attachedItems: AttachedItem[] = [];
 
   @ViewChild(HomeSidebarComponent) sidebarComponent!: HomeSidebarComponent;
 
@@ -63,8 +64,19 @@ export class HomeComponent implements OnInit {
       (dataUrl, fileName) => {
         const imageMarkdown = `![${fileName}](${dataUrl})\n`;
         this.homeInput = (this.homeInput || '') + imageMarkdown;
-      }
+      },
+      (item) => this.onSelectAttachedItem(item)
     );
+  }
+
+  onSelectAttachedItem(item: AttachedItem) {
+    if (!this.attachedItems.some(i => i.id === item.id)) {
+      this.attachedItems.push(item);
+    }
+  }
+
+  removeAttachedItem(index: number) {
+    this.attachedItems.splice(index, 1);
   }
 
   ngOnInit() {
@@ -109,6 +121,29 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  async onSidebarDataChanged() {
+    if (this.activeFileId) {
+      const files = await this.fileService.getFiles();
+      const found = files.find(f => f.id === this.activeFileId);
+      if (found) {
+        this.activeFile = { ...found };
+      } else {
+        this.activeFileId = null;
+        this.activeFile = null;
+      }
+    }
+    if (this.activeRoomId) {
+      const rooms = await this.roomService.getRooms();
+      const found = rooms.find(r => r.id === this.activeRoomId);
+      if (found) {
+        this.activeRoom = { ...found };
+      } else {
+        this.activeRoomId = null;
+        this.activeRoom = null;
+      }
+    }
+  }
+
   onBackToHome() {
     this.activeRoomId = null;
     this.activeRoom = null;
@@ -139,10 +174,27 @@ export class HomeComponent implements OnInit {
   async createRoomFromHome(initialMessage?: string) {
     if (!this.sidebarComponent) return;
     this.sidebarComponent.selectedModel = this.selectedModel;
-    const room = await this.sidebarComponent.createNewRoom(initialMessage, null, true, this.selectedModel);
-    if (room && initialMessage) {
+
+    const userText = initialMessage || '';
+    const attachments = [...this.attachedItems];
+
+    let fullPrompt = userText;
+    if (attachments.length > 0) {
+      const attachmentsText = attachments.map(item => item.content || '').join('\n');
+      fullPrompt = (fullPrompt ? fullPrompt + '\n\n' : '') + attachmentsText;
+    }
+
+    const room = await this.sidebarComponent.createNewRoom(fullPrompt, null, true, this.selectedModel);
+    if (room && room.messages && room.messages.length > 0) {
+      const firstUserMsg = room.messages.find((m: any) => m.isUser);
+      if (firstUserMsg) {
+        firstUserMsg.text = userText;
+        firstUserMsg.attachments = attachments;
+        await this.roomService.saveMessages(room.id, room.messages);
+      }
       setTimeout(() => {
         this.homeInput = '';
+        this.attachedItems = [];
         const textarea = document.querySelector('.main-textarea') as HTMLTextAreaElement;
         if (textarea) textarea.style.height = 'auto';
       }, 0);
@@ -157,18 +209,29 @@ export class HomeComponent implements OnInit {
       this.sidebarComponent.selectedModel = data.model;
     }
 
-    const fileContextPrompt = `[첨부 파일 분석 요청: ${data.file.name}]\n\`\`\`${data.file.extension}\n${data.file.content}\n\`\`\`\n\n질문: ${data.question}`;
+    const ext = data.file.extension ? data.file.extension.toLowerCase() : '';
+    const fileContentPrompt = `\n[첨부 파일: ${data.file.name}]\n\`\`\`${ext}\n${data.file.content || ''}\n\`\`\`\n`;
+    const fullPrompt = (data.question ? data.question + '\n\n' : '') + fileContentPrompt;
     
     // 1. Create a new chat room under the file's folder
-    const room = await this.sidebarComponent.createNewRoom(data.question, data.file.folder_id, false, data.model || this.selectedModel);
+    const room = await this.sidebarComponent.createNewRoom(fullPrompt, data.file.folder_id, false, data.model || this.selectedModel);
     if (room) {
-      // 2. Initialize room message with file context + question
+      // 2. Initialize room message with clean user question + file attachment chip
       room.messages = [
         {
-          text: fileContextPrompt,
+          text: data.question,
           isUser: true,
           timestamp: new Date(),
-          processed: false
+          processed: false,
+          attachments: [
+            {
+              id: data.file.id,
+              type: 'file',
+              name: data.file.name,
+              extension: ext,
+              content: fileContentPrompt
+            }
+          ]
         }
       ];
       await this.roomService.saveMessages(room.id, room.messages);

@@ -10,6 +10,15 @@ export interface ChatInputContext {
   currentFileId?: string;
 }
 
+export interface AttachedItem {
+  id: string;
+  type: 'file' | 'room';
+  name: string;
+  icon?: string;
+  extension?: string;
+  content?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +31,8 @@ export class ChatInputService {
   async loadAddMenuOptions(
     context: ChatInputContext,
     onInsertText: (text: string) => void,
-    onImageSelected: (dataUrl: string, fileName: string) => void
+    onImageSelected: (dataUrl: string, fileName: string) => void,
+    onSelectItem?: (item: AttachedItem) => void
   ): Promise<CDropdownOption[]> {
     const options: CDropdownOption[] = [
       {
@@ -38,17 +48,22 @@ export class ChatInputService {
         this.roomService.getRooms()
       ]);
 
-      const targetFolderId = context.folderId !== undefined ? context.folderId : null;
+      const targetFolderId = context.folderId;
+
+      // 폴더에 속해있지 않은 경우(루트 상태)에는 다른 파일/채팅방 링크 옵션을 제공하지 않음
+      if (!targetFolderId) {
+        return options;
+      }
 
       // 같은 폴더에 속한 파일들
       const sameFolderFiles = allFiles.filter(f => 
-        (targetFolderId === null ? f.folder_id === null : f.folder_id === targetFolderId) &&
+        f.folder_id === targetFolderId &&
         f.id !== context.currentFileId
       );
 
       // 같은 폴더에 속한 채팅방들
       const sameFolderRooms = allRooms.filter(r => 
-        (targetFolderId === null ? r.folder_id === null : r.folder_id === targetFolderId) &&
+        r.folder_id === targetFolderId &&
         r.id !== context.currentRoomId
       );
 
@@ -57,22 +72,35 @@ export class ChatInputService {
 
         // 1. 같은 폴더 내 파일들 추가
         for (const file of sameFolderFiles) {
+          const icon = this.getFileIcon(file.extension);
           options.push({
             label: `${file.name}`,
-            icon: this.getFileIcon(file.extension),
+            icon,
             onClick: () => {
               const ext = file.extension ? file.extension.toLowerCase() : '';
               const codeBlock = `\n[첨부 파일: ${file.name}]\n\`\`\`${ext}\n${file.content || ''}\n\`\`\`\n`;
-              onInsertText(codeBlock);
+              if (onSelectItem) {
+                onSelectItem({
+                  id: file.id,
+                  type: 'file',
+                  name: file.name,
+                  icon,
+                  extension: ext,
+                  content: codeBlock
+                });
+              } else {
+                onInsertText(codeBlock);
+              }
             }
           });
         }
 
         // 2. 같은 폴더 내 채팅방들 추가
         for (const room of sameFolderRooms) {
+          const icon = 'bx bx-message-square-detail text-blue';
           options.push({
             label: `${room.title}`,
-            icon: 'bx bx-message-square-detail text-blue',
+            icon,
             onClick: async () => {
               const msgs = await this.roomService.getMessages(room.id);
               let roomContext = `\n[참조 채팅방: ${room.title}]\n`;
@@ -85,7 +113,18 @@ export class ChatInputService {
               } else {
                 roomContext += `(대화 내역 없음)\n`;
               }
-              onInsertText(roomContext);
+
+              if (onSelectItem) {
+                onSelectItem({
+                  id: room.id,
+                  type: 'room',
+                  name: room.title,
+                  icon,
+                  content: roomContext
+                });
+              } else {
+                onInsertText(roomContext);
+              }
             }
           });
         }
