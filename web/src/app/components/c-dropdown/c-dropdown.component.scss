@@ -123,7 +123,7 @@
   @include typo-caption-2;
 
   :global(.material-symbols-outlined) {
-    @include typo-body-2;
+    font-size: $font-size-pc-body-2;
     cursor: pointer;
     display: flex;
     align-items: center;

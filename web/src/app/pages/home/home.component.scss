@@ -52,7 +52,7 @@ $primary: #007bff;
       cursor: pointer;
       transition: background 0.2s;
       
-      i { @include typo-title-3; }
+      i { font-size: $font-size-pc-title-3; }
       
       &:hover {
         background: #fafafa;
@@ -75,7 +75,7 @@ $primary: #007bff;
       }
       
       i {
-        @include typo-title-2;
+        font-size: $font-size-pc-title-2;
       }
     }
   }
@@ -98,7 +98,7 @@ $primary: #007bff;
       color: $text-main;
       transition: background 0.2s;
 
-      i { @include typo-title-3; color: $text-muted; }
+      i { font-size: $font-size-pc-title-3; color: $text-muted; }
       .room-title { 
         @include typo-body-3;
         white-space: nowrap; 
@@ -146,7 +146,7 @@ $primary: #007bff;
         background-color: #fee2e2;
       }
       
-      i { @include typo-title-3; }
+      i { font-size: $font-size-pc-title-3; }
     }
   }
 }
@@ -242,7 +242,7 @@ $primary: #007bff;
           border-radius: 50%;
           transition: background 0.2s;
           
-          i { @include typo-title-2; color: #444; }
+          i { font-size: $font-size-pc-title-2; color: #444; }
           &:hover { background: #f0f0f0; }
         }
 
@@ -253,7 +253,7 @@ $primary: #007bff;
         .send-btn {
           background: #333;
           padding: $spacing-8;
-          i { color: #fff; @include typo-title-3; }
+          i { color: #fff; font-size: $font-size-pc-title-3; }
           &:disabled {
             background: #e0e0e0;
             i { color: #aaa; }
@@ -344,13 +344,13 @@ $primary: #007bff;
 
   i.bx-folder, i.bx-folder-open {
     margin-right: $spacing-8;
-    @include typo-title-2;
+    font-size: $font-size-pc-title-2;
     color: #a1a1aa;
   }
   
   i.bx-chevron-right, i.bx-chevron-down {
     margin-right: $spacing-4;
-    @include typo-title-2;
+    font-size: $font-size-pc-title-2;
     color: #71717a;
   }
 

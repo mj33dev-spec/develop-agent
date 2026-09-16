@@ -45,11 +45,11 @@ $border-color: #e5e5e5;
   }
   
   .header-left i {
-    @include typo-heading-2;
+    font-size: $font-size-pc-heading-2;
   }
   
   .header-right i {
-    @include typo-title-1;
+    font-size: $font-size-pc-title-1;
   }
   
   .header-center {
@@ -223,7 +223,7 @@ $border-color: #e5e5e5;
   
   .action-btn {
     i {
-      @include typo-heading-3;
+      font-size: $font-size-pc-heading-3;
       color: #999;
       cursor: pointer;
     }
@@ -262,7 +262,7 @@ $border-color: #e5e5e5;
       gap: 10px;
       
       i.bx-smile {
-        @include typo-title-1;
+        font-size: $font-size-pc-title-1;
         color: #b3b3b3;
         cursor: pointer;
       }
@@ -279,7 +279,7 @@ $border-color: #e5e5e5;
         cursor: pointer;
         transition: all 0.2s;
         
-        i { color: #aaa; @include typo-title-3; }
+        i { color: #aaa; font-size: $font-size-pc-title-3; }
         svg { width: 16px; height: 16px; color: #fff; display: none; }
         
         &.active {
