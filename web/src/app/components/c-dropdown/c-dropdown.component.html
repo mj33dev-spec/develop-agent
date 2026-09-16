@@ -12,6 +12,7 @@
       <c-button
         type="button"
         [theme]="variant === 'fill' ? 'neutral' : 'outlinedNeutral'"
+        [icon]="icon"
         (onClick)="toggleDropdown()"
         [style.width]="width ? '100%' : 'auto'"
         [style.justifyContent]="width ? 'space-between' : 'center'"
@@ -20,7 +21,7 @@
         <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           {{ value }}
         </span>
-        <i class="bx bx-chevron-down" style="margin-left: 4px; margin-right: -8px;"></i>
+        <i class="bx bx-chevron-down" style="margin-left: 8px; margin-right: -4px; font-size: 20px;"></i>
       </c-button>
     </div>
 

@@ -19,6 +19,9 @@
           <!-- Allow HTML or string for title using a container if needed, but usually it's string in Angular -->
           <span [innerHTML]="title"></span>
         </h2>
+        <button type="button" class="closeBtn" (click)="onClose.emit()" aria-label="Close">
+          <i class="bx bx-x"></i>
+        </button>
       </div>
       <p *ngIf="subTitle" class="modalSubTitle">{{ subTitle }}</p>
 

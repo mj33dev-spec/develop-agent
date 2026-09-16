@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
 import { BehaviorSubject, Observable } from 'rxjs';
-
-const SUPABASE_URL = 'https://bznbbefithulaeygelax.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_O_rZg-6Z8-36WiNaHQzQRQ_JP20poc4';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   constructor() {
-    this.supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
     
     // 초기 세션 확인
     this.supabase.auth.getSession().then(({ data: { session } }) => {

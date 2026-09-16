@@ -31,15 +31,14 @@
                 <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
                   <button class="add-btn" type="button"><i class="bx bx-plus"></i></button>
                 </c-dropdown>
-
-                <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up">
-                  <c-badge variant="neutral" style="cursor: pointer; user-select: none; padding: 4px 10px;">
-                    {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
-                  </c-badge>
-                </c-dropdown>
               </div>
               
               <div class="footer-right">
+                <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up">
+                  <button class="model-btn" type="button" title="모델 선택">
+                    {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
+                  </button>
+                </c-dropdown>
                 <button class="send-btn" (click)="createRoomFromHome(homeInput)" [disabled]="!homeInput.trim()" [class.active]="homeInput.trim()">
                   <i class="bx bx-up-arrow-alt"></i>
                 </button>

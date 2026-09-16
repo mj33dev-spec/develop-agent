@@ -3,405 +3,408 @@
   <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;" />
 
   <div class="sidebar-header">
-    <button class="new-template-btn" (click)="openTemplateModal()">
+    <button class="sidebar-block-btn" (click)="openTemplateModal()">
       <i class="bx bx-plus-circle"></i> 
       새 템플릿
     </button>
-    <button class="new-chat-btn" (click)="openNewChatMain()">
+    <button class="sidebar-block-btn" (click)="openNewChatMain()">
       <i class="bx bx-edit-alt"></i> 
       새 채팅
     </button>
   </div>
   
   <div class="room-list">
-    <div *ngFor="let node of sidebarNodes" 
-         class="sidebar-node" 
-         [attr.data-id]="node.id"
-         draggable="true"
-         (contextmenu)="onNodeContextMenu($event, node)"
-         (dragstart)="onDragStart($event, node)"
-         (dragover)="onDragOver($event, node)"
-         (dragleave)="onDragLeave($event, node)"
-         (drop)="onDrop($event, node)"
-         (dragend)="onDragEnd($event)"
-         [style.padding-left.px]="node.level * 16"
-         [class.is-folder]="node.type === 'folder'"
-         [class.active]="(node.type === 'room' && activeRoomId === node.id) || (node.type === 'file' && activeFileId === node.id)"
-         [class.drag-over-inside]="dragOverNodeId === node.id && dragOverMode === 'inside'"
-         [class.drag-over-before]="dragOverNodeId === node.id && dragOverMode === 'before'"
-         [class.drag-over-after]="dragOverNodeId === node.id && dragOverMode === 'after'">
-      
-      <!-- Folder Node -->
-      <ng-container *ngIf="node.type === 'folder'">
-        <div class="folder-header" [class.is-empty]="!node.hasChildren" (click)="toggleFolder(node, $event)">
-          <i class="bx" [ngClass]="(node.hasChildren && node.isExpanded) ? 'bx-folder-open' : 'bx-folder'"></i>
-          
-          <span *ngIf="editingNodeId !== node.id" class="node-name">{{ node.name }}</span>
-          <input *ngIf="editingNodeId === node.id"
-                 [id]="'edit-input-' + node.id"
-                 type="text"
-                 class="inline-edit-input"
-                 [(ngModel)]="editInputValue"
-                 (blur)="saveEditing(node)"
-                 (keyup.enter)="saveEditing(node)"
-                 (keyup.escape)="cancelEditing()"
-                 (click)="$event.stopPropagation()">
-        </div>
-      </ng-container>
+    @for (node of sidebarNodes; track node.id) {
+      <div class="sidebar-node" 
+           [attr.data-id]="node.id"
+           draggable="true"
+           (contextmenu)="onNodeContextMenu($event, node)"
+           (dragstart)="onDragStart($event, node)"
+           (dragover)="onDragOver($event, node)"
+           (dragleave)="onDragLeave($event, node)"
+           (drop)="onDrop($event, node)"
+           (dragend)="onDragEnd($event)"
+           [style.padding-left.px]="node.level * 16"
+           [class.is-folder]="node.type === 'folder'"
+           [class.active]="(node.type === 'room' && activeRoomId === node.id) || (node.type === 'file' && activeFileId === node.id)"
+           [class.drag-over-inside]="dragOverNodeId === node.id && dragOverMode === 'inside'"
+           [class.drag-over-before]="dragOverNodeId === node.id && dragOverMode === 'before'"
+           [class.drag-over-after]="dragOverNodeId === node.id && dragOverMode === 'after'">
+        
+        @switch (node.type) {
+          @case ('folder') {
+            <div class="folder-header" [class.is-empty]="!node.hasChildren" (click)="toggleFolder(node, $event)">
+              <i class="bx" [ngClass]="(node.hasChildren && node.isExpanded) ? 'bx-folder-open' : 'bx-folder'"></i>
+              
+              @if (editingNodeId !== node.id) {
+                <span class="node-name">{{ node.name }}</span>
+              } @else {
+                <input [id]="'edit-input-' + node.id"
+                       type="text"
+                       class="inline-edit-input"
+                       [(ngModel)]="editInputValue"
+                       (blur)="saveEditing(node)"
+                       (keyup.enter)="saveEditing(node)"
+                       (keyup.escape)="cancelEditing()"
+                       (click)="$event.stopPropagation()">
+              }
+            </div>
+          }
 
-      <!-- Room Node -->
-      <ng-container *ngIf="node.type === 'room'">
-        <div class="room-item" [class.active]="activeRoomId === node.id" (click)="selectRoom(node.id)">
-          <i class="bx bx-message-square-detail"></i>
-          
-          <span *ngIf="editingNodeId !== node.id" class="room-title">{{ node.name }}</span>
-          <input *ngIf="editingNodeId === node.id"
-                 [id]="'edit-input-' + node.id"
-                 type="text"
-                 class="inline-edit-input"
-                 [(ngModel)]="editInputValue"
-                 (blur)="saveEditing(node)"
-                 (keyup.enter)="saveEditing(node)"
-                 (keyup.escape)="cancelEditing()"
-                 (click)="$event.stopPropagation()">
-        </div>
-      </ng-container>
+          @case ('room') {
+            <div class="room-item" [class.active]="activeRoomId === node.id" (click)="selectRoom(node.id)">
+              <i class="bx bx-message-square-detail"></i>
+              
+              @if (editingNodeId !== node.id) {
+                <span class="room-title">{{ node.name }}</span>
+              } @else {
+                <input [id]="'edit-input-' + node.id"
+                       type="text"
+                       class="inline-edit-input"
+                       [(ngModel)]="editInputValue"
+                       (blur)="saveEditing(node)"
+                       (keyup.enter)="saveEditing(node)"
+                       (keyup.escape)="cancelEditing()"
+                       (click)="$event.stopPropagation()">
+              }
+            </div>
+          }
 
-      <!-- File Node -->
-      <ng-container *ngIf="node.type === 'file'">
-        <div class="file-item" [class.active]="activeFileId === node.id" (click)="selectFile(node.id)">
-          <i [class]="node.icon || 'bx bx-file'"></i>
-          
-          <span *ngIf="editingNodeId !== node.id" class="file-title">{{ node.name }}</span>
-          <input *ngIf="editingNodeId === node.id"
-                 [id]="'edit-input-' + node.id"
-                 type="text"
-                 class="inline-edit-input"
-                 [(ngModel)]="editInputValue"
-                 (blur)="saveEditing(node)"
-                 (keyup.enter)="saveEditing(node)"
-                 (keyup.escape)="cancelEditing()"
-                 (click)="$event.stopPropagation()">
-        </div>
-      </ng-container>
-
-    </div>
-    
-    <div class="empty-rooms" *ngIf="sidebarNodes.length === 0">
-      <p>생성된 방이나 폴더가 없습니다.</p>
-    </div>
+          @case ('file') {
+            <div class="file-item" [class.active]="activeFileId === node.id" (click)="selectFile(node.id)">
+              <i [class]="node.icon || 'bx bx-file'"></i>
+              
+              @if (editingNodeId !== node.id) {
+                <span class="file-title">{{ node.name }}</span>
+              } @else {
+                <input [id]="'edit-input-' + node.id"
+                       type="text"
+                       class="inline-edit-input"
+                       [(ngModel)]="editInputValue"
+                       (blur)="saveEditing(node)"
+                       (keyup.enter)="saveEditing(node)"
+                       (keyup.escape)="cancelEditing()"
+                       (click)="$event.stopPropagation()">
+              }
+            </div>
+          }
+        }
+      </div>
+    } @empty {
+      <div class="empty-rooms">
+        <p>생성된 방이나 폴더가 없습니다.</p>
+      </div>
+    }
   </div>
   
   <!-- Sidebar Footer (Logout) -->
   <div class="sidebar-footer">
-    <button class="logout-btn" (click)="logout()">
+    <button class="sidebar-block-btn danger" (click)="logout()">
       <i class="bx bx-log-out"></i> 로그아웃
     </button>
   </div>
   
   <!-- Custom Context Menu -->
-  <div 
-    *ngIf="contextMenuVisible" 
-    class="custom-context-menu"
-    [style.left.px]="contextMenuPosition.x"
-    [style.top.px]="contextMenuPosition.y"
-    (click)="$event.stopPropagation()"
-  >
-    <button 
-      *ngFor="let opt of contextMenuOptions" 
-      type="button" 
-      class="context-menu-item"
-      (click)="onContextMenuOptionClick(opt)"
-    >
-      <i *ngIf="opt.icon" [class]="opt.icon"></i>
-      <span>{{ opt.label }}</span>
-    </button>
-  </div>
+  @if (contextMenuVisible) {
+    <div class="custom-context-menu"
+         [style.left.px]="contextMenuPosition.x"
+         [style.top.px]="contextMenuPosition.y"
+         (click)="$event.stopPropagation()">
+      @for (opt of contextMenuOptions; track opt.label) {
+        <button type="button" 
+                class="context-menu-item"
+                (click)="onContextMenuOptionClick(opt)">
+          @if (opt.icon) {
+            <i [class]="opt.icon"></i>
+          }
+          <span>{{ opt.label }}</span>
+        </button>
+      }
+    </div>
+  }
 
   <!-- 템플릿 모달 (c-modal 사용) -->
   <c-modal
     [isOpen]="isTemplateModalOpen"
     [title]="templateModalMode === 'select' ? '내 템플릿 선택' : (templateModalMode === 'edit' ? '템플릿 수정' : '새 템플릿 업로드')"
-    [subTitle]="templateModalMode === 'select' 
-      ? '등록된 템플릿을 선택하여 폴더 및 파일을 생성하세요.' 
-      : (templateModalMode === 'edit' ? '템플릿의 이름, 설명, 파일을 수정할 수 있습니다.' : '소스 파일을 직접 업로드하여 템플릿으로 등록하세요.')"
     [width]="'820px'"
     [customFooter]="true"
     (onClose)="closeTemplateModal()"
   >
-    <!-- MODE 1: 내 템플릿 선택 -->
-    <div class="modal-body-container" *ngIf="templateModalMode === 'select'">
-      <!-- 로딩 상태 -->
-      <div class="template-loading" *ngIf="isLoadingTemplates">
-        <i class="bx bx-loader-alt bx-spin"></i>
-        <span>템플릿 목록을 불러오는 중...</span>
-      </div>
-
-      <!-- 프레임워크 필터 탭바 -->
-      <div class="category-pills" *ngIf="!isLoadingTemplates && myTemplates.length > 0">
-        <button 
-          *ngFor="let fw of uniqueFrameworks" 
-          class="pill-btn" 
-          [class.active]="selectedFrameworkFilter === fw"
-          (click)="selectFrameworkFilter(fw)"
-        >
-          {{ fw }}
-        </button>
-      </div>
-
-      <!-- 템플릿 목록이 있을 때 -->
-      <div class="preset-content-grid" *ngIf="!isLoadingTemplates && filteredTemplates.length > 0">
-        <!-- 왼쪽: 템플릿 목록 -->
-        <div class="preset-list">
-          <div 
-            *ngFor="let tpl of filteredTemplates" 
-            class="preset-item-card"
-            [class.selected]="selectedTemplate?.id === tpl.id"
-            (click)="selectTemplate(tpl)"
-          >
-            <div class="preset-icon">
-              <i [class]="tpl.icon || 'bx bx-code-alt'"></i>
+    @switch (templateModalMode) {
+      @case ('select') {
+        <!-- MODE 1: 내 템플릿 선택 -->
+        <div class="modal-body-container">
+          <!-- 프레임워크 필터 탭바 -->
+          @if (!isLoadingTemplates && myTemplates.length > 0) {
+            <div class="category-pills">
+              @for (fw of uniqueFrameworks; track fw) {
+                <button class="pill-btn" 
+                        [class.active]="selectedFrameworkFilter === fw"
+                        (click)="selectFrameworkFilter(fw)">
+                  {{ fw }}
+                </button>
+              }
             </div>
-            <div class="preset-info">
-              <div class="preset-title-row">
-                <span class="preset-name">{{ tpl.name }}</span>
-                <span class="preset-badge">{{ tpl.framework }}</span>
+          }
+
+          <!-- 로딩 상태 -->
+          @if (isLoadingTemplates) {
+            <div class="template-loading">
+              <i class="bx bx-loader-alt bx-spin"></i>
+              <span>템플릿 목록을 불러오는 중...</span>
+            </div>
+          } @else if (filteredTemplates.length > 0) {
+            <!-- 템플릿 목록이 있을 때 -->
+            <div class="preset-content-grid">
+              <!-- 왼쪽: 템플릿 목록 -->
+              <div class="preset-list">
+                @for (tpl of filteredTemplates; track tpl.id) {
+                  <div class="preset-item-card"
+                       [class.selected]="selectedTemplate?.id === tpl.id"
+                       (click)="selectTemplate(tpl)">
+                    <div class="preset-icon">
+                      <i [class]="tpl.icon || 'bx bx-code-alt'"></i>
+                    </div>
+                    <div class="preset-info">
+                      <div class="preset-title-row">
+                        <span class="preset-name">{{ tpl.name }}</span>
+                      </div>
+                      <p class="preset-desc">{{ tpl.description || '설명 없음' }}</p>
+                    </div>
+                    
+                    <div class="preset-action-btns">
+                      <button class="template-action-btn edit" (click)="$event.stopPropagation(); startEditTemplate(tpl)">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button class="template-action-btn delete" (click)="$event.stopPropagation(); deleteMyTemplate(tpl)">
+                        <i class="bx bx-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                }
               </div>
-              <p class="preset-desc">{{ tpl.description || '설명 없음' }}</p>
+
+              <!-- 오른쪽: 선택한 템플릿 미리보기 -->
+              @if (selectedTemplate) {
+                <div class="preset-preview-panel">
+                  <div class="preset-inner">
+                    <!-- 템플릿 카드 미리보기 -->
+                    <div class="card-visual-preview">
+                      <div class="card-top-bar">
+                        <div class="card-dots">
+                          <span class="dot red"></span>
+                          <span class="dot yellow"></span>
+                          <span class="dot green"></span>
+                        </div>
+                        <span class="group-folder-tag">
+                          <i class="bx bx-folder"></i> {{ selectedTemplate.name }}
+                        </span>
+                      </div>
+
+                      <div class="card-body-content">
+                        <div class="preset-hero-preview">
+                          <i [class]="(selectedTemplate.icon || 'bx bx-code-alt') + ' hero-icon'"></i>
+                          <div class="hero-text">
+                            <h3>{{ selectedTemplate.name }}</h3>
+                            <p>{{ selectedTemplate.description || '등록된 설명 없음' }}</p>
+                          </div>
+                        </div>
+
+                        <div class="preview-files-list">
+                          <div class="files-title"><i class="bx bx-file"></i> 포함된 구성 파일:</div>
+                          @for (file of selectedTemplateFiles; track file.name) {
+                            <div class="file-badge-item">
+                              <i [class]="getFileIcon(file.extension)"></i>
+                              <span class="file-name">{{ file.name }}</span>
+                            </div>
+                          } @empty {
+                            <div class="no-files-msg">
+                              구성 파일이 없습니다.
+                            </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              } @else {
+                <!-- 선택 안 됐을 때 안내 -->
+                <div class="preset-preview-panel empty-select">
+                  <div class="preset-inner">
+                    <div class="empty-preset-box">
+                      <i class="bx bx-pointer empty-icon"></i>
+                      <p class="empty-text">왼쪽 목록에서 템플릿을 선택하세요</p>
+                    </div>
+                  </div>
+                </div>
+              }
             </div>
-            <button class="template-action-btn edit" (click)="$event.stopPropagation(); startEditTemplate(tpl)">
-              <i class="bx bx-edit-alt"></i>
-            </button>
-            <button class="template-action-btn delete" (click)="$event.stopPropagation(); deleteMyTemplate(tpl)">
-              <i class="bx bx-trash"></i>
-            </button>
-          </div>
+          } @else if (myTemplates.length > 0 && filteredTemplates.length === 0) {
+            <!-- 필터된 결과가 없을 때 -->
+            <div class="empty-preset-box">
+              <i class="bx bx-filter-alt empty-icon"></i>
+              <p class="empty-text">'{{ selectedFrameworkFilter }}' 프레임워크로 등록된 템플릿이 없습니다.</p>
+            </div>
+          } @else {
+            <!-- 빈 목록 안내 -->
+            <div class="empty-preset-box">
+              <i class="bx bx-folder-open empty-icon"></i>
+              <p class="empty-text">등록된 템플릿이 없습니다.</p>
+              <p class="empty-sub-text">아래 "새 템플릿 등록" 버튼을 눌러 업로드하세요.</p>
+            </div>
+          }
         </div>
+      }
 
-        <!-- 오른쪽: 선택한 템플릿 미리보기 -->
-        <div class="preset-preview-panel" *ngIf="selectedTemplate">
-          <div class="preview-header">
-            <h4>{{ selectedTemplate.name }}</h4>
-            <span class="framework-tag">
-              <i [class]="selectedTemplate.icon || 'bx bx-code-alt'"></i>
-              {{ selectedTemplate.framework }}
-            </span>
-          </div>
-
-          <!-- 템플릿 카드 미리보기 -->
-          <div class="card-visual-preview">
-            <div class="card-top-bar">
-              <div class="card-dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
+      @case ('upload') {
+        <!-- MODE 2: 템플릿 업로드 -->
+        <div class="modal-body-container">
+          <div class="upload-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
+                <input type="text" 
+                       class="form-input" 
+                       placeholder="예: my-custom-component" 
+                       [(ngModel)]="uploadGroupName" />
               </div>
-              <span class="group-folder-tag">
-                <i class="bx bx-folder"></i> {{ selectedTemplate.name }}
-              </span>
+
+              <div class="form-group">
+                <label><i class="bx bx-code-alt"></i> 프레임워크 선택 <span class="required">*</span></label>
+                <c-dropdown [options]="uploadFrameworkOptions"
+                            [value]="selectedUploadFramework"
+                            [width]="'200px'"
+                            [icon]="getSelectedFrameworkIcon(selectedUploadFramework)"></c-dropdown>
+              </div>
             </div>
 
-            <div class="card-body-content">
-              <div class="preset-hero-preview">
-                <i [class]="(selectedTemplate.icon || 'bx bx-code-alt') + ' hero-icon'"></i>
-                <div class="hero-text">
-                  <h3>{{ selectedTemplate.name }}</h3>
-                  <p>{{ selectedTemplate.description || '등록된 설명 없음' }}</p>
+            <div class="form-group">
+              <label><i class="bx bx-book-open"></i> README 설명글 (자동 README.md 생성)</label>
+              <textarea class="form-textarea" 
+                        rows="3" 
+                        placeholder="템플릿 사용 방법이나 주요 설명글을 입력하세요. 자동 README.md 파일로 추가됩니다."
+                        [(ngModel)]="uploadDescription"></textarea>
+            </div>
+
+            <!-- 파일 첨부 영역 -->
+            <div class="form-group">
+              <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
+              <div class="file-upload-dropzone">
+                <input type="file" 
+                       multiple 
+                       #customFileInput 
+                       class="hidden-file-input"
+                       (change)="onCustomFilesAttached($event)" />
+                <div class="dropzone-content" (click)="customFileInput.click()">
+                  <i class="bx bx-cloud-upload upload-icon"></i>
+                  <span>클릭하여 내 컴퓨터에서 소스 파일들을 선택하세요</span>
+                  <small>(.html, .scss, .ts, .js, .json 등 다중 선택 가능)</small>
                 </div>
               </div>
 
-              <div class="preview-files-list">
-                <div class="files-title"><i class="bx bx-file"></i> 포함된 구성 파일:</div>
-                <div 
-                  *ngFor="let file of selectedTemplateFiles" 
-                  class="file-badge-item"
-                >
-                  <i [class]="getFileIcon(file.extension)"></i>
-                  <span class="file-name">{{ file.name }}</span>
+              <!-- 첨부된 파일 목록 -->
+              @if (uploadedCustomFiles.length > 0) {
+                <div class="attached-files-list">
+                  @for (file of uploadedCustomFiles; track file.name; let i = $index) {
+                    <div class="attached-file-chip">
+                      <i [class]="getFileIcon(file.extension)"></i>
+                      <span class="file-name">{{ file.name }}</span>
+                      <button class="remove-btn" (click)="removeCustomFile(i)">
+                        <i class="bx bx-x"></i>
+                      </button>
+                    </div>
+                  }
                 </div>
-                <div *ngIf="selectedTemplateFiles.length === 0" class="no-files-msg">
-                  구성 파일이 없습니다.
-                </div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+
+      @case ('edit') {
+        <!-- MODE 3: 템플릿 수정 -->
+        <div class="modal-body-container">
+          <div class="upload-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
+                <input type="text" 
+                       class="form-input" 
+                       placeholder="예: my-custom-component" 
+                       [(ngModel)]="uploadGroupName" />
+              </div>
+
+              <div class="form-group">
+                <label><i class="bx bx-code-alt"></i> 프레임워크 선택 <span class="required">*</span></label>
+                <c-dropdown [options]="uploadFrameworkOptions"
+                            [value]="selectedUploadFramework"
+                            [icon]="getSelectedFrameworkIcon(selectedUploadFramework)"></c-dropdown>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- 선택 안 됐을 때 안내 -->
-        <div class="preset-preview-panel empty-select" *ngIf="!selectedTemplate">
-          <div class="empty-preset-box">
-            <i class="bx bx-pointer empty-icon"></i>
-            <p class="empty-text">왼쪽 목록에서 템플릿을 선택하세요</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 필터된 결과가 없을 때 -->
-      <div class="empty-preset-box" *ngIf="!isLoadingTemplates && myTemplates.length > 0 && filteredTemplates.length === 0">
-        <i class="bx bx-filter-alt empty-icon"></i>
-        <p class="empty-text">'{{ selectedFrameworkFilter }}' 프레임워크로 등록된 템플릿이 없습니다.</p>
-      </div>
-
-      <!-- 빈 목록 안내 -->
-      <div class="empty-preset-box" *ngIf="!isLoadingTemplates && myTemplates.length === 0">
-        <i class="bx bx-folder-open empty-icon"></i>
-        <p class="empty-text">등록된 템플릿이 없습니다.</p>
-        <p class="empty-sub-text">아래 "새 템플릿 등록" 버튼을 눌러 업로드하세요.</p>
-      </div>
-    </div>
-
-    <!-- MODE 2: 템플릿 업로드 -->
-    <div class="modal-body-container" *ngIf="templateModalMode === 'upload'">
-      <div class="upload-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
-            <input 
-              type="text" 
-              class="form-input" 
-              placeholder="예: my-custom-component" 
-              [(ngModel)]="uploadGroupName"
-            />
-          </div>
-
-          <div class="form-group">
-            <label><i class="bx bx-code-alt"></i> 프레임워크 선택 <span class="required">*</span></label>
-            <c-dropdown
-              [options]="uploadFrameworkOptions"
-              [value]="selectedUploadFramework"
-            ></c-dropdown>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label><i class="bx bx-book-open"></i> README 설명글 (자동 README.md 생성)</label>
-          <textarea 
-            class="form-textarea" 
-            rows="3" 
-            placeholder="템플릿 사용 방법이나 주요 설명글을 입력하세요. 자동 README.md 파일로 추가됩니다."
-            [(ngModel)]="uploadDescription"
-          ></textarea>
-        </div>
-
-        <!-- 파일 첨부 영역 -->
-        <div class="form-group">
-          <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
-          <div class="file-upload-dropzone">
-            <input 
-              type="file" 
-              multiple 
-              #customFileInput 
-              class="hidden-file-input"
-              (change)="onCustomFilesAttached($event)"
-            />
-            <div class="dropzone-content" (click)="customFileInput.click()">
-              <i class="bx bx-cloud-upload upload-icon"></i>
-              <span>클릭하여 내 컴퓨터에서 소스 파일들을 선택하세요</span>
-              <small>(.html, .scss, .ts, .js, .json 등 다중 선택 가능)</small>
+            <div class="form-group">
+              <label><i class="bx bx-book-open"></i> README 설명글</label>
+              <textarea class="form-textarea" 
+                        rows="3" 
+                        placeholder="템플릿 사용 방법이나 주요 설명글을 입력하세요."
+                        [(ngModel)]="uploadDescription"></textarea>
             </div>
-          </div>
 
-          <!-- 첨부된 파일 목록 -->
-          <div class="attached-files-list" *ngIf="uploadedCustomFiles.length > 0">
-            <div *ngFor="let file of uploadedCustomFiles; let i = index" class="attached-file-chip">
-              <i [class]="getFileIcon(file.extension)"></i>
-              <span class="file-name">{{ file.name }}</span>
-              <button class="remove-btn" (click)="removeCustomFile(i)">
-                <i class="bx bx-x"></i>
-              </button>
+            <!-- 파일 첨부 영역 -->
+            <div class="form-group">
+              <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
+              <div class="file-upload-dropzone">
+                <input type="file" 
+                       multiple 
+                       #editFileInput 
+                       class="hidden-file-input"
+                       (change)="onCustomFilesAttached($event)" />
+                <div class="dropzone-content" (click)="editFileInput.click()">
+                  <i class="bx bx-cloud-upload upload-icon"></i>
+                  <span>파일 추가 첨부</span>
+                  <small>(.html, .scss, .ts, .js, .json 등 다중 선택 가능)</small>
+                </div>
+              </div>
+
+              <!-- 첨부된 파일 목록 -->
+              @if (uploadedCustomFiles.length > 0) {
+                <div class="attached-files-list">
+                  @for (file of uploadedCustomFiles; track file.name; let i = $index) {
+                    <div class="attached-file-chip">
+                      <i [class]="getFileIcon(file.extension)"></i>
+                      <span class="file-name">{{ file.name }}</span>
+                      <button class="remove-btn" (click)="removeCustomFile(i)">
+                        <i class="bx bx-x"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div class="no-files-msg">
+                  첨부된 파일이 없습니다. 파일을 추가해주세요.
+                </div>
+              }
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- MODE 3: 템플릿 수정 -->
-    <div class="modal-body-container" *ngIf="templateModalMode === 'edit'">
-      <div class="upload-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
-            <input 
-              type="text" 
-              class="form-input" 
-              placeholder="예: my-custom-component" 
-              [(ngModel)]="uploadGroupName"
-            />
-          </div>
-
-          <div class="form-group">
-            <label><i class="bx bx-code-alt"></i> 프레임워크 선택 <span class="required">*</span></label>
-            <c-dropdown
-              [options]="uploadFrameworkOptions"
-              [value]="selectedUploadFramework"
-            ></c-dropdown>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label><i class="bx bx-book-open"></i> README 설명글</label>
-          <textarea 
-            class="form-textarea" 
-            rows="3" 
-            placeholder="템플릿 사용 방법이나 주요 설명글을 입력하세요."
-            [(ngModel)]="uploadDescription"
-          ></textarea>
-        </div>
-
-        <!-- 파일 첨부 영역 -->
-        <div class="form-group">
-          <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
-          <div class="file-upload-dropzone">
-            <input 
-              type="file" 
-              multiple 
-              #editFileInput 
-              class="hidden-file-input"
-              (change)="onCustomFilesAttached($event)"
-            />
-            <div class="dropzone-content" (click)="editFileInput.click()">
-              <i class="bx bx-cloud-upload upload-icon"></i>
-              <span>파일 추가 첨부</span>
-              <small>(.html, .scss, .ts, .js, .json 등 다중 선택 가능)</small>
-            </div>
-          </div>
-
-          <!-- 첨부된 파일 목록 -->
-          <div class="attached-files-list" *ngIf="uploadedCustomFiles.length > 0">
-            <div *ngFor="let file of uploadedCustomFiles; let i = index" class="attached-file-chip">
-              <i [class]="getFileIcon(file.extension)"></i>
-              <span class="file-name">{{ file.name }}</span>
-              <button class="remove-btn" (click)="removeCustomFile(i)">
-                <i class="bx bx-x"></i>
-              </button>
-            </div>
-          </div>
-
-          <div *ngIf="uploadedCustomFiles.length === 0" class="no-files-msg">
-            첨부된 파일이 없습니다. 파일을 추가해주세요.
-          </div>
-        </div>
-      </div>
-    </div>
+      }
+    }
 
     <!-- 모달 푸터 -->
     <div footer class="c-modal-footer-wrapper">
       <div class="footer-left">
-        <c-button 
-          *ngIf="templateModalMode === 'select'" 
-          theme="neutral" 
-          (onClick)="templateModalMode = 'upload'"
-        >
-          <i class="bx bx-cloud-upload"></i> 새 템플릿 등록
-        </c-button>
+        @if (templateModalMode === 'select') {
+          <c-button theme="neutral" (onClick)="templateModalMode = 'upload'">
+            <i class="bx bx-cloud-upload" style="font-size: 20px;"></i> 새 템플릿 등록
+          </c-button>
+        }
 
-        <c-button 
-          *ngIf="templateModalMode === 'upload' || templateModalMode === 'edit'" 
-          theme="neutral" 
-          (onClick)="templateModalMode = 'select'"
-        >
-          <i class="bx bx-left-arrow-alt"></i> 내 템플릿 목록
-        </c-button>
+        @if (templateModalMode === 'upload' || templateModalMode === 'edit') {
+          <c-button theme="neutral" (onClick)="templateModalMode = 'select'">
+            <i class="bx bx-left-arrow-alt"></i> 내 템플릿 목록
+          </c-button>
+        }
       </div>
 
       <div class="footer-right">
@@ -409,32 +412,29 @@
           취소
         </c-button>
 
-        <c-button 
-          *ngIf="templateModalMode === 'select'" 
-          theme="primary"
-          [disabled]="!selectedTemplate"
-          (onClick)="submitSelectedTemplate()"
-        >
-          템플릿으로 생성하기
-        </c-button>
-
-        <c-button 
-          *ngIf="templateModalMode === 'upload'" 
-          theme="primary"
-          [disabled]="!uploadGroupName.trim() || uploadedCustomFiles.length === 0"
-          (onClick)="submitCustomUpload()"
-        >
-          템플릿 등록하기
-        </c-button>
-
-        <c-button 
-          *ngIf="templateModalMode === 'edit'" 
-          theme="primary"
-          [disabled]="!uploadGroupName.trim()"
-          (onClick)="submitEditTemplate()"
-        >
-          수정 저장하기
-        </c-button>
+        @switch (templateModalMode) {
+          @case ('select') {
+            <c-button theme="primary"
+                      [disabled]="!selectedTemplate"
+                      (onClick)="submitSelectedTemplate()">
+              템플릿으로 생성하기
+            </c-button>
+          }
+          @case ('upload') {
+            <c-button theme="primary"
+                      [disabled]="!uploadGroupName.trim() || uploadedCustomFiles.length === 0"
+                      (onClick)="submitCustomUpload()">
+              템플릿 등록하기
+            </c-button>
+          }
+          @case ('edit') {
+            <c-button theme="primary"
+                      [disabled]="!uploadGroupName.trim()"
+                      (onClick)="submitEditTemplate()">
+              수정 저장하기
+            </c-button>
+          }
+        }
       </div>
     </div>
   </c-modal>

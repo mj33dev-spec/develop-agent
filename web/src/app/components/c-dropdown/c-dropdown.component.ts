@@ -26,6 +26,7 @@ export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() align: 'left' | 'right' = 'left';
   @Input() options: (CDropdownOption | string)[] = [];
   @Input() value?: string;
+  @Input() icon?: string;
   @Input() disabledList: string[] = [];
   @Input() width?: string;
   @Input() selectedValues: string[] = [];

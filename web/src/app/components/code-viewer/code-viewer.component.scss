@@ -26,11 +26,14 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
 
   .header-left {
+    flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 16px;
 
     .icon-btn {
+      flex: none;
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -55,12 +58,16 @@
     }
 
     .file-info {
+      flex: 1;
+      min-width: 0;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
 
       .file-icon {
-        font-size: 24px;
+        flex: none;
+        border-radius: 4px;
+        font-size: 32px;
         &.text-orange { color: #e44d26; }
         &.text-blue { color: #264de4; }
         &.text-yellow { color: #f7df1e; }
@@ -71,12 +78,18 @@
       }
 
       .file-name {
-        @include typo-title-3;
+        flex: 0 1 auto;
+        min-width: 0;
+        @include typo-title-2;
         color: $neu-text;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin: 0;
       }
 
       .file-size {
+        flex: none;
         @include typo-caption-1;
         color: $neu-text-secondary;
         background: rgba(0, 0, 0, 0.04);

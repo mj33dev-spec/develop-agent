@@ -55,12 +55,21 @@ export class HomeSidebarComponent implements OnInit {
   uploadGroupName: string = '';
   selectedUploadFramework: string = 'Angular';
   uploadFrameworkOptions: CDropdownOption[] = [
-    { label: 'Angular', value: 'angular', onClick: () => this.selectedUploadFramework = 'Angular' },
-    { label: 'React', value: 'react', onClick: () => this.selectedUploadFramework = 'React' },
-    { label: 'Vue', value: 'vue', onClick: () => this.selectedUploadFramework = 'Vue' },
-    { label: 'HTML / JS', value: 'html', onClick: () => this.selectedUploadFramework = 'HTML / JS' },
-    { label: '기타 (Other)', value: 'other', onClick: () => this.selectedUploadFramework = '기타 (Other)' }
+    { label: 'Angular', value: 'angular', icon: 'bxl-angular text-red', onClick: () => this.selectedUploadFramework = 'Angular' },
+    { label: 'React', value: 'react', icon: 'bxl-react text-blue', onClick: () => this.selectedUploadFramework = 'React' },
+    { label: 'Vue', value: 'vue', icon: 'bxl-vuejs text-green', onClick: () => this.selectedUploadFramework = 'Vue' },
+    { label: 'HTML / JS', value: 'html', icon: 'bxl-html5 text-orange', onClick: () => this.selectedUploadFramework = 'HTML / JS' },
+    { label: '기타 (Other)', value: 'other', icon: 'bx-code-alt text-sub', onClick: () => this.selectedUploadFramework = '기타 (Other)' }
   ];
+
+  getSelectedFrameworkIcon(fw: string): string {
+    const f = (fw || '').toLowerCase();
+    if (f.includes('angular')) return 'bxl-angular text-red';
+    if (f.includes('react')) return 'bxl-react text-blue';
+    if (f.includes('vue')) return 'bxl-vuejs text-green';
+    if (f.includes('html') || f.includes('js')) return 'bxl-html5 text-orange';
+    return 'bx-code-alt text-sub';
+  }
   uploadDescription: string = '';
   uploadedCustomFiles: { name: string; extension: string; content: string; size?: number }[] = [];
   

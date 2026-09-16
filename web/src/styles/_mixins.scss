@@ -72,6 +72,36 @@
   }
 }
 
+// 뉴모피즘 원형 아이콘 버튼 (입력창 하단 툴바용)
+@mixin neu-circle-btn($size: 38px) {
+  background: $neu-bg;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+  transition: all 0.2s ease;
+  
+  i { 
+    font-size: $font-size-pc-title-2; 
+    color: $neu-text-secondary; 
+  }
+
+  &:hover {
+    box-shadow: 5px 5px 10px $neu-shadow-dark, -5px -5px 10px $neu-shadow-light;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+    transform: translateY(0);
+  }
+}
+
 // 뉴모피즘 원형 아이콘 버튼
 @mixin neu-icon-btn($size: 40px) {
   width: $size;
@@ -94,6 +124,27 @@
   &:active, &.active {
     box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
     transform: translateY(0);
+  }
+}
+
+// ── 공통 커스텀 스크롤바 믹스인 ────────────────
+@mixin custom-scrollbar($width: 6px, $thumb-color: rgba(163, 177, 198, 0.5)) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(163, 177, 198, 0.8);
+    }
   }
 }
 

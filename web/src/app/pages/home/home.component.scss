@@ -1,4 +1,5 @@
 @use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
 
 :host {
   display: block;
@@ -97,43 +98,68 @@
           display: flex;
           align-items: center;
           gap: 12px;
-        }
-
-        button {
-          background: $neu-bg;
-          border: none;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 38px;
-          height: 38px;
-          border-radius: 50%;
-          box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
-          transition: all 0.2s ease;
-          
-          i { font-size: $font-size-pc-title-2; color: $neu-text-secondary; }
-          &:hover {
-            box-shadow: 5px 5px 10px $neu-shadow-dark, -5px -5px 10px $neu-shadow-light;
-            transform: translateY(-1px);
-          }
-          &:active {
-            box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
-            transform: translateY(0);
+          .add-btn {
+            @include neu-circle-btn(38px);
           }
         }
         
-        .send-btn {
-          background: $neu-primary-gradient;
-          width: 40px;
-          height: 40px;
-          box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
-          i { color: $color-white; font-size: $font-size-pc-title-3; }
-          &:disabled {
+        .footer-right {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .model-btn {
             background: $neu-bg;
-            box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
-            i { color: $neu-text-secondary; opacity: 0.5; }
-            cursor: not-allowed;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            @include typo-caption-1;
+            font-weight: 600;
+            color: $neu-text;
+            box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            i {
+              font-size: 16px;
+              color: $neu-text-secondary;
+              transition: transform 0.2s ease;
+            }
+
+            &:hover {
+              transform: translateY(-1px);
+              box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
+              color: $neu-primary;
+              i {
+                color: $neu-primary;
+              }
+            }
+
+            &:active {
+              transform: translateY(0);
+              box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+            }
+          }
+        
+          .send-btn {
+            background: $neu-primary-gradient;
+            width: 40px;
+            height: 40px;
+            box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+            @include neu-circle-btn(38px);
+            background-color: $color-primary;
+
+            i { color: $color-white; font-size: $font-size-pc-title-3; }
+            
+            &:disabled {
+              background: $neu-bg;
+              box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+              i { color: $neu-text-secondary; opacity: 0.5; }
+              cursor: not-allowed;
+            }
           }
         }
       }

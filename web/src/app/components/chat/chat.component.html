@@ -25,14 +25,14 @@
       </div>
     </div>
 
-    <div class="header-right">
+    <!-- <div class="header-right">
       <button type="button" class="icon-btn" title="검색">
         <i class="bx bx-search"></i>
       </button>
       <button type="button" class="icon-btn" title="메뉴">
         <i class="bx bx-menu"></i>
       </button>
-    </div>
+    </div> -->
   </div>
 
   <!-- Messages Body -->
@@ -76,13 +76,7 @@
   <!-- Footer Input Area -->
   <div class="chat-footer-input">
     <div class="chat-input-box">
-      <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
-        <button class="add-btn" type="button" title="추가 옵션">
-          <i class="bx bx-plus"></i>
-        </button>
-      </c-dropdown>
-      
-      <div class="input-wrapper">
+      <div class="input-body">
         <textarea 
                [(ngModel)]="userInput" 
                (keydown.enter)="handleEnter($event)"
@@ -93,20 +87,32 @@
                rows="1">
         </textarea>
         
-        <div class="input-actions">
-          <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up" align="right">
-            <c-badge variant="neutral" style="cursor: pointer; user-select: none;">
-              {{ selectedProvider }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
-            </c-badge>
-          </c-dropdown>
+        <div class="input-footer">
+          <div class="footer-left">
+            <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
+              <button class="add-btn" type="button" title="추가 옵션">
+                <i class="bx bx-plus"></i>
+              </button>
+            </c-dropdown>
+          </div>
           
-          <button *ngIf="!isLoading" (click)="sendMessage()" class="send-btn" [disabled]="!userInput.trim()" [class.active]="userInput.trim()">
-            <i class="bx bx-up-arrow-alt"></i>
-          </button>
-          
-          <button *ngIf="isLoading" (click)="stopGenerating()" class="stop-btn">
-            <div class="stop-square"></div>
-          </button>
+          <div class="footer-right">
+            <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up">
+              <button class="model-btn" type="button" title="모델 선택">
+                {{ selectedProvider }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
+              </button>
+            </c-dropdown>
+            
+            @if (!isLoading) {
+              <button (click)="sendMessage()" class="send-btn" [disabled]="!userInput.trim()" [class.active]="userInput.trim()">
+                <i class="bx bx-up-arrow-alt"></i>
+              </button>
+            } @else {
+              <button (click)="stopGenerating()" class="stop-btn">
+                <div class="stop-square"></div>
+              </button>
+            }
+          </div>
         </div>
       </div>
     </div>

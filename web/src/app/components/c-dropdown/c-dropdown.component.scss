@@ -68,7 +68,7 @@
   gap: $spacing-8;
   width: 100%;
   padding: $spacing-8 $spacing-12;
-  border-radius: $radius-shallow;
+  border-radius: $radius-deep;
   @include typo-body-3;
   color: $color-text;
   transition: background $transition-fast;
@@ -95,9 +95,9 @@
   color: $color-sub-text;
 }
 
-.bx-chevron-down {
-  border: 1px solid $color-dark !important;
-}
+// .bx-chevron-down {
+//   border: 1px solid $color-dark !important;
+// }
 
 .multiSelectContainer {
   display: flex;
