@@ -62,15 +62,11 @@ const FRAMEWORK_ICONS: Record<string, string> = {
 export class TemplateService {
   private supabase = inject(SupabaseService).client;
 
-  // 내 템플릿 목록 조회 (파일 목록 포함)
+  // 전체 템플릿 목록 조회 (모든 유저가 조회 및 적용 가능, 파일 목록 포함)
   async getTemplates(): Promise<Template[]> {
-    const { data: { user } } = await this.supabase.auth.getUser();
-    if (!user) return [];
-
     const { data, error } = await this.supabase
       .from('templates')
       .select('*, template_files(*)')
-      .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -143,17 +139,21 @@ export class TemplateService {
     return template;
   }
 
-  // 템플릿 삭제 (CASCADE로 파일도 함께 삭제됨)
+  // 템플릿 삭제 (본인 생성 템플릿만 삭제 허용)
   async deleteTemplate(id: string): Promise<void> {
+    const { data: { user } } = await this.supabase.auth.getUser();
+    if (!user) throw new Error('로그인이 필요합니다.');
+
     const { error } = await this.supabase
       .from('templates')
       .delete()
-      .eq('id', id);
+      .eq('id', id)
+      .eq('user_id', user.id);
 
     if (error) throw error;
   }
 
-  // 템플릿 수정 (메타 정보 + 파일 전체 교체)
+  // 템플릿 수정 (메타 정보 + 파일 전체 교체, 본인 생성 템플릿만 수정 허용)
   async updateTemplate(
     id: string,
     name: string,
@@ -161,13 +161,17 @@ export class TemplateService {
     framework: string,
     files: { name: string; extension: string; content: string }[]
   ): Promise<Template> {
+    const { data: { user } } = await this.supabase.auth.getUser();
+    if (!user) throw new Error('로그인이 필요합니다.');
+
     const icon = FRAMEWORK_ICONS[framework] || 'bx bx-code-alt';
 
-    // 1) 메타 정보 업데이트
+    // 1) 메타 정보 업데이트 (본인 user_id 매칭)
     const { data: template, error: tplError } = await this.supabase
       .from('templates')
       .update({ name, description, framework, icon })
       .eq('id', id)
+      .eq('user_id', user.id)
       .select()
       .single();
 

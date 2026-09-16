@@ -12,6 +12,8 @@ import { FileItemService, FileItem } from '../../../../core/services/file-item.s
 import { DAlertService } from '../../../../core/services/d-alert.service';
 import { DLoadingService } from '../../../../core/services/d-loading.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { SupabaseService } from '../../../../core/services/supabase.service';
+import { ChatInputService } from '../../../../core/services/chat-input.service';
 
 export interface SidebarNode {
   type: 'folder' | 'room' | 'file';
@@ -89,6 +91,7 @@ export class HomeSidebarComponent implements OnInit {
 
   getSelectedFrameworkIcon(fw: string): string {
     const f = (fw || '').toLowerCase();
+    if (f.includes('bootstrap')) return 'bxl-bootstrap icon-bootstrap';
     if (f.includes('angular')) return 'bxl-angular icon-angular';
     if (f.includes('next')) return 'bxl-react icon-nextjs';
     if (f.includes('nuxt')) return 'bxl-vuejs icon-nuxtjs';
@@ -96,11 +99,11 @@ export class HomeSidebarComponent implements OnInit {
     if (f.includes('vue')) return 'bxl-vuejs icon-vue';
     if (f.includes('nest')) return 'bxl-nodejs icon-nestjs';
     if (f.includes('node')) return 'bxl-nodejs icon-nodejs';
-    if (f.includes('typescript') || f.includes('ts')) return 'bxl-typescript icon-typescript';
+    if (f.includes('typescript') || f === 'ts' || f.startsWith('ts ') || f.endsWith(' ts')) return 'bxl-typescript icon-typescript';
     if (f.includes('jquery')) return 'bx-code-curly icon-jquery';
     if (f.includes('javascript') || f.includes('js')) return 'bxl-javascript icon-javascript';
-    if (f.includes('flutter') || f.includes('dart')) return 'bxl-flutter icon-flutter';
-    if (f.includes('bootstrap')) return 'bxl-bootstrap icon-bootstrap';
+    if (f.includes('flutter')) return 'bxl-flutter icon-flutter';
+    if (f.includes('dart')) return 'icon-dart';
     if (f.includes('tailwind')) return 'bxl-tailwind-css icon-tailwind';
     if (f.includes('scss') || f.includes('sass')) return 'bxl-sass icon-scss';
     if (f.includes('css') && !f.includes('html')) return 'bxl-css3 icon-css';
@@ -152,6 +155,7 @@ export class HomeSidebarComponent implements OnInit {
   draggedNode: SidebarNode | null = null;
   dragOverNodeId: string | null = null;
   dragOverMode: 'inside' | 'before' | 'after' | null = null;
+  currentUserId: string | null = null;
   private targetAttachFolderId: string | null = null;
 
   private folderService = inject(FolderService);
@@ -160,6 +164,7 @@ export class HomeSidebarComponent implements OnInit {
   private dAlert = inject(DAlertService);
   private dLoading = inject(DLoadingService);
   private authService = inject(AuthService);
+  private supabaseService = inject(SupabaseService);
   private templateService = inject(TemplateService);
   private router = inject(Router);
 
@@ -251,22 +256,10 @@ export class HomeSidebarComponent implements OnInit {
     addNodes(null, 0);
   }
 
+  private chatInputService = inject(ChatInputService);
+
   getFileIcon(ext: string): string {
-    const e = (ext || '').toLowerCase();
-    switch (e) {
-      case 'html': case 'htm': return 'bx bxl-html5 icon-html';
-      case 'css': return 'bx bxl-css3 icon-css';
-      case 'scss': case 'sass': return 'bx bxl-sass icon-scss';
-      case 'less': return 'bx bxl-css3 icon-css';
-      case 'js': case 'jsx': return 'bx bxl-javascript icon-javascript';
-      case 'ts': case 'tsx': return 'bx bxl-typescript icon-typescript';
-      case 'py': return 'bx bxl-python icon-python';
-      case 'java': return 'bx bxl-java icon-java';
-      case 'json': return 'bx bx-code-curly icon-json';
-      case 'md': return 'bx bxl-markdown icon-markdown';
-      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': return 'bx bx-image icon-image';
-      default: return 'bx bx-file icon-other';
-    }
+    return this.chatInputService.getFileIcon(ext);
   }
 
   toggleFolder(node: SidebarNode, event: Event) {
@@ -318,10 +311,18 @@ export class HomeSidebarComponent implements OnInit {
     this.isTemplateModalOpen = false;
   }
 
-  // DB에서 내 템플릿 목록 조회
+  // 현재 로그인한 사용자가 템플릿의 생성자인지 확인
+  isTemplateOwner(template: Template | null): boolean {
+    if (!template || !this.currentUserId) return false;
+    return template.user_id === this.currentUserId;
+  }
+
+  // DB에서 전체 템플릿 목록 조회
   async loadMyTemplates() {
     this.isLoadingTemplates = true;
     try {
+      const { data: { user } } = await this.supabaseService.client.auth.getUser();
+      this.currentUserId = user?.id ?? null;
       this.myTemplates = await this.templateService.getTemplates();
       if (this.filteredTemplates.length > 0) {
         await this.selectTemplate(this.filteredTemplates[0]);
@@ -389,6 +390,10 @@ export class HomeSidebarComponent implements OnInit {
 
   // 선택 모드에서 템플릿 삭제
   deleteMyTemplate(template: Template) {
+    if (!this.isTemplateOwner(template)) {
+      this.dAlert.warn('본인이 생성한 템플릿만 삭제할 수 있습니다.', '권한 없음');
+      return;
+    }
     this.dAlert.confirm(
       `'${template.name}' 템플릿을 삭제하시겠습니까?`,
       '템플릿 삭제',
@@ -412,6 +417,10 @@ export class HomeSidebarComponent implements OnInit {
 
   // 템플릿 수정 모드 진입
   async startEditTemplate(template: Template) {
+    if (!this.isTemplateOwner(template)) {
+      this.dAlert.warn('본인이 생성한 템플릿만 수정할 수 있습니다.', '권한 없음');
+      return;
+    }
     this.editingTemplateId = template.id;
     this.uploadGroupName = template.name;
     this.uploadDescription = template.description || '';

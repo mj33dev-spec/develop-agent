@@ -141,17 +141,32 @@ export class ChatInputService {
   getFileIcon(ext: string): string {
     const cleanExt = (ext || '').toLowerCase();
     switch (cleanExt) {
+      case 'dart': return 'icon-dart';
       case 'html': case 'htm': return 'bx bxl-html5 icon-html';
       case 'css': return 'bx bxl-css3 icon-css';
       case 'scss': case 'sass': return 'bx bxl-sass icon-scss';
+      case 'less': return 'bx bxl-css3 icon-css';
       case 'js': case 'jsx': return 'bx bxl-javascript icon-javascript';
       case 'ts': case 'tsx': return 'bx bxl-typescript icon-typescript';
+      case 'vue': return 'bx bxl-vuejs icon-vue';
+      case 'svelte': return 'bx bx-code-alt icon-svelte';
       case 'py': return 'bx bxl-python icon-python';
       case 'java': return 'bx bxl-java icon-java';
+      case 'kt': case 'kts': return 'bx bxl-android icon-kotlin';
+      case 'swift': return 'bx bxl-apple icon-swift';
+      case 'go': return 'bx bxl-go-lang icon-go';
+      case 'rs': return 'bx bxl-rust icon-rust';
+      case 'php': return 'bx bxl-php icon-php';
+      case 'cs': case 'csx': return 'bx bxl-c-sharp icon-csharp';
+      case 'c': case 'cpp': case 'h': case 'hpp': return 'bx bxl-c-plus-plus icon-cpp';
+      case 'rb': return 'bx bxl-ruby icon-ruby';
+      case 'sql': return 'bx bx-data icon-sql';
       case 'json': return 'bx bx-code-curly icon-json';
+      case 'yaml': case 'yml': return 'bx bx-slider-alt icon-yaml';
+      case 'sh': case 'bash': case 'zsh': return 'bx bx-terminal icon-terminal';
       case 'md': return 'bx bxl-markdown icon-markdown';
-      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': return 'bx bx-image icon-image';
-      default: return 'bx bx-code-alt icon-other';
+      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': case 'webp': return 'bx bx-image icon-image';
+      default: return 'bx bx-file icon-other';
     }
   }
 

@@ -189,12 +189,14 @@
                     </div>
                     
                     <div class="preset-action-btns">
-                      <button class="template-action-btn edit" (click)="$event.stopPropagation(); startEditTemplate(tpl)">
-                        <i class="bx bx-edit-alt"></i>
-                      </button>
-                      <button class="template-action-btn delete" (click)="$event.stopPropagation(); deleteMyTemplate(tpl)">
-                        <i class="bx bx-trash"></i>
-                      </button>
+                      @if (isTemplateOwner(tpl)) {
+                        <button class="template-action-btn edit" (click)="$event.stopPropagation(); startEditTemplate(tpl)">
+                          <i class="bx bx-edit-alt"></i>
+                        </button>
+                        <button class="template-action-btn delete" (click)="$event.stopPropagation(); deleteMyTemplate(tpl)">
+                          <i class="bx bx-trash"></i>
+                        </button>
+                      }
                     </div>
                   </div>
                 }

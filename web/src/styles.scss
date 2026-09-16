@@ -72,6 +72,27 @@ body {
 .icon-json { color: #00B4D8 !important; }
 .icon-markdown { color: #0083B0 !important; }
 .icon-image { color: #2EC4B6 !important; }
+i.icon-dart {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  background-color: #0175C2 !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4.105 4.105L1.5 12l2.605 7.895L12 22.5l7.895-2.605L22.5 12l-2.605-7.895L12 1.5 4.105 4.105zM12 4.29l5.41 5.41L12 15.11 6.59 9.7 12 4.29z'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4.105 4.105L1.5 12l2.605 7.895L12 22.5l7.895-2.605L22.5 12l-2.605-7.895L12 1.5 4.105 4.105zM12 4.29l5.41 5.41L12 15.11 6.59 9.7 12 4.29z'/%3E%3C/svg%3E") no-repeat center / contain;
+  vertical-align: middle;
+}
+.icon-swift { color: #F05138 !important; }
+.icon-kotlin { color: #7F52FF !important; }
+.icon-go { color: #00ADD8 !important; }
+.icon-rust { color: #DEA584 !important; }
+.icon-php { color: #777BB4 !important; }
+.icon-csharp { color: #239120 !important; }
+.icon-cpp { color: #00599C !important; }
+.icon-ruby { color: #CC342D !important; }
+.icon-sql { color: #336791 !important; }
+.icon-yaml { color: #CB171E !important; }
+.icon-terminal { color: #4EAA25 !important; }
+.icon-svelte { color: #FF3E00 !important; }
 .icon-other { color: #8A99AD !important; }
 
 /* ── 파일 및 요소 컬러 유틸리티 ──────────────── */
