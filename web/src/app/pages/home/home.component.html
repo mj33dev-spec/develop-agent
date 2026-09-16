@@ -56,13 +56,13 @@
 
     <!-- Chat View when a room is selected -->
     <div class="chat-view" *ngIf="activeRoomId">
-      <app-chat [room]="activeRoom" (onBack)="onBackToHome()" (roomUpdated)="sidebarComponent?.loadData()"></app-chat>
+      <app-chat [room]="activeRoom" (onBack)="onBackToHome()" (roomUpdated)="sidebarComponent.loadData()"></app-chat>
     </div>
 
     <!-- Code Viewer when a file is selected -->
     <div class="code-view" *ngIf="activeFileId && activeFile" style="height: 100%; width: 100%;">
       <app-code-viewer [file]="activeFile" (onClose)="onBackToHome()" (sendFileQuestion)="onSendFileQuestion($event)"></app-code-viewer>
     </div>
-    
+
   </main>
 </div>
