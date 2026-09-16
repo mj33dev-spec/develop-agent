@@ -1,5 +1,5 @@
 <div *ngIf="isOpen" class="modalOverlay" (click)="handleOverlayClick($event)">
-  <div class="modalContent" [style.width]="width" (click)="$event.stopPropagation()">
+  <div class="modalContent" [style.width]="width" [style.height]="height" (click)="$event.stopPropagation()">
     
     <ng-container *ngIf="isForm; else noForm">
       <form (submit)="handleSubmit($event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0;">

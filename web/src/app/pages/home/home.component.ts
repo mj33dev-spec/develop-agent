@@ -133,7 +133,8 @@ export class HomeComponent implements OnInit {
 
   async createRoomFromHome(initialMessage?: string) {
     if (!this.sidebarComponent) return;
-    const room = await this.sidebarComponent.createNewRoom(initialMessage, null, true);
+    this.sidebarComponent.selectedModel = this.selectedModel;
+    const room = await this.sidebarComponent.createNewRoom(initialMessage, null, true, this.selectedModel);
     if (room && initialMessage) {
       setTimeout(() => {
         this.homeInput = '';
@@ -143,13 +144,18 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async onSendFileQuestion(data: { file: FileItem, question: string }) {
+  async onSendFileQuestion(data: { file: FileItem, question: string, model?: string }) {
     if (!this.sidebarComponent) return;
+
+    if (data.model) {
+      this.selectedModel = data.model;
+      this.sidebarComponent.selectedModel = data.model;
+    }
 
     const fileContextPrompt = `[첨부 파일 분석 요청: ${data.file.name}]\n\`\`\`${data.file.extension}\n${data.file.content}\n\`\`\`\n\n질문: ${data.question}`;
     
     // 1. Create a new chat room under the file's folder
-    const room = await this.sidebarComponent.createNewRoom(data.question, data.file.folder_id, false);
+    const room = await this.sidebarComponent.createNewRoom(data.question, data.file.folder_id, false, data.model || this.selectedModel);
     if (room) {
       // 2. Initialize room message with file context + question
       room.messages = [

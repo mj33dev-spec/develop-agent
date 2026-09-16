@@ -126,8 +126,9 @@
   <!-- 템플릿 모달 (c-modal 사용) -->
   <c-modal
     [isOpen]="isTemplateModalOpen"
-    [title]="templateModalMode === 'select' ? '내 템플릿 선택' : (templateModalMode === 'edit' ? '템플릿 수정' : '새 템플릿 업로드')"
+    [title]="templateModalMode === 'select' ? '템플릿 추가' : (templateModalMode === 'edit' ? '템플릿 수정' : '새 템플릿 업로드')"
     [width]="'820px'"
+    [height]="'80vh'"
     [customFooter]="true"
     (onClose)="closeTemplateModal()"
   >
@@ -144,8 +145,6 @@
                         (click)="selectFrameworkFilter(fw)">
                   @if (fw !== '전체') {
                     <i [class]="'bx ' + getSelectedFrameworkIcon(fw)"></i>
-                  } @else {
-                    <i class="bx bx-layer"></i>
                   }
                   <span>{{ fw }}</span>
                 </button>
@@ -203,7 +202,7 @@
                           <span class="dot green"></span>
                         </div>
                         <span class="group-folder-tag">
-                          <i class="bx bx-folder"></i> {{ selectedTemplate.name }}
+                          {{ selectedTemplate.name }}
                         </span>
                       </div>
 
@@ -256,7 +255,7 @@
             <div class="empty-preset-box">
               <i class="bx bx-folder-open empty-icon"></i>
               <p class="empty-text">등록된 템플릿이 없습니다.</p>
-              <p class="empty-sub-text">아래 "새 템플릿 등록" 버튼을 눌러 업로드하세요.</p>
+              <p class="empty-sub-text">아래 "템플릿 직접 만들기" 버튼을 눌러 업로드하세요.</p>
             </div>
           }
         </div>
@@ -404,7 +403,7 @@
       <div class="footer-left">
         @if (templateModalMode === 'select') {
           <c-button theme="neutral" (onClick)="templateModalMode = 'upload'">
-            <i class="bx bx-cloud-upload" style="font-size: 20px;"></i> 새 템플릿 등록
+            <i class="bx bx-cloud-upload" style="font-size: 20px;"></i> 템플릿 직접 만들기
           </c-button>
         }
 
@@ -425,19 +424,17 @@
             <c-button theme="primary"
                       [disabled]="!selectedTemplate"
                       (onClick)="submitSelectedTemplate()">
-              템플릿으로 생성하기
+              적용하기
             </c-button>
           }
           @case ('upload') {
             <c-button theme="primary"
-                      [disabled]="!uploadGroupName.trim() || uploadedCustomFiles.length === 0"
                       (onClick)="submitCustomUpload()">
               템플릿 등록하기
             </c-button>
           }
           @case ('edit') {
             <c-button theme="primary"
-                      [disabled]="!uploadGroupName.trim()"
                       (onClick)="submitEditTemplate()">
               수정 저장하기
             </c-button>

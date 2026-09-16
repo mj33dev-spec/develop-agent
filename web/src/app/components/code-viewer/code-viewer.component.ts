@@ -17,11 +17,11 @@ import { CBadgeComponent } from '../c-badge/c-badge.component';
 })
 export class CodeViewerComponent implements OnInit {
   @Input({ required: true }) file!: FileItem;
+  @Input() selectedModel: string = 'Gemini 3.6 Flash';
   @Output() onClose = new EventEmitter<void>();
-  @Output() sendFileQuestion = new EventEmitter<{ file: FileItem; question: string }>();
+  @Output() sendFileQuestion = new EventEmitter<{ file: FileItem; question: string; model: string }>();
 
   userInput: string = '';
-  selectedModel: string = 'Gemini 3.6 Flash';
   modelOptions: CDropdownOption[] = [
     { label: 'Gemini 3.6 Flash', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.6 Flash' },
     { label: 'Gemini 3.1 Pro', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.1 Pro' },
@@ -149,7 +149,7 @@ export class CodeViewerComponent implements OnInit {
   sendQuestion() {
     const text = this.userInput.trim();
     if (!text) return;
-    this.sendFileQuestion.emit({ file: this.file, question: text });
+    this.sendFileQuestion.emit({ file: this.file, question: text, model: this.selectedModel });
     this.userInput = '';
     const textarea = document.querySelector('.viewer-textarea') as HTMLTextAreaElement;
     if (textarea) textarea.style.height = 'auto';

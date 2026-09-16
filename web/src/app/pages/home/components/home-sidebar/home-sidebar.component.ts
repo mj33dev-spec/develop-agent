@@ -322,9 +322,17 @@ export class HomeSidebarComponent implements OnInit {
     this.isLoadingTemplates = true;
     try {
       this.myTemplates = await this.templateService.getTemplates();
+      if (this.filteredTemplates.length > 0) {
+        await this.selectTemplate(this.filteredTemplates[0]);
+      } else {
+        this.selectedTemplate = null;
+        this.selectedTemplateFiles = [];
+      }
     } catch (e: any) {
       console.error('템플릿 목록 로드 실패:', e);
       this.myTemplates = [];
+      this.selectedTemplate = null;
+      this.selectedTemplateFiles = [];
     } finally {
       this.isLoadingTemplates = false;
     }
@@ -344,10 +352,12 @@ export class HomeSidebarComponent implements OnInit {
     return this.myTemplates.filter(t => t.framework === this.selectedFrameworkFilter);
   }
 
-  selectFrameworkFilter(fw: string) {
+  async selectFrameworkFilter(fw: string) {
     this.selectedFrameworkFilter = fw;
-    // 필터 변경 시 선택 초기화
-    if (this.selectedTemplate && !this.filteredTemplates.find(t => t.id === this.selectedTemplate?.id)) {
+    // 필터 변경 시 첫 번째 항목 자동 선택
+    if (this.filteredTemplates.length > 0) {
+      await this.selectTemplate(this.filteredTemplates[0]);
+    } else {
       this.selectedTemplate = null;
       this.selectedTemplateFiles = [];
     }
@@ -425,7 +435,22 @@ export class HomeSidebarComponent implements OnInit {
 
   // 템플릿 수정 저장
   async submitEditTemplate() {
-    if (!this.editingTemplateId || !this.uploadGroupName.trim()) return;
+    if (!this.editingTemplateId) return;
+
+    if (!this.uploadGroupName.trim()) {
+      this.dAlert.warn('템플릿명을 입력해주세요.', '필수 입력 항목 누락');
+      return;
+    }
+
+    if (!this.selectedUploadFramework) {
+      this.dAlert.warn('프레임워크를 선택해주세요.', '필수 입력 항목 누락');
+      return;
+    }
+
+    if (this.uploadedCustomFiles.length === 0) {
+      this.dAlert.warn('구성 파일을 최소 1개 이상 첨부해주세요.', '필수 입력 항목 누락');
+      return;
+    }
 
     const files: { name: string; extension: string; content: string }[] = [];
 
@@ -500,7 +525,20 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
   }
 
   async submitCustomUpload() {
-    if (!this.uploadGroupName.trim()) return;
+    if (!this.uploadGroupName.trim()) {
+      this.dAlert.warn('템플릿명을 입력해주세요.', '필수 입력 항목 누락');
+      return;
+    }
+
+    if (!this.selectedUploadFramework) {
+      this.dAlert.warn('프레임워크를 선택해주세요.', '필수 입력 항목 누락');
+      return;
+    }
+
+    if (this.uploadedCustomFiles.length === 0) {
+      this.dAlert.warn('구성 파일을 최소 1개 이상 첨부해주세요.', '필수 입력 항목 누락');
+      return;
+    }
 
     const files: { name: string; extension: string; content: string }[] = [];
 
@@ -788,7 +826,7 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
   }
 
   // --- CRUD Operations ---
-  async createNewRoom(initialMessage?: string, folderId: string | null = null, silent: boolean = false) {
+  async createNewRoom(initialMessage?: string, folderId: string | null = null, silent: boolean = false, model?: string) {
     if (!silent) {
       this.dLoading.show('채팅방을 생성하는 중입니다...');
     }
@@ -797,7 +835,8 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
         ? (initialMessage.length > 18 ? initialMessage.substring(0, 18) + '...' : initialMessage) 
         : `새로운 채팅 ${this.rooms.length + 1}`;
         
-      const room: any = await this.roomService.createRoom(title, this.selectedModel, folderId, this.rooms.length);
+      const targetModel = model || this.selectedModel;
+      const room: any = await this.roomService.createRoom(title, targetModel, folderId, this.rooms.length);
       
       if (initialMessage) {
         room.messages = [

@@ -318,17 +318,27 @@ $sidebar-width: 260px;
   }
 }
 
+aside.sidebar {
+  ::ng-deep .modalBody {
+    padding: $spacing-16 calc(#{$spacing-20} - #{$spacing-12}) !important;
+  }
+}
+
 /* 템플릿 모달 스타일 */
 .modal-body-container {
   display: flex;
   flex-direction: column;
   gap: $spacing-8;
   padding-top: $spacing-4;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
 
   .category-pills {
+    padding: 0 $spacing-8;
     display: flex;
     align-items: center;
-    gap: $spacing-8;
+    gap: $spacing-12;
 
     .pill-btn {
       border: none;
@@ -343,16 +353,16 @@ $sidebar-width: 260px;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: $spacing-8;
+      gap: $spacing-4;
+      font-weight: $font-weight-bold;
 
       i {
-        font-size: 16px;
+        font-size: 20px;
       }
 
       &.active {
         background: $neu-bg;
         color: $neu-primary;
-        font-weight: $font-weight-bold;
         box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
       }
     }
@@ -361,13 +371,17 @@ $sidebar-width: 260px;
   .preset-content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 340px;
+    gap: $spacing-16;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
 
     .preset-list {
       display: flex;
       flex-direction: column;
       gap: $spacing-16;
-      max-height: 360px;
+      height: 100%;
+      min-height: 0;
       overflow-y: auto;
       padding: $spacing-12;
 
@@ -471,9 +485,12 @@ $sidebar-width: 260px;
       flex-direction: column;
       gap: $spacing-16;
       padding: $spacing-12;
+      height: 100%;
+      min-height: 0;
 
       &.empty-select {
         padding: $spacing-12;
+        height: 100%;
         .preset-inner {
           display: flex;
           flex-direction: column;
@@ -483,7 +500,7 @@ $sidebar-width: 260px;
           background: $neu-bg;
           border-radius: 18px;
           box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light;
-          min-height: 340px;
+          height: 100%;
           width: 100%;
           box-sizing: border-box;
 
@@ -495,7 +512,7 @@ $sidebar-width: 260px;
             min-height: auto;
 
             .empty-icon {
-              font-size: 52px;
+              font-size: 40px;
               color: $color-sub-text;
               margin-bottom: $spacing-12;
               display: block;
@@ -517,6 +534,9 @@ $sidebar-width: 260px;
         box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.6);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
         .card-top-bar {
           height: 36px;
@@ -552,10 +572,11 @@ $sidebar-width: 260px;
 
         .card-body-content {
           padding: $padding-normal;
+          flex: 1;
+          overflow-y: auto;
 
           .preset-hero-preview {
             display: flex;
-            align-items: center;
             gap: $spacing-8;
             margin-bottom: $spacing-16;
             padding-bottom: $spacing-16;
@@ -645,6 +666,7 @@ $sidebar-width: 260px;
   }
 
   .upload-form {
+    padding: 0 calc(#{$spacing-20} - #{$spacing-8});
     display: flex;
     flex-direction: column;
     gap: $spacing-24;

@@ -18,6 +18,7 @@ export class CModalComponent implements OnChanges, OnDestroy {
   @Input() submitTheme: 'primary' | 'error' | 'success' | 'warn' | 'neutral' | 'secondary' = 'primary';
   @Input() submitDisabled: boolean = false;
   @Input() width?: string;
+  @Input() height?: string;
   @Input() hideCancel: boolean = false;
   @Input() isForm: boolean = false;
 
