@@ -4,11 +4,59 @@
 .dropdownContainer {
   position: relative;
   display: inline-block;
-}
 
-.dropdownWrapper {
-  position: relative;
-  display: inline-block;
+  &[style*="width"] {
+    display: block;
+  }
+
+  .dropdownWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    c-button {
+      display: block;
+      width: 100%;
+
+      ::ng-deep .btn {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .multiSelectContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-8;
+    align-items: center;
+
+    .multiChipWrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-8;
+    }
+
+    .multiChip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba($color-primary, 0.1);
+      color: $color-primary;
+      border-radius: 999px;
+      padding: 6px 12px;
+      @include typo-caption-2;
+
+      :global(.material-symbols-outlined) {
+        font-size: $font-size-pc-body-2;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include hover;
+      }
+    }
+  }
 }
 
 .dropdown-portal-menu {
@@ -31,6 +79,7 @@
 
   &.fill {
     box-shadow: 10px 10px 20px $neu-shadow-dark, -10px -10px 20px $neu-shadow-light;
+
     hr {
       height: 1px;
       background: rgba(194, 209, 229, 0.6);
@@ -41,11 +90,56 @@
 
   &.outlinedDropdown {
     box-shadow: 8px 8px 16px $neu-shadow-dark, -8px -8px 16px $neu-shadow-light;
+
     hr {
       height: 1px;
       background: rgba(194, 209, 229, 0.6);
       margin: $spacing-4 0;
       border: none;
+    }
+  }
+
+  .dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: $spacing-8;
+    width: 100%;
+    padding: $spacing-8 $spacing-12;
+    border-radius: $radius-deep;
+    @include typo-body-3;
+    color: $color-text;
+    transition: background $transition-fast;
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover:not(.disabled) {
+      background: $neu-bg;
+      box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+      transform: translateY(-1px);
+    }
+
+    &.selected {
+      background: $neu-bg;
+      font-weight: 600;
+      color: $neu-primary;
+      box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+
+      .dropdownItemIcon {
+        color: $neu-primary;
+      }
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: none;
+    }
+
+    .dropdownItemIcon {
+      @include typo-body-1;
+      color: $color-sub-text;
     }
   }
 }
@@ -59,75 +153,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-.dropdownItem {
-  display: flex;
-  align-items: center;
-  gap: $spacing-8;
-  width: 100%;
-  padding: $spacing-8 $spacing-12;
-  border-radius: $radius-deep;
-  @include typo-body-3;
-  color: $color-text;
-  transition: background $transition-fast;
-  background: none;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
-
-  &:hover:not(.disabled) {
-    background: $neu-bg;
-    box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
-    transform: translateY(-1px);
-  }
-
-  &.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: none;
-  }
-}
-
-.dropdownItemIcon {
-  @include typo-body-1;
-  color: $color-sub-text;
-}
-
-// .bx-chevron-down {
-//   border: 1px solid $color-dark !important;
-// }
-
-.multiSelectContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-8;
-  align-items: center;
-}
-
-.multiChipWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-8;
-}
-
-.multiChip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba($color-primary, 0.1);
-  color: $color-primary;
-  border-radius: 999px;
-  padding: 6px 12px;
-  @include typo-caption-2;
-
-  :global(.material-symbols-outlined) {
-    font-size: $font-size-pc-body-2;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    @include hover;
   }
 }

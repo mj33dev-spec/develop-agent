@@ -1,5 +1,17 @@
 @use '../../../styles/config' as *;
 
+:host {
+  &[style*="width"] {
+    display: block;
+    width: 100%;
+
+    .btn {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}
+
 .btn {
     padding: $spacing-8 $spacing-16;
     display: inline-flex;

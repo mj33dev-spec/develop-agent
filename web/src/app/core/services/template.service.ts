@@ -24,13 +24,36 @@ export interface TemplateFile {
   order_index: number;
 }
 
-// 프레임워크별 기본 아이콘 매핑
+// 프레임워크별 기본 아이콘 및 브랜드 로고 색상 매핑
 const FRAMEWORK_ICONS: Record<string, string> = {
-  'Angular': 'bx bxl-angular',
-  'React': 'bx bxl-react',
-  'Vue': 'bx bxl-vuejs',
-  'HTML / JS': 'bx bxl-html5',
-  '기타 (Other)': 'bx bx-code-alt'
+  'Angular': 'bx bxl-angular icon-angular',
+  'React.js': 'bx bxl-react icon-react',
+  'React': 'bx bxl-react icon-react',
+  'Vue.js': 'bx bxl-vuejs icon-vue',
+  'Vue': 'bx bxl-vuejs icon-vue',
+  'Next.js': 'bx bxl-react icon-nextjs',
+  'Nuxt.js': 'bx bxl-vuejs icon-nuxtjs',
+  'Node.js': 'bx bxl-nodejs icon-nodejs',
+  'Nest.js': 'bx bxl-nodejs icon-nestjs',
+  'HTML5 / CSS3': 'bx bxl-html5 icon-html',
+  'HTML5': 'bx bxl-html5 icon-html',
+  'CSS3': 'bx bxl-css3 icon-css',
+  'SCSS': 'bx bxl-sass icon-scss',
+  'Bootstrap': 'bx bxl-bootstrap icon-bootstrap',
+  'Tailwind CSS': 'bx bxl-tailwind-css icon-tailwind',
+  'jQuery': 'bx bx-code-curly icon-jquery',
+  'JavaScript': 'bx bxl-javascript icon-javascript',
+  'TypeScript': 'bx bxl-typescript icon-typescript',
+  'Supabase': 'bx bxs-bolt icon-supabase',
+  'Spring Boot': 'bx bx-leaf icon-springboot',
+  'MongoDB': 'bx bxl-mongodb icon-mongodb',
+  'MariaDB': 'bx bx-server icon-mariadb',
+  'MySQL': 'bx bx-data icon-mysql',
+  'PostgreSQL': 'bx bxl-postgresql icon-postgresql',
+  'Flutter / Dart': 'bx bxl-flutter icon-flutter',
+  'Python': 'bx bxl-python icon-python',
+  'Docker': 'bx bxl-docker icon-docker',
+  '기타 (Other)': 'bx bx-code-alt icon-other'
 };
 
 @Injectable({

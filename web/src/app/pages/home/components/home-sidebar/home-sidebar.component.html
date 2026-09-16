@@ -1,6 +1,6 @@
 <aside class="sidebar" (contextmenu)="onSidebarContextMenu($event)">
   <!-- Hidden File Input for Attachments -->
-  <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;" />
+  <input #fileInput type="file" (change)="onFileSelected($event)" class="sidebar-hidden-file-input" />
 
   <div class="sidebar-header">
     <button class="sidebar-block-btn" (click)="openTemplateModal()">
@@ -142,7 +142,12 @@
                 <button class="pill-btn" 
                         [class.active]="selectedFrameworkFilter === fw"
                         (click)="selectFrameworkFilter(fw)">
-                  {{ fw }}
+                  @if (fw !== '전체') {
+                    <i [class]="'bx ' + getSelectedFrameworkIcon(fw)"></i>
+                  } @else {
+                    <i class="bx bx-layer"></i>
+                  }
+                  <span>{{ fw }}</span>
                 </button>
               }
             </div>
@@ -164,7 +169,7 @@
                        [class.selected]="selectedTemplate?.id === tpl.id"
                        (click)="selectTemplate(tpl)">
                     <div class="preset-icon">
-                      <i [class]="tpl.icon || 'bx bx-code-alt'"></i>
+                      <i [class]="getTemplateIcon(tpl)"></i>
                     </div>
                     <div class="preset-info">
                       <div class="preset-title-row">
@@ -204,7 +209,7 @@
 
                       <div class="card-body-content">
                         <div class="preset-hero-preview">
-                          <i [class]="(selectedTemplate.icon || 'bx bx-code-alt') + ' hero-icon'"></i>
+                          <i [class]="getTemplateIcon(selectedTemplate) + ' hero-icon'"></i>
                           <div class="hero-text">
                             <h3>{{ selectedTemplate.name }}</h3>
                             <p>{{ selectedTemplate.description || '등록된 설명 없음' }}</p>
@@ -212,7 +217,7 @@
                         </div>
 
                         <div class="preview-files-list">
-                          <div class="files-title"><i class="bx bx-file"></i> 포함된 구성 파일:</div>
+                          <div class="files-title">구성 파일</div>
                           @for (file of selectedTemplateFiles; track file.name) {
                             <div class="file-badge-item">
                               <i [class]="getFileIcon(file.extension)"></i>
@@ -263,7 +268,7 @@
           <div class="upload-form">
             <div class="form-row">
               <div class="form-group">
-                <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
+                <label>템플릿명 <span class="required">*</span></label>
                 <input type="text" 
                        class="form-input" 
                        placeholder="예: my-custom-component" 
@@ -271,16 +276,18 @@
               </div>
 
               <div class="form-group">
-                <label><i class="bx bx-code-alt"></i> 프레임워크 선택 <span class="required">*</span></label>
-                <c-dropdown [options]="uploadFrameworkOptions"
-                            [value]="selectedUploadFramework"
-                            [width]="'200px'"
-                            [icon]="getSelectedFrameworkIcon(selectedUploadFramework)"></c-dropdown>
+                <label>프레임워크 선택 <span class="required">*</span></label>
+                <div class="framework-dropdown-container">
+                  <c-dropdown [options]="uploadFrameworkOptions"
+                    [value]="selectedUploadFramework"
+                    [width]="'220px'"
+                    [icon]="getSelectedFrameworkIcon(selectedUploadFramework)"></c-dropdown>
+                </div>
               </div>
             </div>
 
             <div class="form-group">
-              <label><i class="bx bx-book-open"></i> README 설명글 (자동 README.md 생성)</label>
+              <label>README 설명글 (자동 README.md 생성)</label>
               <textarea class="form-textarea" 
                         rows="3" 
                         placeholder="템플릿 사용 방법이나 주요 설명글을 입력하세요. 자동 README.md 파일로 추가됩니다."
@@ -289,7 +296,7 @@
 
             <!-- 파일 첨부 영역 -->
             <div class="form-group">
-              <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
+              <label>구성 파일 첨부</label>
               <div class="file-upload-dropzone">
                 <input type="file" 
                        multiple 
@@ -328,7 +335,7 @@
           <div class="upload-form">
             <div class="form-row">
               <div class="form-group">
-                <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
+                <label>템플릿명 <span class="required">*</span></label>
                 <input type="text" 
                        class="form-input" 
                        placeholder="예: my-custom-component" 
@@ -336,15 +343,16 @@
               </div>
 
               <div class="form-group">
-                <label><i class="bx bx-code-alt"></i> 프레임워크 선택 <span class="required">*</span></label>
+                <label>프레임워크 선택 <span class="required">*</span></label>
                 <c-dropdown [options]="uploadFrameworkOptions"
                             [value]="selectedUploadFramework"
+                            [width]="'250px'"
                             [icon]="getSelectedFrameworkIcon(selectedUploadFramework)"></c-dropdown>
               </div>
             </div>
 
             <div class="form-group">
-              <label><i class="bx bx-book-open"></i> README 설명글</label>
+              <label>README 설명글</label>
               <textarea class="form-textarea" 
                         rows="3" 
                         placeholder="템플릿 사용 방법이나 주요 설명글을 입력하세요."
@@ -353,7 +361,7 @@
 
             <!-- 파일 첨부 영역 -->
             <div class="form-group">
-              <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
+              <label>구성 파일 첨부</label>
               <div class="file-upload-dropzone">
                 <input type="file" 
                        multiple 

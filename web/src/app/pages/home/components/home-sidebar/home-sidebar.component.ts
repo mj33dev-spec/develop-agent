@@ -51,24 +51,81 @@ export class HomeSidebarComponent implements OnInit {
   // 편집 모드: 수정 대상 템플릿 ID
   editingTemplateId: string | null = null;
 
-  // Custom Upload Form State
+  // 사용자 지정 업로드 폼 상태
   uploadGroupName: string = '';
-  selectedUploadFramework: string = 'Angular';
+  selectedUploadFramework: string = 'HTML5';
   uploadFrameworkOptions: CDropdownOption[] = [
-    { label: 'Angular', value: 'angular', icon: 'bxl-angular text-red', onClick: () => this.selectedUploadFramework = 'Angular' },
-    { label: 'React', value: 'react', icon: 'bxl-react text-blue', onClick: () => this.selectedUploadFramework = 'React' },
-    { label: 'Vue', value: 'vue', icon: 'bxl-vuejs text-green', onClick: () => this.selectedUploadFramework = 'Vue' },
-    { label: 'HTML / JS', value: 'html', icon: 'bxl-html5 text-orange', onClick: () => this.selectedUploadFramework = 'HTML / JS' },
-    { label: '기타 (Other)', value: 'other', icon: 'bx-code-alt text-sub', onClick: () => this.selectedUploadFramework = '기타 (Other)' }
+    // 마크업 및 스타일링
+    { label: 'HTML5', value: 'HTML5', icon: 'bxl-html5 icon-html', onClick: () => this.selectedUploadFramework = 'HTML5' },
+    { label: 'CSS3', value: 'CSS3', icon: 'bxl-css3 icon-css', onClick: () => this.selectedUploadFramework = 'CSS3' },
+    { label: 'SCSS', value: 'SCSS', icon: 'bxl-sass icon-scss', onClick: () => this.selectedUploadFramework = 'SCSS' },
+    { label: 'Bootstrap', value: 'Bootstrap', icon: 'bxl-bootstrap icon-bootstrap', onClick: () => this.selectedUploadFramework = 'Bootstrap' },
+    { label: 'Tailwind CSS', value: 'Tailwind CSS', icon: 'bxl-tailwind-css icon-tailwind', onClick: () => this.selectedUploadFramework = 'Tailwind CSS' },
+    { label: 'jQuery', value: 'jQuery', icon: 'bx-code-curly icon-jquery', onClick: () => this.selectedUploadFramework = 'jQuery' },
+    { label: 'JavaScript', value: 'JavaScript', icon: 'bxl-javascript icon-javascript', onClick: () => this.selectedUploadFramework = 'JavaScript' },
+    { label: 'TypeScript', value: 'TypeScript', icon: 'bxl-typescript icon-typescript', onClick: () => this.selectedUploadFramework = 'TypeScript' },
+    { label: 'Java', value: 'Java', icon: 'bxl-java icon-java', onClick: () => this.selectedUploadFramework = 'Java' },
+    // 프론트엔드
+    { label: 'React.js', value: 'React.js', icon: 'bxl-react icon-react', onClick: () => this.selectedUploadFramework = 'React.js' },
+    { label: 'Next.js', value: 'Next.js', icon: 'bxl-react icon-nextjs', onClick: () => this.selectedUploadFramework = 'Next.js' },
+    { label: 'Angular', value: 'Angular', icon: 'bxl-angular icon-angular', onClick: () => this.selectedUploadFramework = 'Angular' },
+    { label: 'Vue.js', value: 'Vue.js', icon: 'bxl-vuejs icon-vue', onClick: () => this.selectedUploadFramework = 'Vue.js' },
+    { label: 'Nuxt.js', value: 'Nuxt.js', icon: 'bxl-vuejs icon-nuxtjs', onClick: () => this.selectedUploadFramework = 'Nuxt.js' },
+    // 백엔드
+    { label: 'Node.js', value: 'Node.js', icon: 'bxl-nodejs icon-nodejs', onClick: () => this.selectedUploadFramework = 'Node.js' },
+    { label: 'Nest.js', value: 'Nest.js', icon: 'bxl-nodejs icon-nestjs', onClick: () => this.selectedUploadFramework = 'Nest.js' },
+    { label: 'Supabase', value: 'Supabase', icon: 'bxs-bolt icon-supabase', onClick: () => this.selectedUploadFramework = 'Supabase' },
+    { label: 'Spring Boot', value: 'Spring Boot', icon: 'bx-leaf icon-springboot', onClick: () => this.selectedUploadFramework = 'Spring Boot' },
+    { label: 'MongoDB', value: 'MongoDB', icon: 'bxl-mongodb icon-mongodb', onClick: () => this.selectedUploadFramework = 'MongoDB' },
+    { label: 'MariaDB', value: 'MariaDB', icon: 'bx-server icon-mariadb', onClick: () => this.selectedUploadFramework = 'MariaDB' },
+    { label: 'MySQL', value: 'MySQL', icon: 'bx-data icon-mysql', onClick: () => this.selectedUploadFramework = 'MySQL' },
+    { label: 'PostgreSQL', value: 'PostgreSQL', icon: 'bxl-postgresql icon-postgresql', onClick: () => this.selectedUploadFramework = 'PostgreSQL' },
+    // 기타
+    { label: 'Flutter / Dart', value: 'Flutter / Dart', icon: 'bxl-flutter icon-flutter', onClick: () => this.selectedUploadFramework = 'Flutter / Dart' },
+    { label: 'Python', value: 'Python', icon: 'bxl-python icon-python', onClick: () => this.selectedUploadFramework = 'Python' },
+    { label: 'Docker', value: 'Docker', icon: 'bxl-docker icon-docker', onClick: () => this.selectedUploadFramework = 'Docker' },
+    { label: '기타 (Other)', value: '기타 (Other)', icon: 'bx-code-alt icon-other', onClick: () => this.selectedUploadFramework = '기타 (Other)' }
   ];
 
   getSelectedFrameworkIcon(fw: string): string {
     const f = (fw || '').toLowerCase();
-    if (f.includes('angular')) return 'bxl-angular text-red';
-    if (f.includes('react')) return 'bxl-react text-blue';
-    if (f.includes('vue')) return 'bxl-vuejs text-green';
-    if (f.includes('html') || f.includes('js')) return 'bxl-html5 text-orange';
-    return 'bx-code-alt text-sub';
+    if (f.includes('angular')) return 'bxl-angular icon-angular';
+    if (f.includes('next')) return 'bxl-react icon-nextjs';
+    if (f.includes('nuxt')) return 'bxl-vuejs icon-nuxtjs';
+    if (f.includes('react')) return 'bxl-react icon-react';
+    if (f.includes('vue')) return 'bxl-vuejs icon-vue';
+    if (f.includes('nest')) return 'bxl-nodejs icon-nestjs';
+    if (f.includes('node')) return 'bxl-nodejs icon-nodejs';
+    if (f.includes('typescript') || f.includes('ts')) return 'bxl-typescript icon-typescript';
+    if (f.includes('jquery')) return 'bx-code-curly icon-jquery';
+    if (f.includes('javascript') || f.includes('js')) return 'bxl-javascript icon-javascript';
+    if (f.includes('flutter') || f.includes('dart')) return 'bxl-flutter icon-flutter';
+    if (f.includes('bootstrap')) return 'bxl-bootstrap icon-bootstrap';
+    if (f.includes('tailwind')) return 'bxl-tailwind-css icon-tailwind';
+    if (f.includes('scss') || f.includes('sass')) return 'bxl-sass icon-scss';
+    if (f.includes('css') && !f.includes('html')) return 'bxl-css3 icon-css';
+    if (f.includes('html')) return 'bxl-html5 icon-html';
+    if (f.includes('python')) return 'bxl-python icon-python';
+    if (f.includes('spring')) return 'bx-leaf icon-springboot';
+    if (f.includes('java') && !f.includes('script')) return 'bxl-java icon-java';
+    if (f.includes('mongo')) return 'bxl-mongodb icon-mongodb';
+    if (f.includes('supabase')) return 'bxs-bolt icon-supabase';
+    if (f.includes('maria')) return 'bx-server icon-mariadb';
+    if (f.includes('mysql')) return 'bx-data icon-mysql';
+    if (f.includes('postgres')) return 'bxl-postgresql icon-postgresql';
+    if (f.includes('docker')) return 'bxl-docker icon-docker';
+    return 'bx-code-alt icon-other';
+  }
+
+  getTemplateIcon(tpl: any): string {
+    if (!tpl) return 'bx bx-code-alt icon-other';
+    if (tpl.framework) {
+      return 'bx ' + this.getSelectedFrameworkIcon(tpl.framework);
+    }
+    if (tpl.icon && tpl.icon.includes('icon-')) {
+      return tpl.icon.startsWith('bx') ? tpl.icon : 'bx ' + tpl.icon;
+    }
+    return 'bx ' + this.getSelectedFrameworkIcon(tpl.icon || tpl.name || '');
   }
   uploadDescription: string = '';
   uploadedCustomFiles: { name: string; extension: string; content: string; size?: number }[] = [];
@@ -196,16 +253,18 @@ export class HomeSidebarComponent implements OnInit {
   getFileIcon(ext: string): string {
     const e = (ext || '').toLowerCase();
     switch (e) {
-      case 'html': case 'htm': return 'bx bxl-html5 text-orange';
-      case 'css': case 'scss': case 'less': return 'bx bxl-css3 text-blue';
-      case 'js': case 'jsx': return 'bx bxl-javascript text-yellow';
-      case 'ts': case 'tsx': return 'bx bxl-typescript text-blue';
-      case 'py': return 'bx bxl-python text-yellow';
-      case 'java': return 'bx bxl-java text-red';
-      case 'json': return 'bx bx-code-curly text-green';
-      case 'md': return 'bx bxl-markdown text-purple';
-      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': return 'bx bx-image text-green';
-      default: return 'bx bx-file text-sub';
+      case 'html': case 'htm': return 'bx bxl-html5 icon-html';
+      case 'css': return 'bx bxl-css3 icon-css';
+      case 'scss': case 'sass': return 'bx bxl-sass icon-scss';
+      case 'less': return 'bx bxl-css3 icon-css';
+      case 'js': case 'jsx': return 'bx bxl-javascript icon-javascript';
+      case 'ts': case 'tsx': return 'bx bxl-typescript icon-typescript';
+      case 'py': return 'bx bxl-python icon-python';
+      case 'java': return 'bx bxl-java icon-java';
+      case 'json': return 'bx bx-code-curly icon-json';
+      case 'md': return 'bx bxl-markdown icon-markdown';
+      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': return 'bx bx-image icon-image';
+      default: return 'bx bx-file icon-other';
     }
   }
 
@@ -248,7 +307,7 @@ export class HomeSidebarComponent implements OnInit {
     this.uploadGroupName = '';
     this.uploadDescription = '';
     this.uploadedCustomFiles = [];
-    this.selectedUploadFramework = 'Angular';
+    this.selectedUploadFramework = 'HTML5';
     this.isTemplateModalOpen = true;
     // DB에서 내 템플릿 목록 로드
     await this.loadMyTemplates();
@@ -345,7 +404,7 @@ export class HomeSidebarComponent implements OnInit {
     this.editingTemplateId = template.id;
     this.uploadGroupName = template.name;
     this.uploadDescription = template.description || '';
-    this.selectedUploadFramework = template.framework || 'Angular';
+    this.selectedUploadFramework = template.framework || 'HTML5';
 
     // 기존 파일 목록 로드 (README.md 제외 - 자동 생성되므로)
     const files = template.template_files && template.template_files.length > 0

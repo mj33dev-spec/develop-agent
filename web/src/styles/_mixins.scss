@@ -1,4 +1,5 @@
 @use 'config' as *;
+@forward 'config';
 
 @mixin hover {
     cursor: pointer;
@@ -8,22 +9,24 @@
     }
 }
 
-// ── Neumorphism Common Mixins ────────────────
+// ── 뉴모피즘 공통 믹스인 ────────────────
 
-// 볼록 튀어나온 입체 패널/카드
-@mixin neu-extruded($radius: 20px, $shadow: $shadow-neu-extruded-md) {
+// 1) 돌출된 3D 양각 효과 믹스인 (카드, 버튼, 돌출 패널용)
+@mixin neu-extruded($radius: 16px, $shadow: $shadow-neu-extruded-md) {
   background: $neu-bg;
   border-radius: $radius;
   box-shadow: $shadow;
   border: none;
+  transition: all 0.2s ease;
 }
 
-// 오목하게 들어간 인풋/컨테이너
-@mixin neu-inset($radius: 14px, $shadow: $shadow-neu-inset-md) {
+// 2) 안으로 파여진 3D 음각 효과 믹스인 (인풋, 선택된 카드, 눌린 버튼용)
+@mixin neu-inset($radius: 12px, $shadow: $shadow-neu-inset-md) {
   background: $neu-bg;
   border-radius: $radius;
   box-shadow: $shadow;
   border: none;
+  transition: all 0.2s ease;
 }
 
 // 뉴모피즘 프라이머리/소프트 버튼
@@ -163,5 +166,32 @@
     @include typo-caption-1;
     color: $color-sub-text;
     margin: 0;
+  }
+}
+
+// ── 3) 뉴모피즘 공통 인풋 & 텍스트에어리어 음각 믹스인 ────────────────
+@mixin neu-input($radius: $radius-deep) {
+  @include neu-inset($radius);
+  width: 100%;
+  min-height: 40px;
+  padding: $spacing-8 $spacing-16;
+  @include typo-body-3;
+  color: $neu-text;
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
+
+  &:focus {
+    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.4);
+  }
+
+  &::placeholder {
+    color: $neu-text-secondary;
+    opacity: 0.7;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }

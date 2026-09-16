@@ -1,4 +1,11 @@
 @use "styles/config" as *;
+@use "styles/mixins" as *;
+
+/* ── 전역 공통 폼 인풋 & 텍스트에어리어 스타일 ──────────────── */
+.form-input, .form-textarea {
+  @include neu-input;
+}
+
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
@@ -13,5 +20,66 @@ body {
   background-color: $color-bg;
   color: $color-text;
 }
+
+/* 전역 커스텀 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(163, 177, 198, 0.5);
+  border-radius: 10px;
+
+  &:hover {
+    background: rgba(163, 177, 198, 0.8);
+  }
+}
+
 @import './app/core/services/d-loading.scss';
 @import './app/core/services/d-tooltip.scss';
+
+/* ── 프레임워크 & 기술 스택 브랜드 아이콘 색상 ──────────────── */
+.icon-angular { color: #DD0031 !important; }
+.icon-react { color: #61DAFB !important; }
+.icon-vue { color: #4FC08D !important; }
+.icon-nextjs { color: #111111 !important; }
+.icon-nuxtjs { color: #00DC82 !important; }
+.icon-nestjs { color: #E0234E !important; }
+.icon-nodejs { color: #339933 !important; }
+.icon-javascript { color: #F7DF1E !important; }
+.icon-typescript { color: #3178C6 !important; }
+.icon-flutter { color: #02569B !important; }
+.icon-html { color: #E34F26 !important; }
+.icon-css { color: #1572B6 !important; }
+.icon-scss { color: #CC6699 !important; }
+.icon-bootstrap { color: #7952B3 !important; }
+.icon-tailwind { color: #38BDF8 !important; }
+.icon-python { color: #3776AB !important; }
+.icon-java { color: #5382A1 !important; }
+.icon-springboot { color: #6DB33F !important; }
+.icon-mongodb { color: #47A248 !important; }
+.icon-supabase { color: #3FCF8E !important; }
+.icon-jquery { color: #0769AD !important; }
+.icon-mysql { color: #4479A1 !important; }
+.icon-mariadb { color: #003545 !important; }
+.icon-postgresql { color: #4169E1 !important; }
+.icon-docker { color: #2496ED !important; }
+.icon-json { color: #00B4D8 !important; }
+.icon-markdown { color: #0083B0 !important; }
+.icon-image { color: #2EC4B6 !important; }
+.icon-other { color: #8A99AD !important; }
+
+/* ── 파일 및 요소 컬러 유틸리티 ──────────────── */
+.text-orange { color: #E34F26 !important; }
+.text-blue { color: #3178C6 !important; }
+.text-yellow { color: #F7DF1E !important; }
+.text-green { color: #339933 !important; }
+.text-purple { color: #0083B0 !important; }
+.text-red { color: #DD0031 !important; }
+.text-sub { color: #8A99AD !important; }
+

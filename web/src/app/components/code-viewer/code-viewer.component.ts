@@ -68,15 +68,18 @@ export class CodeViewerComponent implements OnInit {
   get fileIconClass(): string {
     const ext = (this.file?.extension || '').toLowerCase();
     switch (ext) {
-      case 'html': case 'htm': return 'bx bxl-html5 text-orange';
-      case 'css': case 'scss': case 'less': return 'bx bxl-css3 text-blue';
-      case 'js': case 'jsx': return 'bx bxl-javascript text-yellow';
-      case 'ts': case 'tsx': return 'bx bxl-typescript text-blue';
-      case 'py': return 'bx bxl-python text-yellow';
-      case 'java': return 'bx bxl-java text-red';
-      case 'json': return 'bx bx-code-curly text-green';
-      case 'md': return 'bx bxl-markdown text-purple';
-      default: return 'bx bx-code-alt text-sub';
+      case 'html': case 'htm': return 'bx bxl-html5 icon-html';
+      case 'css': return 'bx bxl-css3 icon-css';
+      case 'scss': case 'sass': return 'bx bxl-sass icon-scss';
+      case 'less': return 'bx bxl-css3 icon-css';
+      case 'js': case 'jsx': return 'bx bxl-javascript icon-javascript';
+      case 'ts': case 'tsx': return 'bx bxl-typescript icon-typescript';
+      case 'py': return 'bx bxl-python icon-python';
+      case 'java': return 'bx bxl-java icon-java';
+      case 'json': return 'bx bx-code-curly icon-json';
+      case 'md': return 'bx bxl-markdown icon-markdown';
+      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': return 'bx bx-image icon-image';
+      default: return 'bx bx-code-alt icon-other';
     }
   }
 

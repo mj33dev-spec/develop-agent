@@ -1,4 +1,4 @@
-<div #anchorRef class="dropdownContainer">
+<div #anchorRef class="dropdownContainer" [style.width]="width">
   <!-- More Variant -->
   <ng-container *ngIf="variant === 'more'">
     <div class="dropdownWrapper">
@@ -8,20 +8,19 @@
 
   <!-- Button/Multi Variant -->
   <ng-container *ngIf="variant !== 'more' && (value !== undefined || variant === 'multi')">
-    <div class="dropdownWrapper" [style.width]="width">
+    <div class="dropdownWrapper" [style.width]="width ? '100%' : 'auto'">
       <c-button
         type="button"
         [theme]="variant === 'fill' ? 'neutral' : 'outlinedNeutral'"
-        [icon]="icon"
         (onClick)="toggleDropdown()"
         [style.width]="width ? '100%' : 'auto'"
-        [style.justifyContent]="width ? 'space-between' : 'center'"
         [disabled]="disabled"
       >
-        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          {{ value }}
+        <span style="display: flex; align-items: center; gap: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;">
+          <i *ngIf="icon" class="bx" [ngClass]="icon" style="font-size: 20px;"></i>
+          <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ value }}</span>
         </span>
-        <i class="bx bx-chevron-down" style="margin-left: 8px; margin-right: -4px; font-size: 20px;"></i>
+        <i class="bx bx-chevron-down" style="margin-left: 8px; font-size: 20px; flex-shrink: 0;"></i>
       </c-button>
     </div>
 
@@ -54,6 +53,7 @@
           *ngIf="!isDivider(opt)"
           type="button"
           class="dropdownItem"
+          [class.selected]="isOptionSelected(opt)"
           [class.disabled]="isOptionDisabled(opt)"
           [disabled]="isOptionDisabled(opt)"
           (click)="handleItemClick($event, opt)"

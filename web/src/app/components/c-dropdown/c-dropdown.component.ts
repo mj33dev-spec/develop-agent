@@ -192,6 +192,18 @@ export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
     return (opt && opt.disabled) || this.disabledList.includes(label);
   }
 
+  isOptionSelected(opt: any): boolean {
+    const label = this.getOptionLabel(opt);
+    const val = this.isStringOption(opt) ? opt : (opt.value !== undefined ? opt.value : opt.label);
+    if (this.variant === 'multi') {
+      return this.selectedValues.includes(val) || this.selectedValues.includes(label);
+    }
+    if (this.value !== undefined) {
+      return this.value === val || this.value === label;
+    }
+    return false;
+  }
+
   handleItemClick(event: MouseEvent, opt: any) {
     event.stopPropagation();
     if (this.isOptionDisabled(opt)) return;

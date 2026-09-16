@@ -15,38 +15,14 @@ export class ChatInputService {
   ): CDropdownOption[] {
     return [
       {
-        label: '사진 첨부',
+        label: '이미지 첨부',
         icon: 'bx bx-image-add',
         onClick: () => this.selectImageFile(onImageSelected)
       },
-      {
-        label: 'HTML 코드 조각',
-        icon: 'bx bxl-html5',
-        onClick: () => {
-          const snippet = '```html\n<!-- 여기에 HTML 코드를 입력하세요 -->\n<div class="container">\n  \n</div>\n```\n';
-          onCodeSnippetSelected(snippet);
-        }
-      },
-      {
-        label: 'CSS 코드 조각',
-        icon: 'bx bxl-css3',
-        onClick: () => {
-          const snippet = '```css\n/* 여기에 CSS 코드를 입력하세요 */\n.container {\n  display: flex;\n}\n```\n';
-          onCodeSnippetSelected(snippet);
-        }
-      },
-      {
-        label: 'JavaScript 코드 조각',
-        icon: 'bx bxl-javascript',
-        onClick: () => {
-          const snippet = '```javascript\n// 여기에 JS 코드를 입력하세요\nfunction handleAction() {\n  console.log("Hello World");\n}\n```\n';
-          onCodeSnippetSelected(snippet);
-        }
-      }
     ];
   }
 
-  // 숨겨진 파일 인풋을 트리거하여 사진 첨부
+  // 숨겨진 파일 인풋을 트리거하여 이미지 첨부
   private selectImageFile(onImageSelected: (dataUrl: string, fileName: string) => void) {
     const input = document.createElement('input');
     input.type = 'file';
