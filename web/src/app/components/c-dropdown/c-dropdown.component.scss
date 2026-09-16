@@ -11,11 +11,11 @@
   top: calc(100% + 8px);
   right: 0;
   width: 180px;
-  background: $color-white;
-  border: 1px solid $color-border;
-  border-radius: $radius-deep;
-  box-shadow: $shadow-lg;
-  padding: $spacing-4;
+  background: $neu-bg;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 10px 10px 20px $neu-shadow-dark, -10px -10px 20px $neu-shadow-light;
+  padding: $spacing-8;
   z-index: $z-dropdown;
   animation: dropdownIn 150ms ease;
   max-height: 320px;
@@ -23,7 +23,7 @@
 
   hr {
     height: 1px;
-    background: $color-border;
+    background: rgba(194, 209, 229, 0.6);
     margin: $spacing-8 0;
     border: none;
   }
@@ -34,11 +34,11 @@
   top: calc(100% + 8px);
   right: 0;
   width: 180px;
-  background: $color-white;
-  border: 1px solid $color-border;
-  border-radius: $radius-normal;
-  box-shadow: none;
-  padding: $spacing-4;
+  background: $neu-bg;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 8px 8px 16px $neu-shadow-dark, -8px -8px 16px $neu-shadow-light;
+  padding: $spacing-8;
   z-index: $z-dropdown;
   animation: dropdownIn 150ms ease;
   max-height: 320px;
@@ -46,7 +46,7 @@
 
   hr {
     height: 1px;
-    background: $color-border;
+    background: rgba(194, 209, 229, 0.6);
     margin: $spacing-4 0;
     border: none;
   }
@@ -80,7 +80,9 @@
   white-space: nowrap;
 
   &:hover:not(.disabled) {
-    background: $color-surface;
+    background: $neu-bg;
+    box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+    transform: translateY(-1px);
   }
 
   &.disabled {

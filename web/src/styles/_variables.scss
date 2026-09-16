@@ -13,10 +13,21 @@ $font-weight-bold: 700;
 $color-primary: #4A86FF;
 $color-secondary: #6B5CE7;
 
+// ── Neumorphism Design Tokens ─────────────────
+$neu-bg: #e4ebf5;
+$neu-shadow-dark: #c2d1e5;
+$neu-shadow-light: #ffffff;
+$neu-border-color: #b8c9df;
+$neu-border: 1px solid $neu-border-color;
+$neu-primary: #4A86FF;
+$neu-primary-gradient: linear-gradient(145deg, #4f8fff, #4278e6);
+$neu-text: #2d3748;
+$neu-text-secondary: #718096;
+
 // ── Backgrounds ───────────────────────────────
-$color-bg: #FAFBFD;
-$color-surface: #F8FAFD;
-$color-surface-alt: #F1F4F9;
+$color-bg: #e4ebf5;
+$color-surface: #e4ebf5;
+$color-surface-alt: #d9e3f0;
 $color-white: #FFFFFF;
 
 // ── Text ──────────────────────────────────────
@@ -26,7 +37,7 @@ $color-text-secondary: #757B80;
 $color-sub-text: #A4ADB2;
 
 // ── Neutrals ─────────────────────────────────
-$color-border: #E8EDF4;
+$color-border: #b8c9df;
 $color-light-grey: #F5F5F5;
 $color-grey: #EAEAEA;
 $color-dark-grey: #999999;

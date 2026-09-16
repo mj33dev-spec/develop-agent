@@ -7,7 +7,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(228, 235, 245, 0.65);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,9 +22,10 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-16;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-  background-color: $color-white;
-  border-radius: $radius-deep;
+  box-shadow: 0 20px 48px rgba(162, 178, 201, 0.55), 0 4px 12px rgba(0, 0, 0, 0.04);
+  background-color: $neu-bg;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   box-sizing: border-box;
 }
 

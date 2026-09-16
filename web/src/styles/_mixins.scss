@@ -2,10 +2,99 @@
 
 @mixin hover {
     cursor: pointer;
-    translate: 0.2s ease-in;
+    transition: all 0.2s ease;
     &:hover {
-        opacity: 0.8;
+        opacity: 0.85;
     }
+}
+
+// ── Neumorphism Common Mixins ────────────────
+
+// 볼록 튀어나온 입체 패널/카드
+@mixin neu-extruded($radius: 20px, $shadow: $shadow-neu-extruded-md) {
+  background: $neu-bg;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  border: none;
+}
+
+// 오목하게 들어간 인풋/컨테이너
+@mixin neu-inset($radius: 14px, $shadow: $shadow-neu-inset-md) {
+  background: $neu-bg;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  border: none;
+}
+
+// 뉴모피즘 프라이머리/소프트 버튼
+@mixin neu-button($primary: true, $radius: 16px) {
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  @if $primary {
+    background: $neu-primary-gradient;
+    color: $color-white;
+    box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 8px 8px 18px $neu-shadow-dark, -8px -8px 18px $neu-shadow-light;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.25), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
+    }
+  } @else {
+    background: $neu-bg;
+    color: $neu-text;
+    box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// 뉴모피즘 원형 아이콘 버튼
+@mixin neu-icon-btn($size: 40px) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: $neu-bg;
+  box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+    transform: translateY(-1px);
+  }
+
+  &:active, &.active {
+    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+    transform: translateY(0);
+  }
 }
 
 @mixin section-header-text {

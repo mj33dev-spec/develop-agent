@@ -1,94 +1,199 @@
 @use '../../../styles/variables' as *;
 
+// 뉴모피즘 믹스인 및 변수 정의
+$neu-bg: #e4ebf5;
+$neu-shadow-dark: #c2d1e5;
+$neu-shadow-light: #ffffff;
+$neu-primary: #4A86FF;
+$neu-primary-gradient: linear-gradient(145deg, #4f8fff, #4278e6);
+$neu-text: #2d3748;
+$neu-text-secondary: #718096;
+
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: $color-bg;
+  min-height: 100vh;
+  background-color: $neu-bg;
+  padding: $spacing-24;
 }
 
 .login-box {
-  background: $color-white;
-  padding: $padding-large;
-  border-radius: $radius-deep;
-  border: 1px solid $color-border;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  background: $neu-bg;
+  padding: 40px 36px;
+  border-radius: 28px;
+  box-shadow: 14px 14px 28px $neu-shadow-dark, -14px -14px 28px $neu-shadow-light;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-icon-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: $neu-bg;
+  box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $spacing-24;
+
+  .logo-icon {
+    font-size: 32px;
+    color: $neu-primary;
+  }
 }
 
 h2 {
   margin-top: 0;
   margin-bottom: $spacing-8;
-  color: $color-text;
+  color: $neu-text;
   text-align: center;
   @include typo-title-2;
+  font-weight: 700;
 }
 
 .subtitle {
-  color: $color-text-secondary;
+  color: $neu-text-secondary;
   @include typo-body-2;
   text-align: center;
   margin-bottom: $spacing-32;
+  word-break: keep-all;
+}
+
+form {
+  width: 100%;
 }
 
 .form-group {
   margin-bottom: $spacing-24;
-}
-
-label {
-  display: block;
-  margin-bottom: $spacing-8;
-  @include typo-body-2;
-  font-weight: 500;
-  color: $color-text;
-}
-
-input {
   width: 100%;
-  padding: $spacing-12;
-  border: 1px solid $color-border;
-  border-radius: $radius-normal;
-  @include typo-body-1;
-  color: $color-text;
-  box-sizing: border-box;
 
-  &:focus {
+  label {
+    display: block;
+    margin-bottom: $spacing-8;
+    @include typo-body-2;
+    font-weight: 600;
+    color: $neu-text;
+    padding-left: 4px;
+  }
+}
+
+// 오목한 입력 폼 (Inset Neumorphism Input)
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: $neu-bg;
+  border-radius: 16px;
+  box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light;
+  padding: 4px 16px;
+  height: 52px;
+  transition: all 0.2s ease;
+
+  .input-icon {
+    font-size: 22px;
+    color: $neu-text-secondary;
+    margin-right: 10px;
+    user-select: none;
+  }
+
+  input {
+    flex: 1;
+    height: 100%;
+    background: transparent;
+    border: none;
     outline: none;
-    border-color: $color-primary;
-    box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+    @include typo-body-1;
+    color: $neu-text;
+    font-weight: 500;
+
+    &::placeholder {
+      color: #a0aec0;
+    }
+  }
+
+  &:focus-within {
+    box-shadow: inset 5px 5px 10px #b8c3d1, inset -5px -5px 10px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.4);
+
+    .input-icon {
+      color: $neu-primary;
+    }
   }
 }
 
 .button-group {
   display: flex;
   width: 100%;
-  margin-bottom: $spacing-16;
+  margin-top: $spacing-8;
+  margin-bottom: $spacing-20;
 }
 
-c-button {
-  display: block;
+// 볼록한 뉴모피즘 프라이머리 버튼
+.neu-btn {
   width: 100%;
-}
+  height: 52px;
+  border: none;
+  border-radius: 16px;
+  background: $neu-primary-gradient;
+  color: $color-white;
+  box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 
-::ng-deep .w-full {
-  width: 100%;
+  .btn-text {
+    @include typo-body-1;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 18px $neu-shadow-dark, -8px -8px 18px $neu-shadow-light;
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.25), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+  }
 }
 
 .extra-links {
   display: flex;
   justify-content: center;
-  margin-top: $spacing-16;
+  width: 100%;
 }
 
+// 회원가입 텍스트 링크 (뉴모피즘 제거)
 .link-text {
-  color: $color-primary;
+  color: $neu-primary;
   @include typo-body-2;
+  font-weight: 500;
   cursor: pointer;
   text-decoration: none;
+  padding: 6px 12px;
+  transition: all 0.2s ease;
 
   &:hover {
     text-decoration: underline;
+    opacity: 0.85;
+  }
+}
+
+// 회원가입 모달 내부 오목 스타일
+.neu-form-group {
+  .input-wrapper {
+    margin-top: $spacing-4;
   }
 }

@@ -6,15 +6,23 @@
     align-items: center;
     justify-content: center;
     gap: $spacing-4;
-    min-height: 36px;
-    border: 1px solid transparent;
-    border-radius: $radius-normal;
+    min-height: 40px;
+    border: none;
+    border-radius: 14px;
     @include typo-caption-1;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.2s ease-in;
+    box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+    transition: all 0.2s ease;
 
-    &:hover {
-        opacity: 0.8;
+    &:hover:not(:disabled) {
+        box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+        transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+        box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+        transform: translateY(0);
     }
 
     i.bx {
@@ -23,19 +31,26 @@
 
     &.btn-small {
         padding: $spacing-4 $spacing-8;
-        min-height: min-content;
+        min-height: 32px;
+        border-radius: 10px;
         @include typo-caption-2;
     }
 
     &.btn-large {
         padding: $spacing-12 $spacing-24;
-        min-height: 40px;
+        min-height: 48px;
+        border-radius: 16px;
         @include typo-body-2;
     }
 
     &.btn-primary {
-        background-color: $color-primary;
+        background: $neu-primary-gradient;
         color: $color-white;
+        box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
+
+        &:active:not(:disabled) {
+            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.25), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
+        }
     }
 
     &.btn-outlined-primary {

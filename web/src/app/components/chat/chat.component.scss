@@ -1,47 +1,72 @@
 @use "../../../styles/variables" as *;
 
-$kakao-bg: #b2c7d9;
-$kakao-yellow: #fae100;
-$kakao-text: $color-dark;
-$kakao-time: $color-text-secondary;
-$kakao-input-bg: $color-light-grey;
-$white: $color-white;
-$border-color: $color-border;
-
 :host {
   display: flex;
   flex: 1;
   flex-direction: column;
   height: 100%;
+  padding: 12px 16px;
+  box-sizing: border-box;
 }
 
 .chat-container {
+  margin: 0 auto;
+  box-sizing: border-box;
   display: flex;
   flex: 1;
   flex-direction: column;
   height: 100%;
   width: 100%;
-  max-width: 768px; /* Fixed width for tablet environments */
-  margin: 0 auto;
-  background-color: $kakao-bg;
+  max-width: 840px;
+  background-color: $neu-bg;
   font-family: $font-family;
   position: relative;
   overflow: hidden;
+  border-radius: 24px;
+  box-shadow: inset 6px 6px 14px $neu-shadow-dark, inset -6px -6px 14px $neu-shadow-light;
+  border: none;
 }
 
 .chat-header {
-  background-color: transparent;
-  padding: $spacing-12 $padding-small;
+  background-color: $neu-bg;
+  padding: 14px $padding-normal;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 10;
+  border-bottom: 1px solid rgba(184, 201, 223, 0.5);
+  box-shadow: inset 4px 4px 8px rgba(194, 209, 229, 0.6), inset -4px 0px 8px #ffffff;
+  border-radius: 24px 24px 0 0;
   
   .header-left, .header-right {
     display: flex;
     align-items: center;
     gap: $spacing-12;
-    color: $color-text-secondary;
+    color: $neu-text-secondary;
+
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: $neu-bg;
+      box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
+        transform: translateY(-1px);
+        color: $neu-primary;
+      }
+
+      &:active {
+        box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+        transform: translateY(0);
+      }
+    }
   }
   
   .header-left i {
@@ -60,30 +85,8 @@ $border-color: $color-border;
     h2 {
       margin: 0;
       @include typo-title-3;
-      color: $color-text;
-    }
-    
-    .provider-toggle-mini {
-      display: flex;
-      align-items: center;
-      gap: $spacing-8;
-      @include typo-caption-1;
-      color: $color-text-secondary;
-      margin-top: $spacing-4;
-      
-      label {
-        cursor: pointer;
-        input { display: none; }
-        span {
-          opacity: 0.5;
-          &.active {
-            opacity: 1;
-            font-weight: 600;
-            color: $color-text;
-          }
-        }
-      }
-      .divider { opacity: 0.3; @include typo-caption-2; }
+      font-weight: 700;
+      color: $neu-text;
     }
   }
 }
@@ -91,17 +94,20 @@ $border-color: $color-border;
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: $padding-small;
+  padding: $padding-normal;
   display: flex;
   flex-direction: column;
-  gap: $padding-small;
+  gap: $spacing-16;
   
   &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.15); border-radius: $radius-normal; }
+  &::-webkit-scrollbar-thumb { 
+    background-color: rgba(194, 209, 229, 0.6); 
+    border-radius: $radius-normal; 
+  }
 
   .message-wrapper {
     display: flex;
-    gap: $spacing-8;
+    gap: $spacing-12;
     max-width: 100%;
     
     &.user-message {
@@ -117,20 +123,11 @@ $border-color: $color-border;
       }
 
       .message-bubble {
-        background: $kakao-yellow;
-        color: $kakao-text;
-        border-radius: $radius-normal;
-        position: relative;
-        
-        &::after {
-          content: '';
-          position: absolute;
-          top: 10px;
-          right: -6px;
-          border-width: 6px 0 6px 8px;
-          border-style: solid;
-          border-color: transparent transparent transparent $kakao-yellow;
-        }
+        background: $neu-primary-gradient;
+        color: $color-white;
+        border-radius: 20px 20px 4px 20px;
+        box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
+        font-weight: 500;
       }
     }
 
@@ -142,20 +139,11 @@ $border-color: $color-border;
       }
       
       .message-bubble {
-        background: $white;
-        color: $kakao-text;
-        border-radius: $radius-normal;
-        position: relative;
-        
-        &::before {
-          content: '';
-          position: absolute;
-          top: 10px;
-          left: -6px;
-          border-width: 6px 8px 6px 0;
-          border-style: solid;
-          border-color: transparent $white transparent transparent;
-        }
+        background: $neu-bg;
+        color: $neu-text;
+        border-radius: 20px 20px 20px 4px;
+        box-shadow: 5px 5px 14px $neu-shadow-dark, -5px -5px 14px $neu-shadow-light;
+        border: 1px solid rgba(255, 255, 255, 0.6);
       }
     }
 
@@ -164,30 +152,32 @@ $border-color: $color-border;
       .avatar-small {
         width: 42px;
         height: 42px;
-        border-radius: $radius-deep;
-        background: $color-border;
+        border-radius: 50%;
+        background: $neu-bg;
+        box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: $color-white;
-        svg { width: 24px; height: 24px; }
+        color: $neu-primary;
+        svg { width: 22px; height: 22px; }
       }
     }
 
     .message-content {
       display: flex;
       flex-direction: column;
-      max-width: 500px;
+      max-width: 520px;
       
       @media (max-width: 768px) {
-        max-width: 75%;
+        max-width: 80%;
       }
       
       .agent-name {
         @include typo-caption-1;
-        color: $color-text-secondary;
+        font-weight: 600;
+        color: $neu-text-secondary;
         margin-bottom: $spacing-4;
-        margin-left: 2px;
+        margin-left: 4px;
       }
       
       .bubble-group {
@@ -197,35 +187,59 @@ $border-color: $color-border;
         
         .time-stamp {
           @include typo-caption-2;
-          color: $kakao-time;
+          color: $neu-text-secondary;
           white-space: nowrap;
-          margin-bottom: 2px;
+          margin-bottom: 4px;
         }
         
         .message-bubble {
-          padding: $spacing-8 $spacing-12;
+          padding: 12px 18px;
           @include typo-body-2;
+          line-height: 1.5;
           white-space: pre-wrap;
           word-break: break-word;
-          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
       }
     }
   }
 }
 
+// 하단 메시지 입력 필드 (Inset Neumorphic Input Area)
 .chat-input-area {
-  background-color: $white;
+  background-color: $neu-bg;
   display: flex;
   align-items: center;
-  padding: $spacing-8 $spacing-12;
+  padding: $spacing-12 $padding-normal;
   gap: $spacing-12;
+  border-top: 1px solid rgba(184, 201, 223, 0.5);
+  box-shadow: inset 4px -4px 8px rgba(194, 209, 229, 0.6), inset -4px 0px 8px #ffffff;
+  border-radius: 0 0 24px 24px;
   
   .action-btn {
     i {
-      font-size: $font-size-pc-heading-3;
-      color: $color-dark-grey;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: $neu-bg;
+      box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: $neu-text-secondary;
       cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+        color: $neu-primary;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+        transform: translateY(0);
+      }
     }
   }
   
@@ -233,10 +247,16 @@ $border-color: $color-border;
     flex: 1;
     display: flex;
     align-items: center;
-    background: $kakao-input-bg;
-    border: 1px solid $color-border;
-    border-radius: 20px;
-    padding: $spacing-8 $spacing-12;
+    background: $neu-bg;
+    border-radius: 24px;
+    box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light;
+    padding: 8px 16px;
+    gap: 8px;
+    transition: all 0.2s ease;
+
+    &:focus-within {
+      box-shadow: inset 5px 5px 10px #b8c3d1, inset -5px -5px 10px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.3);
+    }
     
     textarea {
       flex: 1;
@@ -244,15 +264,16 @@ $border-color: $color-border;
       outline: none;
       background: transparent;
       resize: none;
-      padding: $spacing-4 0;
+      padding: 6px 0;
       @include typo-body-2;
+      color: $neu-text;
       max-height: 160px;
       min-height: 24px;
       overflow-y: hidden;
-      color: $kakao-text;
+      font-family: inherit;
       
       &::placeholder {
-        color: $color-sub-text;
+        color: $neu-text-secondary;
       }
     }
     
@@ -261,45 +282,47 @@ $border-color: $color-border;
       align-items: center;
       gap: 10px;
       
-      i.bx-smile {
-        font-size: $font-size-pc-title-1;
-        color: $color-sub-text;
-        cursor: pointer;
-      }
-      
       .send-btn {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         border: none;
-        background: $color-surface-alt;
+        background: $neu-bg;
+        box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: all 0.2s ease;
         
-        i { color: $color-sub-text; font-size: $font-size-pc-title-3; }
+        i { color: $neu-text-secondary; font-size: 18px; }
         svg { width: 16px; height: 16px; color: $color-white; display: none; }
         
         &.active {
-          background: $kakao-yellow;
+          background: $neu-primary-gradient;
+          box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
           i { display: none; }
-          svg { display: block; color: $kakao-text; }
+          svg { display: block; color: $color-white; }
+        }
+
+        &:hover:not(:disabled) {
+          transform: translateY(-1px);
         }
         
         &:disabled {
           cursor: not-allowed;
           opacity: 0.6;
+          box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
         }
       }
       
       .stop-btn {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         border: none;
-        background: transparent;
+        background: $neu-bg;
+        box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -309,12 +332,12 @@ $border-color: $color-border;
           width: 14px;
           height: 14px;
           background-color: $color-error;
-          border-radius: 2px;
+          border-radius: 3px;
           transition: background-color 0.2s;
         }
         
         &:hover .stop-square {
-          background-color: $color-error;
+          background-color: darken($color-error, 10%);
         }
       }
     }
@@ -330,7 +353,7 @@ $border-color: $color-border;
   span {
     width: 6px;
     height: 6px;
-    background-color: $color-dark-grey;
+    background-color: $neu-text-secondary;
     border-radius: 50%;
     animation: bounce 1.4s infinite ease-in-out both;
     

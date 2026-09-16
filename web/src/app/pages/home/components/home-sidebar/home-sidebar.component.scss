@@ -10,39 +10,51 @@ $sidebar-width: 260px;
 .sidebar {
   width: $sidebar-width;
   height: 100%;
-  background-color: $color-surface;
-  border-right: 1px solid $color-border;
+  background-color: $neu-bg;
+  border-right: $neu-border;
+  box-shadow: 6px 0 16px rgba(194, 209, 229, 0.4);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  box-sizing: border-box;
 
   .sidebar-header {
-    padding: $padding-small;
-    border-bottom: 1px solid $color-border;
+    padding: $padding-normal;
+    border-bottom: $neu-border;
     display: flex;
     flex-direction: column;
-    gap: $spacing-8;
+    gap: $spacing-12;
     
     .new-chat-btn, .new-folder-btn {
       width: 100%;
-      background: $color-white;
-      border: 1px solid $color-border;
-      padding: $spacing-8 $spacing-12;
-      border-radius: $radius-normal;
+      background: $neu-bg;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 14px;
       @include typo-subtitle-2;
-      color: $color-text;
+      font-weight: 600;
+      color: $neu-text;
       display: flex;
       align-items: center;
       gap: $spacing-8;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
+      box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+      transition: all 0.2s ease;
       box-sizing: border-box;
       
-      i { font-size: 16px; color: $color-text-secondary; }
+      i { 
+        font-size: 18px; 
+        color: $neu-primary; 
+      }
       
       &:hover {
-        background: $color-surface-alt;
-        border-color: darken($color-border, 5%);
+        box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+        transform: translateY(0);
       }
     }
   }
@@ -53,150 +65,173 @@ $sidebar-width: 260px;
     padding: $padding-small;
     display: flex;
     flex-direction: column;
-    gap: $spacing-4;
+    gap: $spacing-8;
+
+    .sidebar-node {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+
+      &.drag-over-inside > .folder-header {
+        background-color: rgba($neu-primary, 0.15);
+        border: 1px dashed $neu-primary;
+      }
+      
+      &.drag-over-before::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $neu-primary;
+        z-index: 10;
+      }
+      
+      &.drag-over-after::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: $neu-primary;
+        z-index: 10;
+      }
+    }
+
+    .folder-header {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      cursor: pointer;
+      color: $neu-text;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+
+      i.bx {
+        font-size: 20px;
+        margin-right: 8px;
+        color: $neu-primary;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .node-name {
+        flex: 1;
+        @include typo-body-2;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &:hover {
+        box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
+        transform: translateY(-1px);
+      }
+
+      &.is-empty {
+        color: $neu-text-secondary;
+        i.bx {
+          color: $neu-text-secondary;
+          opacity: 0.7;
+        }
+      }
+    }
 
     .room-item {
-      padding: $spacing-8 $padding-small;
-      border-radius: $radius-normal;
+      padding: 10px 12px;
+      border-radius: 12px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: $spacing-8;
-      color: $color-text;
-      transition: background 0.2s, color 0.2s;
+      gap: 8px;
+      color: $neu-text;
+      transition: all 0.2s ease;
 
-      i { font-size: 18px; color: $color-text-secondary; }
+      i.bx {
+        font-size: 18px;
+        color: $neu-primary;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
       .room-title { 
         @include typo-body-2;
+        font-weight: 500;
         white-space: nowrap; 
         overflow: hidden; 
         text-overflow: ellipsis; 
       }
 
-      &:hover { background: $color-surface-alt; }
+      &:hover {
+        box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
+        transform: translateY(-1px);
+      }
       
       &.active {
-        background: rgba($color-primary, 0.08);
-        color: $color-dark;
+        background: $neu-bg;
+        box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+        color: $neu-primary;
         font-weight: 600;
-        i { color: $color-primary; }
+        i { color: $neu-primary; }
       }
     }
 
-    .sidebar-node.active .room-item {
-      background: rgba($color-primary, 0.08);
-      color: $color-dark;
+    .sidebar-node.active > .room-item,
+    .sidebar-node.active > .folder-header {
+      background: $neu-bg;
+      box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+      color: $neu-primary;
       font-weight: 600;
-      i { color: $color-primary; }
+      i { color: $neu-primary; }
     }
     
     .empty-rooms {
       text-align: center;
       padding: $spacing-28 $padding-small;
-      color: $color-sub-text;
+      color: $neu-text-secondary;
       @include typo-body-3;
     }
   }
 
   .sidebar-footer {
-    padding: $padding-small;
-    border-top: 1px solid $color-border;
+    padding: $padding-normal;
+    border-top: 1px solid rgba(194, 209, 229, 0.4);
     
     .logout-btn {
       width: 100%;
-      background: none;
+      background: $neu-bg;
       border: none;
-      padding: $spacing-8 $spacing-12;
-      border-radius: $radius-normal;
+      padding: 10px 14px;
+      border-radius: 14px;
       @include typo-subtitle-2;
+      font-weight: 600;
       color: $color-error;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: $spacing-8;
+      gap: 8px;
       cursor: pointer;
-      transition: background 0.2s;
+      box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
+      transition: all 0.2s ease;
       
       &:hover {
-        background-color: rgba($color-error, 0.08);
+        box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+        transform: translateY(0);
       }
       
-      i { font-size: 16px; }
-    }
-  }
-}
-
-.sidebar-node {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  
-  &.drag-over-inside > .folder-header {
-    background-color: rgba($color-primary, 0.15);
-    border: 1px dashed $color-primary;
-  }
-  
-  &.drag-over-before::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: $color-primary;
-    z-index: 10;
-  }
-  
-  &.drag-over-after::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: $color-primary;
-    z-index: 10;
-  }
-}
-
-.folder-header {
-  display: flex;
-  align-items: center;
-  padding: 6px $spacing-12;
-  cursor: pointer;
-  color: $color-text;
-  border-radius: $radius-normal;
-  border: 1px solid transparent;
-  transition: all 0.2s;
-  
-  &:hover {
-    background: $color-surface-alt;
-  }
-
-  i.bx-folder, i.bx-folder-open {
-    margin-right: $spacing-8;
-    font-size: 18px;
-    color: $color-text-secondary;
-  }
-  
-  i.bx-chevron-right, i.bx-chevron-down {
-    margin-right: $spacing-4;
-    font-size: 14px;
-    color: $color-text-secondary;
-  }
-
-  .node-name {
-    flex: 1;
-    @include typo-body-2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &.is-empty {
-    color: $color-sub-text;
-    i.bx-folder {
-      color: $color-sub-text;
+      i { font-size: 18px; }
     }
   }
 }
@@ -204,14 +239,14 @@ $sidebar-width: 260px;
 .custom-context-menu {
   position: fixed;
   z-index: 9999;
-  background: $color-white;
-  border: 1px solid $color-border;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  padding: 4px;
+  background: $neu-bg;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 10px 10px 20px $neu-shadow-dark, -10px -10px 20px $neu-shadow-light;
+  padding: 8px;
   display: flex;
   flex-direction: column;
-  min-width: 150px;
+  min-width: 160px;
   animation: contextMenuFade 0.15s ease-out;
 
   .context-menu-item {
@@ -221,25 +256,26 @@ $sidebar-width: 260px;
     padding: 8px 12px;
     border: none;
     background: transparent;
-    border-radius: 6px;
+    border-radius: 10px;
     @include typo-body-3;
-    font-weight: $font-weight-medium;
-    color: $color-dark;
+    font-weight: 500;
+    color: $neu-text;
     cursor: pointer;
     text-align: left;
-    transition: background 0.15s ease, color 0.15s ease;
+    transition: all 0.15s ease;
     
     i {
       font-size: 16px;
-      color: $color-text-secondary;
+      color: $neu-text-secondary;
     }
     
     &:hover {
-      background: $color-surface-alt;
-      color: $color-dark;
+      background: $neu-bg;
+      box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+      color: $neu-primary;
       
       i {
-        color: $color-dark;
+        color: $neu-primary;
       }
     }
   }
@@ -256,35 +292,20 @@ $sidebar-width: 260px;
   }
 }
 
-.sidebar-drag-preview { background: $color-dark; padding: 8px 12px; border-radius: 6px; color: $color-white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-.sidebar-drag-placeholder { background: rgba(0,0,0,0.03); border: 2px dashed $color-border; min-height: 40px; border-radius: 6px; margin-bottom: 2px; }
-.cdk-drag-animating { transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }
-.room-list.cdk-drop-list-dragging .sidebar-node:not(.cdk-drag-placeholder) { transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }
-
-.drag-ghost-clone {
-  position: fixed;
-  top: -9999px;
-  left: -9999px;
-  z-index: 9999;
-  background-color: $color-white;
-  border: 1px solid $color-border;
-  border-radius: 8px;
-}
-
 .inline-edit-input {
-  background: transparent;
-  border: 1px solid $color-primary;
-  border-radius: 4px;
-  color: $color-dark;
+  background: $neu-bg;
+  border: none;
+  border-radius: 8px;
+  box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+  color: $neu-text;
   @include typo-body-2;
-  padding: 2px 6px;
+  padding: 4px 8px;
   width: 100%;
   box-sizing: border-box;
   outline: none;
   font-family: inherit;
   
   &:focus {
-    opacity: 0.9;
-    box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.3);
   }
 }

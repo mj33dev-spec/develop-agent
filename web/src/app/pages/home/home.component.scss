@@ -50,14 +50,19 @@
 
   .copilot-input-box {
     width: 100%;
-    background: $color-white;
-    border-radius: $radius-deep;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    padding: $padding-small $padding-normal;
-    border: 1px solid $color-border;
+    background: $neu-bg;
+    border-radius: 24px;
+    box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light;
+    padding: $padding-normal $padding-large;
+    border: none;
     display: flex;
     flex-direction: column;
     gap: $spacing-12;
+    transition: all 0.2s ease;
+
+    &:focus-within {
+      box-shadow: inset 5px 5px 10px #b8c3d1, inset -5px -5px 10px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.3);
+    }
 
     .input-body {
       display: flex;
@@ -71,7 +76,7 @@
         @include typo-body-1;
         padding: 4px;
         background: transparent;
-        color: $color-text;
+        color: $neu-text;
         resize: none;
         overflow-y: hidden;
         min-height: 24px;
@@ -79,7 +84,7 @@
         line-height: 1.4;
         
         &::placeholder {
-          color: $color-sub-text;
+          color: $neu-text-secondary;
         }
       }
 
@@ -95,31 +100,39 @@
         }
 
         button {
-          background: none;
+          background: $neu-bg;
           border: none;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 6px;
+          width: 38px;
+          height: 38px;
           border-radius: 50%;
-          transition: background 0.2s;
+          box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+          transition: all 0.2s ease;
           
-          i { font-size: $font-size-pc-title-2; color: $color-text-secondary; }
-          &:hover { background: $color-surface-alt; }
-        }
-
-        .add-btn {
-          border: 1px solid $color-border;
+          i { font-size: $font-size-pc-title-2; color: $neu-text-secondary; }
+          &:hover {
+            box-shadow: 5px 5px 10px $neu-shadow-dark, -5px -5px 10px $neu-shadow-light;
+            transform: translateY(-1px);
+          }
+          &:active {
+            box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+            transform: translateY(0);
+          }
         }
         
         .send-btn {
-          background: $color-dark;
-          padding: $spacing-8;
+          background: $neu-primary-gradient;
+          width: 40px;
+          height: 40px;
+          box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
           i { color: $color-white; font-size: $font-size-pc-title-3; }
           &:disabled {
-            background: $color-grey;
-            i { color: $color-sub-text; }
+            background: $neu-bg;
+            box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+            i { color: $neu-text-secondary; opacity: 0.5; }
             cursor: not-allowed;
           }
         }
@@ -129,7 +142,7 @@
 
   .disclaimer {
     @include typo-caption-1;
-    color: $color-text-secondary;
+    color: $neu-text-secondary;
     text-align: center;
     max-width: 600px;
   }

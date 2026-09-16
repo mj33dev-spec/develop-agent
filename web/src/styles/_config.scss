@@ -9,23 +9,25 @@ $color-primary: #4A86FF;
 $color-secondary: #6B5CE7;
 
 // ── Backgrounds ───────────────────────────────
-$color-bg: #FAFBFD;
-$color-surface: #F8FAFD;
-$color-surface-alt: #F1F4F9;
+$color-bg: #e4ebf5;
+$color-surface: #e4ebf5;
+$color-surface-alt: #d9e3f0;
 $color-white: #FFFFFF;
 
 // ── Text ──────────────────────────────────────
-$color-dark: #17191A;
-$color-text: #17191A;
-$color-text-secondary: #757B80;
-$color-sub-text: #A4ADB2;
+$color-dark: #2d3748;
+$color-text: #2d3748;
+$color-text-secondary: #718096;
+$color-sub-text: #a0aec0;
 
 // ── Neutrals ─────────────────────────────────
-$color-border: #E8EDF4;
-$color-light-grey: #F5F5F5;
-$color-grey: #EAEAEA;
-$color-dark-grey: #999999;
-$color-deep-grey: #414141;
+$neu-border-color: #b8c9df;
+$neu-border: 1px solid $neu-border-color;
+$color-border: #b8c9df;
+$color-light-grey: #e4ebf5;
+$color-grey: #c2d1e5;
+$color-dark-grey: #8fa0b8;
+$color-deep-grey: #4a5568;
 
 // ── Feedback ─────────────────────────────────
 $color-success: #04B014;
@@ -33,13 +35,19 @@ $color-error: #DC0000;
 $color-warn: #E4AF00;
 
 
-// ── Shadows ──────────────────────────────────
-$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-$shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
-$shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.08);
-$shadow-xl: 0 8px 40px rgba(0, 0, 0, 0.1);
-$shadow-card: 0 1px 4px rgba(0, 0, 0, 0.04), 0 2px 12px rgba(0, 0, 0, 0.03);
-$shadow-hover: 0 4px 16px rgba(74, 134, 255, 0.12);
+// ── Shadows (Neumorphism & Standard) ─────────
+$shadow-neu-extruded-sm: 4px 4px 8px #c2d1e5, -4px -4px 8px #ffffff;
+$shadow-neu-extruded-md: 8px 8px 16px #c2d1e5, -8px -8px 16px #ffffff;
+$shadow-neu-extruded-lg: 12px 12px 24px #c2d1e5, -12px -12px 24px #ffffff;
+$shadow-neu-inset-sm: inset 3px 3px 6px #c2d1e5, inset -3px -3px 6px #ffffff;
+$shadow-neu-inset-md: inset 5px 5px 10px #c2d1e5, inset -5px -5px 10px #ffffff;
+
+$shadow-sm: $shadow-neu-extruded-sm;
+$shadow-md: $shadow-neu-extruded-md;
+$shadow-lg: $shadow-neu-extruded-lg;
+$shadow-xl: 14px 14px 28px #c2d1e5, -14px -14px 28px #ffffff;
+$shadow-card: $shadow-neu-extruded-md;
+$shadow-hover: 10px 10px 20px #c2d1e5, -10px -10px 20px #ffffff;
 
 // ── Admin Layout ─────────────────────────────
 $sidebar-width: 260px;
