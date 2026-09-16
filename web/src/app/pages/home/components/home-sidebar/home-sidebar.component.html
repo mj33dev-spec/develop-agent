@@ -1,0 +1,99 @@
+<aside class="sidebar" (contextmenu)="onSidebarContextMenu($event)">
+  <div class="sidebar-header">
+    <button class="new-chat-btn" (click)="createNewRoom()">
+      <i class="bx bx-edit-alt"></i> 
+      새 채팅
+    </button>
+    <!-- <button class="new-folder-btn" (click)="openCreateFolderModal(null)">
+      <i class="bx bx-folder-plus"></i> 
+      새 폴더
+    </button> -->
+  </div>
+  
+  <div class="room-list">
+    <div *ngFor="let node of sidebarNodes" 
+         class="sidebar-node" 
+         [attr.data-id]="node.id"
+         draggable="true"
+         (contextmenu)="onNodeContextMenu($event, node)"
+         (dragstart)="onDragStart($event, node)"
+         (dragover)="onDragOver($event, node)"
+         (dragleave)="onDragLeave($event, node)"
+         (drop)="onDrop($event, node)"
+         (dragend)="onDragEnd($event)"
+         [style.padding-left.px]="node.level * 16"
+         [class.is-folder]="node.type === 'folder'"
+         [class.active]="node.type === 'room' && activeRoomId === node.id"
+         [class.drag-over-inside]="dragOverNodeId === node.id && dragOverMode === 'inside'"
+         [class.drag-over-before]="dragOverNodeId === node.id && dragOverMode === 'before'"
+         [class.drag-over-after]="dragOverNodeId === node.id && dragOverMode === 'after'">
+      
+      <!-- Folder Node -->
+      <ng-container *ngIf="node.type === 'folder'">
+        <div class="folder-header" [class.is-empty]="!node.hasChildren" (click)="toggleFolder(node, $event)">
+          <i class="bx" [ngClass]="(node.hasChildren && node.isExpanded) ? 'bx-folder-open' : 'bx-folder'"></i>
+          
+          <span *ngIf="editingNodeId !== node.id" class="node-name">{{ node.name }}</span>
+          <input *ngIf="editingNodeId === node.id"
+                 [id]="'edit-input-' + node.id"
+                 type="text"
+                 class="inline-edit-input"
+                 [(ngModel)]="editInputValue"
+                 (blur)="saveEditing(node)"
+                 (keyup.enter)="saveEditing(node)"
+                 (keyup.escape)="cancelEditing()"
+                 (click)="$event.stopPropagation()">
+        </div>
+      </ng-container>
+
+      <!-- Room Node -->
+      <ng-container *ngIf="node.type === 'room'">
+        <div class="room-item" [class.active]="activeRoomId === node.id" (click)="selectRoom(node.id)">
+          <i class="bx bx-message-square-detail"></i>
+          
+          <span *ngIf="editingNodeId !== node.id" class="room-title">{{ node.name }}</span>
+          <input *ngIf="editingNodeId === node.id"
+                 [id]="'edit-input-' + node.id"
+                 type="text"
+                 class="inline-edit-input"
+                 [(ngModel)]="editInputValue"
+                 (blur)="saveEditing(node)"
+                 (keyup.enter)="saveEditing(node)"
+                 (keyup.escape)="cancelEditing()"
+                 (click)="$event.stopPropagation()">
+        </div>
+      </ng-container>
+
+    </div>
+    
+    <div class="empty-rooms" *ngIf="sidebarNodes.length === 0">
+      <p>생성된 방이나 폴더가 없습니다.</p>
+    </div>
+  </div>
+  
+  <!-- Sidebar Footer (Logout) -->
+  <div class="sidebar-footer">
+    <button class="logout-btn" (click)="logout()">
+      <i class="bx bx-log-out"></i> 로그아웃
+    </button>
+  </div>
+  
+  <!-- Custom Context Menu -->
+  <div 
+    *ngIf="contextMenuVisible" 
+    class="custom-context-menu"
+    [style.left.px]="contextMenuPosition.x"
+    [style.top.px]="contextMenuPosition.y"
+    (click)="$event.stopPropagation()"
+  >
+    <button 
+      *ngFor="let opt of contextMenuOptions" 
+      type="button" 
+      class="context-menu-item"
+      (click)="onContextMenuOptionClick(opt)"
+    >
+      <i *ngIf="opt.icon" [class]="opt.icon"></i>
+      <span>{{ opt.label }}</span>
+    </button>
+  </div>
+</aside>

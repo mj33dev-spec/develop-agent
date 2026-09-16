@@ -1,13 +1,5 @@
 @use "../../../styles/variables" as *;
 
-$sidebar-width: 260px;
-$sidebar-bg: #f5f5f5;
-$sidebar-hover: #e5e5e5;
-$border-color: #e5e5e5;
-$text-main: #333;
-$text-muted: #888;
-$primary: #007bff;
-
 :host {
   display: block;
   height: 100vh;
@@ -22,131 +14,12 @@ $primary: #007bff;
   width: 100%;
 }
 
-/* Sidebar */
-.sidebar {
-  width: $sidebar-width;
-  background-color: $sidebar-bg;
-  border-right: 1px solid $border-color;
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-
-  .sidebar-header {
-    padding: $padding-small;
-    border-bottom: 1px solid $border-color;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-8;
-    
-    .new-chat-btn, .new-folder-btn {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid $border-color;
-      padding: $spacing-8 $spacing-12;
-      border-radius: $radius-normal;
-      @include typo-subtitle-2;
-      color: $text-main;
-      display: flex;
-      align-items: center;
-      gap: $spacing-8;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      box-sizing: border-box;
-      
-      i { font-size: 16px; color: #555; }
-      
-      &:hover {
-        background: #fafafa;
-        border-color: #ccc;
-      }
-    }
-  }
-
-  .room-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: $padding-small;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-4;
-
-    .room-item {
-      padding: $spacing-8 $padding-small;
-      border-radius: $radius-normal;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: $spacing-8;
-      color: $text-main;
-      transition: background 0.2s;
-
-      i { font-size: 15px; color: $text-muted; }
-      .room-title { 
-        @include typo-body-3;
-        white-space: nowrap; 
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-      }
-
-      &:hover { background: $sidebar-hover; }
-      
-      &.active {
-        background: rgba(0, 0, 0, 0.08);
-        color: #18181b;
-        font-weight: 600;
-        i { color: #2563eb; }
-      }
-    }
-
-    .sidebar-node.active .room-item {
-      background: rgba(0, 0, 0, 0.08);
-      color: #18181b;
-      font-weight: 600;
-      i { color: #2563eb; }
-    }
-    
-    .empty-rooms {
-      text-align: center;
-      padding: $spacing-28 $padding-small;
-      color: $text-muted;
-      @include typo-body-3;
-    }
-  }
-
-  .sidebar-footer {
-    padding: $padding-small;
-    border-top: 1px solid $border-color;
-    
-    .logout-btn {
-      width: 100%;
-      background: none;
-      border: none;
-      padding: $spacing-8 $spacing-12;
-      border-radius: $radius-normal;
-      @include typo-subtitle-2;
-      color: #ef4444;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: $spacing-8;
-      cursor: pointer;
-      transition: background 0.2s;
-      
-      &:hover {
-        background-color: #fee2e2;
-      }
-      
-      i { font-size: 16px; }
-    }
-  }
-}
-
 /* Main Area */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: #faf9f6; // Copilot-like beige background
+  background-color: $color-bg;
   position: relative;
   overflow: hidden;
 }
@@ -170,18 +43,18 @@ $primary: #007bff;
 
   .greeting {
     @include typo-heading-3;
-    color: #242424;
+    color: $color-text;
     margin: 0;
     text-align: center;
   }
 
   .copilot-input-box {
     width: 100%;
-    background: #ffffff;
+    background: $color-white;
     border-radius: $radius-deep;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     padding: $padding-small $padding-normal;
-    border: 1px solid #eaeaea;
+    border: 1px solid $color-border;
     display: flex;
     flex-direction: column;
     gap: $spacing-12;
@@ -198,7 +71,7 @@ $primary: #007bff;
         @include typo-body-1;
         padding: 4px;
         background: transparent;
-        color: #242424;
+        color: $color-text;
         resize: none;
         overflow-y: hidden;
         min-height: 24px;
@@ -206,7 +79,7 @@ $primary: #007bff;
         line-height: 1.4;
         
         &::placeholder {
-          color: #888;
+          color: $color-sub-text;
         }
       }
 
@@ -232,21 +105,21 @@ $primary: #007bff;
           border-radius: 50%;
           transition: background 0.2s;
           
-          i { font-size: $font-size-pc-title-2; color: #444; }
-          &:hover { background: #f0f0f0; }
+          i { font-size: $font-size-pc-title-2; color: $color-text-secondary; }
+          &:hover { background: $color-surface-alt; }
         }
 
         .add-btn {
-          border: 1px solid #e0e0e0;
+          border: 1px solid $color-border;
         }
         
         .send-btn {
-          background: #333;
+          background: $color-dark;
           padding: $spacing-8;
-          i { color: #fff; font-size: $font-size-pc-title-3; }
+          i { color: $color-white; font-size: $font-size-pc-title-3; }
           &:disabled {
-            background: #e0e0e0;
-            i { color: #aaa; }
+            background: $color-grey;
+            i { color: $color-sub-text; }
             cursor: not-allowed;
           }
         }
@@ -256,7 +129,7 @@ $primary: #007bff;
 
   .disclaimer {
     @include typo-caption-1;
-    color: #888;
+    color: $color-text-secondary;
     text-align: center;
     max-width: 600px;
   }
@@ -279,162 +152,5 @@ $primary: #007bff;
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-.sidebar-node {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  
-  &.drag-over-inside > .folder-header {
-    background-color: rgba(59, 130, 246, 0.2);
-    border: 1px dashed #3b82f6;
-  }
-  
-  &.drag-over-before::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #3b82f6;
-    z-index: 10;
-  }
-  
-  &.drag-over-after::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background-color: #3b82f6;
-    z-index: 10;
-  }
-}
-
-.folder-header {
-  display: flex;
-  align-items: center;
-  padding: 6px $spacing-12;
-  cursor: pointer;
-  color: #333333;
-  border-radius: $radius-normal;
-  border: 1px solid transparent;
-  transition: all 0.2s;
-  
-  &:hover {
-    background: $sidebar-hover;
-  }
-
-  i.bx-folder, i.bx-folder-open {
-    margin-right: $spacing-8;
-    font-size: 16px;
-    color: #666;
-  }
-  
-  i.bx-chevron-right, i.bx-chevron-down {
-    margin-right: $spacing-4;
-    font-size: 14px;
-    color: #71717a;
-  }
-
-  .node-name {
-    flex: 1;
-    @include typo-body-3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-.custom-context-menu {
-  position: fixed;
-  z-index: 9999;
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  padding: 4px;
-  display: flex;
-  flex-direction: column;
-  min-width: 150px;
-  animation: contextMenuFade 0.15s ease-out;
-
-  .context-menu-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border: none;
-    background: transparent;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #27272a;
-    cursor: pointer;
-    text-align: left;
-    transition: background 0.15s ease, color 0.15s ease;
-    
-    i {
-      font-size: 15px;
-      color: #71717a;
-    }
-    
-    &:hover {
-      background: #f4f4f5;
-      color: #09090b;
-      
-      i {
-        color: #18181b;
-      }
-    }
-  }
-}
-
-@keyframes contextMenuFade {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.sidebar-drag-preview { background: #27272a; padding: 8px 12px; border-radius: 6px; color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-.sidebar-drag-placeholder { background: rgba(255,255,255,0.05); border: 2px dashed #52525b; min-height: 40px; border-radius: 6px; margin-bottom: 2px; }
-.cdk-drag-animating { transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }
-.room-list.cdk-drop-list-dragging .sidebar-node:not(.cdk-drag-placeholder) { transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }
-
-.drag-ghost-clone {
-  position: fixed;
-  top: -9999px;
-  left: -9999px;
-  z-index: 9999;
-  background-color: #fff;
-  border: 1px solid #3f3f46;
-  border-radius: 8px;
-  // min-height: 42px;
-}
-
-.inline-edit-input {
-  background: transparent;
-  border: 1px solid #3b82f6;
-  border-radius: 4px;
-  color: #333333;
-  @include typo-body-2;
-  padding: 2px 6px;
-  width: 100%;
-  box-sizing: border-box;
-  outline: none;
-  font-family: inherit;
-  
-  &:focus {
-    opacity: 0.8;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
   }
 }

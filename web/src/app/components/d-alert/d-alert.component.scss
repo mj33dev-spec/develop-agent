@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+@use "../../../styles/variables" as *;
 
 .alertOverlay {
   position: fixed;
@@ -51,9 +51,10 @@
 }
 
 .alertBox {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  background-color: $color-white;
+  border-radius: $radius-deep;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid $color-border;
   width: 100%;
   max-width: 380px;
   overflow: hidden;
@@ -110,23 +111,23 @@
   }
 
   &.info {
-    background-color: rgba(74, 134, 255, 0.1);
-    color: #4a86ff;
+    background-color: rgba($color-primary, 0.1);
+    color: $color-primary;
   }
 
   &.success {
-    background-color: rgba(4, 176, 20, 0.1);
-    color: #04b014;
+    background-color: rgba($color-success, 0.1);
+    color: $color-success;
   }
 
   &.warn {
-    background-color: rgba(228, 175, 0, 0.1);
-    color: #e4af00;
+    background-color: rgba($color-warn, 0.1);
+    color: $color-warn;
   }
 
   &.error {
-    background-color: rgba(220, 0, 0, 0.1);
-    color: #dc0000;
+    background-color: rgba($color-error, 0.1);
+    color: $color-error;
   }
 }
 
@@ -136,13 +137,13 @@
 
 .alertTitle {
   @include typo-title-3;
-  color: #111827;
+  color: $color-text;
   margin: 0 0 6px 0;
 }
 
 .alertMessage {
   @include typo-body-3;
-  color: #4b5563;
+  color: $color-text-secondary;
   line-height: 1.5;
   margin: 0;
   white-space: pre-wrap;
@@ -152,15 +153,15 @@
   margin-top: 12px;
   width: 100%;
   padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1px solid $color-border;
+  border-radius: $radius-normal;
   @include typo-body-3;
-  color: #111827;
+  color: $color-text;
   box-sizing: border-box;
 
   &:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: $color-primary;
   }
 }
 

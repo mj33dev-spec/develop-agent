@@ -10,7 +10,7 @@
     content: 'info';
     font-size: $font-size-pc-body-3;
     font-family: 'Material Symbols Outlined' !important;
-    color: #6b7280;
+    color: $color-text-secondary;
     display: inline-flex;
     vertical-align: middle;
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -20,7 +20,7 @@
   }
 
   &:hover::after {
-    color: #3b82f6; // 호버 시 아이콘 색상 변경
+    color: $color-primary; // 호버 시 아이콘 색상 변경
   }
 }
 
@@ -28,8 +28,8 @@
 .globalTooltip {
   position: fixed; // 스크롤과 무관하게 viewport 기준 좌표(clientX/Y) 사용
   z-index: 1050;
-  background: rgba(17, 17, 17, 0.9);
-  color: #ffffff;
+  background: rgba($color-dark, 0.9);
+  color: $color-white;
   padding: 8px 12px;
   border-radius: 6px;
   @include typo-caption-2;
@@ -51,7 +51,7 @@
     transform: translateX(-50%);
     border-width: 5px 5px 0 5px;
     border-style: solid;
-    border-color: rgba(17, 17, 17, 0.9) transparent transparent transparent;
+    border-color: rgba($color-dark, 0.9) transparent transparent transparent;
   }
 }
 

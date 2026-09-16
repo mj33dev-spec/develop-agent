@@ -11,59 +11,7 @@ import { DAlertService } from '../../core/services/d-alert.service';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule, CButtonComponent, CModalComponent],
-  template: `
-    <div class="login-container">
-      <div class="login-box">
-        <h2>슈파베이스 채팅 로그인</h2>
-        <p class="subtitle">서비스를 이용하려면 이메일과 비밀번호로 로그인해주세요.</p>
-        
-        <form #loginForm="ngForm">
-          <div class="form-group">
-            <label for="email">이메일</label>
-            <input type="email" id="email" name="email" [(ngModel)]="email" required placeholder="you@example.com">
-          </div>
-          
-          <div class="form-group">
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" [(ngModel)]="password" (keyup.enter)="onSignIn()" required minlength="6" placeholder="••••••••">
-          </div>
-          
-          <div class="button-group">
-            <c-button theme="primary" [disabled]="isLoading" (onClick)="onSignIn()" customClass="w-full">
-              <span *ngIf="isLoading">로딩 중...</span>
-              <span *ngIf="!isLoading">로그인</span>
-            </c-button>
-          </div>
-          
-          <div class="extra-links">
-            <span class="link-text" (click)="openSignUpModal()">회원가입</span>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- 회원가입 모달 -->
-    <c-modal 
-      [isOpen]="isSignUpModalOpen"
-      title="새 계정 만들기"
-      [isForm]="true"
-      submitLabel="가입하기"
-      cancelLabel="취소"
-      [submitDisabled]="!signUpEmail || !signUpPassword || signUpPassword.length < 6 || isLoading"
-      (onClose)="closeSignUpModal()"
-      (onSubmit)="onSignUp()">
-      
-      <div class="form-group">
-        <label for="signUpEmail">이메일</label>
-        <input type="email" id="signUpEmail" name="signUpEmail" [(ngModel)]="signUpEmail" required placeholder="you@example.com">
-      </div>
-      
-      <div class="form-group">
-        <label for="signUpPassword">비밀번호</label>
-        <input type="password" id="signUpPassword" name="signUpPassword" [(ngModel)]="signUpPassword" (keyup.enter)="onSignUp()" required minlength="6" placeholder="6자리 이상">
-      </div>
-    </c-modal>
-  `,
+  templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {

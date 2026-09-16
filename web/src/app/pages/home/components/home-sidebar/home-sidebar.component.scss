@@ -1,0 +1,290 @@
+@use "../../../../../styles/variables" as *;
+
+$sidebar-width: 260px;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidebar {
+  width: $sidebar-width;
+  height: 100%;
+  background-color: $color-surface;
+  border-right: 1px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  .sidebar-header {
+    padding: $padding-small;
+    border-bottom: 1px solid $color-border;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-8;
+    
+    .new-chat-btn, .new-folder-btn {
+      width: 100%;
+      background: $color-white;
+      border: 1px solid $color-border;
+      padding: $spacing-8 $spacing-12;
+      border-radius: $radius-normal;
+      @include typo-subtitle-2;
+      color: $color-text;
+      display: flex;
+      align-items: center;
+      gap: $spacing-8;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      box-sizing: border-box;
+      
+      i { font-size: 16px; color: $color-text-secondary; }
+      
+      &:hover {
+        background: $color-surface-alt;
+        border-color: darken($color-border, 5%);
+      }
+    }
+  }
+
+  .room-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: $padding-small;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+
+    .room-item {
+      padding: $spacing-8 $padding-small;
+      border-radius: $radius-normal;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: $spacing-8;
+      color: $color-text;
+      transition: background 0.2s, color 0.2s;
+
+      i { font-size: 18px; color: $color-text-secondary; }
+      .room-title { 
+        @include typo-body-2;
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+      }
+
+      &:hover { background: $color-surface-alt; }
+      
+      &.active {
+        background: rgba($color-primary, 0.08);
+        color: $color-dark;
+        font-weight: 600;
+        i { color: $color-primary; }
+      }
+    }
+
+    .sidebar-node.active .room-item {
+      background: rgba($color-primary, 0.08);
+      color: $color-dark;
+      font-weight: 600;
+      i { color: $color-primary; }
+    }
+    
+    .empty-rooms {
+      text-align: center;
+      padding: $spacing-28 $padding-small;
+      color: $color-sub-text;
+      @include typo-body-3;
+    }
+  }
+
+  .sidebar-footer {
+    padding: $padding-small;
+    border-top: 1px solid $color-border;
+    
+    .logout-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: $spacing-8 $spacing-12;
+      border-radius: $radius-normal;
+      @include typo-subtitle-2;
+      color: $color-error;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing-8;
+      cursor: pointer;
+      transition: background 0.2s;
+      
+      &:hover {
+        background-color: rgba($color-error, 0.08);
+      }
+      
+      i { font-size: 16px; }
+    }
+  }
+}
+
+.sidebar-node {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  
+  &.drag-over-inside > .folder-header {
+    background-color: rgba($color-primary, 0.15);
+    border: 1px dashed $color-primary;
+  }
+  
+  &.drag-over-before::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: $color-primary;
+    z-index: 10;
+  }
+  
+  &.drag-over-after::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: $color-primary;
+    z-index: 10;
+  }
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  padding: 6px $spacing-12;
+  cursor: pointer;
+  color: $color-text;
+  border-radius: $radius-normal;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  
+  &:hover {
+    background: $color-surface-alt;
+  }
+
+  i.bx-folder, i.bx-folder-open {
+    margin-right: $spacing-8;
+    font-size: 18px;
+    color: $color-text-secondary;
+  }
+  
+  i.bx-chevron-right, i.bx-chevron-down {
+    margin-right: $spacing-4;
+    font-size: 14px;
+    color: $color-text-secondary;
+  }
+
+  .node-name {
+    flex: 1;
+    @include typo-body-2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.is-empty {
+    color: $color-sub-text;
+    i.bx-folder {
+      color: $color-sub-text;
+    }
+  }
+}
+
+.custom-context-menu {
+  position: fixed;
+  z-index: 9999;
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  animation: contextMenuFade 0.15s ease-out;
+
+  .context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    @include typo-body-3;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s ease, color 0.15s ease;
+    
+    i {
+      font-size: 16px;
+      color: $color-text-secondary;
+    }
+    
+    &:hover {
+      background: $color-surface-alt;
+      color: $color-dark;
+      
+      i {
+        color: $color-dark;
+      }
+    }
+  }
+}
+
+@keyframes contextMenuFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.sidebar-drag-preview { background: $color-dark; padding: 8px 12px; border-radius: 6px; color: $color-white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.sidebar-drag-placeholder { background: rgba(0,0,0,0.03); border: 2px dashed $color-border; min-height: 40px; border-radius: 6px; margin-bottom: 2px; }
+.cdk-drag-animating { transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }
+.room-list.cdk-drop-list-dragging .sidebar-node:not(.cdk-drag-placeholder) { transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }
+
+.drag-ghost-clone {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+  z-index: 9999;
+  background-color: $color-white;
+  border: 1px solid $color-border;
+  border-radius: 8px;
+}
+
+.inline-edit-input {
+  background: transparent;
+  border: 1px solid $color-primary;
+  border-radius: 4px;
+  color: $color-dark;
+  @include typo-body-2;
+  padding: 2px 6px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  font-family: inherit;
+  
+  &:focus {
+    opacity: 0.9;
+    box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
+  }
+}

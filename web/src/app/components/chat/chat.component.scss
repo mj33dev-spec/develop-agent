@@ -2,11 +2,11 @@
 
 $kakao-bg: #b2c7d9;
 $kakao-yellow: #fae100;
-$kakao-text: #1a1a1a;
-$kakao-time: #7b8a97;
-$kakao-input-bg: #f5f5f5;
-$white: #ffffff;
-$border-color: #e5e5e5;
+$kakao-text: $color-dark;
+$kakao-time: $color-text-secondary;
+$kakao-input-bg: $color-light-grey;
+$white: $color-white;
+$border-color: $color-border;
 
 :host {
   display: flex;
@@ -41,7 +41,7 @@ $border-color: #e5e5e5;
     display: flex;
     align-items: center;
     gap: $spacing-12;
-    color: #4a545c;
+    color: $color-text-secondary;
   }
   
   .header-left i {
@@ -60,7 +60,7 @@ $border-color: #e5e5e5;
     h2 {
       margin: 0;
       @include typo-title-3;
-      color: #333;
+      color: $color-text;
     }
     
     .provider-toggle-mini {
@@ -68,7 +68,7 @@ $border-color: #e5e5e5;
       align-items: center;
       gap: $spacing-8;
       @include typo-caption-1;
-      color: #666;
+      color: $color-text-secondary;
       margin-top: $spacing-4;
       
       label {
@@ -79,7 +79,7 @@ $border-color: #e5e5e5;
           &.active {
             opacity: 1;
             font-weight: 600;
-            color: #333;
+            color: $color-text;
           }
         }
       }
@@ -165,11 +165,11 @@ $border-color: #e5e5e5;
         width: 42px;
         height: 42px;
         border-radius: $radius-deep;
-        background: #e1e1e1;
+        background: $color-border;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: $color-white;
         svg { width: 24px; height: 24px; }
       }
     }
@@ -185,7 +185,7 @@ $border-color: #e5e5e5;
       
       .agent-name {
         @include typo-caption-1;
-        color: #4a545c;
+        color: $color-text-secondary;
         margin-bottom: $spacing-4;
         margin-left: 2px;
       }
@@ -224,7 +224,7 @@ $border-color: #e5e5e5;
   .action-btn {
     i {
       font-size: $font-size-pc-heading-3;
-      color: #999;
+      color: $color-dark-grey;
       cursor: pointer;
     }
   }
@@ -234,7 +234,7 @@ $border-color: #e5e5e5;
     display: flex;
     align-items: center;
     background: $kakao-input-bg;
-    border: 1px solid #e5e5e5;
+    border: 1px solid $color-border;
     border-radius: 20px;
     padding: $spacing-8 $spacing-12;
     
@@ -252,7 +252,7 @@ $border-color: #e5e5e5;
       color: $kakao-text;
       
       &::placeholder {
-        color: #ccc;
+        color: $color-sub-text;
       }
     }
     
@@ -263,7 +263,7 @@ $border-color: #e5e5e5;
       
       i.bx-smile {
         font-size: $font-size-pc-title-1;
-        color: #b3b3b3;
+        color: $color-sub-text;
         cursor: pointer;
       }
       
@@ -272,15 +272,15 @@ $border-color: #e5e5e5;
         height: 32px;
         border-radius: 50%;
         border: none;
-        background: #f0f0f0;
+        background: $color-surface-alt;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
         
-        i { color: #aaa; font-size: $font-size-pc-title-3; }
-        svg { width: 16px; height: 16px; color: #fff; display: none; }
+        i { color: $color-sub-text; font-size: $font-size-pc-title-3; }
+        svg { width: 16px; height: 16px; color: $color-white; display: none; }
         
         &.active {
           background: $kakao-yellow;
@@ -308,13 +308,13 @@ $border-color: #e5e5e5;
         .stop-square {
           width: 14px;
           height: 14px;
-          background-color: #ff4b4b;
+          background-color: $color-error;
           border-radius: 2px;
           transition: background-color 0.2s;
         }
         
         &:hover .stop-square {
-          background-color: #cc0000;
+          background-color: $color-error;
         }
       }
     }
@@ -330,7 +330,7 @@ $border-color: #e5e5e5;
   span {
     width: 6px;
     height: 6px;
-    background-color: #888;
+    background-color: $color-dark-grey;
     border-radius: 50%;
     animation: bounce 1.4s infinite ease-in-out both;
     
