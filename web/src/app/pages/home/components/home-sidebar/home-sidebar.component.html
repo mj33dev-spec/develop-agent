@@ -118,68 +118,77 @@
     </button>
   </div>
 
-  <!-- Direct Template Modal using c-modal -->
-  <!-- Direct Template Modal using c-modal -->
+  <!-- 템플릿 모달 (c-modal 사용) -->
   <c-modal
     [isOpen]="isTemplateModalOpen"
-    [title]="templateModalMode === 'preset' ? '새 템플릿 선택' : '템플릿 직접 업로드'"
+    [title]="templateModalMode === 'select' ? '내 템플릿 선택' : (templateModalMode === 'edit' ? '템플릿 수정' : '새 템플릿 업로드')"
+    [subTitle]="templateModalMode === 'select' 
+      ? '등록된 템플릿을 선택하여 폴더 및 파일을 생성하세요.' 
+      : (templateModalMode === 'edit' ? '템플릿의 이름, 설명, 파일을 수정할 수 있습니다.' : '소스 파일을 직접 업로드하여 템플릿으로 등록하세요.')"
     [width]="'820px'"
     [customFooter]="true"
     (onClose)="closeTemplateModal()"
   >
-    <!-- MODE 1: Preset Generation -->
-    <div class="modal-body-container" *ngIf="templateModalMode === 'preset'">
-      <!-- Category Filter Pills -->
-      <div class="category-pills">
+    <!-- MODE 1: 내 템플릿 선택 -->
+    <div class="modal-body-container" *ngIf="templateModalMode === 'select'">
+      <!-- 로딩 상태 -->
+      <div class="template-loading" *ngIf="isLoadingTemplates">
+        <i class="bx bx-loader-alt bx-spin"></i>
+        <span>템플릿 목록을 불러오는 중...</span>
+      </div>
+
+      <!-- 프레임워크 필터 탭바 -->
+      <div class="category-pills" *ngIf="!isLoadingTemplates && myTemplates.length > 0">
         <button 
-          *ngFor="let cat of templateCategories" 
+          *ngFor="let fw of uniqueFrameworks" 
           class="pill-btn" 
-          [class.active]="selectedTemplateCategory === cat.value"
-          (click)="selectCategory(cat.value)"
+          [class.active]="selectedFrameworkFilter === fw"
+          (click)="selectFrameworkFilter(fw)"
         >
-          {{ cat.label }}
+          {{ fw }}
         </button>
       </div>
 
-      <div class="preset-content-grid" *ngIf="filteredPresets.length > 0; else emptyPresets">
-        <!-- Left: Preset List -->
+      <!-- 템플릿 목록이 있을 때 -->
+      <div class="preset-content-grid" *ngIf="!isLoadingTemplates && filteredTemplates.length > 0">
+        <!-- 왼쪽: 템플릿 목록 -->
         <div class="preset-list">
           <div 
-            *ngFor="let preset of filteredPresets" 
+            *ngFor="let tpl of filteredTemplates" 
             class="preset-item-card"
-            [class.selected]="selectedPreset?.id === preset.id"
-            (click)="selectPreset(preset)"
+            [class.selected]="selectedTemplate?.id === tpl.id"
+            (click)="selectTemplate(tpl)"
           >
             <div class="preset-icon">
-              <i [class]="preset.icon"></i>
+              <i [class]="tpl.icon || 'bx bx-code-alt'"></i>
             </div>
             <div class="preset-info">
               <div class="preset-title-row">
-                <span class="preset-name">{{ preset.name }}</span>
-                <span class="preset-badge">{{ preset.categoryLabel }}</span>
+                <span class="preset-name">{{ tpl.name }}</span>
+                <span class="preset-badge">{{ tpl.framework }}</span>
               </div>
-              <p class="preset-desc">{{ preset.description }}</p>
+              <p class="preset-desc">{{ tpl.description || '설명 없음' }}</p>
             </div>
+            <button class="template-action-btn edit" (click)="$event.stopPropagation(); startEditTemplate(tpl)">
+              <i class="bx bx-edit-alt"></i>
+            </button>
+            <button class="template-action-btn delete" (click)="$event.stopPropagation(); deleteMyTemplate(tpl)">
+              <i class="bx bx-trash"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Right: Framework & Card Image Preview -->
-        <div class="preset-preview-panel" *ngIf="selectedPreset">
+        <!-- 오른쪽: 선택한 템플릿 미리보기 -->
+        <div class="preset-preview-panel" *ngIf="selectedTemplate">
           <div class="preview-header">
-            <h4>프레임워크 선택</h4>
-            <div class="framework-chips">
-              <button 
-                *ngFor="let fw of selectedPreset.frameworks; let i = index" 
-                class="fw-chip" 
-                [class.active]="selectedFrameworkIndex === i"
-                (click)="selectedFrameworkIndex = i"
-              >
-                {{ fw.label }}
-              </button>
-            </div>
+            <h4>{{ selectedTemplate.name }}</h4>
+            <span class="framework-tag">
+              <i [class]="selectedTemplate.icon || 'bx bx-code-alt'"></i>
+              {{ selectedTemplate.framework }}
+            </span>
           </div>
 
-          <!-- Template Card Visual Preview -->
+          <!-- 템플릿 카드 미리보기 -->
           <div class="card-visual-preview">
             <div class="card-top-bar">
               <div class="card-dots">
@@ -188,53 +197,69 @@
                 <span class="dot green"></span>
               </div>
               <span class="group-folder-tag">
-                <i class="bx bx-folder"></i> {{ generatedPresetGroupName }}
+                <i class="bx bx-folder"></i> {{ selectedTemplate.name }}
               </span>
             </div>
 
             <div class="card-body-content">
               <div class="preset-hero-preview">
-                <i [class]="selectedPreset.icon + ' hero-icon'"></i>
+                <i [class]="(selectedTemplate.icon || 'bx bx-code-alt') + ' hero-icon'"></i>
                 <div class="hero-text">
-                  <h3>{{ selectedPreset.name }}</h3>
-                  <p>{{ currentPresetFramework?.label }} 템플릿 묶음</p>
+                  <h3>{{ selectedTemplate.name }}</h3>
+                  <p>{{ selectedTemplate.description || '등록된 설명 없음' }}</p>
                 </div>
               </div>
 
               <div class="preview-files-list">
-                <div class="files-title"><i class="bx bx-file"></i> 생성될 구성 파일:</div>
+                <div class="files-title"><i class="bx bx-file"></i> 포함된 구성 파일:</div>
                 <div 
-                  *ngFor="let file of currentPresetFramework?.files" 
+                  *ngFor="let file of selectedTemplateFiles" 
                   class="file-badge-item"
                 >
                   <i [class]="getFileIcon(file.extension)"></i>
                   <span class="file-name">{{ file.name }}</span>
                 </div>
+                <div *ngIf="selectedTemplateFiles.length === 0" class="no-files-msg">
+                  구성 파일이 없습니다.
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- 선택 안 됐을 때 안내 -->
+        <div class="preset-preview-panel empty-select" *ngIf="!selectedTemplate">
+          <div class="empty-preset-box">
+            <i class="bx bx-pointer empty-icon"></i>
+            <p class="empty-text">왼쪽 목록에서 템플릿을 선택하세요</p>
+          </div>
+        </div>
       </div>
 
-      <!-- Empty State Template -->
-      <ng-template #emptyPresets>
-        <div class="empty-preset-box">
-          <i class="bx bx-folder-open empty-icon"></i>
-          <p class="empty-text">선택한 카테고리에 등록된 템플릿 목록이 없습니다.</p>
-        </div>
-      </ng-template>
+      <!-- 필터된 결과가 없을 때 -->
+      <div class="empty-preset-box" *ngIf="!isLoadingTemplates && myTemplates.length > 0 && filteredTemplates.length === 0">
+        <i class="bx bx-filter-alt empty-icon"></i>
+        <p class="empty-text">'{{ selectedFrameworkFilter }}' 프레임워크로 등록된 템플릿이 없습니다.</p>
+      </div>
+
+      <!-- 빈 목록 안내 -->
+      <div class="empty-preset-box" *ngIf="!isLoadingTemplates && myTemplates.length === 0">
+        <i class="bx bx-folder-open empty-icon"></i>
+        <p class="empty-text">등록된 템플릿이 없습니다.</p>
+        <p class="empty-sub-text">아래 "새 템플릿 등록" 버튼을 눌러 업로드하세요.</p>
+      </div>
     </div>
 
-    <!-- MODE 2: Custom Template Upload -->
+    <!-- MODE 2: 템플릿 업로드 -->
     <div class="modal-body-container" *ngIf="templateModalMode === 'upload'">
       <div class="upload-form">
         <div class="form-row">
           <div class="form-group">
-            <label><i class="bx bx-folder"></i> 폴더 그룹명 <span class="required">*</span></label>
+            <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
             <input 
               type="text" 
               class="form-input" 
-              placeholder="예: my-custom-component-group" 
+              placeholder="예: my-custom-component" 
               [(ngModel)]="uploadGroupName"
             />
           </div>
@@ -258,7 +283,7 @@
           ></textarea>
         </div>
 
-        <!-- File Attachment Zone -->
+        <!-- 파일 첨부 영역 -->
         <div class="form-group">
           <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
           <div class="file-upload-dropzone">
@@ -276,7 +301,7 @@
             </div>
           </div>
 
-          <!-- Uploaded Files List -->
+          <!-- 첨부된 파일 목록 -->
           <div class="attached-files-list" *ngIf="uploadedCustomFiles.length > 0">
             <div *ngFor="let file of uploadedCustomFiles; let i = index" class="attached-file-chip">
               <i [class]="getFileIcon(file.extension)"></i>
@@ -290,23 +315,92 @@
       </div>
     </div>
 
-    <!-- Projected Footer inside c-modal formActions -->
+    <!-- MODE 3: 템플릿 수정 -->
+    <div class="modal-body-container" *ngIf="templateModalMode === 'edit'">
+      <div class="upload-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="bx bx-folder"></i> 템플릿명 <span class="required">*</span></label>
+            <input 
+              type="text" 
+              class="form-input" 
+              placeholder="예: my-custom-component" 
+              [(ngModel)]="uploadGroupName"
+            />
+          </div>
+
+          <div class="form-group">
+            <label><i class="bx bx-code-alt"></i> 프레임워크 선택 <span class="required">*</span></label>
+            <c-dropdown
+              [options]="uploadFrameworkOptions"
+              [value]="selectedUploadFramework"
+            ></c-dropdown>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label><i class="bx bx-book-open"></i> README 설명글</label>
+          <textarea 
+            class="form-textarea" 
+            rows="3" 
+            placeholder="템플릿 사용 방법이나 주요 설명글을 입력하세요."
+            [(ngModel)]="uploadDescription"
+          ></textarea>
+        </div>
+
+        <!-- 파일 첨부 영역 -->
+        <div class="form-group">
+          <label><i class="bx bx-paperclip"></i> 구성 파일 첨부</label>
+          <div class="file-upload-dropzone">
+            <input 
+              type="file" 
+              multiple 
+              #editFileInput 
+              class="hidden-file-input"
+              (change)="onCustomFilesAttached($event)"
+            />
+            <div class="dropzone-content" (click)="editFileInput.click()">
+              <i class="bx bx-cloud-upload upload-icon"></i>
+              <span>파일 추가 첨부</span>
+              <small>(.html, .scss, .ts, .js, .json 등 다중 선택 가능)</small>
+            </div>
+          </div>
+
+          <!-- 첨부된 파일 목록 -->
+          <div class="attached-files-list" *ngIf="uploadedCustomFiles.length > 0">
+            <div *ngFor="let file of uploadedCustomFiles; let i = index" class="attached-file-chip">
+              <i [class]="getFileIcon(file.extension)"></i>
+              <span class="file-name">{{ file.name }}</span>
+              <button class="remove-btn" (click)="removeCustomFile(i)">
+                <i class="bx bx-x"></i>
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="uploadedCustomFiles.length === 0" class="no-files-msg">
+            첨부된 파일이 없습니다. 파일을 추가해주세요.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모달 푸터 -->
     <div footer class="c-modal-footer-wrapper">
       <div class="footer-left">
         <c-button 
-          *ngIf="templateModalMode === 'preset'" 
+          *ngIf="templateModalMode === 'select'" 
           theme="neutral" 
           (onClick)="templateModalMode = 'upload'"
         >
-          <i class="bx bx-cloud-upload"></i> 템플릿 직접 업로드
+          <i class="bx bx-cloud-upload"></i> 새 템플릿 등록
         </c-button>
 
         <c-button 
-          *ngIf="templateModalMode === 'upload'" 
+          *ngIf="templateModalMode === 'upload' || templateModalMode === 'edit'" 
           theme="neutral" 
-          (onClick)="templateModalMode = 'preset'"
+          (onClick)="templateModalMode = 'select'"
         >
-          <i class="bx bx-left-arrow-alt"></i> 프리셋 목록으로
+          <i class="bx bx-left-arrow-alt"></i> 내 템플릿 목록
         </c-button>
       </div>
 
@@ -316,12 +410,12 @@
         </c-button>
 
         <c-button 
-          *ngIf="templateModalMode === 'preset'" 
+          *ngIf="templateModalMode === 'select'" 
           theme="primary"
-          [disabled]="!selectedPreset"
-          (onClick)="submitPresetTemplate()"
+          [disabled]="!selectedTemplate"
+          (onClick)="submitSelectedTemplate()"
         >
-          템플릿 생성하기
+          템플릿으로 생성하기
         </c-button>
 
         <c-button 
@@ -330,7 +424,16 @@
           [disabled]="!uploadGroupName.trim() || uploadedCustomFiles.length === 0"
           (onClick)="submitCustomUpload()"
         >
-          템플릿 업로드하기
+          템플릿 등록하기
+        </c-button>
+
+        <c-button 
+          *ngIf="templateModalMode === 'edit'" 
+          theme="primary"
+          [disabled]="!uploadGroupName.trim()"
+          (onClick)="submitEditTemplate()"
+        >
+          수정 저장하기
         </c-button>
       </div>
     </div>

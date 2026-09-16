@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CDropdownComponent, CDropdownOption } from '../../../../components/c-dropdown/c-dropdown.component';
 import { CModalComponent } from '../../../../components/c-modal/c-modal.component';
 import { CButtonComponent } from '../../../../components/c-button/c-button.component';
-import { TEMPLATE_PRESETS, TemplatePreset, TemplateFilePreset } from '../../../../core/data/template-preset.data';
+import { TemplateService, Template, TemplateFile } from '../../../../core/services/template.service';
 import { FolderService, Folder } from '../../../../core/services/folder.service';
 import { RoomService, ChatRoomRecord } from '../../../../core/services/room.service';
 import { FileItemService, FileItem } from '../../../../core/services/file-item.service';
@@ -37,20 +37,19 @@ export class HomeSidebarComponent implements OnInit {
   @Input() activeFileId: string | null = null;
   @Input() selectedModel: string = 'Gemini 3.6 Flash';
 
-  // --- Template Modal Direct State ---
+  // --- 템플릿 모달 상태 ---
   isTemplateModalOpen = false;
-  templateModalMode: 'preset' | 'upload' = 'preset';
+  templateModalMode: 'select' | 'upload' | 'edit' = 'select';
 
-  templateCategories = [
-    { value: 'all', label: '전체' },
-    { value: 'ui', label: 'UI 컴포넌트' },
-    { value: 'api', label: 'REST API' },
-    { value: 'css', label: 'CSS / 스타일' }
-  ];
-  selectedTemplateCategory: string = 'all';
-  templatePresets: TemplatePreset[] = TEMPLATE_PRESETS;
-  selectedPreset: TemplatePreset | null = TEMPLATE_PRESETS[0] || null;
-  selectedFrameworkIndex: number = 0;
+  // 선택 모드: DB에서 조회한 내 템플릿 목록
+  myTemplates: Template[] = [];
+  selectedTemplate: Template | null = null;
+  selectedTemplateFiles: TemplateFile[] = [];
+  isLoadingTemplates = false;
+  selectedFrameworkFilter: string = '전체';
+
+  // 편집 모드: 수정 대상 템플릿 ID
+  editingTemplateId: string | null = null;
 
   // Custom Upload Form State
   uploadGroupName: string = '';
@@ -95,6 +94,7 @@ export class HomeSidebarComponent implements OnInit {
   private dAlert = inject(DAlertService);
   private dLoading = inject(DLoadingService);
   private authService = inject(AuthService);
+  private templateService = inject(TemplateService);
   private router = inject(Router);
 
   @HostListener('document:click')
@@ -229,59 +229,180 @@ export class HomeSidebarComponent implements OnInit {
     this.selectRoom('');
   }
 
-  // --- Template Modal Handlers ---
-  openTemplateModal() {
-    this.templateModalMode = 'preset';
-    this.selectedTemplateCategory = 'all';
-    this.selectedPreset = this.templatePresets[0] || null;
-    this.selectedFrameworkIndex = 0;
+  // --- 템플릿 모달 핸들러 ---
+  async openTemplateModal() {
+    this.templateModalMode = 'select';
+    this.selectedTemplate = null;
+    this.selectedTemplateFiles = [];
+    this.selectedFrameworkFilter = '전체';
+    // 업로드 폼 초기화
+    this.uploadGroupName = '';
+    this.uploadDescription = '';
+    this.uploadedCustomFiles = [];
+    this.selectedUploadFramework = 'Angular';
     this.isTemplateModalOpen = true;
+    // DB에서 내 템플릿 목록 로드
+    await this.loadMyTemplates();
   }
 
   closeTemplateModal() {
     this.isTemplateModalOpen = false;
   }
 
-  get filteredPresets(): TemplatePreset[] {
-    if (this.selectedTemplateCategory === 'all') {
-      return this.templatePresets;
+  // DB에서 내 템플릿 목록 조회
+  async loadMyTemplates() {
+    this.isLoadingTemplates = true;
+    try {
+      this.myTemplates = await this.templateService.getTemplates();
+    } catch (e: any) {
+      console.error('템플릿 목록 로드 실패:', e);
+      this.myTemplates = [];
+    } finally {
+      this.isLoadingTemplates = false;
     }
-    return this.templatePresets.filter(p => p.category === this.selectedTemplateCategory);
   }
 
-  selectCategory(catValue: string) {
-    this.selectedTemplateCategory = catValue;
-    const filtered = this.filteredPresets;
-    if (filtered.length > 0) {
-      this.selectedPreset = filtered[0];
-      this.selectedFrameworkIndex = 0;
+  // 등록된 템플릿의 고유 프레임워크 목록 추출
+  get uniqueFrameworks(): string[] {
+    const fws = new Set(this.myTemplates.map(t => t.framework).filter(Boolean));
+    return ['전체', ...Array.from(fws)];
+  }
+
+  // 선택한 프레임워크로 필터링된 템플릿 목록
+  get filteredTemplates(): Template[] {
+    if (this.selectedFrameworkFilter === '전체') {
+      return this.myTemplates;
+    }
+    return this.myTemplates.filter(t => t.framework === this.selectedFrameworkFilter);
+  }
+
+  selectFrameworkFilter(fw: string) {
+    this.selectedFrameworkFilter = fw;
+    // 필터 변경 시 선택 초기화
+    if (this.selectedTemplate && !this.filteredTemplates.find(t => t.id === this.selectedTemplate?.id)) {
+      this.selectedTemplate = null;
+      this.selectedTemplateFiles = [];
+    }
+  }
+
+  // 목록에서 템플릿 선택 시 파일 목록 로드
+  async selectTemplate(template: Template) {
+    this.selectedTemplate = template;
+    // 조인으로 이미 파일이 있으면 사용, 없으면 별도 조회
+    if (template.template_files && template.template_files.length > 0) {
+      this.selectedTemplateFiles = template.template_files;
     } else {
-      this.selectedPreset = null;
-      this.selectedFrameworkIndex = 0;
+      this.selectedTemplateFiles = await this.templateService.getTemplateFiles(template.id);
     }
   }
 
-  selectPreset(preset: TemplatePreset) {
-    this.selectedPreset = preset;
-    this.selectedFrameworkIndex = 0;
-  }
-
-  get currentPresetFramework() {
-    if (!this.selectedPreset || !this.selectedPreset.frameworks.length) return null;
-    return this.selectedPreset.frameworks[this.selectedFrameworkIndex] || this.selectedPreset.frameworks[0];
-  }
-
-  get generatedPresetGroupName(): string {
-    if (!this.selectedPreset || !this.currentPresetFramework) return '';
-    const fw = this.currentPresetFramework.framework;
-    return `${this.selectedPreset.id}-${fw}`;
-  }
-
-  async submitPresetTemplate() {
-    if (!this.selectedPreset || !this.currentPresetFramework) return;
-    const groupName = this.generatedPresetGroupName;
-    const files = this.currentPresetFramework.files;
+  // 선택한 템플릿으로 폴더 + 파일 생성
+  async submitSelectedTemplate() {
+    if (!this.selectedTemplate) return;
+    const groupName = this.selectedTemplate.name;
+    const files = this.selectedTemplateFiles.map(f => ({
+      name: f.name,
+      extension: f.extension,
+      content: f.content
+    }));
     await this.createTemplateBundle(groupName, files);
+  }
+
+  // 선택 모드에서 템플릿 삭제
+  deleteMyTemplate(template: Template) {
+    this.dAlert.confirm(
+      `'${template.name}' 템플릿을 삭제하시겠습니까?`,
+      '템플릿 삭제',
+      async () => {
+        this.dLoading.show('템플릿을 삭제하는 중입니다...');
+        try {
+          await this.templateService.deleteTemplate(template.id);
+          this.myTemplates = this.myTemplates.filter(t => t.id !== template.id);
+          if (this.selectedTemplate?.id === template.id) {
+            this.selectedTemplate = null;
+            this.selectedTemplateFiles = [];
+          }
+          this.dLoading.dismiss('템플릿이 삭제되었습니다.');
+        } catch (e: any) {
+          this.dLoading.dismiss();
+          this.dAlert.error('템플릿 삭제 실패: ' + (e.message || ''), '오류');
+        }
+      }
+    );
+  }
+
+  // 템플릿 수정 모드 진입
+  async startEditTemplate(template: Template) {
+    this.editingTemplateId = template.id;
+    this.uploadGroupName = template.name;
+    this.uploadDescription = template.description || '';
+    this.selectedUploadFramework = template.framework || 'Angular';
+
+    // 기존 파일 목록 로드 (README.md 제외 - 자동 생성되므로)
+    const files = template.template_files && template.template_files.length > 0
+      ? template.template_files
+      : await this.templateService.getTemplateFiles(template.id);
+
+    this.uploadedCustomFiles = files
+      .filter(f => f.name !== 'README.md')
+      .map(f => ({
+        name: f.name,
+        extension: f.extension,
+        content: f.content,
+        size: f.content.length
+      }));
+
+    this.templateModalMode = 'edit';
+  }
+
+  // 템플릿 수정 저장
+  async submitEditTemplate() {
+    if (!this.editingTemplateId || !this.uploadGroupName.trim()) return;
+
+    const files: { name: string; extension: string; content: string }[] = [];
+
+    // README.md 자동 재생성
+    const readmeContent = `# ${this.uploadGroupName}
+
+## 📌 프레임워크
+- **${this.selectedUploadFramework}**
+
+## 📝 템플릿 설명
+${this.uploadDescription || '등록된 설명이 없습니다.'}
+
+## 📁 포함된 파일 목록
+${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부된 파일 없음'}
+`;
+
+    files.push({ name: 'README.md', extension: 'md', content: readmeContent });
+
+    for (const f of this.uploadedCustomFiles) {
+      files.push({ name: f.name, extension: f.extension, content: f.content });
+    }
+
+    this.dLoading.show(`'${this.uploadGroupName}' 템플릿을 수정하는 중입니다...`);
+    try {
+      await this.templateService.updateTemplate(
+        this.editingTemplateId,
+        this.uploadGroupName.trim(),
+        this.uploadDescription,
+        this.selectedUploadFramework,
+        files
+      );
+
+      this.dLoading.dismiss('템플릿이 성공적으로 수정되었습니다.');
+
+      // 초기화 및 목록 새로고침
+      this.editingTemplateId = null;
+      this.uploadGroupName = '';
+      this.uploadDescription = '';
+      this.uploadedCustomFiles = [];
+      this.templateModalMode = 'select';
+      await this.loadMyTemplates();
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('템플릿 수정 실패: ' + (e.message || ''), '오류');
+    }
   }
 
   async onCustomFilesAttached(event: Event) {
@@ -313,9 +434,9 @@ export class HomeSidebarComponent implements OnInit {
   async submitCustomUpload() {
     if (!this.uploadGroupName.trim()) return;
 
-    const files: TemplateFilePreset[] = [];
+    const files: { name: string; extension: string; content: string }[] = [];
 
-    // 1. Generate README.md automatically
+    // 1. README.md 자동 생성
     const readmeContent = `# ${this.uploadGroupName}
 
 ## 📌 프레임워크
@@ -334,7 +455,7 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
       content: readmeContent
     });
 
-    // 2. Add uploaded custom files
+    // 2. 업로드된 커스텀 파일 추가
     for (const f of this.uploadedCustomFiles) {
       files.push({
         name: f.name,
@@ -343,15 +464,33 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
       });
     }
 
-    await this.createTemplateBundle(this.uploadGroupName.trim(), files);
+    this.dLoading.show(`'${this.uploadGroupName}' 템플릿을 등록하는 중입니다...`);
+    try {
+      // DB templates 테이블에 저장
+      await this.templateService.createTemplate(
+        this.uploadGroupName.trim(),
+        this.uploadDescription,
+        this.selectedUploadFramework,
+        files
+      );
 
-    // Reset upload form
-    this.uploadGroupName = '';
-    this.uploadDescription = '';
-    this.uploadedCustomFiles = [];
+      this.dLoading.dismiss('템플릿이 성공적으로 등록되었습니다.');
+      
+      // 업로드 폼 초기화
+      this.uploadGroupName = '';
+      this.uploadDescription = '';
+      this.uploadedCustomFiles = [];
+
+      // 선택 모드로 전환 후 목록 새로고침
+      this.templateModalMode = 'select';
+      await this.loadMyTemplates();
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('템플릿 등록 실패: ' + (e.message || ''), '오류');
+    }
   }
 
-  private async createTemplateBundle(groupName: string, files: TemplateFilePreset[]) {
+  private async createTemplateBundle(groupName: string, files: { name: string; extension: string; content: string }[]) {
     this.dLoading.show(`'${groupName}' 템플릿 폴더 및 소스 코드를 생성하는 중입니다...`);
     try {
       const order = this.folders.filter(f => !f.parent_id).length;

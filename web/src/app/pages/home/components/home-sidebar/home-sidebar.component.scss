@@ -738,3 +738,87 @@ $sidebar-width: 260px;
   }
 }
 
+/* 템플릿 로딩 상태 */
+.template-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 280px;
+  font-size: 14px;
+  color: #627d98;
+
+  i {
+    font-size: 22px;
+    color: #4a86ff;
+  }
+}
+
+/* 템플릿 카드 삭제 버튼 */
+.template-delete-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: #a3b1c6;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #e53e3e;
+    background: rgba(229, 62, 62, 0.08);
+  }
+}
+
+/* 프레임워크 태그 */
+.framework-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4a86ff;
+  background: rgba(74, 134, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: 10px;
+}
+
+/* 미리보기 헤더 개선 */
+.preset-preview-panel .preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #2b3a4a;
+  }
+}
+
+/* 빈 선택 안내 */
+.empty-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 파일 없음 메시지 */
+.no-files-msg {
+  font-size: 12px;
+  color: #a3b1c6;
+  padding: 8px 0;
+  font-style: italic;
+}
+
+/* 빈 목록 서브 텍스트 */
+.empty-sub-text {
+  margin: 0;
+  font-size: 12px;
+  color: #a3b1c6;
+}
