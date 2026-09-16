@@ -142,4 +142,31 @@ export class HomeComponent implements OnInit {
       }, 0);
     }
   }
+
+  async onSendFileQuestion(data: { file: FileItem, question: string }) {
+    if (!this.sidebarComponent) return;
+
+    const fileContextPrompt = `[첨부 파일 분석 요청: ${data.file.name}]\n\`\`\`${data.file.extension}\n${data.file.content}\n\`\`\`\n\n질문: ${data.question}`;
+    
+    // 1. Create a new chat room under the file's folder
+    const room = await this.sidebarComponent.createNewRoom(data.question, data.file.folder_id, false);
+    if (room) {
+      // 2. Initialize room message with file context + question
+      room.messages = [
+        {
+          text: fileContextPrompt,
+          isUser: true,
+          timestamp: new Date(),
+          processed: false
+        }
+      ];
+      await this.roomService.saveMessages(room.id, room.messages);
+      
+      // 3. Navigate to new chat room immediately
+      this.activeFileId = null;
+      this.activeFile = null;
+      this.activeRoomId = room.id;
+      this.activeRoom = room;
+    }
+  }
 }

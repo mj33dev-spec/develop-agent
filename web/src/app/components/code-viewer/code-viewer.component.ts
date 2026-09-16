@@ -1,19 +1,34 @@
-import { Component, Input, Output, EventEmitter, inject, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FileItem, FileItemService } from '../../core/services/file-item.service';
 import { DAlertService } from '../../core/services/d-alert.service';
+import { ChatInputService } from '../../core/services/chat-input.service';
+import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.component';
+import { CBadgeComponent } from '../c-badge/c-badge.component';
 
 @Component({
   selector: 'app-code-viewer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, CDropdownComponent, CBadgeComponent],
   templateUrl: './code-viewer.component.html',
   styleUrl: './code-viewer.component.scss'
 })
-export class CodeViewerComponent {
+export class CodeViewerComponent implements OnInit {
   @Input({ required: true }) file!: FileItem;
   @Output() onClose = new EventEmitter<void>();
+  @Output() sendFileQuestion = new EventEmitter<{ file: FileItem; question: string }>();
+
+  userInput: string = '';
+  selectedModel: string = 'Gemini 3.6 Flash';
+  modelOptions: CDropdownOption[] = [
+    { label: 'Gemini 3.6 Flash', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.6 Flash' },
+    { label: 'Gemini 3.1 Pro', value: 'gemini', onClick: () => this.selectedModel = 'Gemini 3.1 Pro' },
+    { label: 'Groq Qwen 3.8', value: 'groq', onClick: () => this.selectedModel = 'Groq Qwen 3.8' },
+    { label: 'Groq GPT-OSS', value: 'groq', onClick: () => this.selectedModel = 'Groq GPT-OSS' }
+  ];
+  addMenuOptions: CDropdownOption[] = [];
 
   isPreviewOpen = false;
   previewSrcDoc: SafeHtml | string = '';
@@ -26,6 +41,19 @@ export class CodeViewerComponent {
   private dAlert = inject(DAlertService);
   private fileService = inject(FileItemService);
   private sanitizer = inject(DomSanitizer);
+  private chatInputService = inject(ChatInputService);
+
+  ngOnInit() {
+    this.addMenuOptions = this.chatInputService.getAddMenuOptions(
+      (dataUrl, fileName) => {
+        const imageMarkdown = `![${fileName}](${dataUrl})\n`;
+        this.userInput = (this.userInput || '') + imageMarkdown;
+      },
+      (codeSnippet) => {
+        this.userInput = (this.userInput || '') + codeSnippet;
+      }
+    );
+  }
 
   get lines(): string[] {
     if (!this.file || !this.file.content) return [];
@@ -69,7 +97,6 @@ export class CodeViewerComponent {
     const offsetX = event.clientX - rect.left;
     let newPercent = (offsetX / rect.width) * 100;
     
-    // Bounds between 20% and 80%
     if (newPercent < 20) newPercent = 20;
     if (newPercent > 80) newPercent = 80;
 
@@ -94,6 +121,35 @@ export class CodeViewerComponent {
     } else {
       this.openPreview();
     }
+  }
+
+  handleEnter(event: Event) {
+    if ((event as KeyboardEvent).isComposing) return;
+    event.preventDefault();
+    this.sendQuestion();
+  }
+
+  autoResize(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    textarea.style.height = 'auto';
+    const scrollHeight = textarea.scrollHeight;
+    
+    if (scrollHeight >= 140) {
+      textarea.style.height = '140px';
+      textarea.style.overflowY = 'auto';
+    } else {
+      textarea.style.height = `${scrollHeight}px`;
+      textarea.style.overflowY = 'hidden';
+    }
+  }
+
+  sendQuestion() {
+    const text = this.userInput.trim();
+    if (!text) return;
+    this.sendFileQuestion.emit({ file: this.file, question: text });
+    this.userInput = '';
+    const textarea = document.querySelector('.viewer-textarea') as HTMLTextAreaElement;
+    if (textarea) textarea.style.height = 'auto';
   }
 
   private getCleanBaseName(fileName: string): string {

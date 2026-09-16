@@ -3,6 +3,10 @@
   <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;" />
 
   <div class="sidebar-header">
+    <button class="new-template-btn" (click)="openNewChatMain()">
+      <i class="bx bx-edit-alt"></i> 
+      새 템플릿
+    </button>
     <button class="new-chat-btn" (click)="openNewChatMain()">
       <i class="bx bx-edit-alt"></i> 
       새 채팅

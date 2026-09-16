@@ -2,103 +2,112 @@
   <!-- Header -->
   <div class="chat-header">
     <div class="header-left">
-      <i class="bx bx-chevron-left" (click)="goBack()" style="cursor: pointer;"></i>
-    </div>
-    
-    <div class="header-center">
-      <ng-container *ngIf="!isEditingTitle; else editTitleTemplate">
-        <h2 class="chat-title" (click)="startEditingTitle()" title="클릭하여 이름 변경">
-          <i class="bx bx-pencil edit-icon"></i>
-          {{ room?.title || 'AI Agent' }}
-        </h2>
-      </ng-container>
-      <ng-template #editTitleTemplate>
-        <input id="chat-title-input" 
-               type="text" 
-               class="chat-title-input"
-               [(ngModel)]="editingTitleValue" 
-               (keydown.enter)="saveEditingTitle()" 
-               (keydown.escape)="cancelEditingTitle()"
-               (blur)="saveEditingTitle()" />
-      </ng-template>
+      <button type="button" class="icon-btn" (click)="goBack()" title="뒤로가기">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+
+      <div class="header-center">
+        <ng-container *ngIf="!isEditingTitle; else editTitleTemplate">
+          <h2 class="chat-title" (click)="startEditingTitle()" title="클릭하여 이름 변경">
+            <i class="bx bx-pencil edit-icon"></i>
+            {{ room?.title || 'AI Agent' }}
+          </h2>
+        </ng-container>
+        <ng-template #editTitleTemplate>
+          <input id="chat-title-input" 
+                 type="text" 
+                 class="chat-title-input"
+                 [(ngModel)]="editingTitleValue" 
+                 (keydown.enter)="saveEditingTitle()" 
+                 (keydown.escape)="cancelEditingTitle()"
+                 (blur)="saveEditingTitle()" />
+        </ng-template>
+      </div>
     </div>
 
     <div class="header-right">
-      <i class="bx bx-search" style="cursor: pointer;"></i>
-      <i class="bx bx-menu" style="cursor: pointer;"></i>
-    </div>
-  </div>
-
-  <!-- Messages -->
-  <div class="chat-messages" #chatMessages>
-    <div *ngFor="let msg of room?.messages" 
-         class="message-wrapper" 
-         [class.user-message]="msg.isUser"
-         [class.agent-message]="!msg.isUser">
-      
-      <div *ngIf="!msg.isUser" class="agent-profile">
-        <div class="avatar-small">
-          <img src="/assets/icons/ic-logo.svg" alt="AI Agent">
-        </div>
-      </div>
-
-      <div class="message-content">
-        <span *ngIf="!msg.isUser" class="agent-name">AI Agent</span>
-        
-        <div class="bubble-group">
-          <!-- User Time (Left of Bubble) -->
-          <div *ngIf="msg.isUser" class="time-stamp user-time">{{ formatTime(msg.timestamp) }}</div>
-
-          <div class="message-bubble" [class.loading]="msg.isLoading">
-            <ng-container *ngIf="!msg.isLoading; else loadingTemplate">
-              {{ msg.text }}
-            </ng-container>
-            <ng-template #loadingTemplate>
-              <div class="typing-indicator">
-                <span></span><span></span><span></span>
-              </div>
-            </ng-template>
-          </div>
-
-          <!-- Agent Time (Right of Bubble) -->
-          <div *ngIf="!msg.isUser" class="time-stamp agent-time">{{ formatTime(msg.timestamp) }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Input Area -->
-  <div class="chat-input-area">
-    <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
-      <button class="add-btn" type="button" title="추가 옵션">
-        <i class="bx bx-plus"></i>
+      <button type="button" class="icon-btn" title="검색">
+        <i class="bx bx-search"></i>
       </button>
-    </c-dropdown>
-    
-    <div class="input-wrapper">
-      <textarea 
-             [(ngModel)]="userInput" 
-             (keydown.enter)="handleEnter($event)"
-             (input)="autoResize($event)"
-             placeholder="메시지를 입력하세요" 
-             [disabled]="isLoading"
-             rows="1">
-      </textarea>
+      <button type="button" class="icon-btn" title="메뉴">
+        <i class="bx bx-menu"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages Body -->
+  <div class="chat-body">
+    <div class="chat-messages" #chatMessages>
+      <div *ngFor="let msg of room?.messages" 
+           class="message-wrapper" 
+           [class.user-message]="msg.isUser"
+           [class.agent-message]="!msg.isUser">
+        
+        <div *ngIf="!msg.isUser" class="agent-profile">
+          <div class="avatar-small">
+            <img src="/assets/icons/ic-logo.svg" alt="AI Agent">
+          </div>
+        </div>
+
+        <div class="message-content">
+          <span *ngIf="!msg.isUser" class="agent-name">AI Agent</span>
+          
+          <div class="bubble-group">
+            <div *ngIf="msg.isUser" class="time-stamp user-time">{{ formatTime(msg.timestamp) }}</div>
+
+            <div class="message-bubble" [class.loading]="msg.isLoading">
+              <ng-container *ngIf="!msg.isLoading; else loadingTemplate">
+                {{ msg.text }}
+              </ng-container>
+              <ng-template #loadingTemplate>
+                <div class="typing-indicator">
+                  <span></span><span></span><span></span>
+                </div>
+              </ng-template>
+            </div>
+
+            <div *ngIf="!msg.isUser" class="time-stamp agent-time">{{ formatTime(msg.timestamp) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Input Area -->
+  <div class="chat-footer-input">
+    <div class="chat-input-box">
+      <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
+        <button class="add-btn" type="button" title="추가 옵션">
+          <i class="bx bx-plus"></i>
+        </button>
+      </c-dropdown>
       
-      <div class="input-actions">
-        <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up" align="right">
-          <c-badge variant="neutral" style="cursor: pointer; user-select: none;">
-            {{ selectedProvider }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
-          </c-badge>
-        </c-dropdown>
+      <div class="input-wrapper">
+        <textarea 
+               [(ngModel)]="userInput" 
+               (keydown.enter)="handleEnter($event)"
+               (input)="autoResize($event)"
+               placeholder="메시지를 입력하세요..." 
+               [disabled]="isLoading"
+               class="chat-textarea"
+               rows="1">
+        </textarea>
         
-        <button *ngIf="!isLoading" (click)="sendMessage()" class="send-btn" [disabled]="!userInput.trim()" [class.active]="userInput.trim()">
-          <i class="bx bx-up-arrow-alt"></i>
-        </button>
-        
-        <button *ngIf="isLoading" (click)="stopGenerating()" class="stop-btn">
-          <div class="stop-square"></div>
-        </button>
+        <div class="input-actions">
+          <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up" align="right">
+            <c-badge variant="neutral" style="cursor: pointer; user-select: none;">
+              {{ selectedProvider }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
+            </c-badge>
+          </c-dropdown>
+          
+          <button *ngIf="!isLoading" (click)="sendMessage()" class="send-btn" [disabled]="!userInput.trim()" [class.active]="userInput.trim()">
+            <i class="bx bx-up-arrow-alt"></i>
+          </button>
+          
+          <button *ngIf="isLoading" (click)="stopGenerating()" class="stop-btn">
+            <div class="stop-square"></div>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -61,7 +61,7 @@
 
     <!-- Code Viewer when a file is selected -->
     <div class="code-view" *ngIf="activeFileId && activeFile" style="height: 100%; width: 100%;">
-      <app-code-viewer [file]="activeFile" (onClose)="onBackToHome()"></app-code-viewer>
+      <app-code-viewer [file]="activeFile" (onClose)="onBackToHome()" (sendFileQuestion)="onSendFileQuestion($event)"></app-code-viewer>
     </div>
     
   </main>

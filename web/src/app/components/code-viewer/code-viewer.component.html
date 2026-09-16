@@ -12,31 +12,6 @@
         <span class="file-size">{{ formattedSize }}</span>
       </div>
     </div>
-
-    <div class="header-right">
-      <!-- Play Preview Toggle Button for HTML Files -->
-      <button 
-        *ngIf="isHtmlFile" 
-        type="button" 
-        class="action-btn play-btn" 
-        [class.active]="isPreviewOpen"
-        (click)="togglePreview()" 
-        title="우측 split 미리보기 토글"
-      >
-        <i class="bx bx-play-circle"></i>
-        <span>{{ isPreviewOpen ? '미리보기 닫기' : '미리보기' }}</span>
-      </button>
-
-      <button type="button" class="action-btn" (click)="copyAllCode()" title="전체 복사">
-        <i class="bx bx-copy"></i>
-        <span>전체 복사</span>
-      </button>
-
-      <button type="button" class="action-btn primary" (click)="downloadFile()" title="다운로드">
-        <i class="bx bx-download"></i>
-        <span>다운로드</span>
-      </button>
-    </div>
   </div>
 
   <!-- Viewer Body (Split Layout) -->
@@ -44,6 +19,28 @@
     <!-- Left: Code Panel -->
     <div class="code-panel-wrapper" [style.width]="isPreviewOpen ? leftWidthPercent + '%' : '100%'">
       <div class="code-panel">
+        <!-- Absolute Top Right Floating Icon Action Buttons -->
+        <div class="floating-actions">
+          <button 
+            *ngIf="isHtmlFile" 
+            type="button" 
+            class="floating-btn play-btn" 
+            [class.active]="isPreviewOpen"
+            (click)="togglePreview()" 
+            [title]="isPreviewOpen ? '미리보기 닫기' : '미리보기'"
+          >
+            <i class="bx bx-play-circle"></i>
+          </button>
+
+          <button type="button" class="floating-btn" (click)="copyAllCode()" title="전체 복사">
+            <i class="bx bx-copy"></i>
+          </button>
+
+          <button type="button" class="floating-btn primary" (click)="downloadFile()" title="다운로드">
+            <i class="bx bx-download"></i>
+          </button>
+        </div>
+
         <table class="code-table">
           <tbody>
             <tr *ngFor="let line of lines; let i = index">
@@ -93,6 +90,40 @@
           class="preview-iframe"
           sandbox="allow-scripts allow-modals allow-forms allow-same-origin"
         ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Chat Input Area for File Analysis Question -->
+  <div class="viewer-footer-input">
+    <div class="file-question-box">
+      <c-dropdown [options]="addMenuOptions" [width]="'180px'" direction="up">
+        <button class="add-btn" type="button" title="추가 옵션">
+          <i class="bx bx-plus"></i>
+        </button>
+      </c-dropdown>
+      
+      <div class="input-wrapper">
+        <textarea 
+               [(ngModel)]="userInput" 
+               (keydown.enter)="handleEnter($event)"
+               (input)="autoResize($event)"
+               [placeholder]="'\'' + file.name + '\' 파일에 대해 AI 질문하기...'" 
+               class="viewer-textarea"
+               rows="1">
+        </textarea>
+        
+        <div class="input-actions">
+          <c-dropdown [options]="modelOptions" [width]="'160px'" direction="up" align="right">
+            <c-badge variant="neutral" style="cursor: pointer; user-select: none;">
+              {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
+            </c-badge>
+          </c-dropdown>
+          
+          <button (click)="sendQuestion()" class="send-btn" [disabled]="!userInput.trim()" [class.active]="userInput.trim()">
+            <i class="bx bx-up-arrow-alt"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
