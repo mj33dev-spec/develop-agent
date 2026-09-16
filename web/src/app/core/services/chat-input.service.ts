@@ -1,24 +1,131 @@
 import { Injectable, inject } from '@angular/core';
 import { CDropdownOption } from '../../components/c-dropdown/c-dropdown.component';
 import { DAlertService } from './d-alert.service';
+import { FileItemService, FileItem } from './file-item.service';
+import { RoomService, ChatRoomRecord } from './room.service';
+
+export interface ChatInputContext {
+  folderId?: string | null;
+  currentRoomId?: string;
+  currentFileId?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatInputService {
   private dAlert = inject(DAlertService);
+  private fileService = inject(FileItemService);
+  private roomService = inject(RoomService);
 
-  // + 버튼 메뉴 옵션 생성
+  // + 버튼 메뉴 옵션 생성 (동적 파일/채팅방 링크 포함)
+  async loadAddMenuOptions(
+    context: ChatInputContext,
+    onInsertText: (text: string) => void,
+    onImageSelected: (dataUrl: string, fileName: string) => void
+  ): Promise<CDropdownOption[]> {
+    const options: CDropdownOption[] = [
+      {
+        label: '이미지 첨부',
+        icon: 'bx bx-image-add',
+        onClick: () => this.selectImageFile(onImageSelected)
+      }
+    ];
+
+    try {
+      const [allFiles, allRooms] = await Promise.all([
+        this.fileService.getFiles(),
+        this.roomService.getRooms()
+      ]);
+
+      const targetFolderId = context.folderId !== undefined ? context.folderId : null;
+
+      // 같은 폴더에 속한 파일들
+      const sameFolderFiles = allFiles.filter(f => 
+        (targetFolderId === null ? f.folder_id === null : f.folder_id === targetFolderId) &&
+        f.id !== context.currentFileId
+      );
+
+      // 같은 폴더에 속한 채팅방들
+      const sameFolderRooms = allRooms.filter(r => 
+        (targetFolderId === null ? r.folder_id === null : r.folder_id === targetFolderId) &&
+        r.id !== context.currentRoomId
+      );
+
+      if (sameFolderFiles.length > 0 || sameFolderRooms.length > 0) {
+        options.push({ type: 'divider' });
+
+        // 1. 같은 폴더 내 파일들 추가
+        for (const file of sameFolderFiles) {
+          options.push({
+            label: `${file.name}`,
+            icon: this.getFileIcon(file.extension),
+            onClick: () => {
+              const ext = file.extension ? file.extension.toLowerCase() : '';
+              const codeBlock = `\n[첨부 파일: ${file.name}]\n\`\`\`${ext}\n${file.content || ''}\n\`\`\`\n`;
+              onInsertText(codeBlock);
+            }
+          });
+        }
+
+        // 2. 같은 폴더 내 채팅방들 추가
+        for (const room of sameFolderRooms) {
+          options.push({
+            label: `${room.title}`,
+            icon: 'bx bx-message-square-detail text-blue',
+            onClick: async () => {
+              const msgs = await this.roomService.getMessages(room.id);
+              let roomContext = `\n[참조 채팅방: ${room.title}]\n`;
+              if (msgs && msgs.length > 0) {
+                const formattedMsgs = msgs
+                  .filter(m => !m.isLoading && m.text)
+                  .map(m => `${m.isUser ? '사용자' : 'AI'}: ${m.text}`)
+                  .join('\n');
+                roomContext += `${formattedMsgs}\n`;
+              } else {
+                roomContext += `(대화 내역 없음)\n`;
+              }
+              onInsertText(roomContext);
+            }
+          });
+        }
+      }
+    } catch (e) {
+      console.warn('첨부 메뉴 옵션 로드 실패:', e);
+    }
+
+    return options;
+  }
+
+  // 파일 확장자별 아이콘 매핑
+  getFileIcon(ext: string): string {
+    const cleanExt = (ext || '').toLowerCase();
+    switch (cleanExt) {
+      case 'html': case 'htm': return 'bx bxl-html5 icon-html';
+      case 'css': return 'bx bxl-css3 icon-css';
+      case 'scss': case 'sass': return 'bx bxl-sass icon-scss';
+      case 'js': case 'jsx': return 'bx bxl-javascript icon-javascript';
+      case 'ts': case 'tsx': return 'bx bxl-typescript icon-typescript';
+      case 'py': return 'bx bxl-python icon-python';
+      case 'java': return 'bx bxl-java icon-java';
+      case 'json': return 'bx bx-code-curly icon-json';
+      case 'md': return 'bx bxl-markdown icon-markdown';
+      case 'png': case 'jpg': case 'jpeg': case 'svg': case 'gif': return 'bx bx-image icon-image';
+      default: return 'bx bx-code-alt icon-other';
+    }
+  }
+
+  // 기존 하위 호환용 getAddMenuOptions
   getAddMenuOptions(
     onImageSelected: (dataUrl: string, fileName: string) => void,
-    onCodeSnippetSelected: (codeSnippet: string) => void
+    onCodeSnippetSelected?: (codeSnippet: string) => void
   ): CDropdownOption[] {
     return [
       {
         label: '이미지 첨부',
         icon: 'bx bx-image-add',
         onClick: () => this.selectImageFile(onImageSelected)
-      },
+      }
     ];
   }
 

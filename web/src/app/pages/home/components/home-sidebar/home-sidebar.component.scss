@@ -100,7 +100,10 @@ $sidebar-width: 260px;
       flex-direction: column;
       position: relative;
       border-radius: 12px;
-      transition: all 0.2s ease;
+
+      &.is-dragging {
+        overflow: hidden;
+      }
 
       &.drag-over-inside > .folder-header {
         background-color: rgba($neu-primary, 0.15);

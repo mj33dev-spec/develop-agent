@@ -26,6 +26,7 @@
            (dragend)="onDragEnd($event)"
            [style.padding-left.px]="node.level * 16"
            [class.is-folder]="node.type === 'folder'"
+           [class.is-dragging]="draggedNode?.id === node.id"
            [class.active]="(node.type === 'room' && activeRoomId === node.id) || (node.type === 'file' && activeFileId === node.id)"
            [class.drag-over-inside]="dragOverNodeId === node.id && dragOverMode === 'inside'"
            [class.drag-over-before]="dragOverNodeId === node.id && dragOverMode === 'before'"

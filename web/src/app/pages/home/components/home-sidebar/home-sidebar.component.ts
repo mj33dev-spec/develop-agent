@@ -151,7 +151,6 @@ export class HomeSidebarComponent implements OnInit {
   draggedNode: SidebarNode | null = null;
   dragOverNodeId: string | null = null;
   dragOverMode: 'inside' | 'before' | 'after' | null = null;
-  private dragGhost: HTMLElement | null = null;
   private targetAttachFolderId: string | null = null;
 
   private folderService = inject(FolderService);
@@ -959,37 +958,16 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
 
   // --- Drag & Drop ---
   onDragStart(event: DragEvent, node: SidebarNode) {
-    this.draggedNode = node;
     if (event.dataTransfer) {
       event.dataTransfer.effectAllowed = 'move';
       event.dataTransfer.setData('text/plain', node.id);
-      
-      const target = (event.target as HTMLElement).querySelector('.folder-header, .room-item') as HTMLElement || event.target as HTMLElement;
-      if (target) {
-        const rect = target.getBoundingClientRect();
-        const offsetX = event.clientX - rect.left;
-        const offsetY = event.clientY - rect.top;
-
-        this.dragGhost = target.cloneNode(true) as HTMLElement;
-        this.dragGhost.classList.add('drag-ghost-clone');
-        this.dragGhost.style.width = `${target.offsetWidth}px`;
-        
-        if (target.parentNode) {
-          target.parentNode.appendChild(this.dragGhost);
-        } else {
-          document.body.appendChild(this.dragGhost);
-        }
-        
-        event.dataTransfer.setDragImage(this.dragGhost, offsetX, offsetY);
-      }
     }
+    setTimeout(() => {
+      this.draggedNode = node;
+    }, 0);
   }
 
   onDragEnd(event: DragEvent) {
-    if (this.dragGhost && this.dragGhost.parentNode) {
-      this.dragGhost.parentNode.removeChild(this.dragGhost);
-      this.dragGhost = null;
-    }
     this.draggedNode = null;
     this.dragOverNodeId = null;
     this.dragOverMode = null;

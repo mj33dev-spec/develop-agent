@@ -43,16 +43,23 @@ export class CodeViewerComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private chatInputService = inject(ChatInputService);
 
-  ngOnInit() {
-    this.addMenuOptions = this.chatInputService.getAddMenuOptions(
+  async loadAddMenuOptions() {
+    const folderId = this.file?.folder_id !== undefined ? this.file.folder_id : null;
+    const currentFileId = this.file?.id;
+    this.addMenuOptions = await this.chatInputService.loadAddMenuOptions(
+      { folderId, currentFileId },
+      (textToInsert) => {
+        this.userInput = (this.userInput || '') + textToInsert;
+      },
       (dataUrl, fileName) => {
         const imageMarkdown = `![${fileName}](${dataUrl})\n`;
         this.userInput = (this.userInput || '') + imageMarkdown;
-      },
-      (codeSnippet) => {
-        this.userInput = (this.userInput || '') + codeSnippet;
       }
     );
+  }
+
+  ngOnInit() {
+    this.loadAddMenuOptions();
   }
 
   get lines(): string[] {

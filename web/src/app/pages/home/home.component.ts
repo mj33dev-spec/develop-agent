@@ -54,16 +54,21 @@ export class HomeComponent implements OnInit {
   private fileService = inject(FileItemService);
   private chatInputService = inject(ChatInputService);
 
-  ngOnInit() {
-    this.addMenuOptions = this.chatInputService.getAddMenuOptions(
+  async loadAddMenuOptions() {
+    this.addMenuOptions = await this.chatInputService.loadAddMenuOptions(
+      { folderId: null },
+      (textToInsert) => {
+        this.homeInput = (this.homeInput || '') + textToInsert;
+      },
       (dataUrl, fileName) => {
         const imageMarkdown = `![${fileName}](${dataUrl})\n`;
         this.homeInput = (this.homeInput || '') + imageMarkdown;
-      },
-      (codeSnippet) => {
-        this.homeInput = (this.homeInput || '') + codeSnippet;
       }
     );
+  }
+
+  ngOnInit() {
+    this.loadAddMenuOptions();
   }
 
   async onActiveRoomIdChange(roomId: string | null) {

@@ -48,16 +48,23 @@ export class ChatComponent implements OnChanges, OnDestroy {
 
   addMenuOptions: CDropdownOption[] = [];
 
-  ngOnInit() {
-    this.addMenuOptions = this.chatInputService.getAddMenuOptions(
+  async loadAddMenuOptions() {
+    const folderId = this.room?.folder_id !== undefined ? this.room.folder_id : null;
+    const currentRoomId = this.room?.id;
+    this.addMenuOptions = await this.chatInputService.loadAddMenuOptions(
+      { folderId, currentRoomId },
+      (textToInsert) => {
+        this.userInput = (this.userInput || '') + textToInsert;
+      },
       (dataUrl, fileName) => {
         const imageMarkdown = `![${fileName}](${dataUrl})\n`;
         this.userInput = (this.userInput || '') + imageMarkdown;
-      },
-      (codeSnippet) => {
-        this.userInput = (this.userInput || '') + codeSnippet;
       }
     );
+  }
+
+  ngOnInit() {
+    this.loadAddMenuOptions();
   }
 
   // 헤더 제목 인라인 편집 상태 변수
@@ -121,6 +128,8 @@ export class ChatComponent implements OnChanges, OnDestroy {
       this.isLoading = false;
       
       if (this.room) {
+        this.loadAddMenuOptions();
+
         if (this.room.provider) {
           this.selectedProvider = this.room.provider;
         }
