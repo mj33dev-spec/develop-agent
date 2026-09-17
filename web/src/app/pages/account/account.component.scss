@@ -32,19 +32,6 @@
       border-bottom: 1px solid rgba(184, 201, 223, 0.5);
       padding-bottom: $spacing-20;
 
-      .header-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 16px;
-        background: linear-gradient(135deg, $neu-primary, #6B5CE7);
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
-      }
-
       .header-text {
         .title {
           @include typo-heading-3;
@@ -89,25 +76,6 @@
       .divider {
         height: 1px;
         background: rgba(184, 201, 223, 0.4);
-      }
-
-      .input-row {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        .badge-verified {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          padding: 6px 12px;
-          border-radius: 8px;
-          background: rgba(4, 176, 20, 0.1);
-          color: $color-success;
-          @include typo-caption-1;
-          font-weight: 600;
-          white-space: nowrap;
-        }
       }
 
       .input-with-btn-row {

@@ -132,7 +132,7 @@ export class HomeSidebarComponent implements OnInit {
   }
   uploadDescription: string = '';
   uploadedCustomFiles: { name: string; extension: string; content: string; size?: number }[] = [];
-  
+
   @Output() activeRoomIdChange = new EventEmitter<string | null>();
   @Output() activeFileIdChange = new EventEmitter<string | null>();
   @Output() dataChanged = new EventEmitter<void>();
@@ -161,7 +161,7 @@ export class HomeSidebarComponent implements OnInit {
 
   userMenuOptions: CDropdownOption[] = [
     {
-      label: '계정정보',
+      label: '내 정보',
       icon: 'bx bx-user-pin',
       onClick: () => this.navigateToAccount()
     },
@@ -314,12 +314,12 @@ export class HomeSidebarComponent implements OnInit {
 
   buildSidebarNodes() {
     this.sidebarNodes = [];
-    
+
     const addNodes = (parentId: string | null, level: number) => {
       const childFolders = this.folders.filter(f => f.parent_id === parentId);
       const childRooms = this.rooms.filter(r => r.folder_id === parentId);
       const childFiles = this.files.filter(f => f.folder_id === parentId);
-      
+
       const children = [
         ...childFolders.map(f => ({ ...f, _type: 'folder' })),
         ...childRooms.map(r => ({ ...r, _type: 'room' })),
@@ -330,10 +330,10 @@ export class HomeSidebarComponent implements OnInit {
         if (item._type === 'folder') {
           const folder = item as any;
           const isExpanded = folder.isExpanded !== undefined ? folder.isExpanded : true;
-          const hasChildren = this.folders.some(f => f.parent_id === folder.id) 
-                           || this.rooms.some(r => r.folder_id === folder.id)
-                           || this.files.some(f => f.folder_id === folder.id);
-          
+          const hasChildren = this.folders.some(f => f.parent_id === folder.id)
+            || this.rooms.some(r => r.folder_id === folder.id)
+            || this.files.some(f => f.folder_id === folder.id);
+
           this.sidebarNodes.push({
             type: 'folder',
             id: folder.id,
@@ -719,7 +719,7 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
       );
 
       this.dLoading.dismiss('템플릿이 성공적으로 등록되었습니다.');
-      
+
       // 업로드 폼 초기화
       this.uploadGroupName = '';
       this.uploadDescription = '';
@@ -761,15 +761,15 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     this.contextMenuNode = null;
     this.contextMenuPosition = { x: event.clientX, y: event.clientY };
     this.contextMenuOptions = [
-      { 
-        label: '새 폴더', 
-        icon: 'bx bx-folder-plus', 
-        onClick: () => this.openCreateFolderModal(null) 
+      {
+        label: '새 폴더',
+        icon: 'bx bx-folder-plus',
+        onClick: () => this.openCreateFolderModal(null)
       },
-      { 
-        label: '새 채팅', 
-        icon: 'bx bx-edit-alt', 
-        onClick: () => this.openNewChatMain() 
+      {
+        label: '새 채팅',
+        icon: 'bx bx-edit-alt',
+        onClick: () => this.openNewChatMain()
       },
       {
         label: '파일 첨부',
@@ -783,66 +783,66 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
   onNodeContextMenu(event: MouseEvent, node: SidebarNode) {
     event.preventDefault();
     event.stopPropagation();
-    
+
     this.contextMenuNode = node;
     this.contextMenuPosition = { x: event.clientX, y: event.clientY };
-    
+
     if (node.type === 'folder') {
       this.contextMenuOptions = [
-        { 
-          label: '하위 폴더 추가', 
-          icon: 'bx bx-folder-plus', 
-          onClick: () => this.openCreateFolderModal(node.id) 
+        {
+          label: '하위 폴더 추가',
+          icon: 'bx bx-folder-plus',
+          onClick: () => this.openCreateFolderModal(node.id)
         },
-        { 
-          label: '하위 채팅방 추가', 
-          icon: 'bx bx-edit-alt', 
-          onClick: () => this.createNewRoom(undefined, node.id) 
+        {
+          label: '하위 채팅방 추가',
+          icon: 'bx bx-edit-alt',
+          onClick: () => this.createNewRoom(undefined, node.id)
         },
         {
           label: '파일 첨부',
           icon: 'bx bx-upload',
           onClick: () => this.triggerFileUpload(node.id)
         },
-        { 
-          label: '이름 변경', 
-          icon: 'bx bx-rename', 
-          onClick: () => this.startEditing(new Event('click'), node) 
+        {
+          label: '이름 변경',
+          icon: 'bx bx-rename',
+          onClick: () => this.startEditing(new Event('click'), node)
         },
-        { 
-          label: '폴더 삭제', 
-          icon: 'bx bx-trash', 
-          onClick: () => this.deleteFolder(node.data) 
+        {
+          label: '폴더 삭제',
+          icon: 'bx bx-trash',
+          onClick: () => this.deleteFolder(node.data)
         }
       ];
     } else if (node.type === 'room') {
       this.contextMenuOptions = [
-        { 
-          label: '이름 변경', 
-          icon: 'bx bx-rename', 
-          onClick: () => this.startEditing(new Event('click'), node) 
+        {
+          label: '이름 변경',
+          icon: 'bx bx-rename',
+          onClick: () => this.startEditing(new Event('click'), node)
         },
-        { 
-          label: '채팅방 삭제', 
-          icon: 'bx bx-trash', 
-          onClick: () => this.deleteRoom(node.data) 
+        {
+          label: '채팅방 삭제',
+          icon: 'bx bx-trash',
+          onClick: () => this.deleteRoom(node.data)
         }
       ];
     } else {
       this.contextMenuOptions = [
-        { 
-          label: '이름 변경', 
-          icon: 'bx bx-rename', 
-          onClick: () => this.startEditing(new Event('click'), node) 
+        {
+          label: '이름 변경',
+          icon: 'bx bx-rename',
+          onClick: () => this.startEditing(new Event('click'), node)
         },
-        { 
-          label: '파일 삭제', 
-          icon: 'bx bx-trash', 
-          onClick: () => this.deleteFile(node.data) 
+        {
+          label: '파일 삭제',
+          icon: 'bx bx-trash',
+          onClick: () => this.deleteFile(node.data)
         }
       ];
     }
-    
+
     this.contextMenuVisible = true;
   }
 
@@ -870,7 +870,7 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     const fileName = file.name;
     const extParts = fileName.split('.');
     const ext = extParts.length > 1 ? extParts.pop()! : '';
-    
+
     this.dLoading.show(`'${fileName}' 파일을 읽는 중입니다...`);
     try {
       const content = await this.readFileAsText(file);
@@ -922,10 +922,10 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
 
   async saveEditing(node: SidebarNode) {
     if (this.editingNodeId !== node.id) return;
-    
+
     const newName = this.editInputValue.trim();
     this.editingNodeId = null;
-    
+
     if (!newName || newName === node.name) {
       return;
     }
@@ -969,13 +969,13 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
       this.dLoading.show('채팅방을 생성하는 중입니다...');
     }
     try {
-      const title = initialMessage 
-        ? (initialMessage.length > 18 ? initialMessage.substring(0, 18) + '...' : initialMessage) 
+      const title = initialMessage
+        ? (initialMessage.length > 18 ? initialMessage.substring(0, 18) + '...' : initialMessage)
         : `새로운 채팅 ${this.rooms.length + 1}`;
-        
+
       const targetModel = model || this.selectedModel;
       const room: any = await this.roomService.createRoom(title, targetModel, folderId, this.rooms.length);
-      
+
       if (initialMessage) {
         room.messages = [
           {
@@ -996,7 +996,7 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
       this.rooms.push(room);
       this.selectRoom(room.id);
       this.buildSidebarNodes();
-      
+
       if (!silent) {
         this.dLoading.dismiss('새 채팅방이 생성되었습니다.');
       }
@@ -1019,10 +1019,10 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
       this.folders.push(newFolder);
       this.buildSidebarNodes();
       this.dLoading.dismiss('새 폴더가 생성되었습니다.');
-      
+
       const newNode = this.sidebarNodes.find(n => n.id === newFolder.id);
       if (newNode) {
-        this.startEditing({ stopPropagation: () => {} } as Event, newNode);
+        this.startEditing({ stopPropagation: () => { } } as Event, newNode);
       }
     } catch (e: any) {
       this.dLoading.dismiss();
@@ -1115,7 +1115,7 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     if (targetElement) {
       const rect = targetElement.getBoundingClientRect();
       const y = event.clientY - rect.top;
-      
+
       if (targetNode.type === 'folder') {
         if (y < rect.height * 0.2) {
           this.dragOverMode = 'before';

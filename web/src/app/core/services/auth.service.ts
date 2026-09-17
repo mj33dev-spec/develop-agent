@@ -18,23 +18,90 @@ function generateRandomNickname(): string {
 export class AuthService {
   private supabase: SupabaseClient;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
+  private isInitializedSubject = new BehaviorSubject<boolean>(false);
+  private userNicknameSubject = new BehaviorSubject<string>('');
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-    
+
     // 초기 세션 확인
-    this.supabase.auth.getSession().then(({ data: { session } }) => {
-      this.currentUserSubject.next(session?.user ?? null);
+    this.supabase.auth.getSession().then(async ({ data: { session } }) => {
+      const user = session?.user ?? null;
+      this.currentUserSubject.next(user);
+      if (user) {
+        await this.syncUserProfile(user);
+      }
+      this.isInitializedSubject.next(true);
+    }).catch(() => {
+      this.isInitializedSubject.next(true);
     });
 
     // 인증 상태 변경 감지
-    this.supabase.auth.onAuthStateChange((event, session) => {
-      this.currentUserSubject.next(session?.user ?? null);
+    this.supabase.auth.onAuthStateChange(async (_event, session) => {
+      const user = session?.user ?? null;
+      this.currentUserSubject.next(user);
+      if (user) {
+        await this.syncUserProfile(user);
+      } else {
+        this.userNicknameSubject.next('');
+      }
+      if (!this.isInitializedSubject.value) {
+        this.isInitializedSubject.next(true);
+      }
     });
+  }
+
+  private async syncUserProfile(user: User | null) {
+    if (!user) {
+      this.userNicknameSubject.next('');
+      return;
+    }
+
+    try {
+      // 1. public.users DB 테이블에서 닉네임 최우선 조회
+      const { data: dbUser, error } = await this.supabase
+        .from('users')
+        .select('nickname')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (!error && dbUser && dbUser.nickname) {
+        this.userNicknameSubject.next(dbUser.nickname);
+        return;
+      }
+
+      // 2. DB에 없거나 비어있는 경우 user_metadata 또는 기본 이메일 아이디 사용
+      const fallbackNickname = user.user_metadata?.['nickname'] || user.email?.split('@')[0] || '사용자';
+      this.userNicknameSubject.next(fallbackNickname);
+
+      // 3. users 테이블 동기화 (upsert)
+      await this.supabase.from('users').upsert({
+        id: user.id,
+        email: user.email,
+        nickname: fallbackNickname,
+        updated_at: new Date().toISOString()
+      });
+    } catch (e) {
+      console.error('syncUserProfile error:', e);
+      const fallback = user.user_metadata?.['nickname'] || user.email?.split('@')[0] || '사용자';
+      this.userNicknameSubject.next(fallback);
+    }
+  }
+
+  get isInitialized(): Observable<boolean> {
+    return this.isInitializedSubject.asObservable();
+  }
+
+  get isInitializedValue(): boolean {
+    return this.isInitializedSubject.value;
   }
 
   get currentUser(): Observable<User | null> {
     return this.currentUserSubject.asObservable();
+  }
+
+  get userNickname$(): Observable<string> {
+    return this.userNicknameSubject.asObservable();
   }
 
   getCurrentUserValue(): User | null {
@@ -42,6 +109,9 @@ export class AuthService {
   }
 
   getUserNickname(user?: User | null): string {
+    if (this.userNicknameSubject.value) {
+      return this.userNicknameSubject.value;
+    }
     const u = user || this.currentUserSubject.value;
     if (!u) return '';
     return u.user_metadata?.['nickname'] || u.email?.split('@')[0] || '사용자';
@@ -53,6 +123,9 @@ export class AuthService {
       password,
     });
     if (error) throw error;
+    if (data.user) {
+      await this.syncUserProfile(data.user);
+    }
     return data;
   }
 
@@ -70,16 +143,16 @@ export class AuthService {
     if (error) throw error;
 
     if (data.user) {
-      try {
-        await this.supabase.from('users').upsert({
-          id: data.user.id,
-          email: data.user.email,
-          nickname: finalNickname,
-          updated_at: new Date().toISOString()
-        });
-      } catch (e) {
-        console.log('User DB sync fallback:', e);
+      const { error: dbError } = await this.supabase.from('users').upsert({
+        id: data.user.id,
+        email: data.user.email,
+        nickname: finalNickname,
+        updated_at: new Date().toISOString()
+      });
+      if (dbError) {
+        console.error('Failed to sync nickname to DB users table:', dbError);
       }
+      this.userNicknameSubject.next(finalNickname);
     }
     return data;
   }
@@ -88,6 +161,7 @@ export class AuthService {
     const currentUser = this.currentUserSubject.value;
     if (!currentUser) throw new Error('로그인이 필요합니다.');
 
+    // 1. Supabase Auth 사용자 메타데이터 변경
     const { data, error } = await this.supabase.auth.updateUser({
       data: { nickname: newNickname }
     });
@@ -95,17 +169,22 @@ export class AuthService {
 
     if (data.user) {
       this.currentUserSubject.next(data.user);
-      try {
-        await this.supabase.from('users').upsert({
-          id: data.user.id,
-          email: data.user.email,
-          nickname: newNickname,
-          updated_at: new Date().toISOString()
-        });
-      } catch (e) {
-        console.log('User DB sync fallback:', e);
-      }
     }
+
+    // 2. DB public.users 테이블의 nickname 컬럼 변경
+    const { error: dbError } = await this.supabase.from('users').upsert({
+      id: currentUser.id,
+      email: currentUser.email,
+      nickname: newNickname,
+      updated_at: new Date().toISOString()
+    });
+
+    if (dbError) {
+      console.error('Failed to update public.users nickname column:', dbError);
+    }
+
+    // 3. 로컬 반응형 닉네임 상태 즉시 업데이트
+    this.userNicknameSubject.next(newNickname);
     return data;
   }
 
