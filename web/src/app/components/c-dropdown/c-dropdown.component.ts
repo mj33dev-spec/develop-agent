@@ -29,6 +29,7 @@ export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() icon?: string;
   @Input() disabledList: string[] = [];
   @Input() width?: string;
+  @Input() menuWidth?: string;
   @Input() selectedValues: string[] = [];
   @Input() customClass: string = '';
   @Input() isOpen?: boolean;
@@ -126,10 +127,10 @@ export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
     const vars: Record<string, string> = {};
 
     if (this.variant === 'more') {
-      vars['--dropdown-min-width'] = '180px';
-      vars['--dropdown-width'] = this.width || 'max-content';
+      vars['--dropdown-min-width'] = this.menuWidth || '180px';
+      vars['--dropdown-width'] = this.menuWidth || this.width || 'max-content';
     } else {
-      vars['--dropdown-width'] = this.width ? this.width : `${rect.width}px`;
+      vars['--dropdown-width'] = this.menuWidth ? this.menuWidth : (this.width ? this.width : `${rect.width}px`);
     }
 
     if (this.direction === 'up') {
@@ -141,10 +142,12 @@ export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     if (this.align === 'right') {
-      vars['--dropdown-right'] = `${window.innerWidth - rect.right}px`;
+      const rightPos = Math.max(8, window.innerWidth - rect.right);
+      vars['--dropdown-right'] = `${rightPos}px`;
       vars['--dropdown-left'] = 'auto';
     } else {
-      vars['--dropdown-left'] = `${rect.left}px`;
+      const leftPos = Math.max(8, rect.left);
+      vars['--dropdown-left'] = `${leftPos}px`;
       vars['--dropdown-right'] = 'auto';
     }
 

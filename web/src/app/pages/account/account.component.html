@@ -1,0 +1,65 @@
+<div class="account-page-container">
+  <div class="account-card">
+    <div class="account-header">
+      <div class="header-icon">
+        <i class="bx bx-user-pin"></i>
+      </div>
+      <div class="header-text">
+        <h2 class="title">계정 정보 관리</h2>
+        <p class="subtitle">프로필 닉네임과 계정 비밀번호를 안전하게 수정할 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="account-body">
+      <!-- 이메일 정보 (읽기 전용) -->
+      <div class="section-block">
+        <div class="section-title">
+          <i class="bx bx-envelope"></i> 계정 이메일
+        </div>
+        <div class="input-row">
+          <input type="text" class="neu-input readonly" [value]="email" readonly />
+          <span class="badge-verified"><i class="bx bx-check-shield"></i> 인증됨</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 닉네임 수정 -->
+      <div class="section-block">
+        <div class="section-title">
+          <i class="bx bx-id-card"></i> 닉네임 설정
+        </div>
+        <div class="input-with-btn-row">
+          <input type="text" class="neu-input" [(ngModel)]="editNickname" placeholder="새 닉네임을 입력하세요" />
+          <c-button theme="primary" (onClick)="onUpdateNickname()">
+            <i class="bx bx-save"></i> 닉네임 변경
+          </c-button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 비밀번호 변경 -->
+      <div class="section-block">
+        <div class="section-title">
+          <i class="bx bx-lock-alt"></i> 비밀번호 변경
+        </div>
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="field-label">새 비밀번호</label>
+            <input type="password" class="neu-input" [(ngModel)]="newPassword" placeholder="최소 6자리 이상 입력" />
+          </div>
+          <div class="form-field">
+            <label class="field-label">새 비밀번호 확인</label>
+            <input type="password" class="neu-input" [(ngModel)]="confirmPassword" placeholder="비밀번호를 한번 더 입력" />
+          </div>
+        </div>
+        <div class="form-action-right">
+          <c-button theme="warn" (onClick)="onUpdatePassword()">
+            <i class="bx bx-key"></i> 비밀번호 변경
+          </c-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

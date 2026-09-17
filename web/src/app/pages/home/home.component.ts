@@ -1,5 +1,5 @@
 import { Component, ViewChild, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { CodeViewerComponent } from '../../components/code-viewer/code-viewer.component';
 import { CommonModule } from '@angular/common';
@@ -58,6 +58,11 @@ export class HomeComponent implements OnInit {
   private roomService = inject(RoomService);
   private fileService = inject(FileItemService);
   private chatInputService = inject(ChatInputService);
+  private router = inject(Router);
+
+  get isAccountPage(): boolean {
+    return this.router.url.includes('/account');
+  }
 
   async loadAddMenuOptions() {
     this.addMenuOptions = await this.chatInputService.loadAddMenuOptions(

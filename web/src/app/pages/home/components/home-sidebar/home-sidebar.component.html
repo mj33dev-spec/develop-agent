@@ -108,12 +108,75 @@
     }
   </div>
   
-  <!-- Sidebar Footer (Logout) -->
+  <!-- Sidebar Footer (User Info & Dropdown) -->
   <div class="sidebar-footer">
-    <button class="sidebar-block-btn danger" (click)="logout()">
-      <i class="bx bx-log-out"></i> 로그아웃
-    </button>
+    <div class="sidebar-user-card">
+      <div class="user-info" (click)="navigateToAccount()">
+        <span class="user-nickname">{{ currentUserNickname || '사용자' }}</span>
+        <span class="user-email">{{ currentUserEmail }}</span>
+      </div>
+      <c-dropdown [options]="userMenuOptions" menuWidth="160px" direction="up" align="right">
+        <button type="button" class="user-more-btn" title="더보기">
+          <i class="bx bx-dots-vertical-rounded"></i>
+        </button>
+      </c-dropdown>
+    </div>
   </div>
+
+  <!-- 내 정보 수정 모달 (c-modal 사용) -->
+  <c-modal
+    [isOpen]="isProfileModalOpen"
+    [title]="'내 정보 수정'"
+    [width]="'520px'"
+    [customFooter]="true"
+    (onClose)="closeProfileModal()"
+  >
+    <div class="profile-modal-body">
+      <!-- 이메일 (읽기 전용) -->
+      <div class="profile-form-group">
+        <label class="form-label">이메일 계정</label>
+        <input type="text" class="profile-input readonly" [value]="currentUserEmail" readonly />
+      </div>
+
+      <!-- 닉네임 수정 -->
+      <div class="profile-form-group">
+        <label class="form-label">닉네임</label>
+        <div class="input-with-btn">
+          <input type="text" class="profile-input" [(ngModel)]="editNickname" placeholder="닉네임을 입력하세요" />
+          <c-button theme="primary" (onClick)="onSaveNickname()">
+            닉네임 변경
+          </c-button>
+        </div>
+      </div>
+
+      <div class="profile-divider"></div>
+
+      <!-- 비밀번호 변경 -->
+      <div class="profile-section-title">
+        <i class="bx bx-lock-alt"></i> 비밀번호 변경
+      </div>
+      <div class="profile-form-group">
+        <label class="form-label">새 비밀번호</label>
+        <input type="password" class="profile-input" [(ngModel)]="newPassword" placeholder="최소 6자리 이상" />
+      </div>
+      <div class="profile-form-group">
+        <label class="form-label">새 비밀번호 확인</label>
+        <input type="password" class="profile-input" [(ngModel)]="confirmPassword" placeholder="새 비밀번호를 한번 더 입력하세요" />
+      </div>
+      <div class="profile-form-actions">
+        <c-button theme="warn" (onClick)="onChangePassword()">
+          비밀번호 변경
+        </c-button>
+      </div>
+    </div>
+
+    <!-- 모달 푸터 -->
+    <div footer class="c-modal-footer-wrapper" style="justify-content: flex-end;">
+      <c-button theme="neutral" (onClick)="closeProfileModal()">
+        닫기
+      </c-button>
+    </div>
+  </c-modal>
   
   <!-- Custom Context Menu -->
   @if (contextMenuVisible) {

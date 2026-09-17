@@ -1,0 +1,176 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.account-page-container {
+  width: 100%;
+  height: 100%;
+  padding: $spacing-32;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: $neu-bg;
+
+  .account-card {
+    width: 100%;
+    max-width: 680px;
+    background: $neu-bg;
+    border-radius: 20px;
+    box-shadow: 10px 10px 24px $neu-shadow-dark, -10px -10px 24px $neu-shadow-light;
+    padding: $spacing-32;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-24;
+    margin-top: $spacing-16;
+
+    .account-header {
+      display: flex;
+      align-items: center;
+      gap: $spacing-16;
+      border-bottom: 1px solid rgba(184, 201, 223, 0.5);
+      padding-bottom: $spacing-20;
+
+      .header-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, $neu-primary, #6B5CE7);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+      }
+
+      .header-text {
+        .title {
+          @include typo-heading-3;
+          font-weight: 700;
+          color: $neu-text;
+          margin: 0 0 4px 0;
+        }
+
+        .subtitle {
+          @include typo-body-3;
+          color: $neu-text-secondary;
+          margin: 0;
+        }
+      }
+    }
+
+    .account-body {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-24;
+
+      .section-block {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-12;
+
+        .section-title {
+          @include typo-subtitle-2;
+          font-weight: 600;
+          color: $neu-text;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          i {
+            font-size: 20px;
+            color: $neu-primary;
+          }
+        }
+      }
+
+      .divider {
+        height: 1px;
+        background: rgba(184, 201, 223, 0.4);
+      }
+
+      .input-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .badge-verified {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 6px 12px;
+          border-radius: 8px;
+          background: rgba(4, 176, 20, 0.1);
+          color: $color-success;
+          @include typo-caption-1;
+          font-weight: 600;
+          white-space: nowrap;
+        }
+      }
+
+      .input-with-btn-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+
+        .neu-input {
+          flex: 1;
+        }
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+
+        @media (max-width: 640px) {
+          grid-template-columns: 1fr;
+        }
+
+        .form-field {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+
+          .field-label {
+            @include typo-caption-1;
+            font-weight: 600;
+            color: $neu-text-secondary;
+          }
+        }
+      }
+
+      .form-action-right {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 4px;
+      }
+
+      .neu-input {
+        width: 100%;
+        height: 44px;
+        padding: 0 16px;
+        border: none;
+        border-radius: 12px;
+        background: $neu-bg;
+        box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+        @include typo-body-2;
+        color: $neu-text;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+
+        &:focus {
+          outline: 2px solid $neu-primary;
+        }
+
+        &.readonly {
+          color: $neu-text-secondary;
+          cursor: not-allowed;
+          opacity: 0.85;
+        }
+      }
+    }
+  }
+}

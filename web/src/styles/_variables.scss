@@ -76,7 +76,7 @@ $font-size-mo-heading-2: 24px;
 $font-size-mo-heading-3: 20px;
 $font-size-mo-title-1: 18px;
 $font-size-mo-title-2: 16px;
-$font-size-mo-title-3: 16px; 
+$font-size-mo-title-3: 16px;
 $font-size-mo-subtitle-1: 16px;
 $font-size-mo-subtitle-2: 14px;
 $font-size-mo-body-1: 16px;
@@ -100,32 +100,74 @@ $font-size-mo-caption-2: 11px;
 
 // Typography Classes / Mixins
 // Display (Bold 700)
-@mixin typo-display-1 { @include typography($font-size-pc-display-1, $font-size-mo-display-1, $font-weight-bold, 1.3, -0.02em); }
-@mixin typo-display-2 { @include typography($font-size-pc-display-2, $font-size-mo-display-2, $font-weight-bold, 1.3, -0.02em); }
-@mixin typo-display-3 { @include typography($font-size-pc-display-3, $font-size-mo-display-3, $font-weight-bold, 1.3, -0.02em); }
+@mixin typo-display-1 {
+  @include typography($font-size-pc-display-1, $font-size-mo-display-1, $font-weight-bold, 1.3, 0px);
+}
+
+@mixin typo-display-2 {
+  @include typography($font-size-pc-display-2, $font-size-mo-display-2, $font-weight-bold, 1.3, 0px);
+}
+
+@mixin typo-display-3 {
+  @include typography($font-size-pc-display-3, $font-size-mo-display-3, $font-weight-bold, 1.3, 0px);
+}
 
 // Heading (Bold 700)
-@mixin typo-heading-1 { @include typography($font-size-pc-heading-1, $font-size-mo-heading-1, $font-weight-bold, 1.4, -0.02em); }
-@mixin typo-heading-2 { @include typography($font-size-pc-heading-2, $font-size-mo-heading-2, $font-weight-bold, 1.4, -0.02em); }
-@mixin typo-heading-3 { @include typography($font-size-pc-heading-3, $font-size-mo-heading-3, $font-weight-bold, 1.4, -0.02em); }
+@mixin typo-heading-1 {
+  @include typography($font-size-pc-heading-1, $font-size-mo-heading-1, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-heading-2 {
+  @include typography($font-size-pc-heading-2, $font-size-mo-heading-2, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-heading-3 {
+  @include typography($font-size-pc-heading-3, $font-size-mo-heading-3, $font-weight-bold, 1.4, 0px);
+}
 
 // Title (Bold 700)
-@mixin typo-title-1 { @include typography($font-size-pc-title-1, $font-size-mo-title-1, $font-weight-bold, 1.4, -0.01em); }
-@mixin typo-title-2 { @include typography($font-size-pc-title-2, $font-size-mo-title-2, $font-weight-bold, 1.4, -0.01em); }
-@mixin typo-title-3 { @include typography($font-size-pc-title-3, $font-size-mo-title-3, $font-weight-bold, 1.4, -0.01em); }
+@mixin typo-title-1 {
+  @include typography($font-size-pc-title-1, $font-size-mo-title-1, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-title-2 {
+  @include typography($font-size-pc-title-2, $font-size-mo-title-2, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-title-3 {
+  @include typography($font-size-pc-title-3, $font-size-mo-title-3, $font-weight-bold, 1.4, 0px);
+}
 
 // Subtitle (Medium 500)
-@mixin typo-subtitle-1 { @include typography($font-size-pc-subtitle-1, $font-size-mo-subtitle-1, $font-weight-medium, 1.5, -0.01em); }
-@mixin typo-subtitle-2 { @include typography($font-size-pc-subtitle-2, $font-size-mo-subtitle-2, $font-weight-medium, 1.5, -0.01em); }
+@mixin typo-subtitle-1 {
+  @include typography($font-size-pc-subtitle-1, $font-size-mo-subtitle-1, $font-weight-medium, 1.5, 0px);
+}
+
+@mixin typo-subtitle-2 {
+  @include typography($font-size-pc-subtitle-2, $font-size-mo-subtitle-2, $font-weight-medium, 1.5, 0px);
+}
 
 // Body (Regular 400)
-@mixin typo-body-1 { @include typography($font-size-pc-body-1, $font-size-mo-body-1, $font-weight-regular, 1.6, -0.01em); }
-@mixin typo-body-2 { @include typography($font-size-pc-body-2, $font-size-mo-body-2, $font-weight-regular, 1.6, -0.01em); }
-@mixin typo-body-3 { @include typography($font-size-pc-body-3, $font-size-mo-body-3, $font-weight-regular, 1.6, -0.01em); }
+@mixin typo-body-1 {
+  @include typography($font-size-pc-body-1, $font-size-mo-body-1, $font-weight-regular, 1.6, 0px);
+}
+
+@mixin typo-body-2 {
+  @include typography($font-size-pc-body-2, $font-size-mo-body-2, $font-weight-regular, 1.6, 0px);
+}
+
+@mixin typo-body-3 {
+  @include typography($font-size-pc-body-3, $font-size-mo-body-3, $font-weight-regular, 1.6, 0px);
+}
 
 // Caption (Regular 400)
-@mixin typo-caption-1 { @include typography($font-size-pc-caption-1, $font-size-mo-caption-1, $font-weight-regular, 1.6, -0.01em); }
-@mixin typo-caption-2 { @include typography($font-size-pc-caption-2, $font-size-mo-caption-2, $font-weight-regular, 1.6, -0.01em); }
+@mixin typo-caption-1 {
+  @include typography($font-size-pc-caption-1, $font-size-mo-caption-1, $font-weight-regular, 1.6, 0px);
+}
+
+@mixin typo-caption-2 {
+  @include typography($font-size-pc-caption-2, $font-size-mo-caption-2, $font-weight-regular, 1.6, 0px);
+}
 
 
 // ── Spacing (간격) ──────────────────────────────────
@@ -161,4 +203,3 @@ $radius-shallow: 4px;
 $radius-normal: 8px;
 $radius-deep: 12px;
 $radius-circle: 50%;
-
