@@ -1,0 +1,14 @@
+<div 
+  class="c-toggle-switch" 
+  [class.active]="checked" 
+  [class.disabled]="disabled"
+  [attr.data-size]="size"
+  (click)="toggle()"
+  role="switch"
+  [attr.aria-checked]="checked"
+  [attr.tabindex]="disabled ? -1 : 0"
+  (keydown.space)="$event.preventDefault(); toggle()"
+  (keydown.enter)="$event.preventDefault(); toggle()"
+>
+  <div class="toggle-knob"></div>
+</div>

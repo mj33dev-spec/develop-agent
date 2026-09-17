@@ -77,9 +77,7 @@
               <span class="item-desc">주요 작업 전 동작 확인 피드백 및 상태 로딩 안내 창을 표시합니다.</span>
             </div>
             <div class="item-control">
-              <div class="toggle-switch" [class.active]="soundNotifications" (click)="toggleSoundNotifications()">
-                <div class="toggle-knob"></div>
-              </div>
+              <c-toggle [(checked)]="soundNotifications"></c-toggle>
             </div>
           </div>
 
@@ -89,9 +87,7 @@
               <span class="item-desc">브라우저 종료 후 재접속 시 이전 로그인 세션을 유지합니다.</span>
             </div>
             <div class="item-control">
-              <div class="toggle-switch" [class.active]="autoSaveSession" (click)="toggleAutoSaveSession()">
-                <div class="toggle-knob"></div>
-              </div>
+              <c-toggle [(checked)]="autoSaveSession"></c-toggle>
             </div>
           </div>
         </div>

@@ -7,11 +7,12 @@ import { DLoadingService } from '../../core/services/d-loading.service';
 import { CButtonComponent } from '../../components/c-button/c-button.component';
 import { CDropdownComponent, CDropdownOption } from '../../components/c-dropdown/c-dropdown.component';
 import { CTabBarComponent } from '../../components/c-tab-bar/c-tab-bar.component';
+import { CToggleComponent } from '../../components/c-toggle/c-toggle.component';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent, CTabBarComponent],
+  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent, CTabBarComponent, CToggleComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })

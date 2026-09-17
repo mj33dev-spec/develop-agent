@@ -1,0 +1,81 @@
+@use '../../../styles/config' as *;
+
+.c-toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  border-radius: 13px;
+  background: $neu-bg;
+  box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+  outline: none;
+  user-select: none;
+
+  .toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: $neu-bg;
+    box-shadow: 2px 2px 4px $neu-shadow-dark, -2px -2px 4px $neu-shadow-light;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
+  }
+
+  &.active {
+    background: rgba(74, 134, 255, 0.12);
+
+    .toggle-knob {
+      transform: translateX(24px);
+      background: $neu-primary;
+      box-shadow: 2px 2px 6px rgba(74, 134, 255, 0.4);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.4);
+  }
+
+  // --- Size Modifiers ---
+  &[data-size='small'] {
+    width: 40px;
+    height: 22px;
+    border-radius: 11px;
+
+    .toggle-knob {
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &.active .toggle-knob {
+      transform: translateX(18px);
+    }
+  }
+
+  &[data-size='large'] {
+    width: 60px;
+    height: 32px;
+    border-radius: 16px;
+
+    .toggle-knob {
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+    }
+
+    &.active .toggle-knob {
+      transform: translateX(28px);
+    }
+  }
+}
