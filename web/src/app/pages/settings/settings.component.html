@@ -80,7 +80,7 @@
           <c-button theme="neutral" (onClick)="onResetDefaults()">
             <i class="bx bx-refresh"></i> 기본값 복원
           </c-button>
-          <c-button theme="primary" (onClick)="onSaveSettings()">
+          <c-button theme="primary" [disabled]="!hasUnsavedChanges()" (onClick)="onSaveSettings()">
             <i class="bx bx-save"></i> 설정 저장
           </c-button>
         </div>

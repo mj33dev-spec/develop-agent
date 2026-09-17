@@ -178,58 +178,58 @@
 
 :host-context(body.dark-theme) {
   .segmentContainer {
-    background-color: #1e222b;
-    box-shadow: inset 2px 2px 5px #14171d, inset -2px -2px 5px #282d39;
+    background-color: $dark-surface;
+    box-shadow: $dark-neu-shadow-inset-sm;
   }
 
   .segmentBtn {
-    color: #a0aec0;
+    color: $dark-text-muted;
 
     &:hover {
-      color: #f1f5f9;
+      color: $dark-text-primary;
     }
 
     &.active {
-      background-color: #2b303e;
-      color: #4A86FF;
-      box-shadow: 3px 3px 6px #181b23, -3px -3px 6px #303545;
+      background-color: $dark-surface-card;
+      color: $color-primary;
+      box-shadow: $dark-neu-shadow-sm;
     }
   }
 
   .baseContainer {
-    border-bottom-color: rgba(255, 255, 255, 0.08);
+    border-bottom-color: $dark-border-color;
   }
 
   .baseBtn {
-    color: #94a3b8;
+    color: $dark-text-muted;
 
     &:hover {
-      color: #f1f5f9;
+      color: $dark-text-primary;
     }
 
     &.active {
-      color: #4A86FF;
+      color: $color-primary;
     }
   }
 
   .folderBtn {
-    background-color: #1e222b;
-    border-color: rgba(255, 255, 255, 0.08);
-    color: #94a3b8;
+    background-color: $dark-surface;
+    border-color: $dark-border-color;
+    color: $dark-text-muted;
 
     &:hover {
-      color: #f1f5f9;
+      color: $dark-text-primary;
     }
 
     &.active {
-      background-color: #242834;
-      color: #4A86FF;
-      box-shadow: 2px -2px 5px #14171d;
+      background-color: $dark-surface-alt;
+      color: $color-primary;
+      box-shadow: 2px -2px 5px $dark-shadow-dark;
     }
   }
 
   .count {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #94a3b8;
+    background-color: $dark-border-color;
+    color: $dark-text-muted;
   }
 }

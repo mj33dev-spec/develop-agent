@@ -14,7 +14,7 @@ $font-weight-bold: 700;
 $color-primary: #4A86FF;
 $color-secondary: #6B5CE7;
 
-// ── Neumorphism Design Tokens ─────────────────
+// ── Neumorphism Design Tokens (Light Theme) ───
 $neu-bg: #e4ebf5;
 $neu-shadow-dark: #c2d1e5;
 $neu-shadow-light: #ffffff;
@@ -24,6 +24,39 @@ $neu-primary: #4A86FF;
 $neu-primary-gradient: linear-gradient(145deg, #4f8fff, #4278e6);
 $neu-text: #2d3748;
 $neu-text-secondary: #718096;
+
+// ── Dark Theme Design Tokens (Dark Theme) ─────
+$dark-bg-overlay: rgba(15, 17, 23, 0.75);
+$dark-bg: #181b24;
+$dark-surface: #1e222d;
+$dark-surface-alt: #242834;
+$dark-surface-card: #2b303e;
+$dark-surface-hover: #353b4d;
+
+$dark-shadow-dark: #161821;
+$dark-shadow-light: #303545;
+
+$dark-border-color: rgba(255, 255, 255, 0.08);
+$dark-border-light: rgba(255, 255, 255, 0.15);
+$dark-border: 1px solid $dark-border-color;
+
+$dark-text-primary: #f1f5f9;
+$dark-text-secondary: #e2e8f0;
+$dark-text-muted: #94a3b8;
+$dark-text-subtle: #64748b;
+
+$dark-disabled-bg: #434b5e;
+$dark-disabled-text: #7e8da6;
+
+// 다크모드 뉴모피즘 그림자 토큰
+$dark-neu-shadow-sm: 4px 4px 10px $dark-shadow-dark, -4px -4px 10px $dark-shadow-light;
+$dark-neu-shadow-md: 6px 6px 14px $dark-shadow-dark, -6px -6px 14px $dark-shadow-light;
+$dark-neu-shadow-lg: 10px 10px 24px $dark-shadow-dark, -10px -10px 24px $dark-shadow-light;
+
+$dark-neu-shadow-inset-sm: inset 3px 3px 6px $dark-shadow-dark, inset -3px -3px 6px $dark-shadow-light;
+$dark-neu-shadow-inset-md: inset 5px 5px 10px $dark-shadow-dark, inset -5px -5px 10px $dark-shadow-light;
+
+$dark-modal-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
 
 // ── Backgrounds ───────────────────────────────
 $color-bg: #e4ebf5;

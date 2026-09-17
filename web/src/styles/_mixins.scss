@@ -29,6 +29,35 @@
   transition: all 0.2s ease;
 }
 
+// ── 다크모드 전용 공통 믹스인 ────────────────
+@mixin dark-theme {
+  :host-context(body.dark-theme) {
+    @content;
+  }
+}
+
+@mixin dark-theme-context {
+  :host-context(body.dark-theme) & {
+    @content;
+  }
+}
+
+@mixin dark-neu-extruded($radius: 16px, $shadow: $dark-neu-shadow-md) {
+  background: $dark-surface;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+@mixin dark-neu-inset($radius: 12px, $shadow: $dark-neu-shadow-inset-md) {
+  background: $dark-surface;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  border: none;
+  transition: all 0.2s ease;
+}
+
 // 뉴모피즘 프라이머리/소프트 버튼
 @mixin neu-button($primary: true, $radius: 16px) {
   border: none;

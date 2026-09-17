@@ -25,6 +25,11 @@ export class SettingsComponent implements OnInit {
   defaultTheme: string = '뉴모피즘';
   isDarkMode: boolean = false;
 
+  // DB에 저장된 원본 설정 상태 (변경 이탈 감지용)
+  private savedModel: string = 'Gemini 3.6 Flash';
+  private savedTheme: string = '뉴모피즘';
+  private savedDarkMode: boolean = false;
+
   themeTabOptions: string[] = ['플랫', '글래스모피즘', '뉴모피즘'];
 
   modelOptions: CDropdownOption[] = [
@@ -49,12 +54,67 @@ export class SettingsComponent implements OnInit {
       this.defaultModel = settings.defaultModel || this.defaultModel;
       this.defaultTheme = settings.defaultTheme || this.defaultTheme;
       this.isDarkMode = settings.isDarkMode ?? false;
+
+      this.savedModel = this.defaultModel;
+      this.savedTheme = this.defaultTheme;
+      this.savedDarkMode = this.isDarkMode;
+
       this.themeService.setDarkMode(this.isDarkMode);
       this.dLoading.dismiss();
     } catch (e: any) {
       this.dLoading.dismiss();
       console.error('계정 설정 로드 실패:', e);
     }
+  }
+
+  hasUnsavedChanges(): boolean {
+    return this.defaultModel !== this.savedModel ||
+           this.defaultTheme !== this.savedTheme ||
+           this.isDarkMode !== this.savedDarkMode;
+  }
+
+  canDeactivate(): Promise<boolean> | boolean {
+    if (!this.hasUnsavedChanges()) {
+      return true;
+    }
+
+    return new Promise<boolean>((resolve) => {
+      this.dAlert.show({
+        title: '변경된 설정 있음',
+        message: '변경된 설정이 있습니다. 저장하시겠습니까?',
+        type: 'warn',
+        buttonType: 'yesNo',
+        onConfirm: async () => {
+          this.dLoading.show('계정 DB에 설정 저장 중...');
+          try {
+            const settings = {
+              defaultModel: this.defaultModel,
+              defaultTheme: this.defaultTheme,
+              isDarkMode: this.isDarkMode
+            };
+            await this.authService.updateUserSettings(settings);
+            this.savedModel = this.defaultModel;
+            this.savedTheme = this.defaultTheme;
+            this.savedDarkMode = this.isDarkMode;
+            this.themeService.setDarkMode(this.isDarkMode);
+            this.dLoading.dismiss('계정 DB에 설정이 성공적으로 저장되었습니다.');
+            resolve(true);
+          } catch (e: any) {
+            this.dLoading.dismiss();
+            this.dAlert.error('계정 DB 설정 저장 실패: ' + (e.message || ''), '오류');
+            resolve(false);
+          }
+        },
+        onCancel: () => {
+          // 변경사항 취소 후 이동
+          this.themeService.setDarkMode(this.savedDarkMode);
+          this.isDarkMode = this.savedDarkMode;
+          this.defaultModel = this.savedModel;
+          this.defaultTheme = this.savedTheme;
+          resolve(true);
+        }
+      });
+    });
   }
 
   onDarkModeToggle(isDark: boolean) {
@@ -67,6 +127,11 @@ export class SettingsComponent implements OnInit {
   }
 
   onSaveSettings() {
+    if (!this.hasUnsavedChanges()) {
+      this.dAlert.info('변경된 설정 항목이 없습니다.', '안내');
+      return;
+    }
+
     this.dAlert.confirm('설정 옵션(AI 모델, 테마, 다크모드)을 계정 DB에 저장하시겠습니까?', '설정 저장', async () => {
       this.dLoading.show('계정 DB에 설정 저장 중...');
       try {
@@ -76,6 +141,9 @@ export class SettingsComponent implements OnInit {
           isDarkMode: this.isDarkMode
         };
         await this.authService.updateUserSettings(settings);
+        this.savedModel = this.defaultModel;
+        this.savedTheme = this.defaultTheme;
+        this.savedDarkMode = this.isDarkMode;
         this.themeService.setDarkMode(this.isDarkMode);
         this.dLoading.dismiss('계정 DB에 설정이 성공적으로 저장되었습니다.');
       } catch (e: any) {
@@ -98,6 +166,9 @@ export class SettingsComponent implements OnInit {
         this.defaultModel = defaultSettings.defaultModel;
         this.defaultTheme = defaultSettings.defaultTheme;
         this.isDarkMode = defaultSettings.isDarkMode;
+        this.savedModel = defaultSettings.defaultModel;
+        this.savedTheme = defaultSettings.defaultTheme;
+        this.savedDarkMode = defaultSettings.isDarkMode;
         this.themeService.setDarkMode(false);
         this.dLoading.dismiss('계정 DB 설정이 기본값으로 복원되었습니다.');
       } catch (e: any) {
@@ -107,3 +178,4 @@ export class SettingsComponent implements OnInit {
     });
   }
 }
+

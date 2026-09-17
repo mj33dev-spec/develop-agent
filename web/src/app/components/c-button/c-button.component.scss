@@ -13,159 +13,183 @@
 }
 
 .btn {
-    padding: $spacing-8 $spacing-16;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: $spacing-4;
-    min-height: 40px;
-    border: none;
-    border-radius: 14px;
-    @include typo-caption-1;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
-    transition: all 0.2s ease;
+  padding: $spacing-8 $spacing-16;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4;
+  min-height: 40px;
+  border: none;
+  border-radius: 14px;
+  @include typo-caption-1;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+  transition: all 0.2s ease;
 
-    &:hover:not(:disabled) {
-        box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
-        transform: translateY(-1px);
-    }
+  &:disabled {
+    background: #e2e8f0 !important;
+    background-image: none !important;
+    color: #94a3b8 !important;
+    cursor: not-allowed;
+    box-shadow: none !important;
+    transform: none !important;
+    border-color: transparent !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  &:hover:not(:disabled) {
+    box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+    transform: translateY(0);
+  }
+
+  i.bx {
+    font-size: $font-size-pc-title-3;
+  }
+
+  &.btn-small {
+    padding: $spacing-4 $spacing-8;
+    min-height: 32px;
+    border-radius: 10px;
+    @include typo-caption-2;
+  }
+
+  &.btn-large {
+    padding: $spacing-12 $spacing-24;
+    min-height: 48px;
+    border-radius: 16px;
+    @include typo-body-2;
+  }
+
+  &.btn-primary {
+    background: $neu-primary-gradient;
+    color: $color-white;
+    box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
 
     &:active:not(:disabled) {
-        box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
-        transform: translateY(0);
+      box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.25), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
     }
+  }
 
-    i.bx {
-        font-size: $font-size-pc-title-3;
+  &.btn-outlined-primary {
+    background-color: transparent;
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+
+  &.btn-secondary {
+    background-color: $color-secondary;
+    color: $color-white;
+  }
+
+  &.btn-outlined-secondary {
+    background-color: transparent;
+    border-color: $color-secondary;
+    color: $color-secondary;
+  }
+
+  &.btn-success {
+    background-color: $color-success;
+    color: $color-white;
+  }
+
+  &.btn-outlined-success {
+    background-color: transparent;
+    border-color: $color-success;
+    color: $color-success;
+  }
+
+  &.btn-error {
+    background-color: $color-error;
+    color: $color-white;
+  }
+
+  &.btn-outlined-error {
+    background-color: transparent;
+    border-color: $color-error;
+    color: $color-error;
+  }
+
+  &.btn-warning {
+    background-color: $color-warn;
+    color: $color-white;
+  }
+
+  &.btn-outlined-warning {
+    background-color: transparent;
+    border-color: $color-warn;
+    color: $color-warn;
+  }
+
+  &.btn-neutral {
+    background-color: $color-light-grey; // $color-light-grey
+    color: $color-deep-grey;
+
+    &:hover {
+      background-color: $color-grey; // $color-grey
     }
+  }
 
-    &.btn-small {
-        padding: $spacing-4 $spacing-8;
-        min-height: 32px;
-        border-radius: 10px;
-        @include typo-caption-2;
+  &.btn-outlined-neutral {
+    background-color: transparent;
+    border-color: $color-grey;
+    color: $color-deep-grey;
+
+    &:hover {
+      background-color: $color-light-grey;
     }
+  }
 
-    &.btn-large {
-        padding: $spacing-12 $spacing-24;
-        min-height: 48px;
-        border-radius: 16px;
-        @include typo-body-2;
+  &.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: $radius-normal;
+    background-color: transparent;
+    color: $color-deep-grey;
+
+    &:hover {
+      background-color: $color-surface;
+      color: $color-dark;
     }
-
-    &.btn-primary {
-        background: $neu-primary-gradient;
-        color: $color-white;
-        box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
-
-        &:active:not(:disabled) {
-            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.25), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
-        }
-    }
-
-    &.btn-outlined-primary {
-        background-color: transparent;
-        border-color: $color-primary;
-        color: $color-primary;
-    }
-
-    &.btn-secondary {
-        background-color: $color-secondary;
-        color: $color-white;
-    }
-
-    &.btn-outlined-secondary {
-        background-color: transparent;
-        border-color: $color-secondary;
-        color: $color-secondary;
-    }
-
-    &.btn-success {
-        background-color: $color-success;
-        color: $color-white;
-    }
-
-    &.btn-outlined-success {
-        background-color: transparent;
-        border-color: $color-success;
-        color: $color-success;
-    }
-
-    &.btn-error {
-        background-color: $color-error;
-        color: $color-white;
-    }
-
-    &.btn-outlined-error {
-        background-color: transparent;
-        border-color: $color-error;
-        color: $color-error;
-    }
-
-    &.btn-warning {
-        background-color: $color-warn;
-        color: $color-white;
-    }
-
-    &.btn-outlined-warning {
-        background-color: transparent;
-        border-color: $color-warn;
-        color: $color-warn;
-    }
-
-    &.btn-neutral {
-        background-color: $color-light-grey; // $color-light-grey
-        color: $color-deep-grey;
-
-        &:hover {
-            background-color: $color-grey; // $color-grey
-        }
-    }
-
-    &.btn-outlined-neutral {
-        background-color: transparent;
-        border-color: $color-grey;
-        color: $color-deep-grey;
-
-        &:hover {
-            background-color: $color-light-grey;
-        }
-    }
-
-    &.btn-icon {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        border-radius: $radius-normal;
-        background-color: transparent;
-        color: $color-deep-grey;
-
-        &:hover {
-            background-color: $color-surface;
-            color: $color-dark;
-        }
-    }
+  }
 }
 
 :host-context(body.dark-theme) {
   .btn {
-    box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+    box-shadow: $dark-neu-shadow-sm;
+
+    &:disabled {
+      background: $dark-disabled-bg !important;
+      background-image: none !important;
+      color: $dark-disabled-text !important;
+      cursor: not-allowed;
+      box-shadow: none !important;
+      transform: none !important;
+      border-color: transparent !important;
+      opacity: 1 !important;
+      filter: none !important;
+    }
 
     &:hover:not(:disabled) {
-      box-shadow: 6px 6px 14px #161821, -6px -6px 14px #303545;
+      box-shadow: $dark-neu-shadow-md;
     }
 
     &:active:not(:disabled) {
-      box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+      box-shadow: $dark-neu-shadow-inset-sm;
     }
 
     &.btn-primary {
-      box-shadow: 5px 5px 12px #161821, -5px -5px 12px #303545;
+      box-shadow: $dark-neu-shadow-sm;
 
       &:hover:not(:disabled) {
-        box-shadow: 7px 7px 16px #161821, -7px -7px 16px #303545;
+        box-shadow: $dark-neu-shadow-md;
       }
 
       &:active:not(:disabled) {
@@ -174,17 +198,17 @@
     }
 
     &.btn-neutral {
-      background-color: #2b303e;
-      color: #e2e8f0;
+      background-color: $dark-surface-card;
+      color: $dark-text-secondary;
 
       &:hover {
-        background-color: #353b4d;
+        background-color: $dark-surface-hover;
       }
     }
 
     &.btn-outlined-neutral {
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #e2e8f0;
+      border-color: $dark-border-light;
+      color: $dark-text-secondary;
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.05);
@@ -192,12 +216,12 @@
     }
 
     &.btn-icon {
-      color: #94a3b8;
+      color: $dark-text-muted;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.08);
-        color: #f1f5f9;
+        background-color: $dark-border-color;
+        color: $dark-text-primary;
       }
     }
   }
-}
+}

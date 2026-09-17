@@ -116,51 +116,51 @@
 
 :host-context(body.dark-theme) {
   .modalOverlay {
-    background-color: rgba(15, 17, 23, 0.75);
+    background-color: $dark-bg-overlay;
   }
 
   .modalContent {
-    background-color: #1e222b;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: $dark-surface;
+    box-shadow: $dark-modal-shadow;
+    border: $dark-border;
   }
 
   .modalHeader {
-    border-bottom-color: rgba(255, 255, 255, 0.08);
+    border-bottom-color: $dark-border-color;
 
     .closeBtn {
-      color: #94a3b8;
+      color: $dark-text-muted;
 
       &:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: #f1f5f9;
+        background: $dark-border-color;
+        color: $dark-text-primary;
       }
     }
   }
 
   .modalTitle {
-    color: #f1f5f9;
+    color: $dark-text-primary;
   }
 
   .modalSubTitle {
-    color: #94a3b8;
+    color: $dark-text-muted;
   }
 
   .modalBody {
-    color: #e2e8f0;
+    color: $dark-text-secondary;
 
     &::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.12);
+      background: $dark-border-light;
     }
   }
 
   .formActions {
-    border-top-color: rgba(255, 255, 255, 0.08);
+    border-top-color: $dark-border-color;
 
     > button:disabled {
-      background-color: #2b303e;
+      background-color: $dark-surface-card;
       border-color: transparent;
-      color: #64748b;
+      color: $dark-text-subtle;
     }
   }
 }
