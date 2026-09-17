@@ -124,28 +124,46 @@ export class DLoadingService {
     }, 16);
   }
 
+  showSuccess(message: string, durationMs: number = 1200) {
+    if (this.fadeOutTimer) {
+      window.clearTimeout(this.fadeOutTimer);
+      this.fadeOutTimer = null;
+    }
+    if (this.progressInterval) {
+      window.clearInterval(this.progressInterval);
+      this.progressInterval = null;
+    }
+
+    const container = this.createLoadingDOM();
+    container.className = 'd-loading-overlay active';
+    this.renderContent(message, true);
+
+    this.fadeOutTimer = window.setTimeout(() => {
+      if (this.loadingContainer) {
+        this.loadingContainer.classList.add('fade-out');
+        this.fadeOutTimer = window.setTimeout(() => {
+          this.destroyLoadingDOM();
+        }, 300);
+      }
+    }, durationMs);
+  }
+
   dismiss(message?: string) {
-    if (!this.loadingContainer) return;
     if (this.progressInterval) {
       window.clearInterval(this.progressInterval);
       this.progressInterval = null;
     }
 
     if (message) {
-      this.renderContent(message, true);
-      this.fadeOutTimer = window.setTimeout(() => {
-        if (this.loadingContainer) {
-          this.loadingContainer.classList.add('fade-out');
-          this.fadeOutTimer = window.setTimeout(() => {
-            this.destroyLoadingDOM();
-          }, 300);
-        }
-      }, 700);
-    } else {
-      this.loadingContainer.classList.add('fade-out');
-      this.fadeOutTimer = window.setTimeout(() => {
-        this.destroyLoadingDOM();
-      }, 200);
+      this.showSuccess(message, 1000);
+      return;
     }
+
+    if (!this.loadingContainer) return;
+
+    this.loadingContainer.classList.add('fade-out');
+    this.fadeOutTimer = window.setTimeout(() => {
+      this.destroyLoadingDOM();
+    }, 200);
   }
 }

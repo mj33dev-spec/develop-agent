@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
   defaultTheme: string = '뉴모피즘';
   isDarkMode: boolean = false;
 
-  // DB에 저장된 원본 설정 상태 (변경 이탈 감지용)
+  // DB에 저장된 원본 설정 상태
   private savedModel: string = 'Gemini 3.6 Flash';
   private savedTheme: string = '뉴모피즘';
   private savedDarkMode: boolean = false;
@@ -33,12 +33,12 @@ export class SettingsComponent implements OnInit {
   themeTabOptions: string[] = ['플랫', '글래스모피즘', '뉴모피즘'];
 
   modelOptions: CDropdownOption[] = [
-    { label: 'Gemini 3.6 Flash', value: 'gemini-flash', onClick: () => this.defaultModel = 'Gemini 3.6 Flash' },
-    { label: 'Gemini 3.1 Pro', value: 'gemini-pro', onClick: () => this.defaultModel = 'Gemini 3.1 Pro' },
-    { label: 'Groq Qwen 3.8', value: 'groq-qwen', onClick: () => this.defaultModel = 'Groq Qwen 3.8' },
-    { label: 'Groq GPT-OSS', value: 'groq-gpt', onClick: () => this.defaultModel = 'Groq GPT-OSS' },
-    { label: 'Groq Llama 3.3 70B', value: 'groq-llama', onClick: () => this.defaultModel = 'Groq Llama 3.3 70B' },
-    { label: 'Groq DeepSeek R1 70B', value: 'groq-deepseek', onClick: () => this.defaultModel = 'Groq DeepSeek R1 70B' }
+    { label: 'Gemini 3.6 Flash', value: 'gemini-flash', onClick: () => this.onModelSelect('Gemini 3.6 Flash') },
+    { label: 'Gemini 3.1 Pro', value: 'gemini-pro', onClick: () => this.onModelSelect('Gemini 3.1 Pro') },
+    { label: 'Groq Qwen 3.8', value: 'groq-qwen', onClick: () => this.onModelSelect('Groq Qwen 3.8') },
+    { label: 'Groq GPT-OSS', value: 'groq-gpt', onClick: () => this.onModelSelect('Groq GPT-OSS') },
+    { label: 'Groq Llama 3.3 70B', value: 'groq-llama', onClick: () => this.onModelSelect('Groq Llama 3.3 70B') },
+    { label: 'Groq DeepSeek R1 70B', value: 'groq-deepseek', onClick: () => this.onModelSelect('Groq DeepSeek R1 70B') }
   ];
 
   private router = inject(Router);
@@ -60,6 +60,7 @@ export class SettingsComponent implements OnInit {
       this.savedDarkMode = this.isDarkMode;
 
       this.themeService.setDarkMode(this.isDarkMode);
+      this.themeService.setStyleTheme(this.defaultTheme);
       this.dLoading.dismiss();
     } catch (e: any) {
       this.dLoading.dismiss();
@@ -67,90 +68,52 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  hasUnsavedChanges(): boolean {
-    return this.defaultModel !== this.savedModel ||
-           this.defaultTheme !== this.savedTheme ||
-           this.isDarkMode !== this.savedDarkMode;
+  canDeactivate(): boolean {
+    return true;
   }
 
-  canDeactivate(): Promise<boolean> | boolean {
-    if (!this.hasUnsavedChanges()) {
-      return true;
-    }
-
-    return new Promise<boolean>((resolve) => {
-      this.dAlert.show({
-        title: '변경된 설정 있음',
-        message: '변경된 설정이 있습니다. 저장하시겠습니까?',
-        type: 'warn',
-        buttonType: 'yesNo',
-        onConfirm: async () => {
-          this.dLoading.show('계정 DB에 설정 저장 중...');
-          try {
-            const settings = {
-              defaultModel: this.defaultModel,
-              defaultTheme: this.defaultTheme,
-              isDarkMode: this.isDarkMode
-            };
-            await this.authService.updateUserSettings(settings);
-            this.savedModel = this.defaultModel;
-            this.savedTheme = this.defaultTheme;
-            this.savedDarkMode = this.isDarkMode;
-            this.themeService.setDarkMode(this.isDarkMode);
-            this.dLoading.dismiss('계정 DB에 설정이 성공적으로 저장되었습니다.');
-            resolve(true);
-          } catch (e: any) {
-            this.dLoading.dismiss();
-            this.dAlert.error('계정 DB 설정 저장 실패: ' + (e.message || ''), '오류');
-            resolve(false);
-          }
-        },
-        onCancel: () => {
-          // 변경사항 취소 후 이동
-          this.themeService.setDarkMode(this.savedDarkMode);
-          this.isDarkMode = this.savedDarkMode;
-          this.defaultModel = this.savedModel;
-          this.defaultTheme = this.savedTheme;
-          resolve(true);
-        }
-      });
-    });
+  async onModelSelect(modelName: string) {
+    if (this.defaultModel === modelName) return;
+    this.defaultModel = modelName;
+    await this.autoSaveSettings();
   }
 
-  onDarkModeToggle(isDark: boolean) {
+  async onDarkModeToggle(isDark: boolean) {
+    if (this.isDarkMode === isDark) return;
     this.isDarkMode = isDark;
     this.themeService.setDarkMode(isDark);
+    await this.autoSaveSettings();
+  }
+
+  async onThemeTabChange(theme: string) {
+    if (this.defaultTheme === theme) return;
+    this.defaultTheme = theme;
+    this.themeService.setStyleTheme(theme);
+    await this.autoSaveSettings();
+  }
+
+  private async autoSaveSettings() {
+    this.dLoading.show('계정 DB에 설정 저장 중...');
+    try {
+      const settings = {
+        defaultModel: this.defaultModel,
+        defaultTheme: this.defaultTheme,
+        isDarkMode: this.isDarkMode
+      };
+      await this.authService.updateUserSettings(settings);
+      this.savedModel = this.defaultModel;
+      this.savedTheme = this.defaultTheme;
+      this.savedDarkMode = this.isDarkMode;
+      // 완료 시 완료 메시지 없이 로딩만 해제
+      this.dLoading.dismiss();
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('계정 DB 설정 저장 실패: ' + (e.message || ''), '오류');
+    }
   }
 
   goBack() {
     this.router.navigate(['/']);
-  }
-
-  onSaveSettings() {
-    if (!this.hasUnsavedChanges()) {
-      this.dAlert.info('변경된 설정 항목이 없습니다.', '안내');
-      return;
-    }
-
-    this.dAlert.confirm('설정 옵션(AI 모델, 테마, 다크모드)을 계정 DB에 저장하시겠습니까?', '설정 저장', async () => {
-      this.dLoading.show('계정 DB에 설정 저장 중...');
-      try {
-        const settings = {
-          defaultModel: this.defaultModel,
-          defaultTheme: this.defaultTheme,
-          isDarkMode: this.isDarkMode
-        };
-        await this.authService.updateUserSettings(settings);
-        this.savedModel = this.defaultModel;
-        this.savedTheme = this.defaultTheme;
-        this.savedDarkMode = this.isDarkMode;
-        this.themeService.setDarkMode(this.isDarkMode);
-        this.dLoading.dismiss('계정 DB에 설정이 성공적으로 저장되었습니다.');
-      } catch (e: any) {
-        this.dLoading.dismiss();
-        this.dAlert.error('계정 DB 설정 저장 실패: ' + (e.message || ''), '오류');
-      }
-    });
   }
 
   onResetDefaults() {
@@ -170,7 +133,9 @@ export class SettingsComponent implements OnInit {
         this.savedTheme = defaultSettings.defaultTheme;
         this.savedDarkMode = defaultSettings.isDarkMode;
         this.themeService.setDarkMode(false);
-        this.dLoading.dismiss('계정 DB 설정이 기본값으로 복원되었습니다.');
+        this.themeService.setStyleTheme('뉴모피즘');
+        // 완료 시 로딩만 해제
+        this.dLoading.dismiss();
       } catch (e: any) {
         this.dLoading.dismiss();
         this.dAlert.error('기본값 복원 실패: ' + (e.message || ''), '오류');

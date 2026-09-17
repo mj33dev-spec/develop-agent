@@ -58,7 +58,7 @@
             </div>
             <div class="item-control">
               <c-tab-bar variant="segment" size="small" [options]="themeTabOptions"
-                [(value)]="defaultTheme"></c-tab-bar>
+                [value]="defaultTheme" (valueChange)="onThemeTabChange($event)"></c-tab-bar>
             </div>
           </div>
 
@@ -79,9 +79,6 @@
         <div class="form-actions-bar">
           <c-button theme="neutral" (onClick)="onResetDefaults()">
             <i class="bx bx-refresh"></i> 기본값 복원
-          </c-button>
-          <c-button theme="primary" [disabled]="!hasUnsavedChanges()" (onClick)="onSaveSettings()">
-            <i class="bx bx-save"></i> 설정 저장
           </c-button>
         </div>
       </div>

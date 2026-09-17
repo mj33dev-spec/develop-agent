@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CButtonComponent } from '../c-button/c-button.component';
 
@@ -9,7 +9,7 @@ import { CButtonComponent } from '../c-button/c-button.component';
   templateUrl: './c-modal.component.html',
   styleUrls: ['./c-modal.component.scss']
 })
-export class CModalComponent implements OnChanges, OnDestroy {
+export class CModalComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isOpen: boolean = false;
   @Input() title: string = '';
   @Input() subTitle?: string;
@@ -27,6 +27,14 @@ export class CModalComponent implements OnChanges, OnDestroy {
   @Output() onClose = new EventEmitter<void>();
   @Output() onSubmit = new EventEmitter<Event>();
 
+  constructor(private el: ElementRef) {}
+
+  ngOnInit() {
+    if (this.el.nativeElement && this.el.nativeElement.parentNode !== document.body) {
+      document.body.appendChild(this.el.nativeElement);
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['isOpen']) {
       if (this.isOpen) {
@@ -39,6 +47,9 @@ export class CModalComponent implements OnChanges, OnDestroy {
 
   ngOnDestroy() {
     document.body.style.overflow = '';
+    if (this.el.nativeElement && this.el.nativeElement.parentNode) {
+      this.el.nativeElement.parentNode.removeChild(this.el.nativeElement);
+    }
   }
 
   handleOverlayClick(e: MouseEvent) {

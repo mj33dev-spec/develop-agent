@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FileItem, FileItemService } from '../../core/services/file-item.service';
 import { DAlertService } from '../../core/services/d-alert.service';
+import { DLoadingService } from '../../core/services/d-loading.service';
 import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
 import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.component';
-import { CBadgeComponent } from '../c-badge/c-badge.component';
 
 import * as Prism from 'prismjs';
 import 'prismjs/components/prism-css';
@@ -24,7 +24,7 @@ import 'prismjs/components/prism-tsx';
 @Component({
   selector: 'app-code-viewer',
   standalone: true,
-  imports: [CommonModule, FormsModule, CDropdownComponent, CBadgeComponent],
+  imports: [CommonModule, FormsModule, CDropdownComponent],
   templateUrl: './code-viewer.component.html',
   styleUrl: './code-viewer.component.scss'
 })
@@ -57,6 +57,7 @@ export class CodeViewerComponent implements OnInit, OnChanges {
   isResizing = false;
 
   private dAlert = inject(DAlertService);
+  private dLoading = inject(DLoadingService);
   private fileService = inject(FileItemService);
   private sanitizer = inject(DomSanitizer);
   private chatInputService = inject(ChatInputService);
@@ -121,22 +122,6 @@ export class CodeViewerComponent implements OnInit, OnChanges {
       case 'sql': return 'sql';
       case 'md': case 'markdown': return 'md';
       default: return 'default';
-    }
-  }
-
-  get themeDisplayName(): string {
-    switch (this.themeClass) {
-      case 'html': return 'HTML';
-      case 'css': return 'CSS';
-      case 'scss': return 'SCSS';
-      case 'js': return 'JavaScript';
-      case 'ts': return 'TypeScript';
-      case 'python': return 'Python';
-      case 'java': return 'Java';
-      case 'json': return 'JSON';
-      case 'sql': return 'SQL';
-      case 'md': return 'Markdown';
-      default: return (this.file?.extension || 'CODE').toUpperCase();
     }
   }
 
@@ -461,7 +446,7 @@ export class CodeViewerComponent implements OnInit, OnChanges {
     if (!this.file || !this.file.content) return;
     navigator.clipboard.writeText(this.file.content)
       .then(() => {
-        this.dAlert.success('전체 코드가 클립보드에 복사되었습니다.', '복사 완료');
+        this.dLoading.showSuccess('전체 코드가 클립보드에 복사되었습니다.');
       })
       .catch((err) => {
         console.error(err);
@@ -480,7 +465,7 @@ export class CodeViewerComponent implements OnInit, OnChanges {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    this.dAlert.success(`'${this.file.name}' 파일이 다운로드되었습니다.`, '다운로드 완료');
+    this.dLoading.showSuccess(`'${this.file.name}' 파일이 다운로드되었습니다.`);
   }
 
   goBack() {
