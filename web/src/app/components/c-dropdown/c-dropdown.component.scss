@@ -155,3 +155,47 @@
     transform: translateY(0);
   }
 }
+
+body.dark-theme .dropdown-portal-menu,
+:host-context(body.dark-theme) .dropdown-portal-menu {
+  background: #242834;
+
+  &.fill {
+    box-shadow: 10px 10px 20px #161821, -10px -10px 20px #303545;
+
+    hr {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  &.outlinedDropdown {
+    box-shadow: 8px 8px 16px #161821, -8px -8px 16px #303545;
+
+    hr {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .dropdownItem {
+    color: #e2e8f0;
+
+    &:hover:not(.disabled) {
+      background: #1e222b;
+      box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+    }
+
+    &.selected {
+      background: #1e222b;
+      color: #4A86FF;
+      box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+
+      .dropdownItemIcon {
+        color: #4A86FF;
+      }
+    }
+
+    .dropdownItemIcon {
+      color: #94a3b8;
+    }
+  }
+}

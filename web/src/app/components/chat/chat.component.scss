@@ -422,3 +422,155 @@
   0%, 80%, 100% { transform: scale(0); }
   40% { transform: scale(1); }
 }
+
+:host-context(body.dark-theme) {
+  .chat-container {
+    background-color: #1a1d26;
+  }
+
+  .chat-header {
+    background-color: #1e222b;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    .header-left {
+      .icon-btn {
+        background: #242834;
+        box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+        i { color: #f1f5f9; }
+        &:hover { box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545; }
+      }
+
+      .header-center {
+        .chat-title {
+          color: #f1f5f9;
+          &:hover { box-shadow: inset 2px 2px 5px #161821, inset -2px -2px 5px #303545; }
+        }
+
+        .chat-title-input {
+          color: #f1f5f9;
+          background: #1e222b;
+          box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+          border-color: rgba(255, 255, 255, 0.08);
+        }
+      }
+    }
+
+    .header-right {
+      .icon-btn {
+        background: #242834;
+        box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+        i { color: #94a3b8; }
+        &:hover {
+          box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
+          i { color: #4A86FF; }
+        }
+      }
+    }
+  }
+
+  .chat-body {
+    .chat-messages {
+      background: #242834;
+      box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .message-wrapper {
+        &.user-message {
+          .message-bubble {
+            background: #2b303e;
+            color: #f1f5f9;
+            box-shadow: 4px 4px 12px #161821, -4px -4px 12px #303545;
+            border-color: rgba(255, 255, 255, 0.08);
+          }
+        }
+
+        &.agent-message {
+          .message-bubble {
+            background: #1e222b;
+            color: #e2e8f0;
+            box-shadow: 5px 5px 14px #161821, -5px -5px 14px #303545;
+            border-color: rgba(255, 255, 255, 0.08);
+          }
+        }
+
+        .agent-profile .avatar-small {
+          box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+          background-color: #242834;
+        }
+
+        .message-content {
+          .agent-name { color: #94a3b8; }
+          .bubble-group .time-stamp { color: #64748b; }
+        }
+      }
+    }
+  }
+
+  .chat-footer-input {
+    background-color: #1a1d26;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    .chat-input-box {
+      background: #242834;
+      box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
+
+      &:focus-within {
+        box-shadow: inset 5px 5px 10px #12141a, inset -5px -5px 10px #303545, 0 0 0 2px rgba(74, 134, 255, 0.3);
+      }
+
+      .input-body {
+        .chat-textarea {
+          color: #f1f5f9;
+          &::placeholder { color: #94a3b8; }
+        }
+
+        .input-footer {
+          .footer-left {
+            .add-btn {
+              background: #242834;
+              box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+              i { color: #e2e8f0; }
+            }
+          }
+
+          .footer-right {
+            .model-btn {
+              background: #242834;
+              color: #e2e8f0;
+              box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+              i { color: #94a3b8; }
+
+              &:hover {
+                box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
+                color: #4A86FF;
+              }
+            }
+
+            .send-btn {
+              box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+              &:disabled {
+                background: #1e222b;
+                box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39;
+                i { color: #64748b; opacity: 0.5; }
+              }
+            }
+
+            .stop-btn {
+              background: #242834;
+              box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .typing-indicator span {
+    background-color: #94a3b8;
+  }
+}
+

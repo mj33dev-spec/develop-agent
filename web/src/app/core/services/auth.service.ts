@@ -196,6 +196,93 @@ export class AuthService {
     return data;
   }
 
+  async getUserSettings(): Promise<{ defaultModel: string; defaultTheme: string; isDarkMode: boolean }> {
+    const user = this.currentUserSubject.value;
+    if (!user) {
+      const saved = localStorage.getItem('user_app_settings');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {}
+      }
+      return { defaultModel: 'Gemini 3.6 Flash', defaultTheme: '뉴모피즘', isDarkMode: false };
+    }
+
+    try {
+      const { data: dbUser } = await this.supabase
+        .from('users')
+        .select('default_model, default_theme, is_dark_mode, settings')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (dbUser) {
+        const metaSettings = user.user_metadata?.['user_settings'];
+        const settings = {
+          defaultModel: dbUser.default_model || dbUser.settings?.defaultModel || metaSettings?.defaultModel || 'Gemini 3.6 Flash',
+          defaultTheme: dbUser.default_theme || dbUser.settings?.defaultTheme || metaSettings?.defaultTheme || '뉴모피즘',
+          isDarkMode: dbUser.is_dark_mode ?? dbUser.settings?.isDarkMode ?? metaSettings?.isDarkMode ?? false
+        };
+        return settings;
+      }
+    } catch (e) {
+      console.warn('DB settings fetch warning:', e);
+    }
+
+    const metaSettings = user.user_metadata?.['user_settings'];
+    if (metaSettings) {
+      return {
+        defaultModel: metaSettings.defaultModel || 'Gemini 3.6 Flash',
+        defaultTheme: metaSettings.defaultTheme || '뉴모피즘',
+        isDarkMode: metaSettings.isDarkMode ?? false
+      };
+    }
+
+    const saved = localStorage.getItem('user_app_settings');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {}
+    }
+
+    return { defaultModel: 'Gemini 3.6 Flash', defaultTheme: '뉴모피즘', isDarkMode: false };
+  }
+
+  async updateUserSettings(settings: { defaultModel: string; defaultTheme: string; isDarkMode: boolean }) {
+    const user = this.currentUserSubject.value;
+    if (!user) throw new Error('로그인이 필요합니다.');
+
+    // 1. Supabase Auth 사용자 메타데이터 업데이트
+    const { data, error } = await this.supabase.auth.updateUser({
+      data: {
+        user_settings: settings
+      }
+    });
+    if (error) throw error;
+    if (data.user) {
+      this.currentUserSubject.next(data.user);
+    }
+
+    // 2. DB public.users 테이블 연동
+    try {
+      await this.supabase.from('users').upsert({
+        id: user.id,
+        email: user.email,
+        default_model: settings.defaultModel,
+        default_theme: settings.defaultTheme,
+        is_dark_mode: settings.isDarkMode,
+        settings: settings,
+        updated_at: new Date().toISOString()
+      });
+    } catch (e) {
+      console.warn('Failed to update public.users settings columns:', e);
+    }
+
+    // 3. 로컬 스토리지 캐싱
+    localStorage.setItem('user_app_settings', JSON.stringify(settings));
+
+    return settings;
+  }
+
   async signOut() {
     const { error } = await this.supabase.auth.signOut();
     if (error) throw error;

@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { DTooltipService } from './core/services/d-tooltip.service';
 import { AuthService } from './core/services/auth.service';
 import { DLoadingService } from './core/services/d-loading.service';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
   private tooltipService = inject(DTooltipService);
   private authService = inject(AuthService);
   private dLoading = inject(DLoadingService);
+  private themeService = inject(ThemeService);
 
   ngOnInit() {
     this.tooltipService.init();

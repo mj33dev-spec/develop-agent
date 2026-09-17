@@ -113,3 +113,55 @@
     opacity: 1;
   }
 }
+
+:host-context(body.dark-theme) {
+  .modalOverlay {
+    background-color: rgba(15, 17, 23, 0.75);
+  }
+
+  .modalContent {
+    background-color: #1e222b;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .modalHeader {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+
+    .closeBtn {
+      color: #94a3b8;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #f1f5f9;
+      }
+    }
+  }
+
+  .modalTitle {
+    color: #f1f5f9;
+  }
+
+  .modalSubTitle {
+    color: #94a3b8;
+  }
+
+  .modalBody {
+    color: #e2e8f0;
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+    }
+  }
+
+  .formActions {
+    border-top-color: rgba(255, 255, 255, 0.08);
+
+    > button:disabled {
+      background-color: #2b303e;
+      border-color: transparent;
+      color: #64748b;
+    }
+  }
+}
+

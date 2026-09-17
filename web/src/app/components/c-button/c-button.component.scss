@@ -148,3 +148,56 @@
         }
     }
 }
+
+:host-context(body.dark-theme) {
+  .btn {
+    box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+
+    &:hover:not(:disabled) {
+      box-shadow: 6px 6px 14px #161821, -6px -6px 14px #303545;
+    }
+
+    &:active:not(:disabled) {
+      box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+    }
+
+    &.btn-primary {
+      box-shadow: 5px 5px 12px #161821, -5px -5px 12px #303545;
+
+      &:hover:not(:disabled) {
+        box-shadow: 7px 7px 16px #161821, -7px -7px 16px #303545;
+      }
+
+      &:active:not(:disabled) {
+        box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.4), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    &.btn-neutral {
+      background-color: #2b303e;
+      color: #e2e8f0;
+
+      &:hover {
+        background-color: #353b4d;
+      }
+    }
+
+    &.btn-outlined-neutral {
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    &.btn-icon {
+      color: #94a3b8;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+        color: #f1f5f9;
+      }
+    }
+  }
+}

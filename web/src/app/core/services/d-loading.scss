@@ -114,3 +114,25 @@
     transform: scale(1);
   }
 }
+
+body.dark-theme {
+  #d-loading-overlay {
+    background-color: rgba(15, 17, 23, 0.75);
+    backdrop-filter: blur(6px);
+
+    .d-loading-content {
+      background: #242834;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+      .d-loading-text {
+        color: #f1f5f9;
+      }
+
+      .d-progress-wrapper {
+        background-color: #1e222b;
+      }
+    }
+  }
+}
+

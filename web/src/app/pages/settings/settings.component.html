@@ -17,8 +17,8 @@
     <!-- Sunken Inset Neumorphic Panel (Code Viewer Panel Style) -->
     <div class="settings-panel">
       <div class="panel-header">
-        <h2 class="panel-title">환경설정 및 시스템 옵션</h2>
-        <p class="panel-subtitle">AI 대화 모델, 테마 옵션, 알림 및 시스템 세션 설정을 관리할 수 있습니다.</p>
+        <h2 class="panel-title">환경설정</h2>
+        <p class="panel-subtitle">AI 대화 모델 및 화면 테마 설정을 관리할 수 있습니다.</p>
       </div>
 
       <div class="settings-form-body">
@@ -61,33 +61,14 @@
                 [(value)]="defaultTheme"></c-tab-bar>
             </div>
           </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- 시스템 및 알림 옵션 -->
-        <div class="section-block">
-          <div class="section-title">
-            알림 및 세션 관리
-          </div>
 
           <div class="setting-item-row">
             <div class="item-info">
-              <span class="item-name">시스템 대화상자 (DAlert / DLoading)</span>
-              <span class="item-desc">주요 작업 전 동작 확인 피드백 및 상태 로딩 안내 창을 표시합니다.</span>
+              <span class="item-name">다크 모드</span>
+              <span class="item-desc">어두운 화면 테마를 적용하여 눈의 피로를 줄입니다.</span>
             </div>
             <div class="item-control">
-              <c-toggle [(checked)]="soundNotifications"></c-toggle>
-            </div>
-          </div>
-
-          <div class="setting-item-row">
-            <div class="item-info">
-              <span class="item-name">세션 상태 유지</span>
-              <span class="item-desc">브라우저 종료 후 재접속 시 이전 로그인 세션을 유지합니다.</span>
-            </div>
-            <div class="item-control">
-              <c-toggle [(checked)]="autoSaveSession"></c-toggle>
+              <c-toggle [(checked)]="isDarkMode" (checkedChange)="onDarkModeToggle($event)"></c-toggle>
             </div>
           </div>
         </div>

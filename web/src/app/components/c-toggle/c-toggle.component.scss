@@ -79,3 +79,25 @@
     }
   }
 }
+
+:host-context(body.dark-theme) {
+  .c-toggle-switch {
+    background: #1e222b;
+    box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39;
+
+    .toggle-knob {
+      background: #2b303e;
+      box-shadow: 2px 2px 4px #14171d, -2px -2px 4px #282d39;
+    }
+
+    &.active {
+      background: rgba(74, 134, 255, 0.2);
+
+      .toggle-knob {
+        background: #4A86FF;
+        box-shadow: 2px 2px 6px rgba(74, 134, 255, 0.5);
+      }
+    }
+  }
+}
+

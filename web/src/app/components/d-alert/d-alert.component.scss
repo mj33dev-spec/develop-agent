@@ -177,3 +177,36 @@
   display: flex;
   gap: 10px;
 }
+
+:host-context(body.dark-theme) {
+  .alertOverlay.active {
+    background-color: rgba(15, 17, 23, 0.75);
+    backdrop-filter: blur(6px);
+  }
+
+  .alertBox {
+    background-color: #242834;
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .alertTitle {
+    color: #f1f5f9;
+  }
+
+  .alertMessage {
+    color: #94a3b8;
+  }
+
+  .alertInput {
+    background: #1e222b;
+    box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+    color: #f1f5f9;
+
+    &:focus {
+      box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545, 0 0 0 2px rgba(74, 134, 255, 0.3);
+    }
+  }
+}
+
+

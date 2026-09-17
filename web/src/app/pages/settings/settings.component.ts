@@ -9,6 +9,9 @@ import { CDropdownComponent, CDropdownOption } from '../../components/c-dropdown
 import { CTabBarComponent } from '../../components/c-tab-bar/c-tab-bar.component';
 import { CToggleComponent } from '../../components/c-toggle/c-toggle.component';
 
+import { AuthService } from '../../core/services/auth.service';
+import { ThemeService } from '../../core/services/theme.service';
+
 @Component({
   selector: 'app-settings',
   standalone: true,
@@ -20,8 +23,7 @@ export class SettingsComponent implements OnInit {
   // AI 및 시스템 설정 상태
   defaultModel: string = 'Gemini 3.6 Flash';
   defaultTheme: string = '뉴모피즘';
-  soundNotifications: boolean = true;
-  autoSaveSession: boolean = true;
+  isDarkMode: boolean = false;
 
   themeTabOptions: string[] = ['플랫', '글래스모피즘', '뉴모피즘'];
 
@@ -37,62 +39,71 @@ export class SettingsComponent implements OnInit {
   private router = inject(Router);
   private dAlert = inject(DAlertService);
   private dLoading = inject(DLoadingService);
+  private authService = inject(AuthService);
+  private themeService = inject(ThemeService);
 
-  ngOnInit() {
-    // 로컬 스토리지에서 저장된 설정 로드
-    const saved = localStorage.getItem('user_app_settings');
-    if (saved) {
-      try {
-        const settings = JSON.parse(saved);
-        this.defaultModel = settings.defaultModel || this.defaultModel;
-        this.defaultTheme = settings.defaultTheme || this.defaultTheme;
-        this.soundNotifications = settings.soundNotifications ?? true;
-        this.autoSaveSession = settings.autoSaveSession ?? true;
-      } catch (e) {
-        console.error('Failed to parse settings:', e);
-      }
+  async ngOnInit() {
+    this.dLoading.show('계정 DB에서 설정을 불러오는 중입니다...');
+    try {
+      const settings = await this.authService.getUserSettings();
+      this.defaultModel = settings.defaultModel || this.defaultModel;
+      this.defaultTheme = settings.defaultTheme || this.defaultTheme;
+      this.isDarkMode = settings.isDarkMode ?? false;
+      this.themeService.setDarkMode(this.isDarkMode);
+      this.dLoading.dismiss();
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      console.error('계정 설정 로드 실패:', e);
     }
+  }
+
+  onDarkModeToggle(isDark: boolean) {
+    this.isDarkMode = isDark;
+    this.themeService.setDarkMode(isDark);
   }
 
   goBack() {
     this.router.navigate(['/']);
   }
 
-  toggleSoundNotifications() {
-    this.soundNotifications = !this.soundNotifications;
-  }
-
-  toggleAutoSaveSession() {
-    this.autoSaveSession = !this.autoSaveSession;
-  }
-
   onSaveSettings() {
-    this.dAlert.confirm('설정을 저장하시겠습니까?', '설정 저장', () => {
-      this.dLoading.show('설정 저장 중...');
+    this.dAlert.confirm('설정 옵션(AI 모델, 테마, 다크모드)을 계정 DB에 저장하시겠습니까?', '설정 저장', async () => {
+      this.dLoading.show('계정 DB에 설정 저장 중...');
       try {
         const settings = {
           defaultModel: this.defaultModel,
           defaultTheme: this.defaultTheme,
-          soundNotifications: this.soundNotifications,
-          autoSaveSession: this.autoSaveSession
+          isDarkMode: this.isDarkMode
         };
-        localStorage.setItem('user_app_settings', JSON.stringify(settings));
-        this.dLoading.dismiss('설정이 성공적으로 저장되었습니다.');
+        await this.authService.updateUserSettings(settings);
+        this.themeService.setDarkMode(this.isDarkMode);
+        this.dLoading.dismiss('계정 DB에 설정이 성공적으로 저장되었습니다.');
       } catch (e: any) {
         this.dLoading.dismiss();
-        this.dAlert.error('설정 저장 실패: ' + (e.message || ''), '오류');
+        this.dAlert.error('계정 DB 설정 저장 실패: ' + (e.message || ''), '오류');
       }
     });
   }
 
   onResetDefaults() {
-    this.dAlert.confirm('모든 설정을 초기 상태로 복원하시겠습니까?', '기본값 복원', () => {
-      this.defaultModel = 'Gemini 3.6 Flash';
-      this.defaultTheme = '뉴모피즘';
-      this.soundNotifications = true;
-      this.autoSaveSession = true;
-      localStorage.removeItem('user_app_settings');
-      this.dAlert.success('설정이 기본값으로 복원되었습니다.', '복원 완료');
+    this.dAlert.confirm('모든 설정을 기본값으로 복원하고 계정 DB에 저장하시겠습니까?', '기본값 복원', async () => {
+      this.dLoading.show('기본값으로 복원 중...');
+      try {
+        const defaultSettings = {
+          defaultModel: 'Gemini 3.6 Flash',
+          defaultTheme: '뉴모피즘',
+          isDarkMode: false
+        };
+        await this.authService.updateUserSettings(defaultSettings);
+        this.defaultModel = defaultSettings.defaultModel;
+        this.defaultTheme = defaultSettings.defaultTheme;
+        this.isDarkMode = defaultSettings.isDarkMode;
+        this.themeService.setDarkMode(false);
+        this.dLoading.dismiss('계정 DB 설정이 기본값으로 복원되었습니다.');
+      } catch (e: any) {
+        this.dLoading.dismiss();
+        this.dAlert.error('기본값 복원 실패: ' + (e.message || ''), '오류');
+      }
     });
   }
 }
