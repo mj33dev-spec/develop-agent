@@ -8,6 +8,7 @@ import { CButtonComponent } from '../../components/c-button/c-button.component';
 import { CDropdownComponent, CDropdownOption } from '../../components/c-dropdown/c-dropdown.component';
 import { CTabBarComponent } from '../../components/c-tab-bar/c-tab-bar.component';
 import { CToggleComponent } from '../../components/c-toggle/c-toggle.component';
+import { GuideModalComponent } from '../../components/guide-modal/guide-modal.component';
 
 import { AuthService } from '../../core/services/auth.service';
 import { ThemeService } from '../../core/services/theme.service';
@@ -15,7 +16,7 @@ import { ThemeService } from '../../core/services/theme.service';
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent, CTabBarComponent, CToggleComponent],
+  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent, CTabBarComponent, CToggleComponent, GuideModalComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
@@ -24,6 +25,7 @@ export class SettingsComponent implements OnInit {
   defaultModel: string = 'Gemini 3.6 Flash';
   defaultTheme: string = '뉴모피즘';
   isDarkMode: boolean = false;
+  isGuideModalOpen: boolean = false;
 
   // DB에 저장된 원본 설정 상태
   private savedModel: string = 'Gemini 3.6 Flash';
@@ -79,14 +81,12 @@ export class SettingsComponent implements OnInit {
   }
 
   async onDarkModeToggle(isDark: boolean) {
-    if (this.isDarkMode === isDark) return;
     this.isDarkMode = isDark;
     this.themeService.setDarkMode(isDark);
     await this.autoSaveSettings();
   }
 
   async onThemeTabChange(theme: string) {
-    if (this.defaultTheme === theme) return;
     this.defaultTheme = theme;
     this.themeService.setStyleTheme(theme);
     await this.autoSaveSettings();
@@ -114,6 +114,10 @@ export class SettingsComponent implements OnInit {
 
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  openGuideModal() {
+    this.isGuideModalOpen = true;
   }
 
   onResetDefaults() {

@@ -524,7 +524,8 @@
 
         .agent-profile .avatar-small {
           box-shadow: $dark-neu-shadow-btn;
-          background-color: $dark-surface-alt;
+          // background-color: $dark-surface-alt;
+          background-color: #fff;
         }
 
         .message-content {
@@ -613,4 +614,4 @@
   .typing-indicator span {
     background-color: $dark-text-muted;
   }
-}
+}

@@ -1,0 +1,222 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.guide-modal-container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-16;
+  padding: $spacing-8 0;
+
+  .step-nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-12;
+
+    .step-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: $radius-full;
+      background: $neu-bg;
+      box-shadow: 2px 2px 5px $neu-shadow-dark, -2px -2px 5px $neu-shadow-light;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: $neu-text-secondary;
+      transition: all 0.2s ease;
+
+      i {
+        font-size: 16px;
+      }
+
+      &:hover {
+        color: $neu-primary;
+        transform: translateY(-1px);
+      }
+
+      &.active {
+        background: $color-primary;
+        color: $color-white;
+        box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(74, 134, 255, 0.4);
+
+        i {
+          color: $color-white;
+        }
+      }
+    }
+  }
+
+  .guide-card-content {
+    background: $neu-bg;
+    border-radius: 16px;
+    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+    padding: $spacing-20;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-16;
+
+    .card-header {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-8;
+
+      .badge-tag {
+        align-self: flex-start;
+        padding: 3px 10px;
+        border-radius: $radius-full;
+        background: rgba(74, 134, 255, 0.12);
+        color: $color-primary;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: $spacing-10;
+
+        .icon-main {
+          font-size: 26px;
+          color: $color-primary;
+        }
+
+        .step-title {
+          @include typo-title-2;
+          color: $neu-text;
+          margin: 0;
+        }
+      }
+
+      .step-desc {
+        @include typo-body-2;
+        color: $neu-text-secondary;
+        margin: 0;
+      }
+    }
+
+    .details-box {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      padding: $spacing-14 $spacing-16;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-10;
+
+        li {
+          display: flex;
+          align-items: flex-start;
+          gap: $spacing-8;
+          @include typo-body-3;
+          color: $neu-text;
+
+          .check-icon {
+            font-size: 18px;
+            color: $color-primary;
+            margin-top: 2px;
+            flex-shrink: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.guide-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .footer-left {
+    .checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: $neu-text-secondary;
+
+      input {
+        cursor: pointer;
+        width: 15px;
+        height: 15px;
+        accent-color: $color-primary;
+      }
+    }
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-8;
+  }
+}
+
+:host-context(body.dark-theme) {
+  .step-nav-bar .step-pill-btn {
+    background: $dark-surface-alt;
+    box-shadow: $dark-neu-shadow-btn;
+    color: $dark-text-muted;
+
+    &.active {
+      background: $color-primary;
+      color: $color-white;
+
+      i {
+        color: $color-white;
+      }
+    }
+  }
+
+  .guide-card-content {
+    background: $dark-surface;
+    box-shadow: $dark-neu-shadow-inset-sm;
+
+    .card-header {
+      .badge-tag {
+        background: rgba(74, 134, 255, 0.2);
+        color: #60a5fa;
+      }
+
+      .title-row {
+        .icon-main {
+          color: #60a5fa;
+        }
+
+        .step-title {
+          color: $dark-text-primary;
+        }
+      }
+
+      .step-desc {
+        color: $dark-text-muted;
+      }
+    }
+
+    .details-box {
+      background: $dark-surface-alt;
+      border-color: $dark-border-color;
+
+      ul li {
+        color: $dark-text-secondary;
+
+        .check-icon {
+          color: #60a5fa;
+        }
+      }
+    }
+  }
+
+  .guide-modal-footer .footer-left .checkbox-label {
+    color: $dark-text-muted;
+  }
+}

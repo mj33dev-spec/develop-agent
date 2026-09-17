@@ -76,7 +76,11 @@
         <div class="divider"></div>
 
         <!-- 하단 액션 버튼 -->
-        <div class="form-actions-bar">
+        <div class="form-actions-bar" style="display: flex; gap: 12px; justify-content: flex-end;">
+          <c-button theme="secondary" (onClick)="openGuideModal()">
+            <i class="bx bx-help-circle"></i> 사용방법 안내 다시보기
+          </c-button>
+
           <c-button theme="neutral" (onClick)="onResetDefaults()">
             <i class="bx bx-refresh"></i> 기본값 복원
           </c-button>
@@ -84,4 +88,6 @@
       </div>
     </div>
   </div>
-</div>
+
+  <app-guide-modal [isOpen]="isGuideModalOpen" (onClose)="isGuideModalOpen = false"></app-guide-modal>
+</div>
