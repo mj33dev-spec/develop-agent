@@ -60,8 +60,12 @@ export class HomeComponent implements OnInit {
   private chatInputService = inject(ChatInputService);
   private router = inject(Router);
 
+  get isSubPage(): boolean {
+    return this.router.url !== '/';
+  }
+
   get isAccountPage(): boolean {
-    return this.router.url.includes('/account');
+    return this.isSubPage;
   }
 
   async loadAddMenuOptions() {

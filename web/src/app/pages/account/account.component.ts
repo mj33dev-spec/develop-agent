@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { DAlertService } from '../../core/services/d-alert.service';
 import { DLoadingService } from '../../core/services/d-loading.service';
@@ -24,6 +25,11 @@ export class AccountComponent implements OnInit {
   private authService = inject(AuthService);
   private dAlert = inject(DAlertService);
   private dLoading = inject(DLoadingService);
+  private router = inject(Router);
+
+  goBack() {
+    this.router.navigate(['/']);
+  }
 
   ngOnInit() {
     this.authService.currentUser.subscribe(user => {

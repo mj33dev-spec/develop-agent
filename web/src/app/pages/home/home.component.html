@@ -15,7 +15,7 @@
     <!-- Router Outlet for Child Routes (e.g., /account) -->
     <router-outlet></router-outlet>
 
-    <ng-container *ngIf="!isAccountPage">
+    <ng-container *ngIf="!isSubPage">
       <!-- Home View (Copilot Style) when no room and no file is selected -->
       <div class="home-view" *ngIf="!activeRoomId && !activeFileId">
         <div class="home-container">

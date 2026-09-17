@@ -168,7 +168,7 @@ export class HomeSidebarComponent implements OnInit {
     {
       label: '설정',
       icon: 'bx bx-cog',
-      onClick: () => this.openSettingsInfo()
+      onClick: () => this.navigateToSettings()
     },
     {
       type: 'divider'
@@ -179,12 +179,6 @@ export class HomeSidebarComponent implements OnInit {
       onClick: () => this.logout()
     }
   ];
-
-  // 내 정보 수정 모달 상태
-  isProfileModalOpen = false;
-  editNickname = '';
-  newPassword = '';
-  confirmPassword = '';
 
   private targetAttachFolderId: string | null = null;
 
@@ -218,71 +212,8 @@ export class HomeSidebarComponent implements OnInit {
     this.router.navigate(['/account']);
   }
 
-  openSettingsInfo() {
-    this.dAlert.info('설정 기능은 준비 중입니다.', '설정');
-  }
-
-  openProfileModal() {
-    this.editNickname = this.currentUserNickname;
-    this.newPassword = '';
-    this.confirmPassword = '';
-    this.isProfileModalOpen = true;
-  }
-
-  closeProfileModal() {
-    this.isProfileModalOpen = false;
-  }
-
-  onSaveNickname() {
-    const trimmed = this.editNickname.trim();
-    if (!trimmed) {
-      this.dAlert.error('닉네임을 입력해주세요.', '입력 오류');
-      return;
-    }
-    if (trimmed === this.currentUserNickname) {
-      this.dAlert.info('변경할 닉네임이 기존과 동일합니다.', '안내');
-      return;
-    }
-
-    this.dAlert.confirm(`닉네임을 "${trimmed}"(으)로 변경하시겠습니까?`, '닉네임 변경', async () => {
-      this.dLoading.show('닉네임 변경 중...');
-      try {
-        await this.authService.updateNickname(trimmed);
-        this.currentUserNickname = trimmed;
-        this.dLoading.dismiss('닉네임이 성공적으로 변경되었습니다.');
-      } catch (e: any) {
-        this.dLoading.dismiss();
-        this.dAlert.error('닉네임 변경 실패: ' + (e.message || ''), '오류');
-      }
-    });
-  }
-
-  onChangePassword() {
-    if (!this.newPassword) {
-      this.dAlert.error('새 비밀번호를 입력해주세요.', '입력 오류');
-      return;
-    }
-    if (this.newPassword.length < 6) {
-      this.dAlert.error('비밀번호는 최소 6자리 이상이어야 합니다.', '입력 오류');
-      return;
-    }
-    if (this.newPassword !== this.confirmPassword) {
-      this.dAlert.error('새 비밀번호와 비밀번호 확인이 일치하지 않습니다.', '입력 오류');
-      return;
-    }
-
-    this.dAlert.confirm('비밀번호를 변경하시겠습니까?', '비밀번호 변경', async () => {
-      this.dLoading.show('비밀번호 변경 중...');
-      try {
-        await this.authService.updatePassword(this.newPassword);
-        this.newPassword = '';
-        this.confirmPassword = '';
-        this.dLoading.dismiss('비밀번호가 성공적으로 변경되었습니다.');
-      } catch (e: any) {
-        this.dLoading.dismiss();
-        this.dAlert.error('비밀번호 변경 실패: ' + (e.message || ''), '오류');
-      }
-    });
+  navigateToSettings() {
+    this.router.navigate(['/settings']);
   }
 
   logout() {
@@ -396,7 +327,7 @@ export class HomeSidebarComponent implements OnInit {
   }
 
   selectRoom(roomId: string) {
-    if (this.router.url.includes('/account')) {
+    if (this.router.url !== '/') {
       this.router.navigate(['/']);
     }
     this.activeRoomId = roomId;
@@ -406,7 +337,7 @@ export class HomeSidebarComponent implements OnInit {
   }
 
   selectFile(fileId: string) {
-    if (this.router.url.includes('/account')) {
+    if (this.router.url !== '/') {
       this.router.navigate(['/']);
     }
     this.activeFileId = fileId;
