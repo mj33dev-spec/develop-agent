@@ -55,6 +55,7 @@
           transform: translateY(-1px);
           box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
           color: $neu-primary;
+
           i {
             color: $neu-primary;
           }
@@ -156,6 +157,7 @@
 
         .setting-item-row {
           display: flex;
+          // align-items: flex-end;
           align-items: center;
           justify-content: space-between;
           gap: 16px;

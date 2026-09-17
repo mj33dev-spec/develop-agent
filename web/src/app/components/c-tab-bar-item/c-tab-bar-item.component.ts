@@ -1,7 +1,8 @@
-import { Component, Input, HostListener, Output, EventEmitter, Optional, Inject, forwardRef } from '@angular/core';
+import { Component, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type CTabBarVariant = 'base' | 'segment' | 'folder';
+export type CTabBarSize = 'small' | 'basic' | 'large';
 
 @Component({
   selector: 'c-tab-bar-item',
@@ -12,9 +13,10 @@ export type CTabBarVariant = 'base' | 'segment' | 'folder';
       type="button"
       [class]="btnClass"
       [class.active]="isActive"
+      [attr.data-size]="size"
     >
       <ng-content></ng-content>
-      <span *ngIf="count !== undefined" class="count">{{ count }}</span>
+      <span *ngIf="count !== undefined && count !== null" class="count">{{ count }}</span>
     </button>
   `,
   styleUrls: ['./c-tab-bar-item.component.scss']
@@ -22,10 +24,9 @@ export type CTabBarVariant = 'base' | 'segment' | 'folder';
 export class CTabBarItemComponent {
   @Input() value: any;
   @Input() count?: number;
-  
-  // Injected by parent CTabBarComponent
-  variant: CTabBarVariant = 'base';
-  isActive: boolean = false;
+  @Input() variant: CTabBarVariant = 'base';
+  @Input() size: CTabBarSize = 'basic';
+  @Input() isActive: boolean = false;
 
   @Output() selectItem = new EventEmitter<any>();
 

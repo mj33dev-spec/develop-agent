@@ -6,11 +6,12 @@ import { DAlertService } from '../../core/services/d-alert.service';
 import { DLoadingService } from '../../core/services/d-loading.service';
 import { CButtonComponent } from '../../components/c-button/c-button.component';
 import { CDropdownComponent, CDropdownOption } from '../../components/c-dropdown/c-dropdown.component';
+import { CTabBarComponent } from '../../components/c-tab-bar/c-tab-bar.component';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent],
+  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent, CTabBarComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
@@ -21,6 +22,8 @@ export class SettingsComponent implements OnInit {
   soundNotifications: boolean = true;
   autoSaveSession: boolean = true;
 
+  themeTabOptions: string[] = ['플랫', '글래스모피즘', '뉴모피즘'];
+
   modelOptions: CDropdownOption[] = [
     { label: 'Gemini 3.6 Flash', value: 'gemini-flash', onClick: () => this.defaultModel = 'Gemini 3.6 Flash' },
     { label: 'Gemini 3.1 Pro', value: 'gemini-pro', onClick: () => this.defaultModel = 'Gemini 3.1 Pro' },
@@ -28,12 +31,6 @@ export class SettingsComponent implements OnInit {
     { label: 'Groq GPT-OSS', value: 'groq-gpt', onClick: () => this.defaultModel = 'Groq GPT-OSS' },
     { label: 'Groq Llama 3.3 70B', value: 'groq-llama', onClick: () => this.defaultModel = 'Groq Llama 3.3 70B' },
     { label: 'Groq DeepSeek R1 70B', value: 'groq-deepseek', onClick: () => this.defaultModel = 'Groq DeepSeek R1 70B' }
-  ];
-
-  themeOptions: CDropdownOption[] = [
-    { label: '플랫', value: 'flat', onClick: () => this.defaultTheme = '플랫' },
-    { label: '글래스모피즘', value: 'glassmorphism', onClick: () => this.defaultTheme = '글래스모피즘' },
-    { label: '뉴모피즘', value: 'neumorphism', onClick: () => this.defaultTheme = '뉴모피즘' }
   ];
 
   private router = inject(Router);
