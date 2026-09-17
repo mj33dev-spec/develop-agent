@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { CButtonComponent } from '../../components/c-button/c-button.component';
 import { CModalComponent } from '../../components/c-modal/c-modal.component';
 import { DAlertService } from '../../core/services/d-alert.service';
+import { DLoadingService } from '../../core/services/d-loading.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private dAlert = inject(DAlertService);
+  private dLoading = inject(DLoadingService);
 
   ngOnInit() {
     // 자동 로그인 (세션이 이미 있으면 메인으로 리다이렉트)
@@ -50,14 +52,17 @@ export class LoginComponent implements OnInit {
       this.dAlert.error('비밀번호는 최소 6자리 이상이어야 합니다.', '입력 오류');
       return;
     }
-    
+
     this.isLoading = true;
+    this.dLoading.show('로그인 중...');
     try {
       await this.authService.signIn(this.email, this.password);
-      this.dAlert.success('로그인이 완료되었습니다.', '로그인 성공', () => {
+      this.dLoading.dismiss('로그인이 완료되었습니다.');
+      setTimeout(() => {
         this.router.navigate(['/']);
-      });
+      }, 800);
     } catch (error: any) {
+      this.dLoading.dismiss();
       let errorMsg = error.message;
       if (errorMsg === 'Invalid login credentials') {
         errorMsg = '아이디 또는 비밀번호가 올바르지 않습니다.';
@@ -101,7 +106,7 @@ export class LoginComponent implements OnInit {
       } else if (errorMsg.includes('Password should be at least')) {
         errorMsg = '비밀번호는 최소 6자리 이상이어야 합니다.';
       }
-      
+
       // DAlert 띄우기
       this.dAlert.error(errorMsg || '회원가입에 실패했습니다.', '가입 오류');
     } finally {
