@@ -58,6 +58,84 @@
   transition: all 0.2s ease;
 }
 
+// ── 다크모드 뉴모피즘 버튼 & 카드 믹스인 ──
+@mixin dark-neu-icon-btn($size: 36px) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: $dark-surface-alt;
+  box-shadow: $dark-neu-shadow-btn;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  i {
+    color: $dark-text-muted;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $dark-neu-shadow-btn-hover;
+
+    i {
+      color: $color-primary;
+    }
+  }
+}
+
+// ── 다크모드 공통 구조 믹스인 ──
+@mixin dark-header-bar {
+  background-color: $dark-surface !important;
+  border-bottom: 1px solid $dark-border-color !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+@mixin dark-panel {
+  background: $dark-surface-alt !important;
+  box-shadow: $dark-neu-shadow-inset-md !important;
+}
+
+// ── 플랫 테마 공통 믹스인 ──
+@mixin flat-panel {
+  background: $flat-card-bg !important;
+  box-shadow: $flat-shadow-lg !important;
+  border: 1px solid $flat-border-color !important;
+}
+
+@mixin flat-icon-btn {
+  background: $flat-card-bg !important;
+  border: 1px solid $flat-border-dark !important;
+  box-shadow: $flat-shadow-sm !important;
+
+  &:hover {
+    background: $flat-sidebar-bg !important;
+    box-shadow: $flat-shadow-md !important;
+  }
+}
+
+// ── 글래스 테마 공통 믹스인 ──
+@mixin glass-panel($radius: 24px) {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 16px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  border-radius: $radius !important;
+}
+
+@mixin dark-glass-panel($radius: 24px) {
+  background: rgba(30, 35, 48, 0.55) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  border-radius: $radius !important;
+}
+
+
 // 뉴모피즘 프라이머리/소프트 버튼
 @mixin neu-button($primary: true, $radius: 16px) {
   border: none;

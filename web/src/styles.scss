@@ -347,9 +347,9 @@ i.icon-dart {
 
 /* ── 다크 테마 전역 스타일 ──────────────── */
 body.dark-theme {
-  background-color: #1a1d26 !important;
+  background-color: $dark-bg !important;
   background-image: none !important;
-  color: #e2e8f0 !important;
+  color: $dark-text-secondary !important;
 
   .app-layout,
   .main-content,
@@ -357,16 +357,16 @@ body.dark-theme {
   .settings-page-container,
   .account-page-container,
   .c-modal-content {
-    background-color: #1a1d26 !important;
-    color: #e2e8f0 !important;
+    background-color: $dark-bg !important;
+    color: $dark-text-secondary !important;
   }
 
   .sidebar,
   .home-sidebar {
-    background-color: #1e222b !important;
+    background-color: $dark-surface !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-right: 1px solid $dark-border-color !important;
     box-shadow: none !important;
   }
 
@@ -374,38 +374,35 @@ body.dark-theme {
   .account-header-bar,
   .code-viewer-header,
   .chat-header {
-    background-color: #1e222b !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    @include dark-header-bar;
   }
 
   .settings-panel,
   .account-panel,
   .code-panel,
   .copilot-input-box {
-    background: #242834 !important;
-    box-shadow: inset 4px 4px 8px #181b23, inset -4px -4px 8px #303545 !important;
+    @include dark-panel;
   }
 
   .icon-btn,
   .sidebar-block-btn,
   .user-more-btn,
   .model-select-btn {
-    background: #242834 !important;
-    color: #e2e8f0 !important;
-    box-shadow: 3px 3px 6px #181b23, -3px -3px 6px #303545 !important;
+    background: $dark-surface-alt !important;
+    color: $dark-text-secondary !important;
+    box-shadow: $dark-neu-shadow-btn !important;
 
     i {
-      color: #e2e8f0 !important;
+      color: $dark-text-secondary !important;
     }
   }
 
   .c-toggle-switch {
-    background: #1e222b !important;
+    background: $dark-surface !important;
     box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39 !important;
 
     .toggle-knob {
-      background: #2b303e !important;
+      background: $dark-surface-card !important;
       box-shadow: 2px 2px 4px #14171d, -2px -2px 4px #282d39 !important;
     }
 
@@ -413,24 +410,24 @@ body.dark-theme {
       background: rgba(74, 134, 255, 0.2) !important;
 
       .toggle-knob {
-        background: #4A86FF !important;
+        background: $color-primary !important;
         box-shadow: 2px 2px 6px rgba(74, 134, 255, 0.5) !important;
       }
     }
   }
 
   .segmentContainer {
-    background-color: #1e222b !important;
+    background-color: $dark-surface !important;
     box-shadow: inset 2px 2px 5px #14171d, inset -2px -2px 5px #282d39 !important;
   }
 
   .segmentBtn {
-    color: #a0aec0 !important;
+    color: $dark-text-muted !important;
 
     &.active {
-      background-color: #2b303e !important;
-      color: #4A86FF !important;
-      box-shadow: 3px 3px 6px #181b23, -3px -3px 6px #303545 !important;
+      background-color: $dark-surface-card !important;
+      color: $color-primary !important;
+      box-shadow: $dark-neu-shadow-btn !important;
     }
   }
 
@@ -440,147 +437,138 @@ body.dark-theme {
   .item-name,
   .user-nickname,
   .page-title {
-    color: #f1f5f9 !important;
+    color: $dark-text-primary !important;
   }
 
   .panel-subtitle,
   .item-desc,
   .user-email,
   .disclaimer {
-    color: #94a3b8 !important;
+    color: $dark-text-muted !important;
   }
 
   textarea.main-textarea,
   textarea.chat-textarea,
   textarea.viewer-textarea {
     background: transparent !important;
-    color: #f1f5f9 !important;
+    color: $dark-text-primary !important;
 
     &::placeholder {
-      color: #94a3b8 !important;
+      color: $dark-text-muted !important;
     }
   }
 
   .form-input,
   .form-textarea,
   .neu-input {
-    background-color: #1e222b !important;
-    color: #f1f5f9 !important;
-    box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545 !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background-color: $dark-surface !important;
+    color: $dark-text-primary !important;
+    box-shadow: $dark-neu-shadow-inset-sm !important;
+    border: 1px solid $dark-border-color !important;
 
     &::placeholder {
-      color: #94a3b8 !important;
+      color: $dark-text-muted !important;
     }
 
     &.readonly {
-      color: #94a3b8 !important;
+      color: $dark-text-muted !important;
     }
   }
 
-
-
   .attached-chip {
-    background-color: #242834 !important;
-    box-shadow: 3px 3px 8px #161821, -3px -3px 8px #303545 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    color: #e2e8f0 !important;
+    background-color: $dark-surface-alt !important;
+    box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light !important;
+    border-color: $dark-border-color !important;
+    color: $dark-text-secondary !important;
 
     .chip-name {
-      color: #e2e8f0 !important;
+      color: $dark-text-secondary !important;
     }
   }
 
   .msg-attachments .attached-chip.msg-chip {
-    background-color: #242834 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    box-shadow: inset 1px 1px 2px #161821 !important;
-    color: #e2e8f0 !important;
+    background-color: $dark-surface-alt !important;
+    border-color: $dark-border-color !important;
+    box-shadow: inset 1px 1px 2px $dark-shadow-dark !important;
+    color: $dark-text-secondary !important;
 
     .chip-name {
-      color: #e2e8f0 !important;
+      color: $dark-text-secondary !important;
     }
   }
 
   .alertOverlay.active {
-    background-color: rgba(15, 17, 23, 0.75) !important;
+    background-color: $dark-bg-overlay !important;
     backdrop-filter: blur(6px) !important;
   }
 
   .alertBox {
-    background-color: #242834 !important;
-    border-color: rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    background-color: $dark-surface-alt !important;
+    border-color: $dark-border-color !important;
+    box-shadow: $dark-modal-shadow !important;
   }
 
   .alertTitle {
-    color: #f1f5f9 !important;
+    color: $dark-text-primary !important;
   }
 
   .alertMessage {
-    color: #94a3b8 !important;
+    color: $dark-text-muted !important;
   }
 
   .alertInput {
-    background: #1e222b !important;
-    box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545 !important;
-    color: #f1f5f9 !important;
+    background: $dark-surface !important;
+    box-shadow: $dark-neu-shadow-inset-sm !important;
+    color: $dark-text-primary !important;
   }
 
   .dropdown-portal-menu {
-    background: #242834 !important;
-    box-shadow: 8px 8px 16px #161821, -8px -8px 16px #303545 !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: $dark-surface-alt !important;
+    box-shadow: 8px 8px 16px $dark-shadow-dark, -8px -8px 16px $dark-shadow-light !important;
+    border: 1px solid $dark-border-color !important;
 
-    &.fill {
-      box-shadow: 10px 10px 20px #161821, -10px -10px 20px #303545 !important;
-
-      hr {
-        background: rgba(255, 255, 255, 0.08) !important;
-      }
-    }
-
-    &.outlinedDropdown {
-      box-shadow: 8px 8px 16px #161821, -8px -8px 16px #303545 !important;
+    &.fill, &.outlinedDropdown {
+      box-shadow: 10px 10px 20px $dark-shadow-dark, -10px -10px 20px $dark-shadow-light !important;
 
       hr {
-        background: rgba(255, 255, 255, 0.08) !important;
+        background: $dark-border-color !important;
       }
     }
 
     .dropdownItem {
-      color: #e2e8f0 !important;
+      color: $dark-text-secondary !important;
 
       &:hover:not(.disabled) {
-        background: #1e222b !important;
-        box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545 !important;
-        color: #4A86FF !important;
+        background: $dark-surface !important;
+        box-shadow: $dark-neu-shadow-btn !important;
+        color: $color-primary !important;
 
         .dropdownItemIcon {
-          color: #4A86FF !important;
+          color: $color-primary !important;
         }
       }
 
       &.selected {
-        background: #1e222b !important;
-        color: #4A86FF !important;
-        box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545 !important;
+        background: $dark-surface !important;
+        color: $color-primary !important;
+        box-shadow: $dark-neu-shadow-inset-sm !important;
 
         .dropdownItemIcon {
-          color: #4A86FF !important;
+          color: $color-primary !important;
         }
       }
 
       .dropdownItemIcon {
-        color: #94a3b8 !important;
+        color: $dark-text-muted !important;
       }
     }
   }
 }
 
+
 /* ── 플랫 테마 (Flat Theme) ───────────────────── */
 body.theme-flat {
-  background-color: #f8fafc !important;
+  background-color: #eef4fc !important;
   background-image: none !important;
 
   .app-container,
@@ -590,22 +578,33 @@ body.theme-flat {
   .main-content,
   .home-main-content,
   .settings-page-container,
-  .account-page-container {
-    background-color: #f8fafc !important;
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .chat-view,
+  .chat-messages-container {
+    background-color: #eef4fc !important;
   }
 
   .settings-panel,
   .account-panel,
   .code-panel,
+  .preview-panel-wrapper,
+  .chat-messages,
   .copilot-input-box,
+  .chat-input-box,
+  .file-question-box,
   .modalContent {
     background: #ffffff !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
     border: 1px solid #e2e8f0 !important;
   }
 
-  .sidebar,
-  .home-sidebar {
+  .home-sidebar,
+  .sidebar {
     background-color: #f8fafc !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
@@ -1045,20 +1044,32 @@ body.theme-flat.dark-theme {
   .main-content,
   .home-main-content,
   .settings-page-container,
-  .account-page-container {
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .chat-view,
+  .chat-messages-container {
     background-color: #161922 !important;
   }
 
   .settings-panel,
   .account-panel,
   .code-panel,
+  .preview-panel-wrapper,
+  .chat-messages,
   .copilot-input-box,
+  .chat-input-box,
+  .file-question-box,
   .modalContent {
     background: #1e222d !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
 
+  .home-sidebar,
   .sidebar {
     background: rgba(20, 24, 34, 0.55) !important;
     backdrop-filter: blur(24px) saturate(180%) !important;
@@ -1497,24 +1508,38 @@ body.theme-flat.dark-theme {
 
 /* ── 리퀴드 글래스모피즘 테마 (Liquid Glassmorphic Theme) ────── */
 body.theme-glass {
-  background: radial-gradient(at 0% 0%, rgba(224, 195, 252, 0.7) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(142, 197, 252, 0.7) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(245, 247, 250, 1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(224, 231, 255, 0.8) 0px, transparent 50%),
-    linear-gradient(135deg, #eef2f7 0%, #e0e7ff 100%) !important;
+  background: radial-gradient(at 0% 0%, rgba(147, 197, 253, 0.65) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(74, 134, 255, 0.35) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.95) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(191, 219, 254, 0.55) 0px, transparent 50%),
+    linear-gradient(135deg, #f0f6ff 0%, #dbeafe 100%) !important;
   background-attachment: fixed !important;
-  color: #1e293b !important;
+  color: $color-dark !important;
 
   .app-container,
   .home-container,
   .main-content,
-  .home-main-content {
+  .home-main-content,
+  .settings-page-container,
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .settings-header-bar,
+  .account-header-bar,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .code-panel-wrapper,
+  .chat-view,
+  .chat-container,
+  .chat-messages-container,
+  .viewer-footer-input {
     background: transparent !important;
+    box-shadow: none !important;
   }
 
   .settings-panel,
   .account-panel,
-  .code-panel,
   .modalContent {
     background: rgba(255, 255, 255, 0.5) !important;
     backdrop-filter: blur(24px) saturate(190%) !important;
@@ -1522,6 +1547,16 @@ body.theme-glass {
     border: 1px solid rgba(255, 255, 255, 0.7) !important;
     box-shadow: 0 16px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
     border-radius: 24px !important;
+  }
+
+  .code-panel,
+  .preview-panel-wrapper {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 16px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 20px !important;
   }
 
   .home-sidebar {
@@ -1544,7 +1579,7 @@ body.theme-glass {
       backdrop-filter: blur(12px) !important;
       border: 1px solid rgba(255, 255, 255, 0.75) !important;
       box-shadow: 0 4px 14px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
-      color: #1e293b !important;
+      color: $color-dark !important;
 
       &:hover {
         background: rgba(255, 255, 255, 0.85) !important;
@@ -1580,7 +1615,7 @@ body.theme-glass {
       &.active {
         background-color: rgba(74, 134, 255, 0.18) !important;
         box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2) !important;
-        color: #2563eb !important;
+        color: $color-primary !important;
         font-weight: 600 !important;
         border: 1px solid rgba(255, 255, 255, 0.6) !important;
       }
@@ -1593,7 +1628,7 @@ body.theme-glass {
       >.file-item {
         background-color: rgba(74, 134, 255, 0.18) !important;
         box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2) !important;
-        color: #2563eb !important;
+        color: $color-primary !important;
         font-weight: 600 !important;
         border: 1px solid rgba(255, 255, 255, 0.6) !important;
       }
@@ -1673,22 +1708,29 @@ body.theme-glass {
   }
 
   .chat-messages {
-    background: rgba(255, 255, 255, 0.5) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.7) !important;
-    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
-    border-radius: 24px !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
 
     .message-wrapper.agent-message .message-bubble {
-      background: rgba(248, 250, 252, 0.65) !important;
-      border: 1px solid rgba(255, 255, 255, 0.8) !important;
-      box-shadow: none !important;
+      background: rgba(255, 255, 255, 0.65) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.06) !important;
+      border-radius: 20px !important;
     }
 
     .message-wrapper.user-message .message-bubble {
       background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
       border: 1px solid rgba(255, 255, 255, 0.95) !important;
       box-shadow: 0 4px 14px rgba(31, 38, 135, 0.08) !important;
+      border-radius: 20px !important;
     }
   }
 
@@ -1971,23 +2013,37 @@ body.theme-glass {
 }
 
 body.theme-glass.dark-theme {
-  background: radial-gradient(at 0% 0%, rgba(74, 134, 255, 0.25) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(147, 51, 234, 0.25) 0px, transparent 50%),
+  background: radial-gradient(at 0% 0%, rgba(74, 134, 255, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.25) 0px, transparent 50%),
     radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.95) 0px, transparent 50%),
-    linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%) !important;
+    linear-gradient(135deg, #0f172a 0%, #172554 100%) !important;
   background-attachment: fixed !important;
-  color: #f8fafc !important;
+  color: $dark-text-primary !important;
 
   .app-container,
   .home-container,
   .main-content,
-  .home-main-content {
+  .home-main-content,
+  .settings-page-container,
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .settings-header-bar,
+  .account-header-bar,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .code-panel-wrapper,
+  .chat-view,
+  .chat-container,
+  .chat-messages-container,
+  .viewer-footer-input {
     background: transparent !important;
+    box-shadow: none !important;
   }
 
   .settings-panel,
   .account-panel,
-  .code-panel,
   .modalContent {
     background: rgba(30, 35, 48, 0.55) !important;
     backdrop-filter: blur(24px) saturate(190%) !important;
@@ -1995,6 +2051,16 @@ body.theme-glass.dark-theme {
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
     border-radius: 24px !important;
+  }
+
+  .code-panel,
+  .preview-panel-wrapper {
+    background: rgba(30, 35, 48, 0.55) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
   }
 
   .home-sidebar {
@@ -2143,22 +2209,29 @@ body.theme-glass.dark-theme {
   }
 
   .chat-messages {
-    background: rgba(30, 35, 48, 0.6) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
-    border-radius: 24px !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
 
     .message-wrapper.agent-message .message-bubble {
-      background: rgba(36, 42, 56, 0.75) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      box-shadow: none !important;
+      background: rgba(30, 35, 48, 0.65) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+      border-radius: 20px !important;
     }
 
     .message-wrapper.user-message .message-bubble {
       background: rgba(43, 50, 68, 0.85) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
       border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+      border-radius: 20px !important;
     }
   }
 

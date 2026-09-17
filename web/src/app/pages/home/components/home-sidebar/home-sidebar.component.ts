@@ -166,7 +166,7 @@ export class HomeSidebarComponent implements OnInit {
       onClick: () => this.navigateToAccount()
     },
     {
-      label: '설정',
+      label: '환경설정',
       icon: 'bx bx-cog',
       onClick: () => this.navigateToSettings()
     },

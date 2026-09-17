@@ -795,7 +795,10 @@
 
         &:hover {
           box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
-          i { color: #4A86FF; }
+
+          i {
+            color: #4A86FF;
+          }
         }
       }
 
@@ -911,7 +914,10 @@
             .add-btn {
               background: #242834;
               box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
-              i { color: #e2e8f0; }
+
+              i {
+                color: #e2e8f0;
+              }
 
               &:hover {
                 box-shadow: 5px 5px 10px #161821, -5px -5px 10px #303545;
@@ -928,12 +934,18 @@
               background: #242834;
               color: #e2e8f0;
               box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
-              i { color: #94a3b8; }
+
+              i {
+                color: #94a3b8;
+              }
 
               &:hover {
                 box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
                 color: #4A86FF;
-                i { color: #4A86FF; }
+
+                i {
+                  color: #4A86FF;
+                }
               }
 
               &:active {
@@ -962,6 +974,7 @@
 
   /* 다크모드 시 구문 강조 (Syntax Highlighting) 선명하고 밝은 색상 정의 */
   ::ng-deep {
+
     .token.comment,
     .token.prolog,
     .token.doctype,
@@ -1020,57 +1033,131 @@
 
   .code-panel {
     &.theme-html ::ng-deep {
-      .token.tag { color: #ff7b72; }
-      .token.attr-name { color: #ffa657; }
-      .token.attr-value, .token.string { color: #7ee787; }
+      .token.tag {
+        color: #ff7b72;
+      }
+
+      .token.attr-name {
+        color: #ffa657;
+      }
+
+      .token.attr-value,
+      .token.string {
+        color: #7ee787;
+      }
     }
 
     &.theme-css ::ng-deep,
     &.theme-scss ::ng-deep {
-      .token.property { color: #79c0ff; }
-      .token.selector { color: #d2a8ff; }
-      .token.punctuation { color: #cbd5e1; }
+      .token.property {
+        color: #79c0ff;
+      }
+
+      .token.selector {
+        color: #d2a8ff;
+      }
+
+      .token.punctuation {
+        color: #cbd5e1;
+      }
     }
 
     &.theme-js ::ng-deep {
-      .token.keyword { color: #ff7b72; }
-      .token.function { color: #79c0ff; }
-      .token.string { color: #7ee787; }
+      .token.keyword {
+        color: #ff7b72;
+      }
+
+      .token.function {
+        color: #79c0ff;
+      }
+
+      .token.string {
+        color: #7ee787;
+      }
     }
 
     &.theme-ts ::ng-deep {
-      .token.keyword { color: #58a6ff; }
-      .token.class-name, .token.type-annotation { color: #c084fc; }
-      .token.function { color: #79c0ff; }
+      .token.keyword {
+        color: #58a6ff;
+      }
+
+      .token.class-name,
+      .token.type-annotation {
+        color: #c084fc;
+      }
+
+      .token.function {
+        color: #79c0ff;
+      }
     }
 
     &.theme-python ::ng-deep {
-      .token.keyword { color: #58a6ff; }
-      .token.string { color: #7ee787; }
-      .token.function { color: #ffa657; }
-      .token.decorator { color: #d2a8ff; }
+      .token.keyword {
+        color: #58a6ff;
+      }
+
+      .token.string {
+        color: #7ee787;
+      }
+
+      .token.function {
+        color: #ffa657;
+      }
+
+      .token.decorator {
+        color: #d2a8ff;
+      }
     }
 
     &.theme-java ::ng-deep {
-      .token.keyword { color: #ff7b72; }
-      .token.class-name { color: #79c0ff; }
-      .token.string { color: #7ee787; }
+      .token.keyword {
+        color: #ff7b72;
+      }
+
+      .token.class-name {
+        color: #79c0ff;
+      }
+
+      .token.string {
+        color: #7ee787;
+      }
     }
 
     &.theme-json ::ng-deep {
-      .token.property { color: #2dd4bf; }
-      .token.string { color: #79c0ff; }
-      .token.number, .token.boolean { color: #ffa657; }
+      .token.property {
+        color: #2dd4bf;
+      }
+
+      .token.string {
+        color: #79c0ff;
+      }
+
+      .token.number,
+      .token.boolean {
+        color: #ffa657;
+      }
     }
 
     &.theme-sql ::ng-deep {
-      .token.keyword { color: #38bdf8; }
-      .token.string { color: #7ee787; }
+      .token.keyword {
+        color: #38bdf8;
+      }
+
+      .token.string {
+        color: #7ee787;
+      }
     }
 
     &.theme-md ::ng-deep {
-      .token.title, .token.header { color: #38bdf8; }
-      .token.url { color: #79c0ff; }
+
+      .token.title,
+      .token.header {
+        color: #38bdf8;
+      }
+
+      .token.url {
+        color: #79c0ff;
+      }
     }
   }
-}
+}

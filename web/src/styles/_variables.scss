@@ -15,7 +15,7 @@ $color-primary: #4A86FF;
 $color-secondary: #6B5CE7;
 
 // ── Neumorphism Design Tokens (Light Theme) ───
-$neu-bg: #e4ebf5;
+$neu-bg: #eef4fc;
 $neu-shadow-dark: #c2d1e5;
 $neu-shadow-light: #ffffff;
 $neu-border-color: #b8c9df;
@@ -49,18 +49,53 @@ $dark-disabled-bg: #434b5e;
 $dark-disabled-text: #7e8da6;
 
 // 다크모드 뉴모피즘 그림자 토큰
+$dark-neu-shadow-btn: 3px 3px 6px $dark-shadow-dark, -3px -3px 6px $dark-shadow-light;
+$dark-neu-shadow-btn-hover: 4px 4px 8px $dark-shadow-dark, -4px -4px 8px $dark-shadow-light;
 $dark-neu-shadow-sm: 4px 4px 10px $dark-shadow-dark, -4px -4px 10px $dark-shadow-light;
 $dark-neu-shadow-md: 6px 6px 14px $dark-shadow-dark, -6px -6px 14px $dark-shadow-light;
 $dark-neu-shadow-lg: 10px 10px 24px $dark-shadow-dark, -10px -10px 24px $dark-shadow-light;
 
 $dark-neu-shadow-inset-sm: inset 3px 3px 6px $dark-shadow-dark, inset -3px -3px 6px $dark-shadow-light;
-$dark-neu-shadow-inset-md: inset 5px 5px 10px $dark-shadow-dark, inset -5px -5px 10px $dark-shadow-light;
+$dark-neu-shadow-inset-md: inset 4px 4px 8px $dark-shadow-dark, inset -4px -4px 8px $dark-shadow-light;
+$dark-neu-shadow-inset-lg: inset 5px 5px 10px $dark-shadow-dark, inset -5px -5px 10px $dark-shadow-light;
 
 $dark-modal-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
 
+// ── Flat Theme Design Tokens ─────────────────
+$flat-bg: #eef4fc;
+$flat-card-bg: #ffffff;
+$flat-sidebar-bg: #f8fafc;
+$flat-border-color: #e2e8f0;
+$flat-border-dark: #cbd5e1;
+$flat-text-primary: #1e293b;
+$flat-text-secondary: #475569;
+$flat-text-muted: #94a3b8;
+$flat-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$flat-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+$flat-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+$flat-dark-bg: #161922;
+$flat-dark-card-bg: #1e222d;
+$flat-dark-sidebar-bg: rgba(20, 24, 34, 0.55);
+$flat-dark-surface-alt: #242834;
+$flat-dark-surface-hover: #2b303e;
+
+// ── Glassmorphism Theme Tokens ─────────────────
+$glass-bg-gradient: radial-gradient(at 0% 0%, rgba(147, 197, 253, 0.65) 0px, transparent 50%),
+  radial-gradient(at 100% 0%, rgba(74, 134, 255, 0.35) 0px, transparent 50%),
+  radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.95) 0px, transparent 50%),
+  radial-gradient(at 0% 100%, rgba(191, 219, 254, 0.55) 0px, transparent 50%),
+  linear-gradient(135deg, #f0f6ff 0%, #dbeafe 100%);
+
+$glass-dark-bg-gradient: radial-gradient(at 0% 0%, rgba(74, 134, 255, 0.3) 0px, transparent 50%),
+  radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.25) 0px, transparent 50%),
+  radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.95) 0px, transparent 50%),
+  linear-gradient(135deg, #0f172a 0%, #172554 100%);
+
+
 // ── Backgrounds ───────────────────────────────
-$color-bg: #e4ebf5;
-$color-surface: #e4ebf5;
+$color-bg: #eef4fc;
+$color-surface: #eef4fc;
 $color-surface-alt: #d9e3f0;
 $color-white: #FFFFFF;
 
