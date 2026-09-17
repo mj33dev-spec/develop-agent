@@ -69,13 +69,34 @@
         flex: none;
         border-radius: 4px;
         font-size: 32px;
-        &.text-orange { color: #e44d26; }
-        &.text-blue { color: #264de4; }
-        &.text-yellow { color: #f7df1e; }
-        &.text-red { color: #ea2d2e; }
-        &.text-green { color: #43853d; }
-        &.text-purple { color: #083344; }
-        &.text-sub { color: $neu-text-secondary; }
+
+        &.text-orange {
+          color: #e44d26;
+        }
+
+        &.text-blue {
+          color: #264de4;
+        }
+
+        &.text-yellow {
+          color: #f7df1e;
+        }
+
+        &.text-red {
+          color: #ea2d2e;
+        }
+
+        &.text-green {
+          color: #43853d;
+        }
+
+        &.text-purple {
+          color: #083344;
+        }
+
+        &.text-sub {
+          color: $neu-text-secondary;
+        }
       }
 
       .file-name {
@@ -97,10 +118,72 @@
         padding: 2px 8px;
         border-radius: 12px;
       }
+
+      .theme-badge {
+        flex: none;
+        @include typo-caption-2;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 12px;
+        box-shadow: 2px 2px 5px $neu-shadow-dark, -2px -2px 5px $neu-shadow-light;
+
+        &.theme-badge-html {
+          background: rgba(228, 77, 38, 0.12);
+          color: #e44d26;
+        }
+
+        &.theme-badge-css {
+          background: rgba(38, 77, 228, 0.12);
+          color: #264de4;
+        }
+
+        &.theme-badge-scss {
+          background: rgba(207, 100, 154, 0.15);
+          color: #cf649a;
+        }
+
+        &.theme-badge-js {
+          background: rgba(247, 223, 30, 0.2);
+          color: #b38f00;
+        }
+
+        &.theme-badge-ts {
+          background: rgba(49, 120, 198, 0.12);
+          color: #3178c6;
+        }
+
+        &.theme-badge-python {
+          background: rgba(55, 118, 171, 0.15);
+          color: #3776ab;
+        }
+
+        &.theme-badge-java {
+          background: rgba(234, 45, 46, 0.12);
+          color: #ea2d2e;
+        }
+
+        &.theme-badge-json {
+          background: rgba(13, 148, 136, 0.15);
+          color: #0d9488;
+        }
+
+        &.theme-badge-sql {
+          background: rgba(2, 132, 199, 0.15);
+          color: #0284c7;
+        }
+
+        &.theme-badge-md {
+          background: rgba(100, 116, 139, 0.15);
+          color: #64748b;
+        }
+
+        &.theme-badge-default {
+          background: rgba(74, 134, 255, 0.12);
+          color: $neu-primary;
+        }
+      }
     }
   }
-
-
 }
 
 /* Split Viewer Body */
@@ -185,11 +268,15 @@
 
         &.play-btn {
           color: #e44d26;
-          i { font-size: 20px; }
+
+          i {
+            font-size: 20px;
+          }
+
           &.active {
             background: #e44d26;
             color: #ffffff;
-            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.3);
+            box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3);
           }
         }
 
@@ -207,8 +294,13 @@
     font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
     @include typo-body-2;
     line-height: 1.6;
+    user-select: text !important;
+    -webkit-user-select: text !important;
 
     tr {
+      user-select: text !important;
+      -webkit-user-select: text !important;
+
       &:hover {
         background: rgba(0, 0, 0, 0.02);
       }
@@ -219,7 +311,9 @@
       text-align: right;
       padding-right: 16px;
       color: $neu-text-secondary;
-      user-select: none;
+      user-select: none !important;
+      -webkit-user-select: none !important;
+      pointer-events: none;
       opacity: 0.6;
       vertical-align: top;
     }
@@ -230,9 +324,33 @@
       white-space: pre-wrap;
       word-break: break-all;
       vertical-align: top;
+      user-select: text !important;
+      -webkit-user-select: text !important;
+      cursor: text;
 
-      code {
+      code,
+      span,
+      .token {
         font-family: inherit;
+        user-select: text !important;
+        -webkit-user-select: text !important;
+        cursor: text;
+      }
+
+      &::selection,
+      code::selection,
+      span::selection,
+      .token::selection {
+        background: #3178c6 !important;
+        color: #ffffff !important;
+      }
+
+      &::-moz-selection,
+      code::-moz-selection,
+      span::-moz-selection,
+      .token::-moz-selection {
+        background: #3178c6 !important;
+        color: #ffffff !important;
       }
     }
   }
@@ -435,6 +553,7 @@
               transform: translateY(-1px);
               box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
               color: $neu-primary;
+
               i {
                 color: $neu-primary;
               }
@@ -454,12 +573,20 @@
             @include neu-circle-btn(38px);
             background-color: $color-primary;
 
-            i { color: $color-white; font-size: $font-size-pc-title-3; }
+            i {
+              color: $color-white;
+              font-size: $font-size-pc-title-3;
+            }
 
             &:disabled {
               background: $neu-bg;
               box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
-              i { color: $neu-text-secondary; opacity: 0.5; }
+
+              i {
+                color: $neu-text-secondary;
+                opacity: 0.5;
+              }
+
               cursor: not-allowed;
             }
           }
@@ -467,4 +594,248 @@
       }
     }
   }
+}
+
+/* Syntax Token Highlighting Styles */
+::ng-deep {
+
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: #8e9aae;
+    font-style: italic;
+  }
+
+  .token.punctuation {
+    color: #718096;
+  }
+
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: #e53e3e;
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: #319795;
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string {
+    color: #d69e2e;
+  }
+
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    color: #3182ce;
+    font-weight: 600;
+  }
+
+  .token.function,
+  .token.class-name {
+    color: #805ad5;
+    font-weight: 600;
+  }
+
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: #dd6b20;
+  }
+}
+
+/* Extension-specific Theme Accents for Code Panel */
+.code-panel {
+  transition: border-color 0.25s ease;
+
+  &.theme-html {
+
+    ::ng-deep {
+      .token.tag {
+        color: #e44d26;
+        font-weight: 600;
+      }
+
+      .token.attr-name {
+        color: #d97706;
+      }
+
+      .token.attr-value,
+      .token.string {
+        color: #059669;
+      }
+    }
+  }
+
+  &.theme-css,
+  &.theme-scss {
+
+    ::ng-deep {
+      .token.property {
+        color: #2563eb;
+        font-weight: 600;
+      }
+
+      .token.selector {
+        color: #7c3aed;
+      }
+
+      .token.punctuation {
+        color: #475569;
+      }
+    }
+  }
+
+  &.theme-js {
+
+    ::ng-deep {
+      .token.keyword {
+        color: #d97706;
+        font-weight: 600;
+      }
+
+      .token.function {
+        color: #2563eb;
+      }
+
+      .token.string {
+        color: #16a34a;
+      }
+    }
+  }
+
+  &.theme-ts {
+
+    ::ng-deep {
+      .token.keyword {
+        color: #3178c6;
+        font-weight: 600;
+      }
+
+      .token.class-name,
+      .token.type-annotation {
+        color: #9333ea;
+        font-weight: 600;
+      }
+
+      .token.function {
+        color: #0284c7;
+      }
+    }
+  }
+
+  &.theme-python {
+
+    ::ng-deep {
+      .token.keyword {
+        color: #0284c7;
+        font-weight: 600;
+      }
+
+      .token.string {
+        color: #16a34a;
+      }
+
+      .token.function {
+        color: #d97706;
+      }
+
+      .token.decorator {
+        color: #9333ea;
+      }
+    }
+  }
+
+  &.theme-java {
+
+    ::ng-deep {
+      .token.keyword {
+        color: #dc2626;
+        font-weight: 600;
+      }
+
+      .token.class-name {
+        color: #2563eb;
+        font-weight: 600;
+      }
+
+      .token.string {
+        color: #16a34a;
+      }
+    }
+  }
+
+  &.theme-json {
+
+    ::ng-deep {
+      .token.property {
+        color: #0d9488;
+        font-weight: 600;
+      }
+
+      .token.string {
+        color: #2563eb;
+      }
+
+      .token.number,
+      .token.boolean {
+        color: #d97706;
+      }
+    }
+  }
+
+  &.theme-sql {
+
+    ::ng-deep {
+      .token.keyword {
+        color: #0284c7;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .token.string {
+        color: #16a34a;
+      }
+    }
+  }
+
+  &.theme-md {
+
+    ::ng-deep {
+
+      .token.title,
+      .token.header {
+        color: #1e293b;
+        font-weight: 700;
+      }
+
+      .token.bold {
+        font-weight: bold;
+      }
+
+      .token.italic {
+        font-style: italic;
+      }
+
+      .token.url {
+        color: #2563eb;
+      }
+    }
+  }
+
+  &.theme-default {}
 }

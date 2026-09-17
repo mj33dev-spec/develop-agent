@@ -10,6 +10,7 @@
         <i [class]="fileIconClass" class="file-icon"></i>
         <h2 class="file-name">{{ file.name }}</h2>
         <span class="file-size">{{ formattedSize }}</span>
+        <span class="theme-badge" [ngClass]="'theme-badge-' + themeClass">{{ themeDisplayName }} Theme</span>
       </div>
     </div>
   </div>
@@ -18,7 +19,7 @@
   <div class="viewer-body split-viewer-body" [class.is-resizing]="isResizing">
     <!-- Left: Code Panel -->
     <div class="code-panel-wrapper" [style.width]="isPreviewOpen ? leftWidthPercent + '%' : '100%'">
-      <div class="code-panel">
+      <div class="code-panel" [ngClass]="'theme-' + themeClass">
         <!-- Absolute Top Right Floating Icon Action Buttons -->
         <div class="floating-actions">
           <button 
@@ -43,9 +44,9 @@
 
         <table class="code-table">
           <tbody>
-            <tr *ngFor="let line of lines; let i = index">
-              <td class="line-number">{{ i + 1 }}</td>
-              <td class="line-code"><code>{{ line || ' ' }}</code></td>
+            <tr *ngFor="let line of highlightedLines; trackBy: trackByLineNum">
+              <td class="line-number">{{ line.lineNum }}</td>
+              <td class="line-code"><code [innerHTML]="line.html"></code></td>
             </tr>
           </tbody>
         </table>
