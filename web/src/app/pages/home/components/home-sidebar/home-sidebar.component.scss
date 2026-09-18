@@ -1050,25 +1050,25 @@ aside.sidebar {
 
 :host-context(body.dark-theme) {
   .sidebar {
-    background-color: #1e222b;
-    border-right-color: rgba(255, 255, 255, 0.08);
+    background-color: $dark-surface;
+    border-right-color: $dark-border-color;
     box-shadow: 6px 0 16px rgba(0, 0, 0, 0.3);
 
     .sidebar-header {
-      border-bottom-color: rgba(255, 255, 255, 0.08);
+      border-bottom-color: $dark-border-color;
     }
 
     .sidebar-block-btn {
-      background: #242834;
-      color: #e2e8f0;
-      box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+      background: $dark-surface-alt;
+      color: $dark-text-secondary;
+      box-shadow: $dark-neu-shadow-sm;
 
       &:hover {
-        box-shadow: 6px 6px 14px #161821, -6px -6px 14px #303545;
+        box-shadow: $dark-neu-shadow-md;
       }
 
       &:active {
-        box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+        box-shadow: $dark-neu-shadow-inset-sm;
       }
     }
 
@@ -1078,61 +1078,61 @@ aside.sidebar {
           > .room-item,
           > .folder-header,
           > .file-item {
-            background: #242834;
-            box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
-            color: #4A86FF;
+            background: $dark-surface-alt;
+            box-shadow: $dark-neu-shadow-inset-sm;
+            color: $color-primary;
           }
         }
 
         .folder-header {
-          color: #cbd5e1;
+          color: $dark-text-muted;
           background-color: transparent;
 
           &:hover {
-            box-shadow: 3px 3px 8px #161821, -3px -3px 8px #303545;
+            box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light;
           }
         }
 
         .room-item, .file-item {
-          color: #cbd5e1;
+          color: $dark-text-muted;
           background-color: transparent;
 
           &:hover {
-            box-shadow: 3px 3px 8px #161821, -3px -3px 8px #303545;
+            box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light;
           }
 
           &.active {
-            background: #242834;
-            box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
-            color: #4A86FF;
+            background: $dark-surface-alt;
+            box-shadow: $dark-neu-shadow-inset-sm;
+            color: $color-primary;
           }
         }
       }
     }
 
     .sidebar-footer {
-      border-top-color: rgba(255, 255, 255, 0.08);
+      border-top-color: $dark-border-color;
 
       .sidebar-user-card {
-        background: #242834;
-        box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+        background: $dark-surface-alt;
+        box-shadow: $dark-neu-shadow-sm;
 
         .user-info {
-          .user-nickname { color: #f1f5f9; }
-          .user-email { color: #94a3b8; }
+          .user-nickname { color: $dark-text-primary; }
+          .user-email { color: $dark-text-muted; }
         }
 
         .user-more-btn {
-          color: #94a3b8;
+          color: $dark-text-muted;
 
           &:hover {
-            background: #1e222b;
-            box-shadow: 2px 2px 5px #161821, -2px -2px 5px #303545;
-            color: #f1f5f9;
+            background: $dark-surface;
+            box-shadow: 2px 2px 5px $dark-shadow-dark, -2px -2px 5px $dark-shadow-light;
+            color: $dark-text-primary;
           }
 
           &:active {
-            box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+            box-shadow: inset 2px 2px 4px $dark-shadow-dark, inset -2px -2px 4px $dark-shadow-light;
           }
         }
       }
@@ -1140,37 +1140,37 @@ aside.sidebar {
   }
 
   .profile-modal-body {
-    .profile-section-title { color: #f1f5f9; }
-    .profile-divider { background: rgba(255, 255, 255, 0.08); }
+    .profile-section-title { color: $dark-text-primary; }
+    .profile-divider { background: $dark-border-color; }
     .profile-form-group {
-      .form-label { color: #94a3b8; }
+      .form-label { color: $dark-text-muted; }
       .profile-input {
-        background: #1e222b;
-        box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
-        color: #f1f5f9;
-        &.readonly { color: #94a3b8; }
+        background: $dark-surface;
+        box-shadow: $dark-neu-shadow-inset-sm;
+        color: $dark-text-primary;
+        &.readonly { color: $dark-text-muted; }
       }
     }
   }
 
   .inline-edit-input {
-    background: #1e222b;
-    box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
-    color: #f1f5f9;
+    background: $dark-surface;
+    box-shadow: inset 2px 2px 4px $dark-shadow-dark, inset -2px -2px 4px $dark-shadow-light;
+    color: $dark-text-primary;
   }
 
-  /* 템플릿 모달 다크모드 전역 적용 */
-  .modal-body-container {
+  /* 템플릿 모달 다크모드 적용 (::ng-deep 적용으로 프로젝션 영역 스타일 보증) */
+  ::ng-deep .modal-body-container {
     .category-pills {
       .pill-btn {
-        background: #242834;
-        color: #94a3b8;
-        box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+        background: $dark-surface-alt;
+        color: $dark-text-muted;
+        box-shadow: 3px 3px 6px $dark-shadow-dark, -3px -3px 6px $dark-shadow-light;
 
         &.active {
-          background: #1e222b;
-          color: #4A86FF;
-          box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+          background: $dark-surface;
+          color: $color-primary;
+          box-shadow: $dark-neu-shadow-inset-sm;
         }
       }
     }
@@ -1178,37 +1178,37 @@ aside.sidebar {
     .preset-content-grid {
       .preset-list {
         .preset-item-card {
-          background: #242834;
-          box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+          background: $dark-surface-alt;
+          box-shadow: $dark-neu-shadow-sm;
 
           .preset-icon {
-            background: #1e222b;
-            box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
+            background: $dark-surface;
+            box-shadow: $dark-neu-shadow-inset-sm;
           }
 
           .preset-info {
-            .preset-title-row .preset-name { color: #f1f5f9; }
-            .preset-desc { color: #94a3b8; }
+            .preset-title-row .preset-name { color: $dark-text-primary; }
+            .preset-desc { color: $dark-text-muted; }
           }
 
           .preset-action-btns {
             .template-action-btn {
-              background: #1e222b;
-              color: #94a3b8;
-              box-shadow: 2px 2px 5px #161821, -2px -2px 5px #303545;
+              background: $dark-surface;
+              color: $dark-text-muted;
+              box-shadow: 2px 2px 5px $dark-shadow-dark, -2px -2px 5px $dark-shadow-light;
 
               &:hover {
-                box-shadow: inset 2px 2px 5px #161821, inset -2px -2px 5px #303545;
+                box-shadow: inset 2px 2px 5px $dark-shadow-dark, inset -2px -2px 4px $dark-shadow-light;
               }
             }
           }
 
           &.selected {
-            background: #1e222b;
-            box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
+            background: $dark-surface;
+            box-shadow: $dark-neu-shadow-inset-md;
 
             .preset-info .preset-title-row .preset-name {
-              color: #4A86FF;
+              color: $color-primary;
             }
           }
         }
@@ -1216,37 +1216,37 @@ aside.sidebar {
 
       .preset-preview-panel {
         &.empty-select .preset-inner {
-          background: #1e222b;
-          box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
-          .empty-text { color: #94a3b8; }
+          background: $dark-surface;
+          box-shadow: $dark-neu-shadow-inset-md;
+          .empty-text { color: $dark-text-muted; }
         }
 
         .card-visual-preview {
-          background: #242834;
-          box-shadow: 6px 6px 14px #161821, -6px -6px 14px #303545;
-          border-color: rgba(255, 255, 255, 0.08);
+          background: $dark-surface-alt;
+          box-shadow: $dark-neu-shadow-md;
+          border-color: $dark-border-color;
 
           .card-top-bar {
             background: rgba(0, 0, 0, 0.25);
-            .group-folder-tag { color: #94a3b8; }
+            .group-folder-tag { color: $dark-text-muted; }
           }
 
           .card-body-content {
             .preset-hero-preview {
-              border-bottom-color: rgba(255, 255, 255, 0.08);
+              border-bottom-color: $dark-border-color;
               .hero-text {
-                h3 { color: #f1f5f9; }
-                p { color: #94a3b8; }
+                h3 { color: $dark-text-primary; }
+                p { color: $dark-text-muted; }
               }
             }
 
             .preview-files-list {
-              .files-title { color: #94a3b8; }
+              .files-title { color: $dark-text-muted; }
               .file-badge-item {
-                background: #1e222b;
-                box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+                background: $dark-surface;
+                box-shadow: inset 2px 2px 4px $dark-shadow-dark, inset -2px -2px 4px $dark-shadow-light;
 
-                .file-name { color: #f1f5f9; }
+                .file-name { color: $dark-text-primary; }
               }
             }
           }
@@ -1255,49 +1255,49 @@ aside.sidebar {
     }
 
     .empty-preset-box {
-      background: #1e222b;
-      box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
-      .empty-text { color: #94a3b8; }
+      background: $dark-surface;
+      box-shadow: $dark-neu-shadow-inset-md;
+      .empty-text { color: $dark-text-muted; }
     }
 
     .upload-form {
       .form-group {
-        label { color: #f1f5f9; }
+        label { color: $dark-text-primary; }
 
         .form-input, .form-textarea {
-          background-color: #1e222b !important;
-          color: #f1f5f9 !important;
-          box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545 !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          background-color: $dark-surface !important;
+          color: $dark-text-primary !important;
+          box-shadow: $dark-neu-shadow-inset-sm !important;
+          border: $dark-border !important;
 
           &::placeholder {
-            color: #94a3b8 !important;
+            color: $dark-text-muted !important;
           }
 
           &:focus {
-            box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545, 0 0 0 2px rgba(74, 134, 255, 0.4) !important;
+            box-shadow: $dark-neu-shadow-inset-md, 0 0 0 2px rgba(74, 134, 255, 0.4) !important;
           }
         }
 
         .file-upload-dropzone {
-          background: #1e222b;
-          border-color: #303545;
+          background: $dark-surface;
+          border-color: $dark-shadow-light;
           .dropzone-content {
-            span { color: #f1f5f9; }
-            small { color: #94a3b8; }
+            span { color: $dark-text-primary; }
+            small { color: $dark-text-muted; }
           }
 
           &:hover {
-            border-color: #4A86FF;
+            border-color: $color-primary;
             background: rgba(74, 134, 255, 0.08);
           }
         }
 
         .attached-files-list {
           .attached-file-chip {
-            background: #242834;
-            box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
-            .file-name { color: #f1f5f9; }
+            background: $dark-surface-alt;
+            box-shadow: 3px 3px 6px $dark-shadow-dark, -3px -3px 6px $dark-shadow-light;
+            .file-name { color: $dark-text-primary; }
           }
         }
       }
@@ -1308,18 +1308,18 @@ aside.sidebar {
 
 body.dark-theme {
   .custom-context-menu {
-    background: #242834;
-    box-shadow: 10px 10px 20px #161821, -10px -10px 20px #303545;
+    background: $dark-surface-alt;
+    box-shadow: 10px 10px 20px $dark-shadow-dark, -10px -10px 20px $dark-shadow-light;
 
     .context-menu-item {
-      color: #e2e8f0;
-      i { color: #94a3b8; }
+      color: $dark-text-secondary;
+      i { color: $dark-text-muted; }
 
       &:hover {
-        background: #1e222b;
-        box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
-        color: #4A86FF;
-        i { color: #4A86FF; }
+        background: $dark-surface;
+        box-shadow: 3px 3px 6px $dark-shadow-dark, -3px -3px 6px $dark-shadow-light;
+        color: $color-primary;
+        i { color: $color-primary; }
       }
     }
   }

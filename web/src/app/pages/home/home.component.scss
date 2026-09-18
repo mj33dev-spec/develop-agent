@@ -217,81 +217,81 @@
 
 :host-context(body.dark-theme) {
   .main-content {
-    background-color: #1a1d26;
+    background-color: $dark-bg;
   }
 
   .home-view {
-    background-color: #1a1d26;
+    background-color: $dark-bg;
   }
 
   .greeting {
-    color: #f1f5f9;
+    color: $dark-text-primary;
   }
 
   .copilot-input-box {
-    background: #242834;
-    box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
+    background: $dark-surface-alt;
+    box-shadow: $dark-neu-shadow-inset-md;
 
     &:focus-within {
-      box-shadow: inset 5px 5px 10px #12141a, inset -5px -5px 10px #303545, 0 0 0 2px rgba(74, 134, 255, 0.3);
+      box-shadow: $dark-neu-shadow-inset-lg, 0 0 0 2px rgba(74, 134, 255, 0.3);
     }
 
     .input-body {
       .main-textarea {
-        color: #f1f5f9;
+        color: $dark-text-primary;
 
         &::placeholder {
-          color: #94a3b8;
+          color: $dark-text-muted;
         }
       }
 
       .input-footer {
         .footer-left {
           .add-btn {
-            background: #242834;
-            box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+            background: $dark-surface-alt;
+            box-shadow: $dark-neu-shadow-btn;
 
-            i { color: #e2e8f0; }
+            i { color: $dark-text-secondary; }
 
             &:hover {
-              box-shadow: 5px 5px 10px #161821, -5px -5px 10px #303545;
+              box-shadow: $dark-neu-shadow-btn-hover;
             }
 
             &:active {
-              box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+              box-shadow: $dark-neu-shadow-inset-sm;
             }
           }
         }
 
         .footer-right {
           .model-btn {
-            background: #242834;
-            color: #e2e8f0;
-            box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+            background: $dark-surface-alt;
+            color: $dark-text-secondary;
+            box-shadow: $dark-neu-shadow-btn;
 
-            i { color: #94a3b8; }
+            i { color: $dark-text-muted; }
 
             &:hover {
-              box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
-              color: #4A86FF;
+              box-shadow: $dark-neu-shadow-btn-hover;
+              color: $color-primary;
 
-              i { color: #4A86FF; }
+              i { color: $color-primary; }
             }
 
             &:active {
-              box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+              box-shadow: $dark-neu-shadow-inset-sm;
             }
           }
 
           .send-btn {
-            box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+            box-shadow: $dark-neu-shadow-sm;
 
             &:disabled {
-              background: #1e222b;
-              box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39;
+              background: $dark-surface;
+              box-shadow: $dark-neu-shadow-inset-sm;
 
               i {
-                color: #64748b;
+                color: $dark-text-subtle;
                 opacity: 0.5;
               }
             }
@@ -302,6 +302,6 @@
   }
 
   .disclaimer {
-    color: #94a3b8;
+    color: $dark-text-muted;
   }
 }
