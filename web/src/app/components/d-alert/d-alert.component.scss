@@ -178,35 +178,131 @@
   gap: 10px;
 }
 
+body.dark-theme,
 :host-context(body.dark-theme) {
   .alertOverlay.active {
-    background-color: rgba(15, 17, 23, 0.75);
-    backdrop-filter: blur(6px);
+    background-color: rgba(15, 17, 23, 0.75) !important;
+    backdrop-filter: blur(6px) !important;
   }
 
   .alertBox {
-    background-color: #242834;
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
-  }
+    background-color: #242834 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 
-  .alertTitle {
-    color: #f1f5f9;
-  }
+    .alertTitle {
+      color: #f1f5f9 !important;
+    }
 
-  .alertMessage {
-    color: #94a3b8;
-  }
+    .alertMessage {
+      color: #94a3b8 !important;
+    }
 
-  .alertInput {
-    background: #1e222b;
-    box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
-    color: #f1f5f9;
+    .alertInput {
+      background: #1e222b !important;
+      box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545 !important;
+      color: #f1f5f9 !important;
 
-    &:focus {
-      box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545, 0 0 0 2px rgba(74, 134, 255, 0.3);
+      &:focus {
+        box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545, 0 0 0 2px rgba(74, 134, 255, 0.3) !important;
+      }
     }
   }
 }
+
+body.theme-flat,
+:host-context(body.theme-flat) {
+  .alertOverlay.active {
+    background-color: rgba(15, 23, 42, 0.35) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+
+  .alertBox {
+    background-color: #ffffff !important;
+    border-radius: 20px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+
+    .alertInput {
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: none !important;
+      color: #1e293b !important;
+    }
+  }
+}
+
+body.theme-flat.dark-theme,
+:host-context(body.theme-flat.dark-theme) {
+  .alertOverlay.active {
+    background-color: rgba(15, 17, 23, 0.75) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+
+  .alertBox {
+    background-color: #1e222d !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+
+    .alertInput {
+      background: #161922 !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: none !important;
+      color: #f1f5f9 !important;
+    }
+  }
+}
+
+body.theme-glass,
+:host-context(body.theme-glass) {
+  .alertOverlay.active {
+    background-color: rgba(15, 23, 42, 0.3) !important;
+    backdrop-filter: blur(12px) !important;
+  }
+
+  .alertBox {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 24px 48px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 24px !important;
+
+    .alertInput {
+      background: rgba(255, 255, 255, 0.6) !important;
+      backdrop-filter: blur(8px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.75) !important;
+      box-shadow: none !important;
+      color: #1e293b !important;
+    }
+  }
+}
+
+body.theme-glass.dark-theme,
+:host-context(body.theme-glass.dark-theme) {
+  .alertOverlay.active {
+    background-color: rgba(10, 14, 23, 0.65) !important;
+    backdrop-filter: blur(12px) !important;
+  }
+
+  .alertBox {
+    background: rgba(30, 35, 48, 0.8) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    border-radius: 24px !important;
+
+    .alertInput {
+      background: rgba(20, 24, 34, 0.6) !important;
+      backdrop-filter: blur(8px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: none !important;
+      color: #f8fafc !important;
+    }
+  }
+}
+
 
 

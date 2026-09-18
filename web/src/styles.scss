@@ -483,30 +483,7 @@ body.dark-theme {
     }
   }
 
-  .alertOverlay.active {
-    background-color: $dark-bg-overlay !important;
-    backdrop-filter: blur(6px) !important;
-  }
 
-  .alertBox {
-    background-color: $dark-surface-alt !important;
-    border-color: $dark-border-color !important;
-    box-shadow: $dark-modal-shadow !important;
-  }
-
-  .alertTitle {
-    color: $dark-text-primary !important;
-  }
-
-  .alertMessage {
-    color: $dark-text-muted !important;
-  }
-
-  .alertInput {
-    background: $dark-surface !important;
-    box-shadow: $dark-neu-shadow-inset-sm !important;
-    color: $dark-text-primary !important;
-  }
 
   .dropdown-portal-menu {
     background: $dark-surface-alt !important;
@@ -879,29 +856,7 @@ body.theme-flat {
   }
 
   /* DAlert Modal overrides for Flat Theme */
-  .alertOverlay.active {
-    background-color: rgba(15, 23, 42, 0.35) !important;
-    backdrop-filter: blur(4px) !important;
-  }
 
-  .alertBox {
-    background-color: #ffffff !important;
-    border-radius: 20px !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
-  }
-
-  .alertInput {
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: none !important;
-    color: #1e293b !important;
-
-    &:focus {
-      border-color: #4A86FF !important;
-      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2) !important;
-    }
-  }
 
   .category-pills .pill-btn {
     background: #ffffff !important;
@@ -1325,29 +1280,7 @@ body.theme-flat.dark-theme {
   }
 
   /* DAlert Modal overrides for Flat Dark Theme */
-  .alertOverlay.active {
-    background-color: rgba(15, 17, 23, 0.75) !important;
-    backdrop-filter: blur(4px) !important;
-  }
 
-  .alertBox {
-    background-color: #1e222d !important;
-    border-radius: 20px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
-  }
-
-  .alertInput {
-    background: #161922 !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: none !important;
-    color: #f1f5f9 !important;
-
-    &:focus {
-      border-color: #4A86FF !important;
-      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3) !important;
-    }
-  }
 
   .category-pills .pill-btn {
     background: #242834 !important;
@@ -1803,27 +1736,7 @@ body.theme-glass {
   }
 
   /* DAlert & Modal Glass Overlays */
-  .alertOverlay.active {
-    background-color: rgba(15, 23, 42, 0.3) !important;
-    backdrop-filter: blur(12px) !important;
-  }
 
-  .alertBox {
-    background: rgba(255, 255, 255, 0.75) !important;
-    backdrop-filter: blur(24px) saturate(190%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.85) !important;
-    box-shadow: 0 24px 48px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-    border-radius: 24px !important;
-  }
-
-  .alertInput {
-    background: rgba(255, 255, 255, 0.6) !important;
-    backdrop-filter: blur(8px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.75) !important;
-    box-shadow: none !important;
-    color: #1e293b !important;
-  }
 
   .form-input,
   .form-textarea,
@@ -2284,28 +2197,7 @@ body.theme-glass.dark-theme {
     }
   }
 
-  /* DAlert & Modal Glass Overlays Dark */
-  .alertOverlay.active {
-    background-color: rgba(10, 14, 23, 0.65) !important;
-    backdrop-filter: blur(12px) !important;
-  }
 
-  .alertBox {
-    background: rgba(30, 35, 48, 0.8) !important;
-    backdrop-filter: blur(24px) saturate(190%) !important;
-    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.18) !important;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-    border-radius: 24px !important;
-  }
-
-  .alertInput {
-    background: rgba(20, 24, 34, 0.6) !important;
-    backdrop-filter: blur(8px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: none !important;
-    color: #f8fafc !important;
-  }
 
   .form-input,
   .form-textarea,
