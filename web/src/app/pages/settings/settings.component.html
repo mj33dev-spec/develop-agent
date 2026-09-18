@@ -76,9 +76,13 @@
         <div class="divider"></div>
 
         <!-- 하단 액션 버튼 -->
-        <div class="form-actions-bar" style="display: flex; gap: 12px; justify-content: flex-end;">
+        <div class="form-actions-bar" style="display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
+          <c-button theme="primary" (onClick)="openThemeSelectModal()">
+            <i class="bx bx-palette"></i> 디자인 테마 선택 모달
+          </c-button>
+
           <c-button theme="secondary" (onClick)="openGuideModal()">
-            <i class="bx bx-help-circle"></i> 사용방법 안내 다시보기
+            <i class="bx bx-help-circle"></i> 사용방법 안내
           </c-button>
 
           <c-button theme="neutral" (onClick)="onResetDefaults()">
@@ -89,5 +93,7 @@
     </div>
   </div>
 
+  <app-theme-select-modal [isOpen]="isThemeModalOpen" (onClose)="onThemeSelectModalClosed()"></app-theme-select-modal>
   <app-guide-modal [isOpen]="isGuideModalOpen" (onClose)="isGuideModalOpen = false"></app-guide-modal>
-</div>
+</div>
+

@@ -86,7 +86,11 @@
 
   </main>
 
+  <!-- 초기 디자인 테마 선택 모달 -->
+  <app-theme-select-modal [isOpen]="isThemeSelectModalOpen" (onClose)="onThemeModalClosed()"></app-theme-select-modal>
+
   <!-- 이용 가이드 온보딩 모달 -->
   <app-guide-modal [isOpen]="isGuideModalOpen" (onClose)="isGuideModalOpen = false"></app-guide-modal>
 </div>
+
 

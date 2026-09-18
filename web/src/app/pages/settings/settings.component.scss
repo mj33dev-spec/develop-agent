@@ -300,3 +300,58 @@
     }
   }
 }
+
+/* ==========================================================
+   플랫 / 글래스모피즘 테마 오버라이드 (설정 페이지)
+   ========================================================== */
+:host-context(body.theme-flat) {
+  .setting-item-row .item-control .model-select-btn {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #334155;
+
+    i { color: #64748b; }
+    &:hover { background: #f1f5f9; color: #4A86FF; }
+  }
+}
+
+:host-context(body.theme-flat.dark-theme) {
+  .setting-item-row .item-control .model-select-btn {
+    background: #242834;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    color: #e2e8f0;
+
+    i { color: #94a3b8; }
+    &:hover { background: #2a2f3d; color: #60a5fa; }
+  }
+}
+
+:host-context(body.theme-glass) {
+  .setting-item-row .item-control .model-select-btn {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06);
+    color: #1e293b;
+
+    i { color: #64748b; }
+    &:hover { background: rgba(255, 255, 255, 0.85); color: #4A86FF; }
+  }
+}
+
+:host-context(body.theme-glass.dark-theme) {
+  .setting-item-row .item-control .model-select-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: #f8fafc;
+
+    i { color: #94a3b8; }
+    &:hover { background: rgba(255, 255, 255, 0.18); color: #60a5fa; }
+  }
+}

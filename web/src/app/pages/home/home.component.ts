@@ -11,6 +11,7 @@ import { RoomService, ChatRoomRecord } from '../../core/services/room.service';
 import { FileItemService, FileItem } from '../../core/services/file-item.service';
 import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
 import { GuideModalComponent } from '../../components/guide-modal/guide-modal.component';
+import { ThemeSelectModalComponent } from '../../components/theme-select-modal/theme-select-modal.component';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -25,7 +26,8 @@ import { AuthService } from '../../core/services/auth.service';
     CDropdownComponent, 
     CBadgeComponent, 
     HomeSidebarComponent,
-    GuideModalComponent
+    GuideModalComponent,
+    ThemeSelectModalComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -56,6 +58,7 @@ export class HomeComponent implements OnInit {
   addMenuOptions: CDropdownOption[] = [];
   attachedItems: AttachedItem[] = [];
   isGuideModalOpen: boolean = false;
+  isThemeSelectModalOpen: boolean = false;
 
   @ViewChild(HomeSidebarComponent) sidebarComponent!: HomeSidebarComponent;
 
@@ -111,14 +114,28 @@ export class HomeComponent implements OnInit {
   }
 
   checkOnboardingGuide() {
-    const hasSeen = localStorage.getItem('has_seen_onboarding_guide');
-    if (!hasSeen) {
-      const sub = this.authService.currentUser.subscribe(user => {
-        if (user) {
+    const hasSelectedTheme = localStorage.getItem('has_selected_initial_theme');
+    const hasSeenGuide = localStorage.getItem('has_seen_onboarding_guide');
+
+    const sub = this.authService.currentUser.subscribe(user => {
+      if (user) {
+        if (!hasSelectedTheme) {
+          this.isThemeSelectModalOpen = true;
+        } else if (!hasSeenGuide) {
           this.isGuideModalOpen = true;
-          sub.unsubscribe();
         }
-      });
+        sub.unsubscribe();
+      }
+    });
+  }
+
+  onThemeModalClosed() {
+    this.isThemeSelectModalOpen = false;
+    const hasSeenGuide = localStorage.getItem('has_seen_onboarding_guide');
+    if (!hasSeenGuide) {
+      setTimeout(() => {
+        this.isGuideModalOpen = true;
+      }, 300);
     }
   }
 

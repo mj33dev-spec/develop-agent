@@ -9,6 +9,7 @@ import { CDropdownComponent, CDropdownOption } from '../../components/c-dropdown
 import { CTabBarComponent } from '../../components/c-tab-bar/c-tab-bar.component';
 import { CToggleComponent } from '../../components/c-toggle/c-toggle.component';
 import { GuideModalComponent } from '../../components/guide-modal/guide-modal.component';
+import { ThemeSelectModalComponent } from '../../components/theme-select-modal/theme-select-modal.component';
 
 import { AuthService } from '../../core/services/auth.service';
 import { ThemeService } from '../../core/services/theme.service';
@@ -16,7 +17,7 @@ import { ThemeService } from '../../core/services/theme.service';
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent, CTabBarComponent, CToggleComponent, GuideModalComponent],
+  imports: [CommonModule, FormsModule, CButtonComponent, CDropdownComponent, CTabBarComponent, CToggleComponent, GuideModalComponent, ThemeSelectModalComponent],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
@@ -26,6 +27,7 @@ export class SettingsComponent implements OnInit {
   defaultTheme: string = '뉴모피즘';
   isDarkMode: boolean = false;
   isGuideModalOpen: boolean = false;
+  isThemeModalOpen: boolean = false;
 
   // DB에 저장된 원본 설정 상태
   private savedModel: string = 'Gemini 3.6 Flash';
@@ -118,6 +120,16 @@ export class SettingsComponent implements OnInit {
 
   openGuideModal() {
     this.isGuideModalOpen = true;
+  }
+
+  openThemeSelectModal() {
+    this.isThemeModalOpen = true;
+  }
+
+  onThemeSelectModalClosed() {
+    this.isThemeModalOpen = false;
+    this.defaultTheme = this.themeService.styleTheme;
+    this.isDarkMode = this.themeService.isDarkMode;
   }
 
   onResetDefaults() {

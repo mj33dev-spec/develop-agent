@@ -1,0 +1,69 @@
+<c-modal
+  [isOpen]="isOpen"
+  title="🎨 선호하는 디자인 테마를 선택하세요"
+  subTitle="선택하신 테마 스타일과 어두운 모드는 클릭 즉시 실시간으로 반영됩니다."
+  width="640px"
+  [customFooter]="true"
+  (onClose)="confirmTheme()"
+>
+  <div class="theme-select-container">
+    <!-- Theme Cards Selection -->
+    <div class="theme-cards-grid">
+      <div 
+        *ngFor="let item of themeOptions" 
+        class="theme-card-item"
+        [class.selected]="selectedTheme === item.id"
+        (click)="onSelectTheme(item.id)"
+      >
+        <div class="card-radio-icon">
+          <i [class]="selectedTheme === item.id ? 'bx bxs-check-circle' : 'bx bx-circle'"></i>
+        </div>
+
+        <div class="card-body-content">
+          <div class="theme-header">
+            <i [class]="item.icon + ' theme-icon'"></i>
+            <div class="theme-title-group">
+              <h4 class="theme-title">{{ item.title }}</h4>
+              <span class="theme-subtitle">{{ item.subtitle }}</span>
+            </div>
+          </div>
+          <p class="theme-desc">{{ item.description }}</p>
+
+          <!-- Visual Preview Box -->
+          <div class="preview-mini-box" [ngClass]="'preview-' + (item.id === '뉴모피즘' ? 'neu' : item.id === '플랫' ? 'flat' : 'glass')">
+            <div class="preview-sidebar"></div>
+            <div class="preview-main">
+              <div class="preview-bubble"></div>
+              <div class="preview-input"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Mode Quick Option -->
+    <div class="dark-mode-row">
+      <div class="mode-info">
+        <i class="bx bx-moon mode-icon"></i>
+        <div class="mode-text">
+          <span class="mode-title">다크 모드 (Dark Mode)</span>
+          <span class="mode-desc">어두운 색상의 눈이 편안한 테마를 사용합니다.</span>
+        </div>
+      </div>
+      <c-toggle [checked]="isDarkMode" (checkedChange)="onToggleDarkMode($event)"></c-toggle>
+    </div>
+  </div>
+
+  <!-- Custom Footer -->
+  <div footer class="theme-modal-footer">
+    <div class="footer-left">
+      <span class="tip-text"><i class="bx bx-info-circle"></i> 나중에 [환경설정]에서도 언제든 변경 가능합니다.</span>
+    </div>
+
+    <div class="footer-right">
+      <c-button theme="primary" (onClick)="confirmTheme()">
+        <i class="bx bx-check"></i> 선택한 테마 적용하기
+      </c-button>
+    </div>
+  </div>
+</c-modal>

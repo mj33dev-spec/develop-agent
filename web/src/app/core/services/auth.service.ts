@@ -247,14 +247,17 @@ export class AuthService {
     return { defaultModel: 'Gemini 3.6 Flash', defaultTheme: '뉴모피즘', isDarkMode: false };
   }
 
-  async updateUserSettings(settings: { defaultModel: string; defaultTheme: string; isDarkMode: boolean }) {
+  async updateUserSettings(settings: Partial<{ defaultModel: string; defaultTheme: string; isDarkMode: boolean }>) {
     const user = this.currentUserSubject.value;
     if (!user) throw new Error('로그인이 필요합니다.');
+
+    const current = await this.getUserSettings();
+    const mergedSettings = { ...current, ...settings };
 
     // 1. Supabase Auth 사용자 메타데이터 업데이트
     const { data, error } = await this.supabase.auth.updateUser({
       data: {
-        user_settings: settings
+        user_settings: mergedSettings
       }
     });
     if (error) throw error;
@@ -264,23 +267,20 @@ export class AuthService {
 
     // 2. DB public.users 테이블 연동
     try {
-      await this.supabase.from('users').upsert({
-        id: user.id,
-        email: user.email,
-        default_model: settings.defaultModel,
-        default_theme: settings.defaultTheme,
-        is_dark_mode: settings.isDarkMode,
-        settings: settings,
-        updated_at: new Date().toISOString()
-      });
-    } catch (e) {
-      console.warn('Failed to update public.users settings columns:', e);
+      await this.supabase
+        .from('users')
+        .update({
+          default_model: mergedSettings.defaultModel,
+          default_theme: mergedSettings.defaultTheme,
+          is_dark_mode: mergedSettings.isDarkMode
+        })
+        .eq('id', user.id);
+    } catch (dbErr) {
+      console.warn('public.users 동기화 경고:', dbErr);
     }
 
-    // 3. 로컬 스토리지 캐싱
-    localStorage.setItem('user_app_settings', JSON.stringify(settings));
-
-    return settings;
+    localStorage.setItem('user_app_settings', JSON.stringify(mergedSettings));
+    return mergedSettings;
   }
 
   async signOut() {
