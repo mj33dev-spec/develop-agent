@@ -48,8 +48,13 @@ body {
 
 
 
-/* ── 다크 테마 전역 스타일 ──────────────── */
+/* ── 다크 테마 전역 텍스트 색상 ──────────────── */
 body.dark-theme {
+  color: $dark-text-secondary;
+}
+
+/* ── 뉴모피즘 다크 테마 배경 및 전용 스타일 ──────────────── */
+body.dark-theme:not(.theme-flat):not(.theme-glass) {
   background-color: $dark-bg !important;
   background-image: none !important;
   color: $dark-text-secondary !important;
