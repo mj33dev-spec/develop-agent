@@ -145,6 +145,70 @@
               transform: translateY(0);
               box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
             }
+
+            /* ── 테마별 오버라이드 (중첩 선언으로 명시도 충돌 해결) ── */
+            :host-context(body.dark-theme) & {
+              background: $dark-surface-alt;
+              color: $dark-text-secondary;
+              box-shadow: $dark-neu-shadow-btn;
+
+              i { color: $dark-text-muted; }
+
+              &:hover {
+                box-shadow: $dark-neu-shadow-btn-hover;
+                color: $color-primary;
+
+                i { color: $color-primary; }
+              }
+
+              &:active {
+                box-shadow: $dark-neu-shadow-inset-sm;
+              }
+            }
+
+            :host-context(body.theme-flat) & {
+              background: $flat-card-bg;
+              border: 1px solid $flat-border-color;
+              box-shadow: $flat-shadow-sm;
+              color: $flat-text-primary;
+
+              i { color: $flat-text-secondary; }
+              &:hover { background: $flat-bg; color: $color-primary; }
+            }
+
+            :host-context(body.theme-flat.dark-theme) & {
+              background: $dark-surface-alt;
+              border: 1px solid $dark-border-color;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+              color: $dark-text-secondary;
+
+              i { color: $dark-text-muted; }
+              &:hover { background: $dark-surface-card; color: $color-primary; }
+            }
+
+            :host-context(body.theme-glass) & {
+              background: rgba(255, 255, 255, 0.65);
+              backdrop-filter: blur(12px);
+              -webkit-backdrop-filter: blur(12px);
+              border: 1px solid rgba(255, 255, 255, 0.75);
+              box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06);
+              color: $flat-text-primary;
+
+              i { color: $flat-text-secondary; }
+              &:hover { background: rgba(255, 255, 255, 0.85); color: $color-primary; }
+            }
+
+            :host-context(body.theme-glass.dark-theme) & {
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(12px);
+              -webkit-backdrop-filter: blur(12px);
+              border: 1px solid $dark-border-light;
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+              color: $dark-text-primary;
+
+              i { color: $dark-text-muted; }
+              &:hover { background: rgba(255, 255, 255, 0.18); color: $color-primary; }
+            }
           }
 
           .send-btn {
