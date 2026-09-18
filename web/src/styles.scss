@@ -594,43 +594,6 @@ body.theme-flat {
       }
     }
 
-    .sidebar-user-card {
-      background: #ffffff !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
-      border: 1px solid #e2e8f0 !important;
-    }
-
-    .folder-header,
-    .room-item,
-    .file-item {
-      background-color: transparent !important;
-      box-shadow: none !important;
-
-      &:hover {
-        background-color: #f1f5f9 !important;
-        box-shadow: none !important;
-        transform: none !important;
-      }
-
-      &.active {
-        background-color: #e2e8f0 !important;
-        box-shadow: none !important;
-        color: #4A86FF !important;
-        font-weight: 600 !important;
-      }
-    }
-
-    .sidebar-node.active {
-
-      >.room-item,
-      >.folder-header,
-      >.file-item {
-        background-color: #e2e8f0 !important;
-        box-shadow: none !important;
-        color: #4A86FF !important;
-        font-weight: 600 !important;
-      }
-    }
   }
 
   .icon-btn,
@@ -858,78 +821,7 @@ body.theme-flat {
   /* DAlert Modal overrides for Flat Theme */
 
 
-  .category-pills .pill-btn {
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
-    color: #475569 !important;
 
-    &.active {
-      background: #4A86FF !important;
-      color: #ffffff !important;
-      border-color: #4A86FF !important;
-      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25) !important;
-    }
-  }
-
-  .preset-item-card {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
-
-    .preset-icon {
-      background: #f1f5f9 !important;
-      box-shadow: none !important;
-      border: 1px solid #cbd5e1 !important;
-    }
-
-    .preset-action-btns .template-action-btn {
-      background: #ffffff !important;
-      border: 1px solid #cbd5e1 !important;
-      box-shadow: none !important;
-    }
-
-    &.selected {
-      background: #f0f7ff !important;
-      border-color: #4A86FF !important;
-      box-shadow: 0 2px 8px rgba(74, 134, 255, 0.15) !important;
-    }
-  }
-
-  .card-visual-preview {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
-
-    .card-top-bar {
-      background: #f8fafc !important;
-      border-bottom: 1px solid #e2e8f0 !important;
-    }
-
-    .file-badge-item {
-      background: #f1f5f9 !important;
-      border: 1px solid #e2e8f0 !important;
-      box-shadow: none !important;
-    }
-  }
-
-  .empty-preset-box {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: none !important;
-  }
-
-  .file-upload-dropzone {
-    background: #f8fafc !important;
-    border: 2px dashed #cbd5e1 !important;
-    box-shadow: none !important;
-  }
-
-  .attached-file-chip {
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
-  }
 
   .modal-action-btn,
   .create-custom-btn,
@@ -1015,43 +907,6 @@ body.theme-flat.dark-theme {
       }
     }
 
-    .sidebar-user-card {
-      background: #242834 !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    }
-
-    .folder-header,
-    .room-item,
-    .file-item {
-      background-color: transparent !important;
-      box-shadow: none !important;
-
-      &:hover {
-        background-color: #242834 !important;
-        box-shadow: none !important;
-        transform: none !important;
-      }
-
-      &.active {
-        background-color: #2b303e !important;
-        box-shadow: none !important;
-        color: #4A86FF !important;
-        font-weight: 600 !important;
-      }
-    }
-
-    .sidebar-node.active {
-
-      >.room-item,
-      >.folder-header,
-      >.file-item {
-        background-color: #2b303e !important;
-        box-shadow: none !important;
-        color: #4A86FF !important;
-        font-weight: 600 !important;
-      }
-    }
   }
 
   .icon-btn,
@@ -1282,86 +1137,7 @@ body.theme-flat.dark-theme {
   /* DAlert Modal overrides for Flat Dark Theme */
 
 
-  .category-pills .pill-btn {
-    background: #242834 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
-    color: #94a3b8 !important;
 
-    &.active {
-      background: #4A86FF !important;
-      color: #ffffff !important;
-      border-color: #4A86FF !important;
-      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.3) !important;
-    }
-  }
-
-  .preset-item-card {
-    background: #242834 !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-
-    .preset-icon {
-      background: #1e222d !important;
-      box-shadow: none !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-
-    .preset-action-btns .template-action-btn {
-      background: #1e222d !important;
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      box-shadow: none !important;
-      color: #94a3b8 !important;
-
-      &:hover {
-        background: #2b303e !important;
-        color: #f1f5f9 !important;
-      }
-    }
-
-    &.selected {
-      background: #1a253a !important;
-      border-color: #4A86FF !important;
-      box-shadow: 0 2px 8px rgba(74, 134, 255, 0.25) !important;
-    }
-  }
-
-  .card-visual-preview {
-    background: #242834 !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-
-    .card-top-bar {
-      background: #1e222d !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    }
-
-    .file-badge-item {
-      background: #1e222d !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      box-shadow: none !important;
-      color: #cbd5e1 !important;
-    }
-  }
-
-  .empty-preset-box {
-    background: #242834 !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: none !important;
-  }
-
-  .file-upload-dropzone {
-    background: #1e222d !important;
-    border: 2px dashed rgba(255, 255, 255, 0.15) !important;
-    box-shadow: none !important;
-  }
-
-  .attached-file-chip {
-    background: #242834 !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
-    color: #f1f5f9 !important;
-  }
 
   .modal-action-btn,
   .create-custom-btn,
@@ -1473,47 +1249,6 @@ body.theme-glass {
       }
     }
 
-    .sidebar-user-card {
-      background: rgba(255, 255, 255, 0.55) !important;
-      backdrop-filter: blur(12px) !important;
-      -webkit-backdrop-filter: blur(12px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.75) !important;
-      box-shadow: 0 6px 20px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
-    }
-
-    .folder-header,
-    .room-item,
-    .file-item {
-      background-color: transparent !important;
-      box-shadow: none !important;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.6) !important;
-        box-shadow: none !important;
-        transform: none !important;
-      }
-
-      &.active {
-        background-color: rgba(74, 134, 255, 0.18) !important;
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2) !important;
-        color: $color-primary !important;
-        font-weight: 600 !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-      }
-    }
-
-    .sidebar-node.active {
-
-      >.room-item,
-      >.folder-header,
-      >.file-item {
-        background-color: rgba(74, 134, 255, 0.18) !important;
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2) !important;
-        color: $color-primary !important;
-        font-weight: 600 !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-      }
-    }
   }
 
   .viewer-footer-input {
@@ -1763,77 +1498,9 @@ body.theme-glass {
     }
   }
 
-  .preset-item-card {
-    background: rgba(255, 255, 255, 0.55) !important;
-    border: 1px solid rgba(255, 255, 255, 0.75) !important;
-    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(12px) !important;
 
-    .preset-icon {
-      background: rgba(255, 255, 255, 0.75) !important;
-      border: 1px solid rgba(255, 255, 255, 0.85) !important;
-      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06) !important;
-    }
 
-    .preset-action-btns .template-action-btn {
-      background: rgba(255, 255, 255, 0.75) !important;
-      border: 1px solid rgba(255, 255, 255, 0.85) !important;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
-      color: #475569 !important;
 
-      &:hover {
-        background: rgba(255, 255, 255, 0.95) !important;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
-      }
-    }
-
-    &.selected {
-      background: rgba(238, 242, 255, 0.85) !important;
-      border: 1.5px solid #4A86FF !important;
-      box-shadow: 0 8px 28px rgba(74, 134, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-    }
-  }
-
-  .card-visual-preview {
-    background: rgba(255, 255, 255, 0.6) !important;
-    border: 1px solid rgba(255, 255, 255, 0.8) !important;
-    box-shadow: 0 12px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-
-    .card-top-bar {
-      background: rgba(255, 255, 255, 0.5) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
-    }
-
-    .file-badge-item {
-      background: rgba(255, 255, 255, 0.7) !important;
-      border: 1px solid rgba(255, 255, 255, 0.85) !important;
-      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.05) !important;
-      color: #334155 !important;
-    }
-  }
-
-  .preset-preview-panel.empty-select .preset-inner {
-    background: rgba(255, 255, 255, 0.5) !important;
-    border: 1px solid rgba(255, 255, 255, 0.75) !important;
-    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
-
-    .empty-preset-box {
-      background: transparent !important;
-      box-shadow: none !important;
-    }
-  }
-
-  .file-upload-dropzone {
-    background: rgba(255, 255, 255, 0.4) !important;
-    border: 2px dashed rgba(74, 134, 255, 0.4) !important;
-    box-shadow: none !important;
-  }
-
-  .attached-file-chip {
-    background: rgba(255, 255, 255, 0.7) !important;
-    border: 1px solid rgba(255, 255, 255, 0.85) !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
-  }
 
   .modal-action-btn,
   .create-custom-btn,
@@ -1933,47 +1600,6 @@ body.theme-glass.dark-theme {
       }
     }
 
-    .sidebar-user-card {
-      background: rgba(255, 255, 255, 0.08) !important;
-      backdrop-filter: blur(12px) !important;
-      -webkit-backdrop-filter: blur(12px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-    }
-
-    .folder-header,
-    .room-item,
-    .file-item {
-      background-color: transparent !important;
-      box-shadow: none !important;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.08) !important;
-        box-shadow: none !important;
-        transform: none !important;
-      }
-
-      &.active {
-        background-color: rgba(74, 134, 255, 0.25) !important;
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3) !important;
-        color: #60a5fa !important;
-        font-weight: 600 !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      }
-    }
-
-    .sidebar-node.active {
-
-      >.room-item,
-      >.folder-header,
-      >.file-item {
-        background-color: rgba(74, 134, 255, 0.25) !important;
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3) !important;
-        color: #60a5fa !important;
-        font-weight: 600 !important;
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      }
-    }
   }
 
   .viewer-footer-input {
