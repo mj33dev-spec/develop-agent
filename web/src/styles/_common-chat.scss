@@ -1,0 +1,153 @@
+@use './config' as *;
+
+/* ── 입력창 첨부파일 칩 컨테이너 ──────────────── */
+.attached-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+/* ── 첨부파일 칩 공통 뉴모피즘 스타일 ──────────────── */
+.attached-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 8px;
+  background-color: #eaf0f8;
+  box-shadow: 3px 3px 8px rgba(163, 177, 198, 0.45), -3px -3px 8px rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b !important;
+  user-select: none;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+
+  .chip-thumb {
+    width: 22px;
+    height: 22px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .chip-name {
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #1e293b !important;
+    font-weight: 600;
+  }
+
+  .remove-chip-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-left: 4px;
+    cursor: pointer;
+    color: #ef4444;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 50%;
+    line-height: 1;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+
+    &:hover {
+      transform: scale(1.25);
+      opacity: 0.85;
+    }
+  }
+}
+
+/* ── 메시지 버블 내 첨부 칩 스타일 ──────────────── */
+.msg-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  .attached-chip.msg-chip {
+    gap: 4px;
+    padding: 3px 8px;
+    font-size: 13px;
+    border-radius: 6px;
+    background-color: #eaf0f8 !important;
+    box-shadow: inset 1px 1px 2px rgba(163, 177, 198, 0.3);
+    border: 1px solid #dbe2ef;
+    color: #2D3748 !important;
+    cursor: default;
+
+    i {
+      font-size: 16px;
+    }
+
+    .chip-name {
+      color: #2D3748 !important;
+      font-weight: 600;
+    }
+  }
+}
+
+/* ── 테마별 첨부 칩 및 채팅 입력 요소 오버라이드 ──────────────── */
+body.dark-theme {
+  .attached-chip {
+    background-color: #242834 !important;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #f1f5f9 !important;
+
+    .chip-name {
+      color: #f1f5f9 !important;
+    }
+  }
+
+  .msg-attachments .attached-chip.msg-chip {
+    background-color: #1e222b !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #cbd5e1 !important;
+
+    .chip-name {
+      color: #cbd5e1 !important;
+    }
+  }
+}
+
+body.theme-flat {
+  .attached-chip {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+    color: #334155 !important;
+
+    .chip-name {
+      color: #334155 !important;
+    }
+  }
+}
+
+body.theme-glass {
+  .attached-chip {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06) !important;
+    color: #1e293b !important;
+
+    .chip-name {
+      color: #1e293b !important;
+    }
+  }
+}
