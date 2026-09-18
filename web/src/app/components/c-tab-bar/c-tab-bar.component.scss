@@ -176,138 +176,143 @@
   }
 }
 
-:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)) {
+:host-context(body.dark-theme),
+body.dark-theme {
   .segmentContainer {
-    background-color: $dark-surface;
-    box-shadow: $dark-neu-shadow-inset-sm;
-  }
+    background-color: $dark-surface !important;
+    box-shadow: $dark-neu-shadow-inset-sm !important;
 
-  .segmentBtn {
-    color: $dark-text-muted;
+    .segmentBtn {
+      color: $dark-text-muted !important;
 
-    &:hover {
-      color: $dark-text-primary;
-    }
+      &:hover {
+        color: $dark-text-primary !important;
+      }
 
-    &.active {
-      background-color: $dark-surface-card;
-      color: $color-primary;
-      box-shadow: $dark-neu-shadow-sm;
+      &.active {
+        background-color: $dark-surface-card !important;
+        color: $color-primary !important;
+        box-shadow: $dark-neu-shadow-sm !important;
+      }
     }
   }
 
   .baseContainer {
-    border-bottom-color: $dark-border-color;
-  }
+    border-bottom-color: $dark-border-color !important;
 
-  .baseBtn {
-    color: $dark-text-muted;
+    .baseBtn {
+      color: $dark-text-muted !important;
 
-    &:hover {
-      color: $dark-text-primary;
-    }
+      &:hover {
+        color: $dark-text-primary !important;
+      }
 
-    &.active {
-      color: $color-primary;
+      &.active {
+        color: $color-primary !important;
+      }
     }
   }
 
   .folderBtn {
-    background-color: $dark-surface;
-    border-color: $dark-border-color;
-    color: $dark-text-muted;
+    background-color: $dark-surface !important;
+    border-color: $dark-border-color !important;
+    color: $dark-text-muted !important;
 
     &:hover {
-      color: $dark-text-primary;
+      color: $dark-text-primary !important;
     }
 
     &.active {
-      background-color: $dark-surface-alt;
-      color: $color-primary;
-      box-shadow: 2px -2px 5px $dark-shadow-dark;
+      background-color: $dark-surface-alt !important;
+      color: $color-primary !important;
+      box-shadow: 2px -2px 5px $dark-shadow-dark !important;
     }
   }
 
   .count {
-    background-color: $dark-border-color;
-    color: $dark-text-muted;
+    background-color: $dark-border-color !important;
+    color: $dark-text-muted !important;
   }
 }
 
-:host-context(body.theme-flat) {
+:host-context(body.theme-flat),
+body.theme-flat {
   .segmentContainer {
-    background-color: #f1f5f9;
-    box-shadow: none;
-    border: 1px solid #e2e8f0;
-  }
+    background-color: #f1f5f9 !important;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
 
-  .segmentBtn {
-    color: #64748b;
+    .segmentBtn {
+      color: #64748b !important;
 
-    &.active {
-      background-color: #ffffff;
-      color: #4A86FF;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      &.active {
+        background-color: #ffffff !important;
+        color: #4A86FF !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) !important;
+      }
     }
   }
 }
 
-:host-context(body.theme-flat.dark-theme) {
+:host-context(body.theme-flat.dark-theme),
+body.theme-flat.dark-theme {
   .segmentContainer {
-    background-color: #181b24;
-    box-shadow: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
+    background-color: #181b24 !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
 
-  .segmentBtn {
-    color: #94a3b8;
+    .segmentBtn {
+      color: #94a3b8 !important;
 
-    &.active {
-      background-color: #2b303e;
-      color: #4A86FF;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      &.active {
+        background-color: #2b303e !important;
+        color: #4A86FF !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !important;
+      }
     }
   }
 }
 
-:host-context(body.theme-glass) {
+:host-context(body.theme-glass),
+body.theme-glass {
   .segmentContainer {
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 16px;
-  }
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    border-radius: 16px !important;
 
-  .segmentBtn {
-    color: #475569;
+    .segmentBtn {
+      color: #475569 !important;
 
-    &.active {
-      background: rgba(255, 255, 255, 0.85);
-      color: #2563eb;
-      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      &.active {
+        background: rgba(255, 255, 255, 0.85) !important;
+        color: #2563eb !important;
+        box-shadow: 0 4px 12px rgba(31, 38, 135, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+      }
     }
   }
 }
 
-:host-context(body.theme-glass.dark-theme) {
+:host-context(body.theme-glass.dark-theme),
+body.theme-glass.dark-theme {
   .segmentContainer {
-    background: rgba(20, 24, 34, 0.5);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-  }
+    background: rgba(20, 24, 34, 0.5) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
 
-  .segmentBtn {
-    color: #94a3b8;
+    .segmentBtn {
+      color: #94a3b8 !important;
 
-    &.active {
-      background: rgba(74, 134, 255, 0.3);
-      color: #60a5fa;
-      box-shadow: 0 4px 12px rgba(74, 134, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      &.active {
+        background: rgba(74, 134, 255, 0.3) !important;
+        color: #60a5fa !important;
+        box-shadow: 0 4px 12px rgba(74, 134, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+      }
     }
   }
 }
