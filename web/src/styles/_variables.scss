@@ -7,14 +7,15 @@ $font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
 
 $font-weight-regular: 400;
 $font-weight-medium: 500;
+$font-weight-semibold: 600;
 $font-weight-bold: 700;
 
 // ── Brand Colors ──────────────────────────────
 $color-primary: #4A86FF;
 $color-secondary: #6B5CE7;
 
-// ── Neumorphism Design Tokens ─────────────────
-$neu-bg: #e4ebf5;
+// ── Neumorphism Design Tokens (Light Theme) ───
+$neu-bg: #eef4fc;
 $neu-shadow-dark: #c2d1e5;
 $neu-shadow-light: #ffffff;
 $neu-border-color: #b8c9df;
@@ -24,9 +25,77 @@ $neu-primary-gradient: linear-gradient(145deg, #4f8fff, #4278e6);
 $neu-text: #2d3748;
 $neu-text-secondary: #718096;
 
+// ── Dark Theme Design Tokens (Dark Theme) ─────
+$dark-bg-overlay: rgba(15, 17, 23, 0.75);
+$dark-bg: #181b24;
+$dark-surface: #1e222d;
+$dark-surface-alt: #242834;
+$dark-surface-card: #2b303e;
+$dark-surface-hover: #353b4d;
+
+$dark-shadow-dark: #161821;
+$dark-shadow-light: #303545;
+
+$dark-border-color: rgba(255, 255, 255, 0.08);
+$dark-border-light: rgba(255, 255, 255, 0.15);
+$dark-border: 1px solid $dark-border-color;
+
+$dark-text-primary: #f1f5f9;
+$dark-text-secondary: #e2e8f0;
+$dark-text-muted: #94a3b8;
+$dark-text-subtle: #64748b;
+
+$dark-disabled-bg: #434b5e;
+$dark-disabled-text: #7e8da6;
+
+// 다크모드 뉴모피즘 그림자 토큰
+$dark-neu-shadow-btn: 3px 3px 6px $dark-shadow-dark, -3px -3px 6px $dark-shadow-light;
+$dark-neu-shadow-btn-hover: 4px 4px 8px $dark-shadow-dark, -4px -4px 8px $dark-shadow-light;
+$dark-neu-shadow-sm: 4px 4px 10px $dark-shadow-dark, -4px -4px 10px $dark-shadow-light;
+$dark-neu-shadow-md: 6px 6px 14px $dark-shadow-dark, -6px -6px 14px $dark-shadow-light;
+$dark-neu-shadow-lg: 10px 10px 24px $dark-shadow-dark, -10px -10px 24px $dark-shadow-light;
+
+$dark-neu-shadow-inset-sm: inset 3px 3px 6px $dark-shadow-dark, inset -3px -3px 6px $dark-shadow-light;
+$dark-neu-shadow-inset-md: inset 4px 4px 8px $dark-shadow-dark, inset -4px -4px 8px $dark-shadow-light;
+$dark-neu-shadow-inset-lg: inset 5px 5px 10px $dark-shadow-dark, inset -5px -5px 10px $dark-shadow-light;
+
+$dark-modal-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+
+// ── Flat Theme Design Tokens ─────────────────
+$flat-bg: #eef4fc;
+$flat-card-bg: #ffffff;
+$flat-sidebar-bg: #f8fafc;
+$flat-border-color: #e2e8f0;
+$flat-border-dark: #cbd5e1;
+$flat-text-primary: #1e293b;
+$flat-text-secondary: #475569;
+$flat-text-muted: #94a3b8;
+$flat-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$flat-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+$flat-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+$flat-dark-bg: #161922;
+$flat-dark-card-bg: #1e222d;
+$flat-dark-sidebar-bg: rgba(20, 24, 34, 0.55);
+$flat-dark-surface-alt: #242834;
+$flat-dark-surface-hover: #2b303e;
+
+// ── Glassmorphism Theme Tokens ─────────────────
+$glass-bg-gradient: radial-gradient(at 0% 0%, rgba(147, 197, 253, 0.65) 0px, transparent 50%),
+  radial-gradient(at 100% 0%, rgba(74, 134, 255, 0.35) 0px, transparent 50%),
+  radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.95) 0px, transparent 50%),
+  radial-gradient(at 0% 100%, rgba(191, 219, 254, 0.55) 0px, transparent 50%),
+  linear-gradient(135deg, #f0f6ff 0%, #dbeafe 100%);
+
+$glass-dark-bg-gradient: radial-gradient(at 0% 0%, rgba(74, 134, 255, 0.3) 0px, transparent 50%),
+  radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.25) 0px, transparent 50%),
+  radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.95) 0px, transparent 50%),
+  linear-gradient(135deg, #0f172a 0%, #172554 100%);
+
+
 // ── Backgrounds ───────────────────────────────
-$color-bg: #e4ebf5;
-$color-surface: #e4ebf5;
+$color-bg: #eef4fc;
+$color-surface: #eef4fc;
 $color-surface-alt: #d9e3f0;
 $color-white: #FFFFFF;
 
@@ -75,7 +144,7 @@ $font-size-mo-heading-2: 24px;
 $font-size-mo-heading-3: 20px;
 $font-size-mo-title-1: 18px;
 $font-size-mo-title-2: 16px;
-$font-size-mo-title-3: 16px; 
+$font-size-mo-title-3: 16px;
 $font-size-mo-subtitle-1: 16px;
 $font-size-mo-subtitle-2: 14px;
 $font-size-mo-body-1: 16px;
@@ -99,43 +168,91 @@ $font-size-mo-caption-2: 11px;
 
 // Typography Classes / Mixins
 // Display (Bold 700)
-@mixin typo-display-1 { @include typography($font-size-pc-display-1, $font-size-mo-display-1, $font-weight-bold, 1.3, -0.02em); }
-@mixin typo-display-2 { @include typography($font-size-pc-display-2, $font-size-mo-display-2, $font-weight-bold, 1.3, -0.02em); }
-@mixin typo-display-3 { @include typography($font-size-pc-display-3, $font-size-mo-display-3, $font-weight-bold, 1.3, -0.02em); }
+@mixin typo-display-1 {
+  @include typography($font-size-pc-display-1, $font-size-mo-display-1, $font-weight-bold, 1.3, 0px);
+}
+
+@mixin typo-display-2 {
+  @include typography($font-size-pc-display-2, $font-size-mo-display-2, $font-weight-bold, 1.3, 0px);
+}
+
+@mixin typo-display-3 {
+  @include typography($font-size-pc-display-3, $font-size-mo-display-3, $font-weight-bold, 1.3, 0px);
+}
 
 // Heading (Bold 700)
-@mixin typo-heading-1 { @include typography($font-size-pc-heading-1, $font-size-mo-heading-1, $font-weight-bold, 1.4, -0.02em); }
-@mixin typo-heading-2 { @include typography($font-size-pc-heading-2, $font-size-mo-heading-2, $font-weight-bold, 1.4, -0.02em); }
-@mixin typo-heading-3 { @include typography($font-size-pc-heading-3, $font-size-mo-heading-3, $font-weight-bold, 1.4, -0.02em); }
+@mixin typo-heading-1 {
+  @include typography($font-size-pc-heading-1, $font-size-mo-heading-1, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-heading-2 {
+  @include typography($font-size-pc-heading-2, $font-size-mo-heading-2, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-heading-3 {
+  @include typography($font-size-pc-heading-3, $font-size-mo-heading-3, $font-weight-bold, 1.4, 0px);
+}
 
 // Title (Bold 700)
-@mixin typo-title-1 { @include typography($font-size-pc-title-1, $font-size-mo-title-1, $font-weight-bold, 1.4, -0.01em); }
-@mixin typo-title-2 { @include typography($font-size-pc-title-2, $font-size-mo-title-2, $font-weight-bold, 1.4, -0.01em); }
-@mixin typo-title-3 { @include typography($font-size-pc-title-3, $font-size-mo-title-3, $font-weight-bold, 1.4, -0.01em); }
+@mixin typo-title-1 {
+  @include typography($font-size-pc-title-1, $font-size-mo-title-1, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-title-2 {
+  @include typography($font-size-pc-title-2, $font-size-mo-title-2, $font-weight-bold, 1.4, 0px);
+}
+
+@mixin typo-title-3 {
+  @include typography($font-size-pc-title-3, $font-size-mo-title-3, $font-weight-bold, 1.4, 0px);
+}
 
 // Subtitle (Medium 500)
-@mixin typo-subtitle-1 { @include typography($font-size-pc-subtitle-1, $font-size-mo-subtitle-1, $font-weight-medium, 1.5, -0.01em); }
-@mixin typo-subtitle-2 { @include typography($font-size-pc-subtitle-2, $font-size-mo-subtitle-2, $font-weight-medium, 1.5, -0.01em); }
+@mixin typo-subtitle-1 {
+  @include typography($font-size-pc-subtitle-1, $font-size-mo-subtitle-1, $font-weight-medium, 1.5, 0px);
+}
+
+@mixin typo-subtitle-2 {
+  @include typography($font-size-pc-subtitle-2, $font-size-mo-subtitle-2, $font-weight-medium, 1.5, 0px);
+}
 
 // Body (Regular 400)
-@mixin typo-body-1 { @include typography($font-size-pc-body-1, $font-size-mo-body-1, $font-weight-regular, 1.6, -0.01em); }
-@mixin typo-body-2 { @include typography($font-size-pc-body-2, $font-size-mo-body-2, $font-weight-regular, 1.6, -0.01em); }
-@mixin typo-body-3 { @include typography($font-size-pc-body-3, $font-size-mo-body-3, $font-weight-regular, 1.6, -0.01em); }
+@mixin typo-body-1 {
+  @include typography($font-size-pc-body-1, $font-size-mo-body-1, $font-weight-regular, 1.6, 0px);
+}
+
+@mixin typo-body-2 {
+  @include typography($font-size-pc-body-2, $font-size-mo-body-2, $font-weight-regular, 1.6, 0px);
+}
+
+@mixin typo-body-3 {
+  @include typography($font-size-pc-body-3, $font-size-mo-body-3, $font-weight-regular, 1.6, 0px);
+}
 
 // Caption (Regular 400)
-@mixin typo-caption-1 { @include typography($font-size-pc-caption-1, $font-size-mo-caption-1, $font-weight-regular, 1.6, -0.01em); }
-@mixin typo-caption-2 { @include typography($font-size-pc-caption-2, $font-size-mo-caption-2, $font-weight-regular, 1.6, -0.01em); }
+@mixin typo-caption-1 {
+  @include typography($font-size-pc-caption-1, $font-size-mo-caption-1, $font-weight-regular, 1.6, 0px);
+}
+
+@mixin typo-caption-2 {
+  @include typography($font-size-pc-caption-2, $font-size-mo-caption-2, $font-weight-regular, 1.6, 0px);
+}
 
 
 // ── Spacing (간격) ──────────────────────────────────
+$spacing-2: 2px;
 $spacing-4: 4px;
+$spacing-6: 6px;
 $spacing-8: 8px;
+$spacing-10: 10px;
 $spacing-12: 12px;
+$spacing-14: 14px;
 $spacing-16: 16px;
 $spacing-20: 20px;
 $spacing-24: 24px;
 $spacing-28: 28px;
 $spacing-32: 32px;
+$spacing-40: 40px;
+$spacing-48: 48px;
 
 // ── Padding ──────────────────────────────────
 $padding-small: 16px;
@@ -143,8 +260,14 @@ $padding-normal: 20px;
 $padding-large: 24px;
 
 // ── Border Radius ────────────────────────────
+$radius-xs: 4px;
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-full: 9999px;
+
 $radius-shallow: 4px;
 $radius-normal: 8px;
 $radius-deep: 12px;
 $radius-circle: 50%;
-

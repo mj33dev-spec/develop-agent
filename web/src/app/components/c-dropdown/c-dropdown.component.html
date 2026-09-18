@@ -1,4 +1,4 @@
-<div #anchorRef class="dropdownContainer" [style.width]="width">
+<div #anchorRef class="dropdownContainer" [style.width]="width ? width : null">
   <!-- More Variant -->
   <ng-container *ngIf="variant === 'more'">
     <div class="dropdownWrapper">

@@ -1,0 +1,70 @@
+<c-modal
+  [isOpen]="isOpen"
+  title="✨ 환영합니다! 이용 가이드"
+  subTitle="자동화 개발 AI 에이전트의 주요 기능을 살펴보세요."
+  width="560px"
+  [customFooter]="true"
+  (onClose)="finish()"
+>
+  <div class="guide-modal-container">
+    <!-- Step Navigation Tabs / Dots -->
+    <div class="step-nav-bar">
+      <button 
+        *ngFor="let step of steps; let i = index" 
+        type="button" 
+        class="step-pill-btn" 
+        [class.active]="i === currentStepIndex"
+        (click)="setStep(i)"
+      >
+        <i [class]="step.icon"></i>
+        <span>{{ i + 1 }}</span>
+      </button>
+    </div>
+
+    <!-- Active Step Content Card -->
+    <div class="guide-card-content">
+      <div class="card-header">
+        <div class="badge-tag">{{ currentStep.badge }}</div>
+        <div class="title-row">
+          <i [class]="currentStep.icon + ' icon-main'"></i>
+          <h3 class="step-title">{{ currentStep.title }}</h3>
+        </div>
+        <p class="step-desc">{{ currentStep.description }}</p>
+      </div>
+
+      <div class="details-box">
+        <ul>
+          <li *ngFor="let detail of currentStep.details">
+            <i class="bx bx-check-circle check-icon"></i>
+            <span>{{ detail }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Footer -->
+  <div footer class="guide-modal-footer">
+    <div class="footer-left">
+      <label class="checkbox-label" (click)="toggleDontShowAgain()">
+        <input type="checkbox" [checked]="dontShowAgain" (change)="toggleDontShowAgain()" />
+        <span>다시 보지 않기</span>
+      </label>
+    </div>
+
+    <div class="footer-right">
+      <c-button *ngIf="currentStepIndex > 0" theme="neutral" (onClick)="prevStep()">
+        <i class="bx bx-chevron-left"></i> 이전
+      </c-button>
+
+      <c-button theme="primary" (onClick)="nextStep()">
+        <ng-container *ngIf="currentStepIndex < steps.length - 1">
+          다음 <i class="bx bx-chevron-right"></i>
+        </ng-container>
+        <ng-container *ngIf="currentStepIndex === steps.length - 1">
+          <i class="bx bx-rocket"></i> 시작하기
+        </ng-container>
+      </c-button>
+    </div>
+  </div>
+</c-modal>

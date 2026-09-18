@@ -1,5 +1,5 @@
 import { Component, ViewChild, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { CodeViewerComponent } from '../../components/code-viewer/code-viewer.component';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,8 @@ import { HomeSidebarComponent } from './components/home-sidebar/home-sidebar.com
 import { RoomService, ChatRoomRecord } from '../../core/services/room.service';
 import { FileItemService, FileItem } from '../../core/services/file-item.service';
 import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
+import { GuideModalComponent } from '../../components/guide-modal/guide-modal.component';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +24,8 @@ import { ChatInputService, AttachedItem } from '../../core/services/chat-input.s
     CodeViewerComponent, 
     CDropdownComponent, 
     CBadgeComponent, 
-    HomeSidebarComponent
+    HomeSidebarComponent,
+    GuideModalComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -52,15 +55,26 @@ export class HomeComponent implements OnInit {
 
   addMenuOptions: CDropdownOption[] = [];
   attachedItems: AttachedItem[] = [];
+  isGuideModalOpen: boolean = false;
 
   @ViewChild(HomeSidebarComponent) sidebarComponent!: HomeSidebarComponent;
 
   private roomService = inject(RoomService);
   private fileService = inject(FileItemService);
   private chatInputService = inject(ChatInputService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  async loadAddMenuOptions() {
-    this.addMenuOptions = await this.chatInputService.loadAddMenuOptions(
+  get isSubPage(): boolean {
+    return this.router.url !== '/';
+  }
+
+  get isAccountPage(): boolean {
+    return this.isSubPage;
+  }
+
+  loadAddMenuOptions() {
+    this.chatInputService.loadAddMenuOptions(
       { folderId: null },
       (textToInsert) => {
         this.homeInput = (this.homeInput || '') + textToInsert;
@@ -76,7 +90,9 @@ export class HomeComponent implements OnInit {
         });
       },
       (item) => this.onSelectAttachedItem(item)
-    );
+    ).then(options => {
+      this.addMenuOptions = options;
+    });
   }
 
   onSelectAttachedItem(item: AttachedItem) {
@@ -91,6 +107,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loadAddMenuOptions();
+    this.checkOnboardingGuide();
+  }
+
+  checkOnboardingGuide() {
+    const hasSeen = localStorage.getItem('has_seen_onboarding_guide');
+    if (!hasSeen) {
+      const sub = this.authService.currentUser.subscribe(user => {
+        if (user) {
+          this.isGuideModalOpen = true;
+          sub.unsubscribe();
+        }
+      });
+    }
   }
 
   async onActiveRoomIdChange(roomId: string | null) {

@@ -2,7 +2,8 @@
 @use "styles/mixins" as *;
 
 /* ── 전역 공통 폼 인풋 & 텍스트에어리어 스타일 ──────────────── */
-.form-input, .form-textarea {
+.form-input,
+.form-textarea {
   @include neu-input;
 }
 
@@ -44,34 +45,118 @@ body {
 @import './app/core/services/d-tooltip.scss';
 
 /* ── 프레임워크 & 기술 스택 브랜드 아이콘 색상 ──────────────── */
-.icon-angular { color: #DD0031 !important; }
-.icon-react { color: #61DAFB !important; }
-.icon-vue { color: #4FC08D !important; }
-.icon-nextjs { color: #111111 !important; }
-.icon-nuxtjs { color: #00DC82 !important; }
-.icon-nestjs { color: #E0234E !important; }
-.icon-nodejs { color: #339933 !important; }
-.icon-javascript { color: #F7DF1E !important; }
-.icon-typescript { color: #3178C6 !important; }
-.icon-flutter { color: #02569B !important; }
-.icon-html { color: #E34F26 !important; }
-.icon-css { color: #1572B6 !important; }
-.icon-scss { color: #CC6699 !important; }
-.icon-bootstrap { color: #7952B3 !important; }
-.icon-tailwind { color: #38BDF8 !important; }
-.icon-python { color: #3776AB !important; }
-.icon-java { color: #5382A1 !important; }
-.icon-springboot { color: #6DB33F !important; }
-.icon-mongodb { color: #47A248 !important; }
-.icon-supabase { color: #3FCF8E !important; }
-.icon-jquery { color: #0769AD !important; }
-.icon-mysql { color: #4479A1 !important; }
-.icon-mariadb { color: #003545 !important; }
-.icon-postgresql { color: #4169E1 !important; }
-.icon-docker { color: #2496ED !important; }
-.icon-json { color: #00B4D8 !important; }
-.icon-markdown { color: #0083B0 !important; }
-.icon-image { color: #2EC4B6 !important; }
+.icon-angular {
+  color: #DD0031 !important;
+}
+
+.icon-react {
+  color: #61DAFB !important;
+}
+
+.icon-vue {
+  color: #4FC08D !important;
+}
+
+.icon-nextjs {
+  color: #111111 !important;
+}
+
+.icon-nuxtjs {
+  color: #00DC82 !important;
+}
+
+.icon-nestjs {
+  color: #E0234E !important;
+}
+
+.icon-nodejs {
+  color: #339933 !important;
+}
+
+.icon-javascript {
+  color: #F7DF1E !important;
+}
+
+.icon-typescript {
+  color: #3178C6 !important;
+}
+
+.icon-flutter {
+  color: #02569B !important;
+}
+
+.icon-html {
+  color: #E34F26 !important;
+}
+
+.icon-css {
+  color: #1572B6 !important;
+}
+
+.icon-scss {
+  color: #CC6699 !important;
+}
+
+.icon-bootstrap {
+  color: #7952B3 !important;
+}
+
+.icon-tailwind {
+  color: #38BDF8 !important;
+}
+
+.icon-python {
+  color: #3776AB !important;
+}
+
+.icon-java {
+  color: #5382A1 !important;
+}
+
+.icon-springboot {
+  color: #6DB33F !important;
+}
+
+.icon-mongodb {
+  color: #47A248 !important;
+}
+
+.icon-supabase {
+  color: #3FCF8E !important;
+}
+
+.icon-jquery {
+  color: #0769AD !important;
+}
+
+.icon-mysql {
+  color: #4479A1 !important;
+}
+
+.icon-mariadb {
+  color: #003545 !important;
+}
+
+.icon-postgresql {
+  color: #4169E1 !important;
+}
+
+.icon-docker {
+  color: #2496ED !important;
+}
+
+.icon-json {
+  color: #00B4D8 !important;
+}
+
+.icon-markdown {
+  color: #0083B0 !important;
+}
+
+.icon-image {
+  color: #2EC4B6 !important;
+}
+
 i.icon-dart {
   display: inline-block;
   width: 1.1em;
@@ -81,27 +166,83 @@ i.icon-dart {
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4.105 4.105L1.5 12l2.605 7.895L12 22.5l7.895-2.605L22.5 12l-2.605-7.895L12 1.5 4.105 4.105zM12 4.29l5.41 5.41L12 15.11 6.59 9.7 12 4.29z'/%3E%3C/svg%3E") no-repeat center / contain;
   vertical-align: middle;
 }
-.icon-swift { color: #F05138 !important; }
-.icon-kotlin { color: #7F52FF !important; }
-.icon-go { color: #00ADD8 !important; }
-.icon-rust { color: #DEA584 !important; }
-.icon-php { color: #777BB4 !important; }
-.icon-csharp { color: #239120 !important; }
-.icon-cpp { color: #00599C !important; }
-.icon-ruby { color: #CC342D !important; }
-.icon-sql { color: #336791 !important; }
-.icon-yaml { color: #CB171E !important; }
-.icon-terminal { color: #4EAA25 !important; }
-.icon-svelte { color: #FF3E00 !important; }
-.icon-other { color: #8A99AD !important; }
+
+.icon-swift {
+  color: #F05138 !important;
+}
+
+.icon-kotlin {
+  color: #7F52FF !important;
+}
+
+.icon-go {
+  color: #00ADD8 !important;
+}
+
+.icon-rust {
+  color: #DEA584 !important;
+}
+
+.icon-php {
+  color: #777BB4 !important;
+}
+
+.icon-csharp {
+  color: #239120 !important;
+}
+
+.icon-cpp {
+  color: #00599C !important;
+}
+
+.icon-ruby {
+  color: #CC342D !important;
+}
+
+.icon-sql {
+  color: #336791 !important;
+}
+
+.icon-yaml {
+  color: #CB171E !important;
+}
+
+.icon-terminal {
+  color: #4EAA25 !important;
+}
+
+.icon-svelte {
+  color: #FF3E00 !important;
+}
+
+.icon-other {
+  color: #8A99AD !important;
+}
 
 /* ── 파일 및 요소 컬러 유틸리티 ──────────────── */
-.text-orange { color: #E34F26 !important; }
-.text-blue { color: #3178C6 !important; }
-.text-yellow { color: #F7DF1E !important; }
-.text-green { color: #339933 !important; }
-.text-purple { color: #0083B0 !important; }
-.text-red { color: #DD0031 !important; }
+.text-orange {
+  color: #E34F26 !important;
+}
+
+.text-blue {
+  color: #3178C6 !important;
+}
+
+.text-yellow {
+  color: #F7DF1E !important;
+}
+
+.text-green {
+  color: #339933 !important;
+}
+
+.text-purple {
+  color: #0083B0 !important;
+}
+
+.text-red {
+  color: #DD0031 !important;
+}
 
 /* ── 입력창 첨부파일 칩 스타일 ──────────────── */
 .attached-items-container {
@@ -204,3 +345,2174 @@ i.icon-dart {
   }
 }
 
+/* ── 다크 테마 전역 스타일 ──────────────── */
+body.dark-theme {
+  background-color: $dark-bg !important;
+  background-image: none !important;
+  color: $dark-text-secondary !important;
+
+  .app-layout,
+  .main-content,
+  .home-view,
+  .settings-page-container,
+  .account-page-container,
+  .c-modal-content {
+    background-color: $dark-bg !important;
+    color: $dark-text-secondary !important;
+  }
+
+  .sidebar,
+  .home-sidebar {
+    background-color: $dark-surface !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-right: 1px solid $dark-border-color !important;
+    box-shadow: none !important;
+  }
+
+  .settings-header-bar,
+  .account-header-bar,
+  .code-viewer-header,
+  .chat-header {
+    @include dark-header-bar;
+  }
+
+  .settings-panel,
+  .account-panel,
+  .code-panel,
+  .copilot-input-box {
+    @include dark-panel;
+  }
+
+  .icon-btn,
+  .sidebar-block-btn,
+  .user-more-btn,
+  .model-select-btn {
+    background: $dark-surface-alt !important;
+    color: $dark-text-secondary !important;
+    box-shadow: $dark-neu-shadow-btn !important;
+
+    i {
+      color: $dark-text-secondary !important;
+    }
+  }
+
+  .c-toggle-switch {
+    background: $dark-surface !important;
+    box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39 !important;
+
+    .toggle-knob {
+      background: $dark-surface-card !important;
+      box-shadow: 2px 2px 4px #14171d, -2px -2px 4px #282d39 !important;
+    }
+
+    &.active {
+      background: rgba(74, 134, 255, 0.2) !important;
+
+      .toggle-knob {
+        background: $color-primary !important;
+        box-shadow: 2px 2px 6px rgba(74, 134, 255, 0.5) !important;
+      }
+    }
+  }
+
+  .segmentContainer {
+    background-color: $dark-surface !important;
+    box-shadow: inset 2px 2px 5px #14171d, inset -2px -2px 5px #282d39 !important;
+  }
+
+  .segmentBtn {
+    color: $dark-text-muted !important;
+
+    &.active {
+      background-color: $dark-surface-card !important;
+      color: $color-primary !important;
+      box-shadow: $dark-neu-shadow-btn !important;
+    }
+  }
+
+  .greeting,
+  .panel-title,
+  .section-title,
+  .item-name,
+  .user-nickname,
+  .page-title {
+    color: $dark-text-primary !important;
+  }
+
+  .panel-subtitle,
+  .item-desc,
+  .user-email,
+  .disclaimer {
+    color: $dark-text-muted !important;
+  }
+
+  textarea.main-textarea,
+  textarea.chat-textarea,
+  textarea.viewer-textarea {
+    background: transparent !important;
+    color: $dark-text-primary !important;
+
+    &::placeholder {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  .form-input,
+  .form-textarea,
+  .neu-input {
+    background-color: $dark-surface !important;
+    color: $dark-text-primary !important;
+    box-shadow: $dark-neu-shadow-inset-sm !important;
+    border: 1px solid $dark-border-color !important;
+
+    &::placeholder {
+      color: $dark-text-muted !important;
+    }
+
+    &.readonly {
+      color: $dark-text-muted !important;
+    }
+  }
+
+  .attached-chip {
+    background-color: $dark-surface-alt !important;
+    box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light !important;
+    border-color: $dark-border-color !important;
+    color: $dark-text-secondary !important;
+
+    .chip-name {
+      color: $dark-text-secondary !important;
+    }
+  }
+
+  .msg-attachments .attached-chip.msg-chip {
+    background-color: $dark-surface-alt !important;
+    border-color: $dark-border-color !important;
+    box-shadow: inset 1px 1px 2px $dark-shadow-dark !important;
+    color: $dark-text-secondary !important;
+
+    .chip-name {
+      color: $dark-text-secondary !important;
+    }
+  }
+
+  .alertOverlay.active {
+    background-color: $dark-bg-overlay !important;
+    backdrop-filter: blur(6px) !important;
+  }
+
+  .alertBox {
+    background-color: $dark-surface-alt !important;
+    border-color: $dark-border-color !important;
+    box-shadow: $dark-modal-shadow !important;
+  }
+
+  .alertTitle {
+    color: $dark-text-primary !important;
+  }
+
+  .alertMessage {
+    color: $dark-text-muted !important;
+  }
+
+  .alertInput {
+    background: $dark-surface !important;
+    box-shadow: $dark-neu-shadow-inset-sm !important;
+    color: $dark-text-primary !important;
+  }
+
+  .dropdown-portal-menu {
+    background: $dark-surface-alt !important;
+    box-shadow: 8px 8px 16px $dark-shadow-dark, -8px -8px 16px $dark-shadow-light !important;
+    border: 1px solid $dark-border-color !important;
+
+    &.fill, &.outlinedDropdown {
+      box-shadow: 10px 10px 20px $dark-shadow-dark, -10px -10px 20px $dark-shadow-light !important;
+
+      hr {
+        background: $dark-border-color !important;
+      }
+    }
+
+    .dropdownItem {
+      color: $dark-text-secondary !important;
+
+      &:hover:not(.disabled) {
+        background: $dark-surface !important;
+        box-shadow: $dark-neu-shadow-btn !important;
+        color: $color-primary !important;
+
+        .dropdownItemIcon {
+          color: $color-primary !important;
+        }
+      }
+
+      &.selected {
+        background: $dark-surface !important;
+        color: $color-primary !important;
+        box-shadow: $dark-neu-shadow-inset-sm !important;
+
+        .dropdownItemIcon {
+          color: $color-primary !important;
+        }
+      }
+
+      .dropdownItemIcon {
+        color: $dark-text-muted !important;
+      }
+    }
+  }
+}
+
+
+/* ── 플랫 테마 (Flat Theme) ───────────────────── */
+body.theme-flat {
+  background-color: #eef4fc !important;
+  background-image: none !important;
+
+  .app-container,
+  .app-layout,
+  .home-container,
+  .home-view,
+  .main-content,
+  .home-main-content,
+  .settings-page-container,
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .chat-view,
+  .chat-messages-container {
+    background-color: #eef4fc !important;
+  }
+
+  .settings-panel,
+  .account-panel,
+  .code-panel,
+  .preview-panel-wrapper,
+  .chat-messages,
+  .copilot-input-box,
+  .chat-input-box,
+  .file-question-box,
+  .modalContent {
+    background: #ffffff !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  .home-sidebar,
+  .sidebar {
+    background-color: #f8fafc !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-right: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  .sidebar {
+
+    .sidebar-block-btn,
+    .user-more-btn,
+    .sidebar-nav-item {
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+
+      &:hover {
+        background: #f1f5f9 !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .sidebar-user-card {
+      background: #ffffff !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent !important;
+      box-shadow: none !important;
+
+      &:hover {
+        background-color: #f1f5f9 !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      &.active {
+        background-color: #e2e8f0 !important;
+        box-shadow: none !important;
+        color: #4A86FF !important;
+        font-weight: 600 !important;
+      }
+    }
+
+    .sidebar-node.active {
+
+      >.room-item,
+      >.folder-header,
+      >.file-item {
+        background-color: #e2e8f0 !important;
+        box-shadow: none !important;
+        color: #4A86FF !important;
+        font-weight: 600 !important;
+      }
+    }
+  }
+
+  .icon-btn,
+  .viewer-header .icon-btn,
+  .chat-header .icon-btn,
+  .settings-header-bar .icon-btn,
+  .account-header-bar .icon-btn {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+
+    &:hover {
+      background: #f1f5f9 !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+    }
+  }
+
+  .code-panel .floating-actions {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    backdrop-filter: none !important;
+
+    .floating-btn {
+      background: #f1f5f9 !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: none !important;
+      color: #475569 !important;
+
+      &:hover {
+        background: #e2e8f0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+
+    &:focus-within {
+      border-color: #4A86FF !important;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2) !important;
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: #f1f5f9 !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: none !important;
+      color: #475569 !important;
+    }
+
+    .model-btn {
+      background: #f1f5f9 !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: none !important;
+      color: #334155 !important;
+
+      &:hover {
+        background: #e2e8f0 !important;
+        box-shadow: none !important;
+      }
+    }
+
+    .send-btn {
+      background: #4A86FF !important;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25) !important;
+      border: none !important;
+
+      &:disabled {
+        background: #e2e8f0 !important;
+        box-shadow: none !important;
+
+        i {
+          color: #94a3b8 !important;
+        }
+      }
+    }
+  }
+
+  .chat-messages {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+
+    .message-wrapper.agent-message .message-bubble {
+      background: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: none !important;
+    }
+
+    .message-wrapper.user-message .message-bubble {
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    }
+  }
+
+  .model-select-btn {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .dropdown-portal-menu {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+
+    .dropdownItem {
+      &:hover:not(.disabled) {
+        background: #f1f5f9 !important;
+        box-shadow: none !important;
+      }
+
+      &.selected {
+        background: #e2e8f0 !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .c-toggle-switch {
+    background: #cbd5e1 !important;
+    box-shadow: none !important;
+
+    .toggle-knob {
+      background: #ffffff !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    &.active {
+      background: #4A86FF !important;
+
+      .toggle-knob {
+        background: #ffffff !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+      }
+    }
+  }
+
+  .segmentContainer {
+    background-color: #f1f5f9 !important;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  .segmentBtn {
+    color: #64748b !important;
+
+    &.active {
+      background-color: #ffffff !important;
+      color: #4A86FF !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
+  /* C-Button & Button overrides for Flat Theme */
+  c-button .btn,
+  .btn {
+    box-shadow: none !important;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+      transform: none !important;
+    }
+
+    &:active:not(:disabled) {
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    &.btn-primary {
+      background: #4A86FF !important;
+      box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3) !important;
+    }
+
+    &.btn-warning {
+      background: #eab308 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(234, 179, 8, 0.35) !important;
+    }
+
+    &.btn-error {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(239, 68, 68, 0.35) !important;
+    }
+
+    &.btn-success {
+      background: #10b981 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.35) !important;
+    }
+
+    &.btn-secondary {
+      background: #64748b !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(100, 116, 139, 0.3) !important;
+    }
+
+    &.btn-neutral {
+      background: #f1f5f9 !important;
+      border: 1px solid #cbd5e1 !important;
+      color: #475569 !important;
+      box-shadow: none !important;
+
+      &:hover:not(:disabled) {
+        background: #e2e8f0 !important;
+      }
+    }
+
+    &.btn-outlined-primary {
+      border: 1px solid #4A86FF !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    &.btn-outlined-neutral {
+      border: 1px solid #cbd5e1 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    &.btn-icon {
+      background: transparent !important;
+      box-shadow: none !important;
+
+      &:hover:not(:disabled) {
+        background: #f1f5f9 !important;
+      }
+    }
+  }
+
+  /* DAlert Modal overrides for Flat Theme */
+  .alertOverlay.active {
+    background-color: rgba(15, 23, 42, 0.35) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+
+  .alertBox {
+    background-color: #ffffff !important;
+    border-radius: 20px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .alertInput {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    color: #1e293b !important;
+
+    &:focus {
+      border-color: #4A86FF !important;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2) !important;
+    }
+  }
+
+  .category-pills .pill-btn {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    color: #475569 !important;
+
+    &.active {
+      background: #4A86FF !important;
+      color: #ffffff !important;
+      border-color: #4A86FF !important;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25) !important;
+    }
+  }
+
+  .preset-item-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+
+    .preset-icon {
+      background: #f1f5f9 !important;
+      box-shadow: none !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: #ffffff !important;
+      border: 1px solid #cbd5e1 !important;
+      box-shadow: none !important;
+    }
+
+    &.selected {
+      background: #f0f7ff !important;
+      border-color: #4A86FF !important;
+      box-shadow: 0 2px 8px rgba(74, 134, 255, 0.15) !important;
+    }
+  }
+
+  .card-visual-preview {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+
+    .card-top-bar {
+      background: #f8fafc !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+    }
+
+    .file-badge-item {
+      background: #f1f5f9 !important;
+      border: 1px solid #e2e8f0 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .empty-preset-box {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  .file-upload-dropzone {
+    background: #f8fafc !important;
+    border: 2px dashed #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  .attached-file-chip {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .modal-action-btn,
+  .create-custom-btn,
+  .upload-trigger-btn,
+  .btn-back {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    color: #475569 !important;
+
+    &:hover {
+      background: #e2e8f0 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .form-input,
+  .form-textarea,
+  .neu-input {
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+  }
+}
+
+body.theme-flat.dark-theme {
+  background-color: #161922 !important;
+  background-image: none !important;
+
+  .app-container,
+  .app-layout,
+  .home-container,
+  .home-view,
+  .main-content,
+  .home-main-content,
+  .settings-page-container,
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .chat-view,
+  .chat-messages-container {
+    background-color: #161922 !important;
+  }
+
+  .settings-panel,
+  .account-panel,
+  .code-panel,
+  .preview-panel-wrapper,
+  .chat-messages,
+  .copilot-input-box,
+  .chat-input-box,
+  .file-question-box,
+  .modalContent {
+    background: #1e222d !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .home-sidebar,
+  .sidebar {
+    background: rgba(20, 24, 34, 0.55) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+
+    .sidebar-block-btn,
+    .user-more-btn,
+    .sidebar-nav-item {
+      background: #242834 !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+
+      &:hover {
+        background: #2b303e !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .sidebar-user-card {
+      background: #242834 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent !important;
+      box-shadow: none !important;
+
+      &:hover {
+        background-color: #242834 !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      &.active {
+        background-color: #2b303e !important;
+        box-shadow: none !important;
+        color: #4A86FF !important;
+        font-weight: 600 !important;
+      }
+    }
+
+    .sidebar-node.active {
+
+      >.room-item,
+      >.folder-header,
+      >.file-item {
+        background-color: #2b303e !important;
+        box-shadow: none !important;
+        color: #4A86FF !important;
+        font-weight: 600 !important;
+      }
+    }
+  }
+
+  .icon-btn,
+  .viewer-header .icon-btn,
+  .chat-header .icon-btn,
+  .settings-header-bar .icon-btn,
+  .account-header-bar .icon-btn {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+
+    i {
+      color: #f1f5f9 !important;
+    }
+
+    &:hover {
+      background: #2b303e !important;
+    }
+  }
+
+  .code-panel .floating-actions {
+    background: #1e222d !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: none !important;
+
+    .floating-btn {
+      background: #2b303e !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: none !important;
+      color: #f1f5f9 !important;
+
+      &:hover {
+        background: #353b4d !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: #1e222d !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+
+    &:focus-within {
+      border-color: #4A86FF !important;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3) !important;
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: #2b303e !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: none !important;
+      color: #f1f5f9 !important;
+    }
+
+    .model-btn {
+      background: #2b303e !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: none !important;
+      color: #f1f5f9 !important;
+
+      &:hover {
+        background: #353b4d !important;
+        box-shadow: none !important;
+      }
+    }
+
+    .send-btn {
+      background: #4A86FF !important;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.4) !important;
+      border: none !important;
+
+      &:disabled {
+        background: #2b303e !important;
+        box-shadow: none !important;
+
+        i {
+          color: #64748b !important;
+        }
+      }
+    }
+  }
+
+  .chat-messages {
+    background: #1e222d !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+
+    .message-wrapper.agent-message .message-bubble {
+      background: #242834 !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: none !important;
+    }
+
+    .message-wrapper.user-message .message-bubble {
+      background: #2b303e !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    }
+  }
+
+  .model-select-btn {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .dropdown-portal-menu {
+    background: #1e222d !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+
+    .dropdownItem {
+      &:hover:not(.disabled) {
+        background: #2b303e !important;
+        box-shadow: none !important;
+      }
+
+      &.selected {
+        background: #353b4d !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .c-toggle-switch {
+    background: #334155 !important;
+    box-shadow: none !important;
+
+    .toggle-knob {
+      background: #f1f5f9 !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    &.active {
+      background: #4A86FF !important;
+
+      .toggle-knob {
+        background: #ffffff !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4) !important;
+      }
+    }
+  }
+
+  .segmentContainer {
+    background-color: #181b24 !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .segmentBtn {
+    color: #94a3b8 !important;
+
+    &.active {
+      background-color: #2b303e !important;
+      color: #4A86FF !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !important;
+    }
+  }
+
+  /* C-Button & Button overrides for Flat Dark Theme */
+  c-button .btn,
+  .btn {
+    box-shadow: none !important;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+      transform: none !important;
+    }
+
+    &:active:not(:disabled) {
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    &.btn-primary {
+      background: #4A86FF !important;
+      box-shadow: 0 2px 6px rgba(74, 134, 255, 0.4) !important;
+    }
+
+    &.btn-warning {
+      background: #d97706 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(217, 119, 6, 0.4) !important;
+    }
+
+    &.btn-error {
+      background: #dc2626 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4) !important;
+    }
+
+    &.btn-success {
+      background: #059669 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(5, 150, 105, 0.4) !important;
+    }
+
+    &.btn-secondary {
+      background: #475569 !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 6px rgba(71, 85, 105, 0.4) !important;
+    }
+
+    &.btn-neutral {
+      background: #2b303e !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      color: #f1f5f9 !important;
+      box-shadow: none !important;
+
+      &:hover:not(:disabled) {
+        background: #353b4d !important;
+      }
+    }
+
+    &.btn-outlined-primary {
+      border: 1px solid #4A86FF !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    &.btn-outlined-neutral {
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    &.btn-icon {
+      background: transparent !important;
+      box-shadow: none !important;
+
+      &:hover:not(:disabled) {
+        background: #2b303e !important;
+      }
+    }
+  }
+
+  /* DAlert Modal overrides for Flat Dark Theme */
+  .alertOverlay.active {
+    background-color: rgba(15, 17, 23, 0.75) !important;
+    backdrop-filter: blur(4px) !important;
+  }
+
+  .alertBox {
+    background-color: #1e222d !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .alertInput {
+    background: #161922 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+    color: #f1f5f9 !important;
+
+    &:focus {
+      border-color: #4A86FF !important;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3) !important;
+    }
+  }
+
+  .category-pills .pill-btn {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+    color: #94a3b8 !important;
+
+    &.active {
+      background: #4A86FF !important;
+      color: #ffffff !important;
+      border-color: #4A86FF !important;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.3) !important;
+    }
+  }
+
+  .preset-item-card {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+
+    .preset-icon {
+      background: #1e222d !important;
+      box-shadow: none !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: #1e222d !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: none !important;
+      color: #94a3b8 !important;
+
+      &:hover {
+        background: #2b303e !important;
+        color: #f1f5f9 !important;
+      }
+    }
+
+    &.selected {
+      background: #1a253a !important;
+      border-color: #4A86FF !important;
+      box-shadow: 0 2px 8px rgba(74, 134, 255, 0.25) !important;
+    }
+  }
+
+  .card-visual-preview {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+
+    .card-top-bar {
+      background: #1e222d !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .file-badge-item {
+      background: #1e222d !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      box-shadow: none !important;
+      color: #cbd5e1 !important;
+    }
+  }
+
+  .empty-preset-box {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: none !important;
+  }
+
+  .file-upload-dropzone {
+    background: #1e222d !important;
+    border: 2px dashed rgba(255, 255, 255, 0.15) !important;
+    box-shadow: none !important;
+  }
+
+  .attached-file-chip {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+    color: #f1f5f9 !important;
+  }
+
+  .modal-action-btn,
+  .create-custom-btn,
+  .upload-trigger-btn,
+  .btn-back {
+    background: #242834 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+    color: #f1f5f9 !important;
+
+    &:hover {
+      background: #2b303e !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .form-input,
+  .form-textarea,
+  .neu-input {
+    background-color: #181b24 !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  }
+}
+
+/* ── 리퀴드 글래스모피즘 테마 (Liquid Glassmorphic Theme) ────── */
+body.theme-glass {
+  background: radial-gradient(at 0% 0%, rgba(147, 197, 253, 0.65) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(74, 134, 255, 0.35) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.95) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(191, 219, 254, 0.55) 0px, transparent 50%),
+    linear-gradient(135deg, #f0f6ff 0%, #dbeafe 100%) !important;
+  background-attachment: fixed !important;
+  color: $color-dark !important;
+
+  .app-container,
+  .home-container,
+  .main-content,
+  .home-main-content,
+  .settings-page-container,
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .settings-header-bar,
+  .account-header-bar,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .code-panel-wrapper,
+  .chat-view,
+  .chat-container,
+  .chat-messages-container,
+  .viewer-footer-input {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .settings-panel,
+  .account-panel,
+  .modalContent {
+    background: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    box-shadow: 0 16px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 24px !important;
+  }
+
+  .code-panel,
+  .preview-panel-wrapper {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 16px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 20px !important;
+  }
+
+  .home-sidebar {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .sidebar {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.6) !important;
+    box-shadow: 4px 0 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+
+    .sidebar-block-btn,
+    .user-more-btn,
+    .sidebar-nav-item {
+      background: rgba(255, 255, 255, 0.55) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.75) !important;
+      box-shadow: 0 4px 14px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+      color: $color-dark !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.85) !important;
+        border-color: rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 6px 18px rgba(31, 38, 135, 0.1) !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .sidebar-user-card {
+      background: rgba(255, 255, 255, 0.55) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.75) !important;
+      box-shadow: 0 6px 20px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent !important;
+      box-shadow: none !important;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.6) !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      &.active {
+        background-color: rgba(74, 134, 255, 0.18) !important;
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2) !important;
+        color: $color-primary !important;
+        font-weight: 600 !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      }
+    }
+
+    .sidebar-node.active {
+
+      >.room-item,
+      >.folder-header,
+      >.file-item {
+        background-color: rgba(74, 134, 255, 0.18) !important;
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2) !important;
+        color: $color-primary !important;
+        font-weight: 600 !important;
+        border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      }
+    }
+  }
+
+  .viewer-footer-input {
+    background-color: transparent !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 24px !important;
+
+    &:focus-within {
+      border-color: #4A86FF !important;
+      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.25), 0 12px 36px rgba(31, 38, 135, 0.12) !important;
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: rgba(255, 255, 255, 0.75) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+      color: #334155 !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12) !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .model-btn {
+      background: rgba(255, 255, 255, 0.75) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+      color: #334155 !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12) !important;
+        color: #4A86FF !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, #4A86FF, #3b82f6) !important;
+      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.4) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+
+      &:disabled {
+        background: rgba(203, 213, 225, 0.6) !important;
+        box-shadow: none !important;
+
+        i {
+          color: #94a3b8 !important;
+        }
+      }
+    }
+  }
+
+  .chat-messages {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+
+    .message-wrapper.agent-message .message-bubble {
+      background: rgba(255, 255, 255, 0.65) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.06) !important;
+      border-radius: 20px !important;
+    }
+
+    .message-wrapper.user-message .message-bubble {
+      background: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.95) !important;
+      box-shadow: 0 4px 14px rgba(31, 38, 135, 0.08) !important;
+      border-radius: 20px !important;
+    }
+  }
+
+  .code-panel .floating-actions {
+    background: rgba(255, 255, 255, 0.65) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 6px 20px rgba(31, 38, 135, 0.1) !important;
+
+    .floating-btn {
+      background: rgba(255, 255, 255, 0.75) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+      color: #334155 !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1) !important;
+        transform: none !important;
+      }
+    }
+  }
+
+  .icon-btn,
+  .viewer-header .icon-btn,
+  .chat-header .icon-btn,
+  .settings-header-bar .icon-btn,
+  .account-header-bar .icon-btn {
+    background: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06) !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.85) !important;
+    }
+  }
+
+  .model-select-btn {
+    background: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06) !important;
+  }
+
+  .dropdown-portal-menu {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 16px 40px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 20px !important;
+
+    .dropdownItem {
+      &:hover:not(.disabled) {
+        background: rgba(255, 255, 255, 0.65) !important;
+        box-shadow: none !important;
+      }
+
+      &.selected {
+        background: rgba(74, 134, 255, 0.18) !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .c-toggle-switch {
+    background: rgba(203, 213, 225, 0.65) !important;
+    backdrop-filter: blur(8px) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+
+    .toggle-knob {
+      background: #ffffff !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #4A86FF, #6366f1) !important;
+      box-shadow: 0 0 16px rgba(74, 134, 255, 0.4) !important;
+
+      .toggle-knob {
+        background: #ffffff !important;
+      }
+    }
+  }
+
+  .segmentContainer {
+    background: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    border-radius: 16px !important;
+  }
+
+  .segmentBtn {
+    color: #475569 !important;
+
+    &.active {
+      background: rgba(255, 255, 255, 0.85) !important;
+      color: #2563eb !important;
+      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+  }
+
+  /* C-Button Liquid Glass */
+  c-button .btn,
+  .btn {
+    backdrop-filter: blur(12px) !important;
+    box-shadow: 0 4px 14px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+
+    &.btn-primary {
+      background: linear-gradient(135deg, rgba(74, 134, 255, 0.95), rgba(59, 130, 246, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 6px 20px rgba(74, 134, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    }
+
+    &.btn-warning {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.95), rgba(217, 119, 6, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 6px 20px rgba(234, 179, 8, 0.35) !important;
+    }
+
+    &.btn-error {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35) !important;
+    }
+
+    &.btn-success {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(5, 150, 105, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35) !important;
+    }
+
+    &.btn-neutral {
+      background: rgba(255, 255, 255, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      color: #334155 !important;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.85) !important;
+      }
+    }
+  }
+
+  /* DAlert & Modal Glass Overlays */
+  .alertOverlay.active {
+    background-color: rgba(15, 23, 42, 0.3) !important;
+    backdrop-filter: blur(12px) !important;
+  }
+
+  .alertBox {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 24px 48px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    border-radius: 24px !important;
+  }
+
+  .alertInput {
+    background: rgba(255, 255, 255, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: none !important;
+    color: #1e293b !important;
+  }
+
+  .form-input,
+  .form-textarea,
+  .neu-input {
+    background: rgba(255, 255, 255, 0.55) !important;
+    backdrop-filter: blur(12px) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  }
+
+  /* ── 템플릿 모달 내 글래스모피즘 요소 오버라이드 ── */
+  .category-pills .pill-btn {
+    background: rgba(255, 255, 255, 0.55) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 4px 12px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(8px) !important;
+    color: #475569 !important;
+
+    &.active {
+      background: linear-gradient(135deg, rgba(74, 134, 255, 0.9), rgba(59, 130, 246, 0.9)) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.35) !important;
+    }
+  }
+
+  .preset-item-card {
+    background: rgba(255, 255, 255, 0.55) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) !important;
+
+    .preset-icon {
+      background: rgba(255, 255, 255, 0.75) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06) !important;
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: rgba(255, 255, 255, 0.75) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+      color: #475569 !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95) !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+      }
+    }
+
+    &.selected {
+      background: rgba(238, 242, 255, 0.85) !important;
+      border: 1.5px solid #4A86FF !important;
+      box-shadow: 0 8px 28px rgba(74, 134, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    }
+  }
+
+  .card-visual-preview {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 12px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+
+    .card-top-bar {
+      background: rgba(255, 255, 255, 0.5) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .file-badge-item {
+      background: rgba(255, 255, 255, 0.7) !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.05) !important;
+      color: #334155 !important;
+    }
+  }
+
+  .preset-preview-panel.empty-select .preset-inner {
+    background: rgba(255, 255, 255, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+
+    .empty-preset-box {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .file-upload-dropzone {
+    background: rgba(255, 255, 255, 0.4) !important;
+    border: 2px dashed rgba(74, 134, 255, 0.4) !important;
+    box-shadow: none !important;
+  }
+
+  .attached-file-chip {
+    background: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .modal-action-btn,
+  .create-custom-btn,
+  .upload-trigger-btn,
+  .btn-back {
+    background: rgba(255, 255, 255, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 4px 14px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    color: #334155 !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.85) !important;
+    }
+  }
+}
+
+body.theme-glass.dark-theme {
+  background: radial-gradient(at 0% 0%, rgba(74, 134, 255, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.25) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.95) 0px, transparent 50%),
+    linear-gradient(135deg, #0f172a 0%, #172554 100%) !important;
+  background-attachment: fixed !important;
+  color: $dark-text-primary !important;
+
+  .app-container,
+  .home-container,
+  .main-content,
+  .home-main-content,
+  .settings-page-container,
+  .account-page-container,
+  .settings-body-wrapper,
+  .account-body-wrapper,
+  .settings-header-bar,
+  .account-header-bar,
+  .code-viewer-container,
+  .split-viewer-body,
+  .viewer-body,
+  .code-panel-wrapper,
+  .chat-view,
+  .chat-container,
+  .chat-messages-container,
+  .viewer-footer-input {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .settings-panel,
+  .account-panel,
+  .modalContent {
+    background: rgba(30, 35, 48, 0.55) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border-radius: 24px !important;
+  }
+
+  .code-panel,
+  .preview-panel-wrapper {
+    background: rgba(30, 35, 48, 0.55) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+  }
+
+  .home-sidebar {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .sidebar {
+    background: rgba(20, 24, 34, 0.55) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+
+    .sidebar-block-btn,
+    .user-more-btn,
+    .sidebar-nav-item {
+      background: rgba(255, 255, 255, 0.08) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+      color: #f8fafc !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.16) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .sidebar-user-card {
+      background: rgba(255, 255, 255, 0.08) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent !important;
+      box-shadow: none !important;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+        box-shadow: none !important;
+        transform: none !important;
+      }
+
+      &.active {
+        background-color: rgba(74, 134, 255, 0.25) !important;
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3) !important;
+        color: #60a5fa !important;
+        font-weight: 600 !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      }
+    }
+
+    .sidebar-node.active {
+
+      >.room-item,
+      >.folder-header,
+      >.file-item {
+        background-color: rgba(74, 134, 255, 0.25) !important;
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3) !important;
+        color: #60a5fa !important;
+        font-weight: 600 !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      }
+    }
+  }
+
+  .viewer-footer-input {
+    background-color: transparent !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: rgba(30, 35, 48, 0.6) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border-radius: 24px !important;
+
+    &:focus-within {
+      border-color: #4A86FF !important;
+      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.35), 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: rgba(255, 255, 255, 0.1) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+      color: #f8fafc !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18) !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .model-btn {
+      background: rgba(255, 255, 255, 0.1) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+      color: #f8fafc !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18) !important;
+        color: #60a5fa !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+      }
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, #4A86FF, #6366f1) !important;
+      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.45) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
+      &:disabled {
+        background: rgba(43, 48, 62, 0.6) !important;
+        box-shadow: none !important;
+
+        i {
+          color: #64748b !important;
+        }
+      }
+    }
+  }
+
+  .chat-messages {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+
+    .message-wrapper.agent-message .message-bubble {
+      background: rgba(30, 35, 48, 0.65) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+      border-radius: 20px !important;
+    }
+
+    .message-wrapper.user-message .message-bubble {
+      background: rgba(43, 50, 68, 0.85) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+      border-radius: 20px !important;
+    }
+  }
+
+  .code-panel .floating-actions {
+    background: rgba(30, 35, 48, 0.7) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+
+    .floating-btn {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+      color: #f8fafc !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18) !important;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3) !important;
+        transform: none !important;
+      }
+    }
+  }
+
+  .icon-btn,
+  .viewer-header .icon-btn,
+  .chat-header .icon-btn,
+  .settings-header-bar .icon-btn,
+  .account-header-bar .icon-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+
+    i {
+      color: #f8fafc !important;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.18) !important;
+    }
+  }
+
+  .model-select-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .dropdown-portal-menu {
+    background: rgba(30, 35, 48, 0.85) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+
+    .dropdownItem {
+      &:hover:not(.disabled) {
+        background: rgba(255, 255, 255, 0.12) !important;
+        box-shadow: none !important;
+      }
+
+      &.selected {
+        background: rgba(74, 134, 255, 0.25) !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .c-toggle-switch {
+    background: rgba(51, 65, 85, 0.7) !important;
+    backdrop-filter: blur(8px) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+
+    .toggle-knob {
+      background: #f8fafc !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #4A86FF, #6366f1) !important;
+      box-shadow: 0 0 16px rgba(74, 134, 255, 0.5) !important;
+
+      .toggle-knob {
+        background: #ffffff !important;
+      }
+    }
+  }
+
+  .segmentContainer {
+    background: rgba(20, 24, 34, 0.5) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
+  }
+
+  .segmentBtn {
+    color: #94a3b8 !important;
+
+    &.active {
+      background: rgba(74, 134, 255, 0.3) !important;
+      color: #60a5fa !important;
+      box-shadow: 0 4px 12px rgba(74, 134, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    }
+  }
+
+  /* C-Button Liquid Glass Dark */
+  c-button .btn,
+  .btn {
+    backdrop-filter: blur(12px) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+
+    &.btn-primary {
+      background: linear-gradient(135deg, rgba(74, 134, 255, 0.95), rgba(99, 102, 241, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 6px 20px rgba(74, 134, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    }
+
+    &.btn-warning {
+      background: linear-gradient(135deg, rgba(217, 119, 6, 0.95), rgba(180, 83, 9, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 6px 20px rgba(217, 119, 6, 0.45) !important;
+    }
+
+    &.btn-error {
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.95), rgba(185, 28, 28, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 6px 20px rgba(220, 38, 38, 0.45) !important;
+    }
+
+    &.btn-success {
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.95), rgba(4, 120, 87, 0.95)) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45) !important;
+    }
+
+    &.btn-neutral {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: #f8fafc !important;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.18) !important;
+      }
+    }
+  }
+
+  /* DAlert & Modal Glass Overlays Dark */
+  .alertOverlay.active {
+    background-color: rgba(10, 14, 23, 0.65) !important;
+    backdrop-filter: blur(12px) !important;
+  }
+
+  .alertBox {
+    background: rgba(30, 35, 48, 0.8) !important;
+    backdrop-filter: blur(24px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    border-radius: 24px !important;
+  }
+
+  .alertInput {
+    background: rgba(20, 24, 34, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: none !important;
+    color: #f8fafc !important;
+  }
+
+  .form-input,
+  .form-textarea,
+  .neu-input {
+    background: rgba(20, 24, 34, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* ── 템플릿 모달 내 다크 글래스모피즘 요소 오버라이드 ── */
+  .category-pills .pill-btn {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: blur(8px) !important;
+    color: #94a3b8 !important;
+
+    &.active {
+      background: linear-gradient(135deg, rgba(74, 134, 255, 0.9), rgba(99, 102, 241, 0.9)) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.25) !important;
+      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.4) !important;
+    }
+  }
+
+  .preset-item-card {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(12px) !important;
+
+    .preset-icon {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: none !important;
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: none !important;
+      color: #94a3b8 !important;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18) !important;
+        color: #f8fafc !important;
+      }
+    }
+
+    &.selected {
+      background: rgba(74, 134, 255, 0.2) !important;
+      border: 1.5px solid #4A86FF !important;
+      box-shadow: 0 8px 28px rgba(74, 134, 255, 0.35) !important;
+    }
+  }
+
+  .card-visual-preview {
+    background: rgba(20, 24, 34, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4) !important;
+
+    .card-top-bar {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .file-badge-item {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: none !important;
+      color: #cbd5e1 !important;
+    }
+  }
+
+  .preset-preview-panel.empty-select .preset-inner {
+    background: rgba(20, 24, 34, 0.5) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+
+    .empty-preset-box {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .file-upload-dropzone {
+    background: rgba(20, 24, 34, 0.4) !important;
+    border: 2px dashed rgba(74, 134, 255, 0.4) !important;
+    box-shadow: none !important;
+  }
+
+  .attached-file-chip {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+  }
+
+  .modal-action-btn,
+  .create-custom-btn,
+  .upload-trigger-btn,
+  .btn-back {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+    color: #f8fafc !important;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.18) !important;
+    }
+  }
+}

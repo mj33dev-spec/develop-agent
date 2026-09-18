@@ -108,12 +108,22 @@
     }
   </div>
   
-  <!-- Sidebar Footer (Logout) -->
+  <!-- Sidebar Footer (User Info & Dropdown) -->
   <div class="sidebar-footer">
-    <button class="sidebar-block-btn danger" (click)="logout()">
-      <i class="bx bx-log-out"></i> 로그아웃
-    </button>
+    <div class="sidebar-user-card">
+      <div class="user-info" (click)="navigateToAccount()">
+        <span class="user-nickname">{{ currentUserNickname || '사용자' }}</span>
+        <span class="user-email">{{ currentUserEmail }}</span>
+      </div>
+      <c-dropdown [options]="userMenuOptions" menuWidth="160px" direction="up" align="right">
+        <button type="button" class="user-more-btn" title="더보기">
+          <i class="bx bx-dots-vertical-rounded"></i>
+        </button>
+      </c-dropdown>
+    </div>
   </div>
+
+
   
   <!-- Custom Context Menu -->
   @if (contextMenuVisible) {

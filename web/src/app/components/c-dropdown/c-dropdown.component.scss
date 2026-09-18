@@ -155,3 +155,47 @@
     transform: translateY(0);
   }
 }
+
+body.dark-theme .dropdown-portal-menu,
+:host-context(body.dark-theme) .dropdown-portal-menu {
+  background: $dark-surface-alt;
+
+  &.fill {
+    box-shadow: $dark-neu-shadow-lg;
+
+    hr {
+      background: $dark-border-color;
+    }
+  }
+
+  &.outlinedDropdown {
+    box-shadow: $dark-neu-shadow-md;
+
+    hr {
+      background: $dark-border-color;
+    }
+  }
+
+  .dropdownItem {
+    color: $dark-text-secondary;
+
+    &:hover:not(.disabled) {
+      background: $dark-surface;
+      box-shadow: $dark-neu-shadow-sm;
+    }
+
+    &.selected {
+      background: $dark-surface;
+      color: $color-primary;
+      box-shadow: $dark-neu-shadow-inset-sm;
+
+      .dropdownItemIcon {
+        color: $color-primary;
+      }
+    }
+
+    .dropdownItemIcon {
+      color: $dark-text-muted;
+    }
+  }
+}

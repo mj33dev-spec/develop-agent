@@ -18,6 +18,7 @@
 /* Main Area */
 .main-content {
   flex: 1;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   background-color: $color-bg;
@@ -83,7 +84,7 @@
         min-height: 24px;
         max-height: 160px;
         line-height: 1.4;
-        
+
         &::placeholder {
           color: $neu-text-secondary;
         }
@@ -98,11 +99,12 @@
           display: flex;
           align-items: center;
           gap: 12px;
+
           .add-btn {
             @include neu-circle-btn(38px);
           }
         }
-        
+
         .footer-right {
           display: flex;
           align-items: center;
@@ -133,6 +135,7 @@
               transform: translateY(-1px);
               box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
               color: $neu-primary;
+
               i {
                 color: $neu-primary;
               }
@@ -143,7 +146,7 @@
               box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
             }
           }
-        
+
           .send-btn {
             background: $neu-primary-gradient;
             width: 40px;
@@ -152,12 +155,20 @@
             @include neu-circle-btn(38px);
             background-color: $color-primary;
 
-            i { color: $color-white; font-size: $font-size-pc-title-3; }
-            
+            i {
+              color: $color-white;
+              font-size: $font-size-pc-title-3;
+            }
+
             &:disabled {
               background: $neu-bg;
               box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
-              i { color: $neu-text-secondary; opacity: 0.5; }
+
+              i {
+                color: $neu-text-secondary;
+                opacity: 0.5;
+              }
+
               cursor: not-allowed;
             }
           }
@@ -197,8 +208,100 @@
     opacity: 0;
     transform: translateY(20px) scale(0.98);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
+
+:host-context(body.dark-theme) {
+  .main-content {
+    background-color: #1a1d26;
+  }
+
+  .home-view {
+    background-color: #1a1d26;
+  }
+
+  .greeting {
+    color: #f1f5f9;
+  }
+
+  .copilot-input-box {
+    background: #242834;
+    box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
+
+    &:focus-within {
+      box-shadow: inset 5px 5px 10px #12141a, inset -5px -5px 10px #303545, 0 0 0 2px rgba(74, 134, 255, 0.3);
+    }
+
+    .input-body {
+      .main-textarea {
+        color: #f1f5f9;
+
+        &::placeholder {
+          color: #94a3b8;
+        }
+      }
+
+      .input-footer {
+        .footer-left {
+          .add-btn {
+            background: #242834;
+            box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+
+            i { color: #e2e8f0; }
+
+            &:hover {
+              box-shadow: 5px 5px 10px #161821, -5px -5px 10px #303545;
+            }
+
+            &:active {
+              box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+            }
+          }
+        }
+
+        .footer-right {
+          .model-btn {
+            background: #242834;
+            color: #e2e8f0;
+            box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+
+            i { color: #94a3b8; }
+
+            &:hover {
+              box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
+              color: #4A86FF;
+
+              i { color: #4A86FF; }
+            }
+
+            &:active {
+              box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+            }
+          }
+
+          .send-btn {
+            box-shadow: 4px 4px 10px #161821, -4px -4px 10px #303545;
+
+            &:disabled {
+              background: #1e222b;
+              box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39;
+
+              i {
+                color: #64748b;
+                opacity: 0.5;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .disclaimer {
+    color: #94a3b8;
+  }
+}

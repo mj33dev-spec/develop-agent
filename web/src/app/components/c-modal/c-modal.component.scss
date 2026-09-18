@@ -113,3 +113,55 @@
     opacity: 1;
   }
 }
+
+:host-context(body.dark-theme) {
+  .modalOverlay {
+    background-color: $dark-bg-overlay;
+  }
+
+  .modalContent {
+    background-color: $dark-surface;
+    box-shadow: $dark-modal-shadow;
+    border: $dark-border;
+  }
+
+  .modalHeader {
+    border-bottom-color: $dark-border-color;
+
+    .closeBtn {
+      color: $dark-text-muted;
+
+      &:hover {
+        background: $dark-border-color;
+        color: $dark-text-primary;
+      }
+    }
+  }
+
+  .modalTitle {
+    color: $dark-text-primary;
+  }
+
+  .modalSubTitle {
+    color: $dark-text-muted;
+  }
+
+  .modalBody {
+    color: $dark-text-secondary;
+
+    &::-webkit-scrollbar-thumb {
+      background: $dark-border-light;
+    }
+  }
+
+  .formActions {
+    border-top-color: $dark-border-color;
+
+    > button:disabled {
+      background-color: $dark-surface-card;
+      border-color: transparent;
+      color: $dark-text-subtle;
+    }
+  }
+}
+

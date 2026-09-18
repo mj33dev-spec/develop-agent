@@ -60,7 +60,7 @@
       .header-center {
         display: flex;
         align-items: center;
-        
+
         .chat-title {
           margin: 0;
           @include typo-title-3;
@@ -83,6 +83,7 @@
 
           &:hover {
             box-shadow: inset 2px 2px 5px $neu-shadow-dark, inset -2px -2px 5px $neu-shadow-light;
+
             .edit-icon {
               opacity: 1;
               color: $neu-primary;
@@ -131,7 +132,10 @@
         &:hover {
           transform: translateY(-1px);
           box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
-          i { color: $neu-primary; }
+
+          i {
+            color: $neu-primary;
+          }
         }
       }
     }
@@ -156,25 +160,28 @@
       gap: $spacing-16;
       box-sizing: border-box;
 
-      &::-webkit-scrollbar { width: 6px; }
-      &::-webkit-scrollbar-thumb { 
-        background-color: rgba(194, 209, 229, 0.6); 
-        border-radius: $radius-normal; 
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(194, 209, 229, 0.6);
+        border-radius: $radius-normal;
       }
 
       .message-wrapper {
         display: flex;
         gap: $spacing-12;
         max-width: 100%;
-        
+
         &.user-message {
           align-self: flex-end;
           flex-direction: row-reverse;
-          
+
           .message-content {
             align-items: flex-end;
           }
-          
+
           .bubble-group {
             flex-direction: row-reverse;
           }
@@ -191,11 +198,11 @@
 
         &.agent-message {
           align-self: flex-start;
-          
+
           .message-content {
             align-items: flex-start;
           }
-          
+
           .message-bubble {
             background: $neu-bg;
             border-radius: 20px 20px 20px 4px;
@@ -207,6 +214,7 @@
 
         .agent-profile {
           padding-top: $spacing-4;
+
           .avatar-small {
             width: 42px;
             height: 42px;
@@ -217,8 +225,13 @@
             justify-content: center;
             // background: $neu-bg;
             background-color: #fff;
-            
-            svg, img { width: 28px; height: 28px; object-fit: contain; }
+
+            svg,
+            img {
+              width: 28px;
+              height: 28px;
+              object-fit: contain;
+            }
           }
         }
 
@@ -226,11 +239,11 @@
           display: flex;
           flex-direction: column;
           max-width: 640px;
-          
+
           @media (max-width: 768px) {
             max-width: 85%;
           }
-          
+
           .agent-name {
             @include typo-caption-1;
             font-weight: 600;
@@ -238,19 +251,19 @@
             margin-bottom: $spacing-4;
             margin-left: 4px;
           }
-          
+
           .bubble-group {
             display: flex;
             align-items: flex-end;
             gap: $spacing-8;
-            
+
             .time-stamp {
               @include typo-caption-2;
               color: $neu-text-secondary;
               white-space: nowrap;
               margin-bottom: 4px;
             }
-            
+
             .message-bubble {
               padding: 12px 18px;
               @include typo-body-2;
@@ -267,7 +280,6 @@
   /* Footer Chat Input Area */
   .chat-footer-input {
     padding: 12px 20px 16px;
-    background-color: $color-bg;
     border-top: 1px solid rgba(255, 255, 255, 0.4);
 
     .chat-input-box {
@@ -319,7 +331,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            
+
             .add-btn {
               @include neu-circle-btn(38px);
             }
@@ -355,6 +367,7 @@
                 transform: translateY(-1px);
                 box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
                 color: $neu-primary;
+
                 i {
                   color: $neu-primary;
                 }
@@ -373,19 +386,27 @@
               @include neu-circle-btn(38px);
               background-color: $color-primary;
 
-              i { color: $color-white; font-size: $font-size-pc-title-3; }
+              i {
+                color: $color-white;
+                font-size: $font-size-pc-title-3;
+              }
 
               &:disabled {
                 background: $neu-bg;
                 box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
-                i { color: $neu-text-secondary; opacity: 0.5; }
+
+                i {
+                  color: $neu-text-secondary;
+                  opacity: 0.5;
+                }
+
                 cursor: not-allowed;
               }
             }
 
             .stop-btn {
               @include neu-circle-btn(38px);
-              
+
               .stop-square {
                 width: 12px;
                 height: 12px;
@@ -405,20 +426,192 @@
   align-items: center;
   gap: 4px;
   padding: 4px 0;
-  
+
   span {
     width: 6px;
     height: 6px;
     background-color: $neu-text-secondary;
     border-radius: 50%;
     animation: bounce 1.4s infinite ease-in-out both;
-    
-    &:nth-child(1) { animation-delay: -0.32s; }
-    &:nth-child(2) { animation-delay: -0.16s; }
+
+    &:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: -0.16s;
+    }
   }
 }
 
 @keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+}
+
+:host-context(body.dark-theme) {
+  .chat-container {
+    background-color: $dark-bg;
+  }
+
+  .chat-header {
+    @include dark-header-bar;
+
+    .header-left {
+      .icon-btn {
+        @include dark-neu-icon-btn(36px);
+      }
+
+      .header-center {
+        .chat-title {
+          color: $dark-text-primary;
+
+          &:hover {
+            box-shadow: $dark-neu-shadow-inset-sm;
+          }
+        }
+
+        .chat-title-input {
+          color: $dark-text-primary;
+          background: $dark-surface;
+          box-shadow: $dark-neu-shadow-inset-sm;
+          border-color: $dark-border-color;
+        }
+      }
+    }
+
+    .header-right {
+      .icon-btn {
+        @include dark-neu-icon-btn(36px);
+      }
+    }
+  }
+
+  .chat-body {
+    .chat-messages {
+      @include dark-panel;
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $dark-border-light;
+      }
+
+      .message-wrapper {
+        &.user-message {
+          .message-bubble {
+            background: $dark-surface-card;
+            color: $dark-text-primary;
+            box-shadow: $dark-neu-shadow-sm;
+            border-color: $dark-border-color;
+          }
+        }
+
+        &.agent-message {
+          .message-bubble {
+            background: $dark-surface;
+            color: $dark-text-secondary;
+            box-shadow: $dark-neu-shadow-md;
+            border-color: $dark-border-color;
+          }
+        }
+
+        .agent-profile .avatar-small {
+          box-shadow: $dark-neu-shadow-btn;
+          // background-color: $dark-surface-alt;
+          background-color: #fff;
+        }
+
+        .message-content {
+          .agent-name {
+            color: $dark-text-muted;
+          }
+
+          .bubble-group .time-stamp {
+            color: $dark-text-subtle;
+          }
+        }
+      }
+    }
+  }
+
+  .chat-footer-input {
+    background-color: $dark-bg;
+    border-top: 1px solid $dark-border-color;
+
+    .chat-input-box {
+      @include dark-panel;
+
+      &:focus-within {
+        box-shadow: $dark-neu-shadow-inset-md, 0 0 0 2px rgba(74, 134, 255, 0.3);
+      }
+
+      .input-body {
+        .chat-textarea {
+          color: $dark-text-primary;
+
+          &::placeholder {
+            color: $dark-text-muted;
+          }
+        }
+
+        .input-footer {
+          .footer-left {
+            .add-btn {
+              @include dark-neu-icon-btn(38px);
+
+              i {
+                color: $dark-text-secondary;
+              }
+            }
+          }
+
+          .footer-right {
+            .model-btn {
+              background: $dark-surface-alt;
+              color: $dark-text-secondary;
+              box-shadow: $dark-neu-shadow-btn;
+
+              i {
+                color: $dark-text-muted;
+              }
+
+              &:hover {
+                box-shadow: $dark-neu-shadow-btn-hover;
+                color: $color-primary;
+              }
+            }
+
+            .send-btn {
+              box-shadow: $dark-neu-shadow-btn-hover;
+
+              &:disabled {
+                background: $dark-surface;
+                box-shadow: $dark-neu-shadow-inset-sm;
+
+                i {
+                  color: $dark-text-subtle;
+                  opacity: 0.5;
+                }
+              }
+            }
+
+            .stop-btn {
+              @include dark-neu-icon-btn(38px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .typing-indicator span {
+    background-color: $dark-text-muted;
+  }
 }

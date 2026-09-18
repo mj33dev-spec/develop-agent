@@ -1,0 +1,302 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.settings-page-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: $color-bg;
+  position: relative;
+
+  /* Top Full-Width Header Bar (Code Viewer Header Style) */
+  .settings-header-bar {
+    height: 64px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+
+    .header-left {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .icon-btn {
+        flex: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: $neu-bg;
+        border: none;
+        box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+
+        i {
+          font-size: 20px;
+          color: $neu-text;
+        }
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
+          color: $neu-primary;
+
+          i {
+            color: $neu-primary;
+          }
+        }
+
+        &:active {
+          transform: translateY(0);
+          box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+        }
+      }
+
+      .page-title-group {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .page-title {
+          flex: none;
+          @include typo-title-2;
+          color: $neu-text;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  /* Main Body Wrapper */
+  .settings-body-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px;
+    overflow-y: auto;
+    position: relative;
+
+    /* Sunken Inset Neumorphic Panel (Code Viewer Panel Style) */
+    .settings-panel {
+      width: 100%;
+      max-width: 680px;
+      background: $neu-bg;
+      border-radius: 20px;
+      box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light;
+      padding: 32px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .panel-header {
+        border-bottom: 1px solid rgba(184, 201, 223, 0.5);
+        padding-bottom: $spacing-16;
+
+        .panel-title {
+          @include typo-heading-3;
+          font-weight: 700;
+          color: $neu-text;
+          margin: 0 0 6px 0;
+        }
+
+        .panel-subtitle {
+          @include typo-body-3;
+          color: $neu-text-secondary;
+          margin: 0;
+        }
+      }
+
+      .settings-form-body {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        .section-block {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+
+          .section-title {
+            @include typo-subtitle-2;
+            font-weight: 600;
+            color: $neu-text;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            i {
+              font-size: 20px;
+              color: $neu-primary;
+            }
+          }
+        }
+
+        .divider {
+          height: 1px;
+          background: rgba(184, 201, 223, 0.4);
+        }
+
+        .setting-item-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+
+          .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            .item-name {
+              @include typo-body-2;
+              font-weight: 600;
+              color: $neu-text;
+            }
+
+            .item-desc {
+              @include typo-caption-1;
+              color: $neu-text-secondary;
+            }
+          }
+
+          .item-control {
+            flex: none;
+
+            .model-select-btn {
+              background: $neu-bg;
+              border: none;
+              border-radius: 14px;
+              padding: 8px 16px;
+              display: inline-flex;
+              align-items: center;
+              gap: 6px;
+              @include typo-caption-1;
+              font-weight: 600;
+              color: $neu-text;
+              box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+              cursor: pointer;
+              transition: all 0.2s ease;
+
+              i {
+                font-size: 16px;
+                color: $neu-text-secondary;
+              }
+
+              &:hover {
+                transform: translateY(-1px);
+                box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
+                color: $neu-primary;
+              }
+
+              &:active {
+                transform: translateY(0);
+                box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+              }
+            }
+          }
+        }
+
+        .form-actions-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+}
+
+:host-context(body.dark-theme) {
+  .settings-header-bar {
+    background-color: #1e222b;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+
+    .icon-btn {
+      background: #242834;
+      color: #e2e8f0;
+      box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+
+      i { color: #e2e8f0; }
+
+      &:hover {
+        box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
+        color: #4A86FF;
+        i { color: #4A86FF; }
+      }
+
+      &:active {
+        box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+      }
+    }
+
+    .page-title {
+      color: #f1f5f9;
+    }
+  }
+
+  .settings-panel {
+    background: #242834;
+    box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545;
+
+    .panel-header {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+
+      .panel-title { color: #f1f5f9; }
+      .panel-subtitle { color: #94a3b8; }
+    }
+
+    .settings-form-body {
+      .section-block .section-title {
+        color: #f1f5f9;
+      }
+
+      .divider {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .setting-item-row {
+        .item-info {
+          .item-name { color: #f1f5f9; }
+          .item-desc { color: #94a3b8; }
+        }
+
+        .item-control .model-select-btn {
+          background: #242834;
+          color: #e2e8f0;
+          box-shadow: 3px 3px 6px #161821, -3px -3px 6px #303545;
+
+          i { color: #94a3b8; }
+
+          &:hover {
+            box-shadow: 4px 4px 8px #161821, -4px -4px 8px #303545;
+            color: #4A86FF;
+          }
+
+          &:active {
+            box-shadow: inset 2px 2px 4px #161821, inset -2px -2px 4px #303545;
+          }
+        }
+      }
+    }
+  }
+}

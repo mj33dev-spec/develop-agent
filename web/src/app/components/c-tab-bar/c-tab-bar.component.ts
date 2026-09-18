@@ -1,33 +1,17 @@
-import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CTabBarItemComponent, CTabBarVariant } from '../c-tab-bar-item/c-tab-bar-item.component';
+import { CTabBarItemComponent, CTabBarVariant, CTabBarSize } from '../c-tab-bar-item/c-tab-bar-item.component';
 import { Subscription } from 'rxjs';
 
-export type CTabBarSize = 'small' | 'basic' | 'large';
+export type { CTabBarSize } from '../c-tab-bar-item/c-tab-bar-item.component';
 
 @Component({
   selector: 'c-tab-bar',
   standalone: true,
   imports: [CommonModule, CTabBarItemComponent],
-  template: `
-    <div [class]="containerClass" [class]="customClass" [attr.data-size]="size">
-      <!-- Options based rendering -->
-      <ng-container *ngIf="options && options.length > 0">
-        <c-tab-bar-item
-          *ngFor="let option of options"
-          [value]="option.value !== undefined ? option.value : option"
-          [count]="option.count"
-          (selectItem)="onItemSelect($event)"
-        >
-          {{ option.label !== undefined ? option.label : option }}
-        </c-tab-bar-item>
-      </ng-container>
-
-      <!-- Content projection rendering -->
-      <ng-content></ng-content>
-    </div>
-  `,
-  styleUrls: ['./c-tab-bar.component.scss']
+  templateUrl: './c-tab-bar.component.html',
+  styleUrls: ['./c-tab-bar.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CTabBarComponent implements AfterContentInit, OnChanges, OnDestroy {
   @Input() variant: CTabBarVariant = 'base';
@@ -41,11 +25,33 @@ export class CTabBarComponent implements AfterContentInit, OnChanges, OnDestroy 
   @ContentChildren(CTabBarItemComponent) items!: QueryList<CTabBarItemComponent>;
   
   private subscription = new Subscription();
+  private itemSubscriptions = new Subscription();
 
   get containerClass(): string {
     if (this.variant === 'segment') return 'segmentContainer';
     if (this.variant === 'folder') return 'folderContainer';
     return 'baseContainer';
+  }
+
+  getOptionValue(option: any): any {
+    if (typeof option === 'object' && option !== null && 'value' in option) {
+      return option.value;
+    }
+    return option;
+  }
+
+  getOptionLabel(option: any): string {
+    if (typeof option === 'object' && option !== null && 'label' in option) {
+      return option.label;
+    }
+    return String(option);
+  }
+
+  getOptionCount(option: any): number | undefined {
+    if (typeof option === 'object' && option !== null && 'count' in option) {
+      return option.count;
+    }
+    return undefined;
   }
 
   ngAfterContentInit() {
@@ -58,24 +64,28 @@ export class CTabBarComponent implements AfterContentInit, OnChanges, OnDestroy 
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['value'] || changes['variant']) {
+    if (changes['value'] || changes['variant'] || changes['size']) {
       this.updateItems();
     }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.itemSubscriptions.unsubscribe();
   }
 
   private updateItems() {
+    this.itemSubscriptions.unsubscribe();
+    this.itemSubscriptions = new Subscription();
+
     if (this.items) {
       this.items.forEach(item => {
         item.variant = this.variant;
+        item.size = this.size;
         item.isActive = item.value === this.value;
-        // Listen to projection item clicks if not already bound
-        // Note: It's better to let CTabBarItemComponent emit selectItem and handle it there.
-        // We can subscribe to each item's selectItem emitter.
-        item.selectItem.subscribe((val: any) => this.onItemSelect(val));
+        this.itemSubscriptions.add(
+          item.selectItem.subscribe((val: any) => this.onItemSelect(val))
+        );
       });
     }
   }
@@ -84,7 +94,7 @@ export class CTabBarComponent implements AfterContentInit, OnChanges, OnDestroy 
     if (this.value !== val) {
       this.value = val;
       this.valueChange.emit(this.value);
-      this.updateItems(); // Update active states manually
+      this.updateItems();
     }
   }
 }

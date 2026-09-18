@@ -1,1 +1,19 @@
-<p>c-tab-bar works!</p>
+<div [class]="containerClass + (customClass ? ' ' + customClass : '')" [attr.data-size]="size">
+  <!-- Options based rendering -->
+  <ng-container *ngIf="options && options.length > 0">
+    <c-tab-bar-item
+      *ngFor="let option of options"
+      [value]="getOptionValue(option)"
+      [count]="getOptionCount(option)"
+      [variant]="variant"
+      [size]="size"
+      [isActive]="getOptionValue(option) === value"
+      (selectItem)="onItemSelect($event)"
+    >
+      {{ getOptionLabel(option) }}
+    </c-tab-bar-item>
+  </ng-container>
+
+  <!-- Content projection rendering -->
+  <ng-content></ng-content>
+</div>

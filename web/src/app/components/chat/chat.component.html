@@ -110,7 +110,7 @@
         
         <div class="input-footer">
           <div class="footer-left">
-            <c-dropdown [options]="addMenuOptions" [width]="'240px'" direction="up">
+            <c-dropdown [options]="addMenuOptions" menuWidth="240px" direction="up">
               <button class="add-btn" type="button" title="추가 옵션">
                 <i class="bx bx-plus"></i>
               </button>
@@ -118,7 +118,7 @@
           </div>
           
           <div class="footer-right">
-            <c-dropdown [options]="modelOptions" [width]="'200px'" direction="up">
+            <c-dropdown [options]="modelOptions" menuWidth="240px" direction="up" align="right">
               <button class="model-btn" type="button" title="모델 선택">
                 {{ selectedProvider }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
               </button>
