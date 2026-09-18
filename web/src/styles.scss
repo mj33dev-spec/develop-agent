@@ -164,27 +164,6 @@ body.dark-theme {
     }
   }
 
-  .attached-chip {
-    background-color: $dark-surface-alt !important;
-    box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light !important;
-    border-color: $dark-border-color !important;
-    color: $dark-text-secondary !important;
-
-    .chip-name {
-      color: $dark-text-secondary !important;
-    }
-  }
-
-  .msg-attachments .attached-chip.msg-chip {
-    background-color: $dark-surface-alt !important;
-    border-color: $dark-border-color !important;
-    box-shadow: inset 1px 1px 2px $dark-shadow-dark !important;
-    color: $dark-text-secondary !important;
-
-    .chip-name {
-      color: $dark-text-secondary !important;
-    }
-  }
 
 
 

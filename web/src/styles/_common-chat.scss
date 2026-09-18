@@ -104,23 +104,24 @@
 /* ── 테마별 첨부 칩 및 채팅 입력 요소 오버라이드 ──────────────── */
 body.dark-theme {
   .attached-chip {
-    background-color: #242834 !important;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3), -2px -2px 5px rgba(255, 255, 255, 0.05) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    color: #f1f5f9 !important;
+    background-color: $dark-surface-alt !important;
+    box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light !important;
+    border-color: $dark-border-color !important;
+    color: $dark-text-secondary !important;
 
     .chip-name {
-      color: #f1f5f9 !important;
+      color: $dark-text-secondary !important;
     }
   }
 
   .msg-attachments .attached-chip.msg-chip {
-    background-color: #1e222b !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    color: #cbd5e1 !important;
+    background-color: $dark-surface-alt !important;
+    border-color: $dark-border-color !important;
+    box-shadow: inset 1px 1px 2px $dark-shadow-dark !important;
+    color: $dark-text-secondary !important;
 
     .chip-name {
-      color: #cbd5e1 !important;
+      color: $dark-text-secondary !important;
     }
   }
 }
