@@ -19,6 +19,7 @@ import { ThemeService } from './core/services/theme.service';
   `]
 })
 export class AppComponent implements OnInit {
+  title = 'temp-web';
   private tooltipService = inject(DTooltipService);
   private authService = inject(AuthService);
   private dLoading = inject(DLoadingService);
