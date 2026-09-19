@@ -9,24 +9,107 @@
     }
 }
 
-// ── 뉴모피즘 공통 믹스인 ────────────────
-
-// 1) 돌출된 3D 양각 효과 믹스인 (카드, 버튼, 돌출 패널용)
-@mixin neu-extruded($radius: 16px, $shadow: $shadow-neu-extruded-md) {
-  background: $neu-bg;
+// ── Flat Compatibility Mixins (Neumorphism Removal) ────────────────
+@mixin neu-extruded($radius: 16px, $shadow: none) {
+  background: #ffffff;
   border-radius: $radius;
-  box-shadow: $shadow;
-  border: none;
-  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-// 2) 안으로 파여진 3D 음각 효과 믹스인 (인풋, 선택된 카드, 눌린 버튼용)
-@mixin neu-inset($radius: 12px, $shadow: $shadow-neu-inset-md) {
-  background: $neu-bg;
+@mixin neu-inset($radius: 12px, $shadow: none) {
+  background: #ffffff;
   border-radius: $radius;
-  box-shadow: $shadow;
-  border: none;
+  border: 1px solid #cbd5e1;
+  box-shadow: none;
+}
+
+@mixin neu-input($radius: $radius-deep) {
+  width: 100%;
+  min-height: 40px;
+  padding: $spacing-8 $spacing-16;
+  @include typo-body-3;
+  color: #1e293b;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: $radius;
+  outline: none;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
+  }
+}
+
+@mixin neu-circle-btn($size: 38px) {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
   transition: all 0.2s ease;
+  i { font-size: $font-size-pc-title-2; color: #64748b; }
+  &:hover { background: #e2e8f0; color: $color-primary; }
+}
+
+@mixin neu-icon-btn($size: 40px) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  &:hover { background: #e2e8f0; }
+}
+
+@mixin neu-button($primary: true, $radius: 16px) {
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background: $color-primary;
+  color: $color-white;
+  box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3);
+  &:hover { background: #3b82f6; }
+}
+
+@mixin dark-neu-icon-btn($size: 36px) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  background: #2b303e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  i { color: #94a3b8; }
+  &:hover { background: #353b4d; i { color: $color-primary; } }
+}
+
+@mixin dark-neu-extruded($radius: 16px, $shadow: none) {
+  background: $dark-surface;
+  border-radius: $radius;
+  border: 1px solid $dark-border-color;
+}
+
+@mixin dark-neu-inset($radius: 12px, $shadow: none) {
+  background: $dark-surface-alt;
+  border-radius: $radius;
+  border: 1px solid $dark-border-color;
 }
 
 // ── 다크모드 전용 공통 믹스인 ────────────────
@@ -42,50 +125,6 @@
   }
 }
 
-@mixin dark-neu-extruded($radius: 16px, $shadow: $dark-neu-shadow-md) {
-  background: $dark-surface;
-  border-radius: $radius;
-  box-shadow: $shadow;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-@mixin dark-neu-inset($radius: 12px, $shadow: $dark-neu-shadow-inset-md) {
-  background: $dark-surface;
-  border-radius: $radius;
-  box-shadow: $shadow;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-// ── 다크모드 뉴모피즘 버튼 & 카드 믹스인 ──
-@mixin dark-neu-icon-btn($size: 36px) {
-  width: $size;
-  height: $size;
-  border-radius: 50%;
-  background: $dark-surface-alt;
-  box-shadow: $dark-neu-shadow-btn;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-
-  i {
-    color: $dark-text-muted;
-  }
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: $dark-neu-shadow-btn-hover;
-
-    i {
-      color: $color-primary;
-    }
-  }
-}
-
 // ── 다크모드 공통 구조 믹스인 ──
 @mixin dark-header-bar {
   background-color: $dark-surface !important;
@@ -95,7 +134,8 @@
 
 @mixin dark-panel {
   background: $dark-surface-alt !important;
-  box-shadow: $dark-neu-shadow-inset-md !important;
+  border: 1px solid $dark-border-color !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
 // ── 플랫 테마 공통 믹스인 ──
@@ -135,108 +175,6 @@
   border-radius: $radius !important;
 }
 
-
-// 뉴모피즘 프라이머리/소프트 버튼
-@mixin neu-button($primary: true, $radius: 16px) {
-  border: none;
-  border-radius: $radius;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-
-  @if $primary {
-    background: $neu-primary-gradient;
-    color: $color-white;
-    box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
-
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 8px 8px 18px $neu-shadow-dark, -8px -8px 18px $neu-shadow-light;
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(1px);
-      box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.25), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
-    }
-  } @else {
-    background: $neu-bg;
-    color: $neu-text;
-    box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
-
-    &:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(0);
-      box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
-    }
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
-// 뉴모피즘 원형 아이콘 버튼 (입력창 하단 툴바용)
-@mixin neu-circle-btn($size: 38px) {
-  background: $neu-bg;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: $size;
-  height: $size;
-  border-radius: 50%;
-  box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
-  transition: all 0.2s ease;
-  
-  i { 
-    font-size: $font-size-pc-title-2; 
-    color: $neu-text-secondary; 
-  }
-
-  &:hover {
-    box-shadow: 5px 5px 10px $neu-shadow-dark, -5px -5px 10px $neu-shadow-light;
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
-    transform: translateY(0);
-  }
-}
-
-// 뉴모피즘 원형 아이콘 버튼
-@mixin neu-icon-btn($size: 40px) {
-  width: $size;
-  height: $size;
-  border-radius: 50%;
-  background: $neu-bg;
-  box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
-    transform: translateY(-1px);
-  }
-
-  &:active, &.active {
-    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
-    transform: translateY(0);
-  }
-}
-
 // ── 공통 커스텀 스크롤바 믹스인 ────────────────
 @mixin custom-scrollbar($width: 6px, $thumb-color: rgba(163, 177, 198, 0.5)) {
   &::-webkit-scrollbar {
@@ -273,32 +211,5 @@
     @include typo-caption-1;
     color: $color-sub-text;
     margin: 0;
-  }
-}
-
-// ── 3) 뉴모피즘 공통 인풋 & 텍스트에어리어 음각 믹스인 ────────────────
-@mixin neu-input($radius: $radius-deep) {
-  @include neu-inset($radius);
-  width: 100%;
-  min-height: 40px;
-  padding: $spacing-8 $spacing-16;
-  @include typo-body-3;
-  color: $neu-text;
-  outline: none;
-  box-sizing: border-box;
-  font-family: inherit;
-
-  &:focus {
-    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.4);
-  }
-
-  &::placeholder {
-    color: $neu-text-secondary;
-    opacity: 0.7;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
   }
 }

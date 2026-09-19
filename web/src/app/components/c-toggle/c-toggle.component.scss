@@ -5,8 +5,8 @@
   width: 50px;
   height: 26px;
   border-radius: 13px;
-  background: $neu-bg;
-  box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+  background: #cbd5e1;
+  box-shadow: none;
   cursor: pointer;
   transition: all 0.2s ease;
   display: inline-block;
@@ -20,18 +20,18 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: $neu-bg;
-    box-shadow: 2px 2px 4px $neu-shadow-dark, -2px -2px 4px $neu-shadow-light;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease;
   }
 
   &.active {
-    background: rgba(74, 134, 255, 0.12);
+    background: $color-primary;
 
     .toggle-knob {
       transform: translateX(24px);
-      background: $neu-primary;
-      box-shadow: 2px 2px 6px rgba(74, 134, 255, 0.4);
+      background: #ffffff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
     }
   }
 
@@ -41,7 +41,7 @@
   }
 
   &:focus-visible {
-    box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.4);
+    box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.4);
   }
 
   // --- Size Modifiers ---
@@ -76,28 +76,6 @@
 
     &.active .toggle-knob {
       transform: translateX(28px);
-    }
-  }
-}
-
-// ── 테마 오버라이드 ──────────────────────────────────────
-:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)) {
-  .c-toggle-switch {
-    background: $dark-surface;
-    box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39;
-
-    .toggle-knob {
-      background: $dark-surface-card;
-      box-shadow: 2px 2px 4px #14171d, -2px -2px 4px #282d39;
-    }
-
-    &.active {
-      background: rgba(74, 134, 255, 0.2);
-
-      .toggle-knob {
-        background: $color-primary;
-        box-shadow: 2px 2px 6px rgba(74, 134, 255, 0.5);
-      }
     }
   }
 }

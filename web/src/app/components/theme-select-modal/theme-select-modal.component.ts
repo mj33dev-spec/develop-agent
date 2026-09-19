@@ -27,7 +27,7 @@ export class ThemeSelectModalComponent implements OnInit {
   @Input() isOpen: boolean = false;
   @Output() onClose = new EventEmitter<void>();
 
-  selectedTheme: StyleTheme = '글래스모피즘';
+  selectedTheme: StyleTheme = '플랫';
   isDarkMode: boolean = false;
 
   themeOptions: ThemeOptionItem[] = [
@@ -44,14 +44,7 @@ export class ThemeSelectModalComponent implements OnInit {
       subtitle: '유리 질감 테마',
       icon: 'bx bx-glass',
       description: '투명한 프리미엄 유리 질감과 몽환적인 배경 그라디언트 톤'
-    },
-    {
-      id: '뉴모피즘',
-      title: '뉴모피즘 (Neumorphism)',
-      subtitle: '기본 입체 테마',
-      icon: 'bx bx-cube-alt',
-      description: '은은한 3D 양각/음각 그림자와 입체적인 버튼 감성의 소프트 디자인'
-    },
+    }
   ];
 
   private themeService = inject(ThemeService);

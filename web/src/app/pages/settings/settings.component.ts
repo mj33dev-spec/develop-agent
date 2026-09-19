@@ -24,17 +24,17 @@ import { ThemeService } from '../../core/services/theme.service';
 export class SettingsComponent implements OnInit {
   // AI 및 시스템 설정 상태
   defaultModel: string = 'Gemini 3.6 Flash';
-  defaultTheme: string = '뉴모피즘';
+  defaultTheme: string = '플랫';
   isDarkMode: boolean = false;
   isGuideModalOpen: boolean = false;
   isThemeModalOpen: boolean = false;
 
   // DB에 저장된 원본 설정 상태
   private savedModel: string = 'Gemini 3.6 Flash';
-  private savedTheme: string = '뉴모피즘';
+  private savedTheme: string = '플랫';
   private savedDarkMode: boolean = false;
 
-  themeTabOptions: string[] = ['플랫', '글래스모피즘', '뉴모피즘'];
+  themeTabOptions: string[] = ['플랫', '글래스모피즘'];
 
   modelOptions: CDropdownOption[] = [
     { label: 'Gemini 3.6 Flash', value: 'gemini-flash', onClick: () => this.onModelSelect('Gemini 3.6 Flash') },
@@ -138,7 +138,7 @@ export class SettingsComponent implements OnInit {
       try {
         const defaultSettings = {
           defaultModel: 'Gemini 3.6 Flash',
-          defaultTheme: '뉴모피즘',
+          defaultTheme: '플랫',
           isDarkMode: false
         };
         await this.authService.updateUserSettings(defaultSettings);
@@ -149,7 +149,7 @@ export class SettingsComponent implements OnInit {
         this.savedTheme = defaultSettings.defaultTheme;
         this.savedDarkMode = defaultSettings.isDarkMode;
         this.themeService.setDarkMode(false);
-        this.themeService.setStyleTheme('뉴모피즘');
+        this.themeService.setStyleTheme('플랫');
         // 완료 시 로딩만 해제
         this.dLoading.dismiss();
       } catch (e: any) {

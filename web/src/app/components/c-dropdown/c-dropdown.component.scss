@@ -69,32 +69,22 @@
   width: var(--dropdown-width, auto);
   min-width: var(--dropdown-min-width, auto);
 
-  background: $neu-bg;
-  border: none;
-  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
   padding: $spacing-8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   animation: dropdownIn 150ms ease;
   max-height: 320px;
   overflow-y: auto;
 
-  &.fill {
-    box-shadow: 10px 10px 20px $neu-shadow-dark, -10px -10px 20px $neu-shadow-light;
+  &.fill, &.outlinedDropdown {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 
     hr {
       height: 1px;
-      background: rgba(194, 209, 229, 0.6);
+      background: #e2e8f0;
       margin: $spacing-8 0;
-      border: none;
-    }
-  }
-
-  &.outlinedDropdown {
-    box-shadow: 8px 8px 16px $neu-shadow-dark, -8px -8px 16px $neu-shadow-light;
-
-    hr {
-      height: 1px;
-      background: rgba(194, 209, 229, 0.6);
-      margin: $spacing-4 0;
       border: none;
     }
   }
@@ -105,9 +95,9 @@
     gap: $spacing-8;
     width: 100%;
     padding: $spacing-8 $spacing-12;
-    border-radius: $radius-deep;
+    border-radius: $radius-md;
     @include typo-body-3;
-    color: $color-text;
+    color: #1e293b;
     transition: background $transition-fast;
     background: none;
     border: none;
@@ -115,19 +105,19 @@
     white-space: nowrap;
 
     &:hover:not(.disabled) {
-      background: $neu-bg;
-      box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
-      transform: translateY(-1px);
+      background: #f1f5f9;
+      box-shadow: none;
+      transform: none;
     }
 
     &.selected {
-      background: $neu-bg;
+      background: #e2e8f0;
       font-weight: 600;
-      color: $neu-primary;
-      box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+      color: $color-primary;
+      box-shadow: none;
 
       .dropdownItemIcon {
-        color: $neu-primary;
+        color: $color-primary;
       }
     }
 
@@ -156,49 +146,7 @@
   }
 }
 
-body.dark-theme:not(.theme-flat):not(.theme-glass) .dropdown-portal-menu,
-:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)) .dropdown-portal-menu {
-  background: $dark-surface-alt;
 
-  &.fill {
-    box-shadow: $dark-neu-shadow-lg;
-
-    hr {
-      background: $dark-border-color;
-    }
-  }
-
-  &.outlinedDropdown {
-    box-shadow: $dark-neu-shadow-md;
-
-    hr {
-      background: $dark-border-color;
-    }
-  }
-
-  .dropdownItem {
-    color: $dark-text-secondary;
-
-    &:hover:not(.disabled) {
-      background: $dark-surface;
-      box-shadow: $dark-neu-shadow-sm;
-    }
-
-    &.selected {
-      background: $dark-surface;
-      color: $color-primary;
-      box-shadow: $dark-neu-shadow-inset-sm;
-
-      .dropdownItemIcon {
-        color: $color-primary;
-      }
-    }
-
-    .dropdownItemIcon {
-      color: $dark-text-muted;
-    }
-  }
-}
 
 /* ── 플랫 테마 (라이트) ────────────────── */
 body.theme-flat .dropdown-portal-menu {

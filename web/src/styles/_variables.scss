@@ -14,16 +14,25 @@ $font-weight-bold: 700;
 $color-primary: #4A86FF;
 $color-secondary: #6B5CE7;
 
-// ── Neumorphism Design Tokens (Light Theme) ───
-$neu-bg: #eef4fc;
-$neu-shadow-dark: #c2d1e5;
-$neu-shadow-light: #ffffff;
-$neu-border-color: #b8c9df;
+// ── Flat Design Tokens Mapped for Clean Removal of Neumorphism ───
+$neu-bg: #ffffff;
+$neu-shadow-dark: rgba(0, 0, 0, 0.04);
+$neu-shadow-light: rgba(255, 255, 255, 0);
+$neu-border-color: #cbd5e1;
 $neu-border: 1px solid $neu-border-color;
 $neu-primary: #4A86FF;
-$neu-primary-gradient: linear-gradient(145deg, #4f8fff, #4278e6);
-$neu-text: #2d3748;
-$neu-text-secondary: #718096;
+$neu-primary-gradient: #4A86FF;
+$neu-text: #1e293b;
+$neu-text-secondary: #64748b;
+
+$dark-neu-shadow-btn: 0 1px 2px rgba(0, 0, 0, 0.2);
+$dark-neu-shadow-btn-hover: 0 2px 4px rgba(0, 0, 0, 0.3);
+$dark-neu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+$dark-neu-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3);
+$dark-neu-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.4);
+$dark-neu-shadow-inset-sm: none;
+$dark-neu-shadow-inset-md: none;
+$dark-neu-shadow-inset-lg: none;
 
 // ── Dark Theme Design Tokens (Dark Theme) ─────
 $dark-bg-overlay: rgba(15, 17, 23, 0.75);
@@ -47,17 +56,6 @@ $dark-text-subtle: #64748b;
 
 $dark-disabled-bg: #434b5e;
 $dark-disabled-text: #7e8da6;
-
-// 다크모드 뉴모피즘 그림자 토큰
-$dark-neu-shadow-btn: 3px 3px 6px $dark-shadow-dark, -3px -3px 6px $dark-shadow-light;
-$dark-neu-shadow-btn-hover: 4px 4px 8px $dark-shadow-dark, -4px -4px 8px $dark-shadow-light;
-$dark-neu-shadow-sm: 4px 4px 10px $dark-shadow-dark, -4px -4px 10px $dark-shadow-light;
-$dark-neu-shadow-md: 6px 6px 14px $dark-shadow-dark, -6px -6px 14px $dark-shadow-light;
-$dark-neu-shadow-lg: 10px 10px 24px $dark-shadow-dark, -10px -10px 24px $dark-shadow-light;
-
-$dark-neu-shadow-inset-sm: inset 3px 3px 6px $dark-shadow-dark, inset -3px -3px 6px $dark-shadow-light;
-$dark-neu-shadow-inset-md: inset 4px 4px 8px $dark-shadow-dark, inset -4px -4px 8px $dark-shadow-light;
-$dark-neu-shadow-inset-lg: inset 5px 5px 10px $dark-shadow-dark, inset -5px -5px 10px $dark-shadow-light;
 
 $dark-modal-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
 

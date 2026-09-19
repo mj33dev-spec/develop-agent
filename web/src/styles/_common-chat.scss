@@ -11,15 +11,14 @@
   width: 100%;
 }
 
-/* ── 첨부파일 칩 공통 뉴모피즘 스타일 ──────────────── */
+/* ── 첨부파일 칩 공통 스타일 ──────────────── */
 .attached-chip {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 2px 8px;
-  background-color: #eaf0f8;
-  box-shadow: 3px 3px 8px rgba(163, 177, 198, 0.45), -3px -3px 8px rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
@@ -84,9 +83,8 @@
     padding: 3px 8px;
     font-size: 13px;
     border-radius: 6px;
-    background-color: #eaf0f8;
-    box-shadow: inset 1px 1px 2px rgba(163, 177, 198, 0.3);
-    border: 1px solid #dbe2ef;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
     color: #2D3748;
     cursor: default;
 
@@ -97,36 +95,6 @@
     .chip-name {
       color: #2D3748;
       font-weight: 600;
-    }
-  }
-}
-
-/* ========================================================================
-   채팅 입력창 공통 테마별 스타일
-   (.chat-input-box, .file-question-box, .copilot-input-box)
-   ======================================================================== */
-
-/* ── 뉴모피즘 다크 테마 ────────────────── */
-body.dark-theme:not(.theme-flat):not(.theme-glass) {
-  .attached-chip {
-    background-color: $dark-surface-alt;
-    box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light;
-    border-color: $dark-border-color;
-    color: $dark-text-secondary;
-
-    .chip-name {
-      color: $dark-text-secondary;
-    }
-  }
-
-  .msg-attachments .attached-chip.msg-chip {
-    background-color: $dark-surface-alt;
-    border-color: $dark-border-color;
-    box-shadow: inset 1px 1px 2px $dark-shadow-dark;
-    color: $dark-text-secondary;
-
-    .chip-name {
-      color: $dark-text-secondary;
     }
   }
 }

@@ -176,64 +176,7 @@
   }
 }
 
-:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)),
-body.dark-theme:not(.theme-flat):not(.theme-glass) {
-  .segmentContainer {
-    background-color: $dark-surface;
-    box-shadow: $dark-neu-shadow-inset-sm;
 
-    .segmentBtn {
-      color: $dark-text-muted;
-
-      &:hover {
-        color: $dark-text-primary;
-      }
-
-      &.active {
-        background-color: $dark-surface-card;
-        color: $color-primary;
-        box-shadow: $dark-neu-shadow-sm;
-      }
-    }
-  }
-
-  .baseContainer {
-    border-bottom-color: $dark-border-color;
-
-    .baseBtn {
-      color: $dark-text-muted;
-
-      &:hover {
-        color: $dark-text-primary;
-      }
-
-      &.active {
-        color: $color-primary;
-      }
-    }
-  }
-
-  .folderBtn {
-    background-color: $dark-surface;
-    border-color: $dark-border-color;
-    color: $dark-text-muted;
-
-    &:hover {
-      color: $dark-text-primary;
-    }
-
-    &.active {
-      background-color: $dark-surface-alt;
-      color: $color-primary;
-      box-shadow: 2px -2px 5px $dark-shadow-dark;
-    }
-  }
-
-  .count {
-    background-color: $dark-border-color;
-    color: $dark-text-muted;
-  }
-}
 
 :host-context(body.theme-flat),
 body.theme-flat {

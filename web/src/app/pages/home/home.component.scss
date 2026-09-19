@@ -52,18 +52,19 @@
 
   .copilot-input-box {
     width: 100%;
-    background: $neu-bg;
-    border-radius: 24px;
-    box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     padding: $padding-normal $padding-large;
-    border: none;
     display: flex;
     flex-direction: column;
     gap: $spacing-12;
     transition: all 0.2s ease;
 
     &:focus-within {
-      box-shadow: inset 5px 5px 10px #b8c3d1, inset -5px -5px 10px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.3);
+      border-color: $color-primary;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2), 0 4px 20px rgba(0, 0, 0, 0.08);
     }
 
     .input-body {
@@ -78,7 +79,7 @@
         @include typo-body-1;
         padding: 4px;
         background: transparent;
-        color: $neu-text;
+        color: #1e293b;
         resize: none;
         overflow-y: hidden;
         min-height: 24px;
@@ -86,7 +87,7 @@
         line-height: 1.4;
 
         &::placeholder {
-          color: $neu-text-secondary;
+          color: #94a3b8;
         }
       }
 
@@ -101,7 +102,28 @@
           gap: 12px;
 
           .add-btn {
-            @include neu-circle-btn(38px);
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            i {
+              font-size: $font-size-pc-title-2;
+              color: #64748b;
+            }
+
+            &:hover {
+              background: #e2e8f0;
+              color: $color-primary;
+
+              i { color: $color-primary; }
+            }
           }
         }
 
@@ -111,8 +133,8 @@
           gap: 8px;
 
           .model-btn {
-            background: $neu-bg;
-            border: none;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
             border-radius: 20px;
             padding: 8px 16px;
             display: inline-flex;
@@ -120,66 +142,29 @@
             gap: 4px;
             @include typo-caption-1;
             font-weight: 600;
-            color: $neu-text;
-            box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+            color: #334155;
+            box-shadow: none;
             cursor: pointer;
             transition: all 0.2s ease;
 
             i {
               font-size: 16px;
-              color: $neu-text-secondary;
+              color: #64748b;
               transition: transform 0.2s ease;
             }
 
             &:hover {
-              transform: translateY(-1px);
-              box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
-              color: $neu-primary;
+              background: #e2e8f0;
+              color: $color-primary;
 
               i {
-                color: $neu-primary;
+                color: $color-primary;
               }
             }
 
-            &:active {
-              transform: translateY(0);
-              box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
-            }
-
-            /* ── 테마별 오버라이드 (중첩 선언으로 명시도 충돌 해결) ── */
             :host-context(body.dark-theme) & {
               background: $dark-surface-alt;
-              color: $dark-text-secondary;
-              box-shadow: $dark-neu-shadow-btn;
-
-              i { color: $dark-text-muted; }
-
-              &:hover {
-                box-shadow: $dark-neu-shadow-btn-hover;
-                color: $color-primary;
-
-                i { color: $color-primary; }
-              }
-
-              &:active {
-                box-shadow: $dark-neu-shadow-inset-sm;
-              }
-            }
-
-            :host-context(body.theme-flat) & {
-              background: $flat-card-bg;
-              border: 1px solid $flat-border-color;
-              box-shadow: $flat-shadow-sm;
-              color: $flat-text-primary;
-
-              i { color: $flat-text-secondary; }
-              &:hover { background: $flat-bg; color: $color-primary; }
-            }
-
-            :host-context(body.theme-flat.dark-theme) & {
-              background: $dark-surface-alt;
               border: 1px solid $dark-border-color;
-              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
               color: $dark-text-secondary;
 
               i { color: $dark-text-muted; }
@@ -212,25 +197,34 @@
           }
 
           .send-btn {
-            background: $neu-primary-gradient;
-            width: 40px;
-            height: 40px;
-            box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
-            @include neu-circle-btn(38px);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             background-color: $color-primary;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3);
+            transition: all 0.2s ease;
 
             i {
               color: $color-white;
               font-size: $font-size-pc-title-3;
             }
 
+            &:hover:not(:disabled) {
+              background-color: #3b82f6;
+              box-shadow: 0 4px 10px rgba(74, 134, 255, 0.4);
+            }
+
             &:disabled {
-              background: $neu-bg;
-              box-shadow: inset 2px 2px 4px $neu-shadow-dark, inset -2px -2px 4px $neu-shadow-light;
+              background: #e2e8f0;
+              box-shadow: none;
 
               i {
-                color: $neu-text-secondary;
-                opacity: 0.5;
+                color: #94a3b8;
               }
 
               cursor: not-allowed;
@@ -243,7 +237,7 @@
 
   .disclaimer {
     @include typo-caption-1;
-    color: $neu-text-secondary;
+    color: #64748b;
     text-align: center;
     max-width: 600px;
   }
@@ -294,10 +288,12 @@
 
   .copilot-input-box {
     background: $dark-surface-alt;
-    box-shadow: $dark-neu-shadow-inset-md;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 
     &:focus-within {
-      box-shadow: $dark-neu-shadow-inset-lg, 0 0 0 2px rgba(74, 134, 255, 0.3);
+      border-color: $color-primary;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3);
     }
 
     .input-body {
@@ -312,51 +308,30 @@
       .input-footer {
         .footer-left {
           .add-btn {
-            background: $dark-surface-alt;
-            box-shadow: $dark-neu-shadow-btn;
+            background: #2b303e;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
 
             i { color: $dark-text-secondary; }
 
             &:hover {
-              box-shadow: $dark-neu-shadow-btn-hover;
-            }
-
-            &:active {
-              box-shadow: $dark-neu-shadow-inset-sm;
+              background: #353b4d;
+              color: $color-primary;
+              i { color: $color-primary; }
             }
           }
         }
 
         .footer-right {
-          .model-btn {
-            background: $dark-surface-alt;
-            color: $dark-text-secondary;
-            box-shadow: $dark-neu-shadow-btn;
-
-            i { color: $dark-text-muted; }
-
-            &:hover {
-              box-shadow: $dark-neu-shadow-btn-hover;
-              color: $color-primary;
-
-              i { color: $color-primary; }
-            }
-
-            &:active {
-              box-shadow: $dark-neu-shadow-inset-sm;
-            }
-          }
-
           .send-btn {
-            box-shadow: $dark-neu-shadow-sm;
+            box-shadow: 0 2px 6px rgba(74, 134, 255, 0.4);
 
             &:disabled {
-              background: $dark-surface;
-              box-shadow: $dark-neu-shadow-inset-sm;
+              background: #2b303e;
+              box-shadow: none;
 
               i {
                 color: $dark-text-subtle;
-                opacity: 0.5;
               }
             }
           }

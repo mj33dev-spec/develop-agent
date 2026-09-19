@@ -51,10 +51,10 @@
 }
 
 .alertBox {
-  background-color: $neu-bg;
-  border-radius: 24px;
-  box-shadow: 0 16px 40px rgba(162, 178, 201, 0.5), 0 4px 12px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
   width: 100%;
   max-width: 400px;
   overflow: hidden;
@@ -153,17 +153,18 @@
   margin-top: 12px;
   width: 100%;
   padding: 12px 16px;
-  background: $neu-bg;
-  border: none;
-  border-radius: 14px;
-  box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  box-shadow: none;
   @include typo-body-3;
-  color: $neu-text;
+  color: #1e293b;
   box-sizing: border-box;
 
   &:focus {
     outline: none;
-    box-shadow: inset 4px 4px 8px $neu-shadow-dark, inset -4px -4px 8px $neu-shadow-light, 0 0 0 2px rgba(74, 134, 255, 0.3);
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
   }
 }
 
@@ -178,37 +179,7 @@
   gap: 10px;
 }
 
-body.dark-theme:not(.theme-flat):not(.theme-glass),
-:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)) {
-  .alertOverlay.active {
-    background-color: rgba(15, 17, 23, 0.75);
-    backdrop-filter: blur(6px);
-  }
 
-  .alertBox {
-    background-color: #242834;
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
-
-    .alertTitle {
-      color: #f1f5f9;
-    }
-
-    .alertMessage {
-      color: #94a3b8;
-    }
-
-    .alertInput {
-      background: #1e222b;
-      box-shadow: inset 3px 3px 6px #161821, inset -3px -3px 6px #303545;
-      color: #f1f5f9;
-
-      &:focus {
-        box-shadow: inset 4px 4px 8px #161821, inset -4px -4px 8px #303545, 0 0 0 2px rgba(74, 134, 255, 0.3);
-      }
-    }
-  }
-}
 
 body.theme-flat,
 :host-context(body.theme-flat) {
