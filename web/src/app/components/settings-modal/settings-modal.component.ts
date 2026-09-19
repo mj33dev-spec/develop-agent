@@ -9,13 +9,26 @@ import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.co
 import { CButtonComponent } from '../c-button/c-button.component';
 import { CToggleComponent } from '../c-toggle/c-toggle.component';
 import { CModalComponent } from '../c-modal/c-modal.component';
+import { CModalSidebarComponent } from '../c-modal/c-modal-sidebar/c-modal-sidebar.component';
+import { CModalSidebarItemComponent } from '../c-modal/c-modal-sidebar/c-modal-sidebar-item/c-modal-sidebar-item.component';
+import { CModalSidebarItemLabelComponent } from '../c-modal/c-modal-sidebar/c-modal-sidebar-item-label/c-modal-sidebar-item-label.component';
 
 export type SettingsTab = 'account' | 'appearance' | 'behavior' | 'notifications' | 'custom' | 'data';
 
 @Component({
   selector: 'app-settings-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, CDropdownComponent, CButtonComponent, CToggleComponent, CModalComponent],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    CDropdownComponent, 
+    CButtonComponent, 
+    CToggleComponent, 
+    CModalComponent,
+    CModalSidebarComponent,
+    CModalSidebarItemComponent,
+    CModalSidebarItemLabelComponent
+  ],
   templateUrl: './settings-modal.component.html',
   styleUrl: './settings-modal.component.scss',
   encapsulation: ViewEncapsulation.None

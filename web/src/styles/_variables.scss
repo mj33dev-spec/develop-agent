@@ -80,6 +80,25 @@ $flat-dark-sidebar-bg: rgba(20, 24, 34, 0.55);
 $flat-dark-surface-alt: #242834;
 $flat-dark-surface-hover: #2b303e;
 
+// ── 사이드바 통합 디자인 토큰 (홈 사이드바 & 모달 사이드바 공통 토큰) ───
+// 라이트모드 사이드바 디자인 토큰
+$sidebar-light-bg: #f8fafc;
+$sidebar-light-border: #e2e8f0;
+$sidebar-light-hover-bg: #f1f5f9;
+$sidebar-light-active-bg: #e2e8f0;
+$sidebar-light-text: #334155;
+$sidebar-light-text-active: #0f172a;
+$sidebar-light-icon: #64748b;
+
+// 다크모드 사이드바 디자인 토큰 (어두운 슬레이트 차콜 컨셉)
+$sidebar-dark-bg: #1e293b;
+$sidebar-dark-border: #334155;
+$sidebar-dark-hover-bg: #334155;
+$sidebar-dark-active-bg: #334155;
+$sidebar-dark-text: #cbd5e1;
+$sidebar-dark-text-active: #ffffff;
+$sidebar-dark-icon: #94a3b8;
+
 // ── Glassmorphism Theme Tokens (Liquid Glass Concept) ─────────────────
 $glass-bg-gradient: 
   radial-gradient(circle at 15% 20%, rgba(244, 114, 182, 0.45) 0%, transparent 45%),

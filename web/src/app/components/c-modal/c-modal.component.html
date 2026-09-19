@@ -1,7 +1,7 @@
 <div *ngIf="isOpen" class="modalOverlay" (click)="handleOverlayClick($event)">
   <div class="modalContent" [class.has-sidebar]="hasSidebar" [style.width]="width" [style.height]="height" (click)="$event.stopPropagation()">
     
-    <!-- 닫기 버튼 (hideHeader이거나 hasSidebar일 때도 우측 상단 닫기 기능 지원) -->
+    <!-- 닫기 버튼 -->
     <button *ngIf="hasSidebar || hideHeader" type="button" class="closeBtn absoluteCloseBtn" (click)="onClose.emit()" aria-label="Close">
       <i class="bx bx-x"></i>
     </button>
@@ -10,10 +10,10 @@
     <ng-container *ngIf="hasSidebar; else standardModal">
       <div class="modalSidebarLayout">
         <aside class="modalSidebarContainer">
-          <ng-content select="[modal-sidebar]"></ng-content>
+          <ng-content select="c-modal-sidebar"></ng-content>
         </aside>
         <div class="modalMainContainer">
-          <ng-content select="[modal-content], :not([modal-sidebar])"></ng-content>
+          <ng-content select=":not(c-modal-sidebar)"></ng-content>
         </div>
       </div>
     </ng-container>

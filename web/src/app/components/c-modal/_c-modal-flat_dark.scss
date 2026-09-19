@@ -18,6 +18,11 @@ body.dark-mode {
     border: 1px solid $dark-border-color;
   }
 
+  .modalSidebarContainer {
+    background: #1e293b !important;
+    border-right-color: #334155 !important;
+  }
+
   .modalHeader {
     border-bottom: 1px solid $dark-border-color;
 

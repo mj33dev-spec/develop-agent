@@ -1,0 +1,24 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/mixins' as *;
+
+.c-modal-sidebar-root {
+  width: 220px;
+  height: 100% !important;
+  flex: none;
+  background: $sidebar-light-bg;
+  border-right: 1px solid $sidebar-light-border;
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+body.dark-theme,
+body.dark-mode {
+  .c-modal-sidebar-root {
+    background: $sidebar-dark-bg !important;
+    border-right-color: $sidebar-dark-border !important;
+  }
+}

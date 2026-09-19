@@ -7,36 +7,36 @@
 
 body.theme-flat.dark-theme {
   .sidebar {
-    background-color: $flat-dark-bg;
-    border-right: 1px solid $dark-border-color;
+    background-color: $sidebar-dark-bg;
+    border-right: 1px solid $sidebar-dark-border;
     box-shadow: $dark-shadow-sm;
 
     .sidebar-header {
-      border-bottom: 1px solid $dark-border-color;
+      border-bottom: 1px solid $sidebar-dark-border;
     }
 
     .sidebar-block-btn {
-      background: $flat-dark-surface-alt;
-      border: 1px solid $dark-border-color;
-      color: $dark-text-primary;
+      background: $sidebar-dark-hover-bg;
+      border: 1px solid $sidebar-dark-border;
+      color: $sidebar-dark-text-active;
       box-shadow: $dark-shadow-btn;
 
       i {
-        color: $dark-text-primary;
+        color: $sidebar-dark-text-active;
       }
 
       &:hover {
-        background: $flat-dark-surface-hover;
-        border-color: $dark-border-light;
-        color: $color-white;
+        background: #475569;
+        border-color: #475569;
+        color: #ffffff;
         
         i {
-          color: $color-white;
+          color: #ffffff;
         }
       }
 
       &:active {
-        background: $flat-dark-card-bg;
+        background: $sidebar-dark-bg;
         box-shadow: none;
       }
 
@@ -47,20 +47,20 @@ body.theme-flat.dark-theme {
     }
 
     .sidebar-footer {
-      border-top: 1px solid $dark-border-color;
+      border-top: 1px solid $sidebar-dark-border;
 
       .sidebar-user-card {
-        background: $flat-dark-surface-alt;
+        background: $sidebar-dark-hover-bg;
         box-shadow: $dark-shadow-md;
-        border: 1px solid $dark-border-color;
+        border: 1px solid $sidebar-dark-border;
 
         .user-info {
           .user-nickname {
-            color: $dark-text-primary;
+            color: $sidebar-dark-text-active;
           }
 
           .user-email {
-            color: $dark-text-muted;
+            color: $sidebar-dark-icon;
           }
 
           &:hover .user-nickname {
@@ -69,15 +69,15 @@ body.theme-flat.dark-theme {
         }
 
         .user-more-btn {
-          color: $dark-text-muted;
+          color: $sidebar-dark-icon;
 
           &:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: $dark-text-primary;
+            background: #475569;
+            color: $sidebar-dark-text-active;
           }
 
           &:active {
-            background: rgba(255, 255, 255, 0.12);
+            background: $sidebar-dark-bg;
           }
         }
       }
@@ -87,20 +87,28 @@ body.theme-flat.dark-theme {
     .room-item,
     .file-item {
       background-color: transparent;
-      color: $dark-text-secondary;
+      color: $sidebar-dark-text;
+
+      i {
+        color: $sidebar-dark-icon;
+      }
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.06);
-        color: $dark-text-primary;
+        background-color: $sidebar-dark-hover-bg;
+        color: $sidebar-dark-text-active;
+
+        i {
+          color: $sidebar-dark-text-active;
+        }
       }
 
       &.active {
-        background-color: $dark-active-bg;
-        border: 1px solid $dark-active-border;
+        background-color: $sidebar-dark-active-bg;
+        border: 1px solid $sidebar-dark-border;
         box-shadow: $dark-shadow-sm;
-        color: $dark-primary;
+        color: $sidebar-dark-text-active;
         font-weight: 600;
-        i { color: $dark-primary; }
+        i { color: $sidebar-dark-text-active; }
       }
     }
 
@@ -108,17 +116,17 @@ body.theme-flat.dark-theme {
       > .room-item,
       > .folder-header,
       > .file-item {
-        background-color: $dark-active-bg;
-        border: 1px solid $dark-active-border;
+        background-color: $sidebar-dark-active-bg;
+        border: 1px solid $sidebar-dark-border;
         box-shadow: $dark-shadow-sm;
-        color: $dark-primary;
+        color: $sidebar-dark-text-active;
         font-weight: 600;
-        i { color: $dark-primary; }
+        i { color: $sidebar-dark-text-active; }
       }
     }
 
     .empty-rooms {
-      color: $dark-text-subtle;
+      color: $sidebar-dark-icon;
     }
   }
 

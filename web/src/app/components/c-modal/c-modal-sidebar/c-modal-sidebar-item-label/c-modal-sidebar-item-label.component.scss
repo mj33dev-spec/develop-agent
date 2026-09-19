@@ -1,0 +1,79 @@
+@use '../../../../../styles/variables' as *;
+@use '../../../../../styles/mixins' as *;
+
+.c-modal-sidebar-item-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: $sidebar-light-text;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  outline: none;
+
+  i {
+    font-size: 18px;
+    color: $sidebar-light-icon;
+    transition: color 0.15s ease;
+  }
+
+  .item-label {
+    flex: 1;
+  }
+
+  &:hover:not(:disabled) {
+    background: $sidebar-light-hover-bg;
+    color: $sidebar-light-text-active;
+  }
+
+  &.active {
+    background: $sidebar-light-active-bg;
+    color: $sidebar-light-text-active;
+    font-weight: 600;
+
+    i {
+      color: $sidebar-light-text-active;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+body.dark-theme,
+body.dark-mode {
+  .c-modal-sidebar-item-btn {
+    color: $sidebar-dark-text !important;
+
+    i {
+      color: $sidebar-dark-icon !important;
+    }
+
+    &:hover:not(:disabled) {
+      background: $sidebar-dark-hover-bg !important;
+      color: $sidebar-dark-text-active !important;
+
+      i {
+        color: $sidebar-dark-text-active !important;
+      }
+    }
+
+    &.active {
+      background: $sidebar-dark-active-bg !important;
+      color: $sidebar-dark-text-active !important;
+
+      i {
+        color: $sidebar-dark-text-active !important;
+      }
+    }
+  }
+}

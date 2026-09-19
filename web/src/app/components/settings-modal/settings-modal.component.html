@@ -7,50 +7,29 @@
   [hideFooter]="true" 
   (onClose)="closeModal()">
 
-  <!-- 좌측 사이드바 탭 (modal-sidebar DOM 바인딩) -->
-  <aside modal-sidebar class="settings-sidebar">
-    <!-- 그룹 1: 일반 -->
-    <div class="tab-group">
-      <span class="group-title">일반</span>
-      <button type="button" class="tab-btn" [class.active]="activeTab === 'account'" (click)="setTab('account')">
-        <i class="bx bx-user"></i>
-        <span>계정</span>
-      </button>
-      <button type="button" class="tab-btn" [class.active]="activeTab === 'appearance'" (click)="setTab('appearance')">
-        <i class="bx bx-palette"></i>
-        <span>외관</span>
-      </button>
-      <button type="button" class="tab-btn" [class.active]="activeTab === 'behavior'" (click)="setTab('behavior')">
-        <i class="bx bx-slider-alt"></i>
-        <span>행동 유형</span>
-      </button>
-      <button type="button" class="tab-btn" [class.active]="activeTab === 'notifications'" (click)="setTab('notifications')">
-        <i class="bx bx-bell"></i>
-        <span>알림</span>
-      </button>
-    </div>
+  <!-- 사이드바 전체 뚜껑 (c-modal-sidebar) -->
+  <c-modal-sidebar>
+    <!-- 그룹 1: 일반 (c-modal-sidebar-item) -->
+    <c-modal-sidebar-item label="일반">
+      <c-modal-sidebar-item-label icon="bx bx-user" label="계정" [active]="activeTab === 'account'" (onClick)="setTab('account')"></c-modal-sidebar-item-label>
+      <c-modal-sidebar-item-label icon="bx bx-palette" label="외관" [active]="activeTab === 'appearance'" (onClick)="setTab('appearance')"></c-modal-sidebar-item-label>
+      <c-modal-sidebar-item-label icon="bx bx-slider-alt" label="행동 유형" [active]="activeTab === 'behavior'" (onClick)="setTab('behavior')"></c-modal-sidebar-item-label>
+      <c-modal-sidebar-item-label icon="bx bx-bell" label="알림" [active]="activeTab === 'notifications'" (onClick)="setTab('notifications')"></c-modal-sidebar-item-label>
+    </c-modal-sidebar-item>
 
-    <!-- 그룹 2: Grok / AI -->
-    <div class="tab-group">
-      <span class="group-title">Grok</span>
-      <button type="button" class="tab-btn" [class.active]="activeTab === 'custom'" (click)="setTab('custom')">
-        <i class="bx bx-wrench"></i>
-        <span>맞춤 설정</span>
-      </button>
-    </div>
+    <!-- 그룹 2: GROK (c-modal-sidebar-item) -->
+    <c-modal-sidebar-item label="GROK">
+      <c-modal-sidebar-item-label icon="bx bx-wrench" label="맞춤 설정" [active]="activeTab === 'custom'" (onClick)="setTab('custom')"></c-modal-sidebar-item-label>
+    </c-modal-sidebar-item>
 
-    <!-- 그룹 3: 데이터 및 정보 -->
-    <div class="tab-group">
-      <span class="group-title">데이터 및 정보</span>
-      <button type="button" class="tab-btn" [class.active]="activeTab === 'data'" (click)="setTab('data')">
-        <i class="bx bx-data"></i>
-        <span>데이터 컨트롤</span>
-      </button>
-    </div>
-  </aside>
+    <!-- 그룹 3: 데이터 및 정보 (c-modal-sidebar-item) -->
+    <c-modal-sidebar-item label="데이터 및 정보">
+      <c-modal-sidebar-item-label icon="bx bx-data" label="데이터 컨트롤" [active]="activeTab === 'data'" (onClick)="setTab('data')"></c-modal-sidebar-item-label>
+    </c-modal-sidebar-item>
+  </c-modal-sidebar>
 
-  <!-- 우측 메인 컨텐츠 영역 (modal-content 바인딩) -->
-  <main modal-content class="settings-content-panel">
+  <!-- 우측 메인 컨텐츠 영역 -->
+  <main class="settings-content-panel">
     <!-- 1. 계정 탭 -->
     <ng-container *ngIf="activeTab === 'account'">
       <h2 class="section-title">계정</h2>
