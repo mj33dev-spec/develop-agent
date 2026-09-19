@@ -1,41 +1,74 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/config' as *;
 
-/* ========================================================================
-   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
-   ======================================================================== */
-
+// c-button 리퀴드 글래스모피즘 다크 테마 스타일
 body.theme-glass.dark-theme {
-  .btn {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+  .c-button {
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
-    &.btn-neutral {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid $dark-border-light;
+    &[data-variant='primary'] {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.5), rgba(168, 85, 247, 0.5));
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 28px rgba(96, 165, 250, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+
+      &:hover:not([data-disabled='true']) {
+        background: linear-gradient(135deg, rgba(96, 165, 250, 0.65), rgba(236, 72, 153, 0.6));
+        box-shadow: 0 12px 36px rgba(96, 165, 250, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+        transform: translateY(-1px);
+      }
+    }
+
+    &[data-variant='secondary'] {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
       color: $dark-text-primary;
-      box-shadow: $dark-shadow-md;
 
-      &:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 0.15);
+      &:hover:not([data-disabled='true']) {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+        transform: translateY(-1px);
       }
     }
 
-    &.btn-outlined-neutral {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid $dark-border-color;
-      color: $dark-text-secondary;
+    &[data-variant='outline'] {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(96, 165, 250, 0.5);
+      box-shadow: 0 4px 18px rgba(96, 165, 250, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      color: $dark-primary;
 
-      &:hover:not(:disabled) {
-        background: rgba(255, 255, 255, 0.1);
+      &:hover:not([data-disabled='true']) {
+        background: rgba(96, 165, 250, 0.2);
+        border-color: rgba(96, 165, 250, 0.8);
+        transform: translateY(-1px);
       }
     }
 
-    &.btn-icon {
-      color: $dark-text-muted;
+    &[data-variant='ghost'] {
+      background: transparent;
+      border: 1px solid transparent;
+      color: $dark-text-primary;
 
-      &:hover:not(:disabled) {
+      &:hover:not([data-disabled='true']) {
         background: rgba(255, 255, 255, 0.12);
-        color: $dark-text-primary;
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    &[data-variant='danger'] {
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.5), rgba(244, 63, 94, 0.5));
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 28px rgba(248, 113, 113, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+
+      &:hover:not([data-disabled='true']) {
+        background: linear-gradient(135deg, rgba(248, 113, 113, 0.65), rgba(225, 29, 72, 0.65));
+        box-shadow: 0 12px 36px rgba(248, 113, 113, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+        transform: translateY(-1px);
       }
     }
   }

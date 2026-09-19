@@ -80,17 +80,20 @@ $flat-dark-sidebar-bg: rgba(20, 24, 34, 0.55);
 $flat-dark-surface-alt: #242834;
 $flat-dark-surface-hover: #2b303e;
 
-// ── Glassmorphism Theme Tokens ─────────────────
-$glass-bg-gradient: radial-gradient(at 0% 0%, rgba(147, 197, 253, 0.65) 0px, transparent 50%),
-  radial-gradient(at 100% 0%, rgba(74, 134, 255, 0.35) 0px, transparent 50%),
-  radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.95) 0px, transparent 50%),
-  radial-gradient(at 0% 100%, rgba(191, 219, 254, 0.55) 0px, transparent 50%),
-  linear-gradient(135deg, #f0f6ff 0%, #dbeafe 100%);
+// ── Glassmorphism Theme Tokens (Liquid Glass Concept) ─────────────────
+$glass-bg-gradient: 
+  radial-gradient(circle at 15% 20%, rgba(244, 114, 182, 0.45) 0%, transparent 45%),
+  radial-gradient(circle at 85% 30%, rgba(129, 140, 248, 0.5) 0%, transparent 50%),
+  radial-gradient(circle at 50% 80%, rgba(251, 146, 60, 0.4) 0%, transparent 45%),
+  radial-gradient(circle at 80% 85%, rgba(56, 189, 248, 0.45) 0%, transparent 40%),
+  linear-gradient(135deg, #e0e7ff 0%, #fae8ff 50%, #fce7f3 100%);
 
-$glass-dark-bg-gradient: radial-gradient(at 0% 0%, rgba(74, 134, 255, 0.3) 0px, transparent 50%),
-  radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.25) 0px, transparent 50%),
-  radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.95) 0px, transparent 50%),
-  linear-gradient(135deg, #0f172a 0%, #172554 100%);
+$glass-dark-bg-gradient: 
+  radial-gradient(circle at 10% 15%, rgba(168, 85, 247, 0.5) 0%, transparent 50%),
+  radial-gradient(circle at 85% 25%, rgba(236, 72, 153, 0.4) 0%, transparent 45%),
+  radial-gradient(circle at 60% 85%, rgba(59, 130, 246, 0.45) 0%, transparent 50%),
+  radial-gradient(circle at 20% 80%, rgba(249, 115, 22, 0.35) 0%, transparent 40%),
+  linear-gradient(135deg, #0f0c20 0%, #150d2a 50%, #0a1128 100%);
 
 
 // ── Backgrounds ───────────────────────────────

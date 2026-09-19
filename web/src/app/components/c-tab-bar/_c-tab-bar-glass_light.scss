@@ -2,35 +2,37 @@
 @use '../../../styles/mixins' as *;
 
 /* ========================================================================
-   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   [테마 3] 리퀴드 글래스모피즘 라이트 모드 (Liquid Glassmorphism + Light Mode)
    ======================================================================== */
 
 body.theme-glass:not(.dark-theme) {
   .segmentContainer {
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    box-shadow: 0 4px 14px rgba(31, 38, 135, 0.05);
+    background: rgba(255, 255, 255, 0.32);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
 
     .segmentBtn {
       color: $flat-text-secondary;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
         color: $color-dark;
+        background: rgba(255, 255, 255, 0.3);
       }
 
       &.active {
         background: rgba(255, 255, 255, 0.85);
         color: $color-primary;
-        box-shadow: 0 2px 8px rgba(31, 38, 135, 0.1);
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.9);
         font-weight: 700;
       }
     }
   }
 
   .baseContainer {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
     .baseBtn {
       color: $flat-text-secondary;
@@ -44,7 +46,8 @@ body.theme-glass:not(.dark-theme) {
         font-weight: $font-weight-bold;
 
         &::after {
-          background-color: $color-primary;
+          background: linear-gradient(90deg, $color-primary, #818cf8);
+          box-shadow: 0 0 12px rgba(74, 134, 255, 0.5);
         }
       }
     }
@@ -52,22 +55,23 @@ body.theme-glass:not(.dark-theme) {
 
   .folderContainer {
     .folderBtn {
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.32);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
       color: $flat-text-secondary;
 
       &:hover {
         color: $color-dark;
+        background: rgba(255, 255, 255, 0.5);
       }
 
       &.active {
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.8);
         color: $color-primary;
         font-weight: $font-weight-bold;
         border-bottom-color: transparent;
-        box-shadow: 0 -2px 10px rgba(31, 38, 135, 0.08);
+        box-shadow: 0 -4px 16px rgba(31, 38, 135, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.9);
       }
     }
   }
@@ -77,8 +81,9 @@ body.theme-glass:not(.dark-theme) {
     color: $flat-text-secondary;
 
     .active & {
-      background: $color-primary;
+      background: linear-gradient(135deg, $color-primary, #818cf8);
       color: $color-white;
+      box-shadow: 0 2px 8px rgba(74, 134, 255, 0.3);
     }
   }
 }

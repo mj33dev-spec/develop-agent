@@ -1,50 +1,42 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/config' as *;
+@use '../../../styles/mixins' as *;
 
-/* ========================================================================
-   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
-   ======================================================================== */
-
-body.theme-glass:not(.dark-theme) {
-  .modalOverlay {
-    background-color: rgba(15, 23, 42, 0.35);
+// c-modal 리퀴드 글래스모피즘 라이트 테마 스타일
+body.theme-glass {
+  .c-modal-backdrop {
+    background: rgba(147, 197, 253, 0.25);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
 
-  .modalContent {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(24px) saturate(190%);
-    -webkit-backdrop-filter: blur(24px) saturate(190%);
-    box-shadow: 0 24px 60px rgba(31, 38, 135, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-  }
+  .c-modal-container {
+    @include glass-panel(28px);
 
-  .modalHeader {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    .c-modal-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
-    .closeBtn {
-      color: $flat-text-secondary;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.65);
+      .c-modal-title {
         color: $flat-text-primary;
       }
+
+      .c-modal-close {
+        color: $flat-text-secondary;
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.7);
+          color: $color-dark;
+        }
+      }
     }
-  }
 
-  .modalTitle {
-    color: $flat-text-primary;
-  }
+    .c-modal-body {
+      color: $flat-text-primary;
+    }
 
-  .modalSubTitle {
-    color: $flat-text-secondary;
-  }
-
-  .modalBody {
-    color: $flat-text-primary;
-  }
-
-  .formActions {
-    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    .c-modal-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.5);
+    }
   }
 }

@@ -1,42 +1,18 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/config' as *;
+@use '../../../styles/mixins' as *;
 
-/* ========================================================================
-   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
-   ======================================================================== */
-
+// c-panel 리퀴드 글래스모피즘 다크 테마 스타일
 body.theme-glass.dark-theme {
-  .panelOverlay.active {
-    background-color: rgba(15, 17, 23, 0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
+  .c-panel {
+    @include dark-glass-panel(24px);
 
-  .panelContent {
-    background: rgba(30, 35, 48, 0.85);
-    backdrop-filter: blur(24px) saturate(190%);
-    -webkit-backdrop-filter: blur(24px) saturate(190%);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-
-    &.right { border-left: 1px solid rgba(255, 255, 255, 0.15); }
-    &.left { border-right: 1px solid rgba(255, 255, 255, 0.15); }
-    &.top { border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
-    &.bottom { border-top: 1px solid rgba(255, 255, 255, 0.15); }
-  }
-
-  .panelHeader {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  }
-
-  .panelTitle {
-    color: $dark-text-primary;
-  }
-
-  .closeBtn {
-    color: $dark-text-muted;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.12);
+    .c-panel-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
       color: $dark-text-primary;
+    }
+
+    .c-panel-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
     }
   }
 }

@@ -2,34 +2,41 @@
 @use "../../../../../styles/mixins" as *;
 
 /* ========================================================================
-   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
+   [테마 4] 리퀴드 글래스모피즘 다크 모드 (Liquid Glassmorphism + Dark Mode)
    ======================================================================== */
 
 body.theme-glass.dark-theme {
   .sidebar {
-    @include dark-glass-panel(0px);
-    border-right: 1px solid $dark-border-color;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(32px) saturate(210%);
+    -webkit-backdrop-filter: blur(32px) saturate(210%);
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 
+      12px 0 40px rgba(0, 0, 0, 0.5),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
 
     .sidebar-header {
-      border-bottom: 1px solid $dark-border-color;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .sidebar-block-btn {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid $dark-border-light;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: $dark-text-primary;
-      box-shadow: $dark-shadow-md, inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 
       i {
         color: $dark-text-primary;
       }
 
       &:hover {
-        background: rgba(255, 255, 255, 0.15);
-        border-color: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.35);
         color: $color-white;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35);
         
         i {
           color: $color-white;
@@ -37,8 +44,8 @@ body.theme-glass.dark-theme {
       }
 
       &:active {
-        background: rgba(255, 255, 255, 0.05);
-        box-shadow: none;
+        background: rgba(255, 255, 255, 0.07);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
       }
 
       &.danger {
@@ -48,14 +55,14 @@ body.theme-glass.dark-theme {
     }
 
     .sidebar-footer {
-      border-top: 1px solid $dark-border-color;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
 
       .sidebar-user-card {
-        background: rgba(255, 255, 255, 0.07);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid $dark-border-light;
-        box-shadow: $dark-shadow-lg, inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.09);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 
         .user-info {
           .user-nickname {
@@ -75,12 +82,12 @@ body.theme-glass.dark-theme {
           color: $dark-text-muted;
 
           &:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: $dark-text-primary;
           }
 
           &:active {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
           }
         }
       }
@@ -93,17 +100,17 @@ body.theme-glass.dark-theme {
       color: $dark-text-secondary;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.08);
+        background-color: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
         color: $dark-text-primary;
       }
 
       &.active {
-        background-color: rgba(74, 134, 255, 0.22);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(96, 165, 250, 0.4);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        color: $dark-primary;
+        background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(168, 85, 247, 0.3));
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 6px 20px rgba(96, 165, 250, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        color: $color-white;
         font-weight: 600;
         i { color: $dark-primary; }
       }
@@ -113,12 +120,11 @@ body.theme-glass.dark-theme {
       > .room-item,
       > .folder-header,
       > .file-item {
-        background-color: rgba(74, 134, 255, 0.22);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(96, 165, 250, 0.4);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        color: $dark-primary;
+        background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(168, 85, 247, 0.3));
+        backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        box-shadow: 0 6px 20px rgba(96, 165, 250, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+        color: $color-white;
         font-weight: 600;
         i { color: $dark-primary; }
       }
@@ -129,73 +135,72 @@ body.theme-glass.dark-theme {
     }
   }
 
-  /* 모달 내부 글래스모피즘 요소 오버라이드 */
   .category-pills .pill-btn {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid $dark-border-light;
-    box-shadow: $dark-shadow-sm;
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
     color: $dark-text-muted;
 
     &.active {
-      background: linear-gradient(135deg, rgba(74, 134, 255, 0.9), rgba(99, 102, 241, 0.9));
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.85), rgba(236, 72, 153, 0.85));
       color: $color-white;
-      border-color: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.4);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 6px 24px rgba(168, 85, 247, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
     }
   }
 
   .preset-item-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid $dark-border-color;
-    box-shadow: $dark-shadow-md;
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
 
     .preset-icon {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid $dark-border-light;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       box-shadow: none;
     }
 
     .preset-action-btns .template-action-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid $dark-border-light;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: none;
       color: $dark-text-muted;
 
       &:hover {
-        background: rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.22);
         color: $dark-text-primary;
       }
     }
 
     &.selected {
-      background: rgba(74, 134, 255, 0.2);
-      border: 1.5px solid $color-primary;
-      box-shadow: 0 8px 28px rgba(74, 134, 255, 0.35);
+      background: rgba(168, 85, 247, 0.25);
+      border: 1.5px solid $dark-primary;
+      box-shadow: 0 12px 36px rgba(168, 85, 247, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
     }
   }
 
   .card-visual-preview {
-    background: rgba(20, 24, 34, 0.6);
-    border: 1px solid $dark-border-light;
-    box-shadow: $dark-shadow-lg;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 
     .card-top-bar {
-      background: rgba(255, 255, 255, 0.06);
-      border-bottom: 1px solid $dark-border-color;
+      background: rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .file-badge-item {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid $dark-border-light;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       color: $dark-text-secondary;
     }
   }
 
   .preset-preview-panel.empty-select .preset-inner {
-    background: rgba(20, 24, 34, 0.5);
-    border: 1px solid $dark-border-color;
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.18);
 
     .empty-preset-box {
       background: transparent;
@@ -204,18 +209,18 @@ body.theme-glass.dark-theme {
   }
 
   .file-upload-dropzone {
-    background: rgba(20, 24, 34, 0.5);
-    border: 2px dashed rgba(255, 255, 255, 0.2);
+    background: rgba(15, 23, 42, 0.45);
+    border: 2px dashed rgba(255, 255, 255, 0.25);
 
     &:hover {
-      border-color: $color-primary;
-      background: rgba(74, 134, 255, 0.08);
+      border-color: $dark-primary;
+      background: rgba(96, 165, 250, 0.12);
     }
   }
 
   .attached-file-chip {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid $dark-border-light;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     color: $dark-text-secondary;
   }
 }

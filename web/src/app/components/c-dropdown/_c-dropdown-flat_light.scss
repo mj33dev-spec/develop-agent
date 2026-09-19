@@ -1,43 +1,43 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/config' as *;
 
-/* ========================================================================
-   [테마 1] 플랫 라이트 모드 (Flat + Light Mode)
-   ======================================================================== */
+// c-dropdown 플랫 라이트 테마 스타일
+body.theme-flat {
+  .dropdownContainer {
+    c-button {
+      ::ng-deep .btn {
+        background: $flat-card-bg;
+        border: 1px solid $flat-border-dark;
+        color: $flat-text-primary;
 
-body.theme-flat:not(.dark-theme) {
-  .dropdownContainer .multiChip {
-    background: rgba($color-primary, 0.1);
-    color: $color-primary;
+        &:hover {
+          background: $flat-sidebar-bg;
+        }
+      }
+    }
   }
 
   .dropdown-portal-menu {
     background: $flat-card-bg;
-    border: 1px solid $flat-border-color;
+    border: 1px solid $flat-border-dark;
     box-shadow: $flat-shadow-lg;
+    color: $flat-text-primary;
 
     hr {
-      background: $flat-border-color;
+      background-color: $flat-border-color;
     }
 
     .dropdownItem {
       color: $flat-text-primary;
 
-      .dropdownItemIcon {
-        color: $flat-text-muted;
-      }
-
       &:hover:not(.disabled) {
         background: $flat-sidebar-bg;
+        color: $color-primary;
       }
 
       &.selected {
-        background: $flat-border-color;
-        font-weight: 600;
+        background: rgba(74, 134, 255, 0.1);
         color: $color-primary;
-
-        .dropdownItemIcon {
-          color: $color-primary;
-        }
+        font-weight: 600;
       }
     }
   }

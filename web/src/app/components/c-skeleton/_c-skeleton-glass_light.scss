@@ -1,21 +1,34 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/config' as *;
 
-/* ========================================================================
-   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
-   ======================================================================== */
-
-body.theme-glass:not(.dark-theme) {
-  .skeleton {
+// c-skeleton 리퀴드 글래스모피즘 라이트 테마 스타일
+body.theme-glass {
+  .c-skeleton {
     background: rgba(255, 255, 255, 0.35);
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.35) 25%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.35) 75%);
-    background-size: 200% 100%;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+
+    &::after {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      );
+    }
   }
 
-  .overlay {
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+  .c-skeleton-overlay {
+    background: rgba(255, 255, 255, 0.32);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+
+    .spinner {
+      border: 3px solid rgba(74, 134, 255, 0.2);
+      border-top-color: $color-primary;
+    }
+
+    .overlay-text {
+      color: $flat-text-primary;
+    }
   }
 }

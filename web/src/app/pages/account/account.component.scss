@@ -1,5 +1,6 @@
 @use "../../../styles/variables" as *;
 @use "../../../styles/mixins" as *;
+@use "../../../styles/common-layouts" as *;
 
 :host {
   display: block;
@@ -7,216 +8,110 @@
   height: 100%;
 }
 
+/* ========================================================================
+   [내 정보 페이지 (Account Page) 세부 폼 요소]
+   골격 및 구조는 _common-layouts.scss 모듈 상속
+   ======================================================================== */
+
 .account-page-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  background-color: $color-bg;
-  position: relative;
-
-  /* Top Full-Width Header Bar */
-  .account-header-bar {
-    height: 64px;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    background: #ffffff;
-
-    .header-left {
-      flex: 1;
-      min-width: 0;
+  .account-panel {
+    .account-form-body {
       display: flex;
-      align-items: center;
-      gap: 16px;
+      flex-direction: column;
+      gap: 24px;
 
-      .icon-btn {
-        flex: none;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: #ffffff;
-        border: 1px solid #cbd5e1;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-        cursor: pointer;
+      .section-block {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
+        flex-direction: column;
+        gap: 12px;
 
-        i {
-          font-size: 20px;
+        .section-title {
+          @include typo-subtitle-2;
+          font-weight: 600;
           color: #1e293b;
-        }
-
-        &:hover {
-          background: #f1f5f9;
-          color: $color-primary;
+          display: flex;
+          align-items: center;
+          gap: 8px;
 
           i {
+            font-size: 20px;
             color: $color-primary;
           }
         }
       }
 
-      .page-title-group {
-        flex: 1;
-        min-width: 0;
+      .divider {
+        height: 1px;
+        background: #e2e8f0;
+      }
+
+      .input-with-btn-row {
         display: flex;
+        gap: 12px;
         align-items: center;
-        gap: 10px;
 
-        .page-title {
-          flex: none;
-          @include typo-title-2;
-          color: #1e293b;
-          margin: 0;
-        }
-      }
-    }
-  }
-
-  /* Main Body Wrapper */
-  .account-body-wrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 24px;
-    overflow-y: auto;
-    position: relative;
-
-    .account-panel {
-      width: 100%;
-      max-width: 680px;
-      background: #ffffff;
-      border-radius: 20px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      padding: 32px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-
-      .panel-header {
-        border-bottom: 1px solid #e2e8f0;
-        padding-bottom: $spacing-16;
-
-        .panel-title {
-          @include typo-heading-3;
-          font-weight: 700;
-          color: #1e293b;
-          margin: 0 0 6px 0;
-        }
-
-        .panel-subtitle {
-          @include typo-body-3;
-          color: #64748b;
-          margin: 0;
+        .form-input, .neu-input {
+          flex: 1;
         }
       }
 
-      .account-form-body {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
 
-        .section-block {
+        @media (max-width: 640px) {
+          grid-template-columns: 1fr;
+        }
+
+        .form-field {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 6px;
 
-          .section-title {
-            @include typo-subtitle-2;
+          .field-label {
+            @include typo-caption-1;
             font-weight: 600;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            i {
-              font-size: 20px;
-              color: $color-primary;
-            }
-          }
-        }
-
-        .divider {
-          height: 1px;
-          background: #e2e8f0;
-        }
-
-        .input-with-btn-row {
-          display: flex;
-          gap: 12px;
-          align-items: center;
-
-          .form-input, .neu-input {
-            flex: 1;
-          }
-        }
-
-        .form-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-
-          @media (max-width: 640px) {
-            grid-template-columns: 1fr;
-          }
-
-          .form-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-
-            .field-label {
-              @include typo-caption-1;
-              font-weight: 600;
-              color: #64748b;
-            }
-          }
-        }
-
-        .form-action-right {
-          display: flex;
-          justify-content: flex-end;
-          margin-top: 4px;
-        }
-
-        .neu-input, .form-input {
-          width: 100%;
-          height: 44px;
-          padding: 0 16px;
-          border: 1px solid #cbd5e1;
-          border-radius: 12px;
-          background: #ffffff;
-          box-shadow: none;
-          @include typo-body-2;
-          color: #1e293b;
-          box-sizing: border-box;
-          transition: all 0.2s ease;
-
-          &:focus {
-            border-color: $color-primary;
-            box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
-          }
-
-          &.readonly {
             color: #64748b;
-            background: #f8fafc;
-            cursor: not-allowed;
           }
+        }
+      }
+
+      .form-action-right {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 4px;
+      }
+
+      .neu-input, .form-input {
+        width: 100%;
+        height: 44px;
+        padding: 0 16px;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: none;
+        @include typo-body-2;
+        color: #1e293b;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+
+        &:focus {
+          border-color: $color-primary;
+          box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
+        }
+
+        &.readonly {
+          color: #64748b;
+          background: #f8fafc;
+          cursor: not-allowed;
         }
       }
     }
   }
 }
 
+/* 다크 테마 오버라이드 */
 :host-context(body.dark-theme) {
   .account-header-bar {
     background-color: #1e222d;
@@ -280,4 +175,4 @@
       }
     }
   }
-}
+}

@@ -2,35 +2,37 @@
 @use '../../../styles/mixins' as *;
 
 /* ========================================================================
-   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
+   [테마 4] 리퀴드 글래스모피즘 다크 모드 (Liquid Glassmorphism + Dark Mode)
    ======================================================================== */
 
 body.theme-glass.dark-theme {
   .segmentContainer {
     background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid $dark-border-light;
-    box-shadow: $dark-shadow-sm;
+    backdrop-filter: blur(28px) saturate(210%);
+    -webkit-backdrop-filter: blur(28px) saturate(210%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
 
     .segmentBtn {
       color: $dark-text-muted;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
         color: $dark-text-primary;
+        background: rgba(255, 255, 255, 0.1);
       }
 
       &.active {
         background: rgba(255, 255, 255, 0.18);
-        color: $dark-primary;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        color: $color-white;
+        box-shadow: 0 4px 16px rgba(168, 85, 247, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
         font-weight: 700;
       }
     }
   }
 
   .baseContainer {
-    border-bottom: 1px solid $dark-border-color;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 
     .baseBtn {
       color: $dark-text-muted;
@@ -44,7 +46,8 @@ body.theme-glass.dark-theme {
         font-weight: $font-weight-bold;
 
         &::after {
-          background-color: $dark-primary;
+          background: linear-gradient(90deg, $dark-primary, #c084fc);
+          box-shadow: 0 0 12px rgba(96, 165, 250, 0.6);
         }
       }
     }
@@ -52,33 +55,35 @@ body.theme-glass.dark-theme {
 
   .folderContainer {
     .folderBtn {
-      border: 1px solid $dark-border-color;
+      border: 1px solid rgba(255, 255, 255, 0.18);
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
       color: $dark-text-muted;
 
       &:hover {
         color: $dark-text-primary;
+        background: rgba(255, 255, 255, 0.14);
       }
 
       &.active {
         background: rgba(255, 255, 255, 0.18);
-        color: $dark-primary;
+        color: $color-white;
         font-weight: $font-weight-bold;
         border-bottom-color: transparent;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35);
       }
     }
   }
 
   .count {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.15);
     color: $dark-text-muted;
 
     .active & {
-      background: $dark-primary;
-      color: #ffffff;
+      background: linear-gradient(135deg, $dark-primary, #a855f7);
+      color: $color-white;
+      box-shadow: 0 2px 10px rgba(96, 165, 250, 0.4);
     }
   }
 }

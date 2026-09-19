@@ -1,48 +1,44 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/config' as *;
 
-/* ========================================================================
-   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
-   ======================================================================== */
-
+// c-badge 리퀴드 글래스모피즘 다크 테마 스타일
 body.theme-glass.dark-theme {
-  .badge {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+  .c-badge {
+    backdrop-filter: blur(20px) saturate(190%);
+    -webkit-backdrop-filter: blur(20px) saturate(190%);
 
-    &[data-variant="success"] {
-      color: #4ade80;
-      background: rgba(74, 222, 128, 0.2);
-      border: 1px solid rgba(74, 222, 128, 0.3);
+    &[data-variant='primary'] {
+      background: linear-gradient(135deg, rgba(96, 165, 250, 0.4), rgba(168, 85, 247, 0.4));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 16px rgba(96, 165, 250, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      color: #ffffff;
     }
-    
-    &[data-variant="warning"] {
-      color: #facc15;
-      background: rgba(250, 204, 21, 0.2);
-      border: 1px solid rgba(250, 204, 21, 0.3);
-    }
-    
-    &[data-variant="danger"] {
-      color: $dark-error;
-      background: rgba(252, 129, 129, 0.2);
-      border: 1px solid rgba(252, 129, 129, 0.3);
-    }
-    
-    &[data-variant="info"] {
-      color: $dark-primary;
-      background: rgba(96, 165, 250, 0.2);
-      border: 1px solid rgba(96, 165, 250, 0.3);
-    }
-    
-    &[data-variant="neutral"] {
+
+    &[data-variant='secondary'] {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
       color: $dark-text-primary;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid $dark-border-light;
     }
-    
-    &[data-variant="purple"] {
-      color: #a78bfa;
-      background: rgba(167, 139, 250, 0.2);
-      border: 1px solid rgba(167, 139, 250, 0.3);
+
+    &[data-variant='success'] {
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.4), rgba(16, 185, 129, 0.4));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 16px rgba(52, 211, 153, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+    }
+
+    &[data-variant='danger'] {
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.4), rgba(244, 63, 94, 0.4));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 16px rgba(248, 113, 113, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+    }
+
+    &[data-variant='warning'] {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.4), rgba(245, 158, 11, 0.4));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 16px rgba(251, 191, 36, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      color: #ffffff;
     }
   }
 }

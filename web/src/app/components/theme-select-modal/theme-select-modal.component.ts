@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CModalComponent } from '../c-modal/c-modal.component';
@@ -21,7 +21,8 @@ export interface ThemeOptionItem {
   standalone: true,
   imports: [CommonModule, FormsModule, CModalComponent, CButtonComponent, CToggleComponent],
   templateUrl: './theme-select-modal.component.html',
-  styleUrls: ['./theme-select-modal.component.scss']
+  styleUrls: ['./theme-select-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ThemeSelectModalComponent implements OnInit {
   @Input() isOpen: boolean = false;

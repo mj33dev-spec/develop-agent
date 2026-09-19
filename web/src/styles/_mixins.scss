@@ -130,22 +130,50 @@
   }
 }
 
-// ── 글래스 테마 공통 믹스인 ──
+// ── 리퀴드 글래스모피즘(Liquid Glassmorphism) 공통 믹스인 ──
 @mixin glass-panel($radius: 24px) {
-  background: rgba(255, 255, 255, 0.5) !important;
-  backdrop-filter: blur(24px) saturate(190%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.7) !important;
-  box-shadow: 0 16px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.28) !important;
+  backdrop-filter: blur(28px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(210%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 
+    0 20px 48px rgba(31, 38, 135, 0.12),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.05) !important;
   border-radius: $radius !important;
 }
 
 @mixin dark-glass-panel($radius: 24px) {
-  background: rgba(30, 35, 48, 0.55) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(32px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(210%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 
+    0 24px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4) !important;
+  border-radius: $radius !important;
+}
+
+@mixin glass-element-light($radius: 14px) {
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 
+    0 8px 24px rgba(31, 38, 135, 0.08), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+  border-radius: $radius !important;
+}
+
+@mixin glass-element-dark($radius: 14px) {
+  background: rgba(255, 255, 255, 0.09) !important;
   backdrop-filter: blur(24px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 
+    0 8px 28px rgba(0, 0, 0, 0.35), 
+    inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
   border-radius: $radius !important;
 }
 

@@ -2,37 +2,42 @@
 @use "../../../../../styles/mixins" as *;
 
 /* ========================================================================
-   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   [테마 3] 리퀴드 글래스모피즘 라이트 모드 (Liquid Glassmorphism + Light Mode)
    ======================================================================== */
 
 body.theme-glass:not(.dark-theme) {
   .sidebar {
-    @include glass-panel(0px);
-    border-right: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 4px 0 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(28px) saturate(210%);
+    -webkit-backdrop-filter: blur(28px) saturate(210%);
+    border-right: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 
+      8px 0 32px rgba(31, 38, 135, 0.08),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 1px 0 rgba(0, 0, 0, 0.03);
 
     .sidebar-header {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.45);
     }
 
     .sidebar-block-btn {
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: 0 4px 14px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      color: $color-dark;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      color: $flat-text-primary;
 
       i { color: inherit; }
 
       &:hover {
-        background: rgba(255, 255, 255, 0.85);
-        border-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 6px 18px rgba(31, 38, 135, 0.1);
+        background: rgba(255, 255, 255, 0.65);
+        border-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 6px 20px rgba(31, 38, 135, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
       }
 
       &:active {
-        box-shadow: none;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
       }
 
       &.danger {
@@ -42,14 +47,14 @@ body.theme-glass:not(.dark-theme) {
     }
 
     .sidebar-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      border-top: 1px solid rgba(255, 255, 255, 0.45);
 
       .sidebar-user-card {
-        background: rgba(255, 255, 255, 0.55);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.75);
-        box-shadow: 0 6px 20px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 8px 24px rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
 
         .user-info {
           .user-nickname {
@@ -57,7 +62,7 @@ body.theme-glass:not(.dark-theme) {
           }
 
           .user-email {
-            color: $neu-text-secondary;
+            color: $flat-text-secondary;
           }
 
           &:hover .user-nickname {
@@ -66,10 +71,10 @@ body.theme-glass:not(.dark-theme) {
         }
 
         .user-more-btn {
-          color: $neu-text-secondary;
+          color: $flat-text-secondary;
 
           &:hover {
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.7);
             color: $flat-text-primary;
           }
         }
@@ -83,13 +88,15 @@ body.theme-glass:not(.dark-theme) {
       color: $flat-text-primary;
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(10px);
         color: $color-dark;
       }
 
       &.active {
-        background-color: rgba(74, 134, 255, 0.18);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2);
+        background: linear-gradient(135deg, rgba(74, 134, 255, 0.25), rgba(129, 140, 248, 0.25));
+        backdrop-filter: blur(14px);
+        box-shadow: 0 4px 16px rgba(74, 134, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.7);
         color: $color-primary;
         font-weight: 600;
         border: 1px solid rgba(255, 255, 255, 0.6);
@@ -101,8 +108,9 @@ body.theme-glass:not(.dark-theme) {
       > .room-item,
       > .folder-header,
       > .file-item {
-        background-color: rgba(74, 134, 255, 0.18);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2);
+        background: linear-gradient(135deg, rgba(74, 134, 255, 0.25), rgba(129, 140, 248, 0.25));
+        backdrop-filter: blur(14px);
+        box-shadow: 0 4px 16px rgba(74, 134, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.7);
         color: $color-primary;
         font-weight: 600;
         border: 1px solid rgba(255, 255, 255, 0.6);
@@ -111,79 +119,78 @@ body.theme-glass:not(.dark-theme) {
     }
 
     .empty-rooms {
-      color: $neu-text-secondary;
+      color: $flat-text-secondary;
     }
   }
 
-  /* 모달 내부 글래스모피즘 요소 오버라이드 */
   .category-pills .pill-btn {
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 4px 12px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 14px rgba(31, 38, 135, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
     color: $flat-text-secondary;
 
     &.active {
-      background: linear-gradient(135deg, rgba(74, 134, 255, 0.9), rgba(59, 130, 246, 0.9));
+      background: linear-gradient(135deg, rgba(74, 134, 255, 0.9), rgba(147, 51, 234, 0.85));
       color: $color-white;
-      border-color: rgba(255, 255, 255, 0.5);
-      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.35);
+      border-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 6px 20px rgba(74, 134, 255, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.9);
     }
   }
 
   .preset-item-card {
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
 
     .preset-icon {
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06);
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.08);
     }
 
     .preset-action-btns .template-action-btn {
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       color: $flat-text-secondary;
 
       &:hover {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
       }
     }
 
     &.selected {
-      background: rgba(238, 242, 255, 0.85);
+      background: rgba(238, 242, 255, 0.7);
       border: 1.5px solid $color-primary;
-      box-shadow: 0 8px 28px rgba(74, 134, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      box-shadow: 0 12px 32px rgba(74, 134, 255, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.9);
     }
   }
 
   .card-visual-preview {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 12px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    box-shadow: 0 12px 36px rgba(31, 38, 135, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.9);
 
     .card-top-bar {
-      background: rgba(255, 255, 255, 0.5);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.45);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
     }
 
     .file-badge-item {
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.8);
       box-shadow: 0 2px 8px rgba(31, 38, 135, 0.05);
       color: $flat-text-primary;
     }
   }
 
   .preset-preview-panel.empty-select .preset-inner {
-    background: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
 
     .empty-preset-box {
       background: transparent;
@@ -192,14 +199,14 @@ body.theme-glass:not(.dark-theme) {
   }
 
   .file-upload-dropzone {
-    background: rgba(255, 255, 255, 0.4);
-    border: 2px dashed rgba(74, 134, 255, 0.4);
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px dashed rgba(74, 134, 255, 0.5);
     box-shadow: none;
   }
 
   .attached-file-chip {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 }

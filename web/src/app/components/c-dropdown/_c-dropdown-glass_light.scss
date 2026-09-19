@@ -1,50 +1,51 @@
-@use '../../../styles/variables' as *;
+@use '../../../styles/config' as *;
 
-/* ========================================================================
-   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
-   ======================================================================== */
+// c-dropdown 리퀴드 글래스모피즘 라이트 테마 스타일
+body.theme-glass {
+  .dropdownContainer {
+    c-button {
+      ::ng-deep .btn {
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(20px) saturate(190%);
+        -webkit-backdrop-filter: blur(20px) saturate(190%);
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        box-shadow: 0 6px 20px rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.85);
+        color: $flat-text-primary;
 
-body.theme-glass:not(.dark-theme) {
-  .dropdownContainer .multiChip {
-    background: rgba(74, 134, 255, 0.15);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: $color-primary;
-    border: 1px solid rgba(74, 134, 255, 0.3);
+        &:hover {
+          background: rgba(255, 255, 255, 0.7);
+          border-color: rgba(255, 255, 255, 0.85);
+        }
+      }
+    }
   }
 
   .dropdown-portal-menu {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(24px) saturate(190%);
-    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
     border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 16px 40px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
+    box-shadow: 
+      0 16px 40px rgba(31, 38, 135, 0.15),
+      inset 0 1px 1px rgba(255, 255, 255, 0.9);
+    color: $flat-text-primary;
 
     hr {
-      background: rgba(255, 255, 255, 0.5);
+      background-color: rgba(0, 0, 0, 0.08);
     }
 
     .dropdownItem {
       color: $flat-text-primary;
 
-      .dropdownItemIcon {
-        color: $flat-text-muted;
-      }
-
       &:hover:not(.disabled) {
-        background: rgba(255, 255, 255, 0.65);
+        background: rgba(74, 134, 255, 0.12);
         color: $color-primary;
       }
 
       &.selected {
-        background: rgba(74, 134, 255, 0.18);
+        background: linear-gradient(135deg, rgba(74, 134, 255, 0.2), rgba(129, 140, 248, 0.2));
         color: $color-primary;
         font-weight: 600;
-
-        .dropdownItemIcon {
-          color: $color-primary;
-        }
       }
     }
   }
