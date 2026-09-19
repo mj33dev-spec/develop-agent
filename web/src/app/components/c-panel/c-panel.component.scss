@@ -1,142 +1,15 @@
-@use "sass:color";
-@use '../../../styles/config' as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
-.panelOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0);
-  z-index: $z-modal - 10; // below modals but above header/sidebar
-  display: flex;
-  transition: background-color 0.3s ease;
-  pointer-events: none;
+/* ========================================================================
+   c-panel 메인 SCSS 모듈 체인 (C-Panel Component Main Entry)
+   ======================================================================== */
 
-  &.active {
-    background-color: rgba(0, 0, 0, 0.4);
-    pointer-events: auto;
-  }
-}
+/* 1. 기본 레이아웃 및 컴포넌트 골격 (Base) */
+@import "./c-panel-base";
 
-.panelContent {
-  position: fixed;
-  background-color: $color-white;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-
-  /* Directions styles & animation starting states */
-  &.right {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 460px;
-    height: 100%;
-    transform: translateX(100%);
-    border-left: 1px solid $color-border;
-
-    &.active {
-      transform: translateX(0);
-    }
-  }
-
-  &.left {
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 460px;
-    height: 100%;
-    transform: translateX(-100%);
-    border-right: 1px solid $color-border;
-
-    &.active {
-      transform: translateX(0);
-    }
-  }
-
-  &.top {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 400px;
-    width: 100%;
-    transform: translateY(-100%);
-    border-bottom: 1px solid $color-border;
-
-    &.active {
-      transform: translateY(0);
-    }
-  }
-
-  &.bottom {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 400px;
-    width: 100%;
-    transform: translateY(100%);
-    border-top: 1px solid $color-border;
-
-    &.active {
-      transform: translateY(0);
-    }
-  }
-}
-
-.panelHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $spacing-20 $spacing-24;
-  border-bottom: 1px solid $color-border;
-}
-
-.panelTitle {
-  @include typo-title-3;
-  color: $color-dark;
-  margin: 0;
-}
-
-.closeBtn {
-  background: none;
-  border: none;
-  @include typo-body-1;
-  color: $color-deep-grey;
-  cursor: pointer;
-  padding: $spacing-4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: $radius-sm;
-  transition: background-color $transition-fast, color $transition-fast;
-
-  &:hover {
-    background-color: $color-light-grey;
-    color: $color-dark;
-  }
-}
-
-.panelBody {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
-  padding: $spacing-24;
-
-  /* Custom scrollbar for premium look */
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $color-border;
-    border-radius: $radius-full;
-  }
-}
+/* 2. 4가지 독립 테마 모듈 체이닝 (Theme Partial Modules) */
+@import "./c-panel-flat_light";
+@import "./c-panel-flat_dark";
+@import "./c-panel-glass_light";
+@import "./c-panel-glass_dark";

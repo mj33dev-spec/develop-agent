@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type CButtonTheme = 
@@ -17,7 +17,8 @@ export type CButtonSize = 'small' | 'medium' | 'large' | 'more';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './c-button.component.html',
-  styleUrls: ['./c-button.component.scss']
+  styleUrls: ['./c-button.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CButtonComponent {
   @Input() theme: CButtonTheme = 'primary';

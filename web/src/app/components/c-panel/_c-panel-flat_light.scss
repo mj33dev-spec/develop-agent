@@ -1,0 +1,44 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 1] 플랫 라이트 모드 (Flat + Light Mode)
+   ======================================================================== */
+
+body.theme-flat:not(.dark-theme) {
+  .panelOverlay.active {
+    background-color: rgba(15, 23, 42, 0.4);
+  }
+
+  .panelContent {
+    background-color: $flat-card-bg;
+    box-shadow: $flat-shadow-lg;
+
+    &.right { border-left: 1px solid $flat-border-color; }
+    &.left { border-right: 1px solid $flat-border-color; }
+    &.top { border-bottom: 1px solid $flat-border-color; }
+    &.bottom { border-top: 1px solid $flat-border-color; }
+  }
+
+  .panelHeader {
+    border-bottom: 1px solid $flat-border-color;
+  }
+
+  .panelTitle {
+    color: $flat-text-primary;
+  }
+
+  .closeBtn {
+    color: $flat-text-secondary;
+
+    &:hover {
+      background-color: $flat-sidebar-bg;
+      color: $flat-text-primary;
+    }
+  }
+
+  .panelBody {
+    &::-webkit-scrollbar-thumb {
+      background: $flat-border-dark;
+    }
+  }
+}

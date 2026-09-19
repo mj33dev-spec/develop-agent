@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'neutral' | 'purple';
@@ -19,7 +19,8 @@ export type BadgeSize = 'sm' | 'md' | 'lg';
       <ng-content></ng-content>
     </span>
   `,
-  styleUrls: ['./c-badge.component.scss']
+  styleUrls: ['./c-badge.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CBadgeComponent {
   @Input() label: string = '';

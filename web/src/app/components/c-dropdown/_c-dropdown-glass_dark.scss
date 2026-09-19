@@ -1,0 +1,51 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
+   ======================================================================== */
+
+body.theme-glass.dark-theme {
+  .dropdownContainer .multiChip {
+    background: rgba(96, 165, 250, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: $dark-primary;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+  }
+
+  .dropdown-portal-menu {
+    background: rgba(30, 35, 48, 0.85);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+
+    hr {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .dropdownItem {
+      color: $dark-text-primary;
+
+      .dropdownItemIcon {
+        color: $dark-text-muted;
+      }
+
+      &:hover:not(.disabled) {
+        background: rgba(255, 255, 255, 0.12);
+        color: $dark-primary;
+      }
+
+      &.selected {
+        background: rgba(74, 134, 255, 0.25);
+        color: $dark-primary;
+        font-weight: 600;
+
+        .dropdownItemIcon {
+          color: $dark-primary;
+        }
+      }
+    }
+  }
+}

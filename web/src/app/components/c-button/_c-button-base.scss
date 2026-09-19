@@ -1,0 +1,77 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [골격 (Base)] 버튼(c-button) 순수 레이아웃 및 크기 골격
+   ======================================================================== */
+
+:host {
+  display: inline-block;
+
+  &[style*="width"] {
+    display: block;
+    width: 100%;
+
+    .btn {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}
+
+.btn {
+  padding: $spacing-8 $spacing-16;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-4;
+  min-height: 40px;
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
+  border-radius: 14px;
+  @include typo-caption-1;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
+  i.bx {
+    font-size: $font-size-pc-title-3;
+  }
+
+  /* 크기 규격 */
+  &.btn-small {
+    padding: $spacing-4 $spacing-8;
+    min-height: 32px;
+    border-radius: 10px;
+    @include typo-caption-2;
+  }
+
+  &.btn-large {
+    padding: $spacing-12 $spacing-24;
+    min-height: 48px;
+    border-radius: 16px;
+    @include typo-body-2;
+  }
+
+  &.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: $radius-normal;
+    background-color: transparent;
+    border: none;
+  }
+}

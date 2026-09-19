@@ -1,0 +1,44 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 1] 플랫 라이트 모드 (Flat + Light Mode)
+   ======================================================================== */
+
+body.theme-flat:not(.dark-theme) {
+  .dropdownContainer .multiChip {
+    background: rgba($color-primary, 0.1);
+    color: $color-primary;
+  }
+
+  .dropdown-portal-menu {
+    background: $flat-card-bg;
+    border: 1px solid $flat-border-color;
+    box-shadow: $flat-shadow-lg;
+
+    hr {
+      background: $flat-border-color;
+    }
+
+    .dropdownItem {
+      color: $flat-text-primary;
+
+      .dropdownItemIcon {
+        color: $flat-text-muted;
+      }
+
+      &:hover:not(.disabled) {
+        background: $flat-sidebar-bg;
+      }
+
+      &.selected {
+        background: $flat-border-color;
+        font-weight: 600;
+        color: $color-primary;
+
+        .dropdownItemIcon {
+          color: $color-primary;
+        }
+      }
+    }
+  }
+}

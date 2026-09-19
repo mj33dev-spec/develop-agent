@@ -1,0 +1,43 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   ======================================================================== */
+
+body.theme-glass:not(.dark-theme) {
+  .btn {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    &.btn-neutral {
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      color: $flat-text-primary;
+      box-shadow: 0 4px 14px rgba(31, 38, 135, 0.05);
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 6px 18px rgba(31, 38, 135, 0.1);
+      }
+    }
+
+    &.btn-outlined-neutral {
+      background: rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      color: $flat-text-primary;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.65);
+      }
+    }
+
+    &.btn-icon {
+      color: $flat-text-secondary;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.65);
+        color: $flat-text-primary;
+      }
+    }
+  }
+}

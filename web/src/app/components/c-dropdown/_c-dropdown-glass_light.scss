@@ -1,0 +1,51 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   ======================================================================== */
+
+body.theme-glass:not(.dark-theme) {
+  .dropdownContainer .multiChip {
+    background: rgba(74, 134, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: $color-primary;
+    border: 1px solid rgba(74, 134, 255, 0.3);
+  }
+
+  .dropdown-portal-menu {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 16px 40px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+
+    hr {
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .dropdownItem {
+      color: $flat-text-primary;
+
+      .dropdownItemIcon {
+        color: $flat-text-muted;
+      }
+
+      &:hover:not(.disabled) {
+        background: rgba(255, 255, 255, 0.65);
+        color: $color-primary;
+      }
+
+      &.selected {
+        background: rgba(74, 134, 255, 0.18);
+        color: $color-primary;
+        font-weight: 600;
+
+        .dropdownItemIcon {
+          color: $color-primary;
+        }
+      }
+    }
+  }
+}

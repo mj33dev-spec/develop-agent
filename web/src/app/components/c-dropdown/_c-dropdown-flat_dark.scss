@@ -1,0 +1,44 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 2] 플랫 다크 모드 (Flat + Dark Mode)
+   ======================================================================== */
+
+body.theme-flat.dark-theme {
+  .dropdownContainer .multiChip {
+    background: rgba(96, 165, 250, 0.15);
+    color: $dark-primary;
+  }
+
+  .dropdown-portal-menu {
+    background: $flat-dark-card-bg;
+    border: 1px solid $dark-border-color;
+    box-shadow: $dark-shadow-lg;
+
+    hr {
+      background: $dark-border-color;
+    }
+
+    .dropdownItem {
+      color: $dark-text-primary;
+
+      .dropdownItemIcon {
+        color: $dark-text-muted;
+      }
+
+      &:hover:not(.disabled) {
+        background: $flat-dark-surface-alt;
+      }
+
+      &.selected {
+        background: $dark-active-bg;
+        font-weight: 600;
+        color: $dark-primary;
+
+        .dropdownItemIcon {
+          color: $dark-primary;
+        }
+      }
+    }
+  }
+}

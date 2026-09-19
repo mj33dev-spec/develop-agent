@@ -1,0 +1,110 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 2] 플랫 다크 모드 (Flat + Dark Mode)
+   ======================================================================== */
+
+body.theme-flat.dark-theme {
+  .btn {
+    box-shadow: $dark-shadow-sm;
+
+    &:disabled {
+      background-color: $dark-disabled-bg;
+      color: $dark-disabled-text;
+      cursor: not-allowed;
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    &.btn-primary {
+      background-color: $color-primary;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(74, 134, 255, 0.4);
+      border: none;
+    }
+
+    &.btn-outlined-primary {
+      background-color: transparent;
+      border: 1px solid $dark-primary;
+      color: $dark-primary;
+    }
+
+    &.btn-secondary {
+      background-color: $color-secondary;
+      color: #ffffff;
+      border: none;
+    }
+
+    &.btn-outlined-secondary {
+      background-color: transparent;
+      border: 1px solid #a78bfa;
+      color: #a78bfa;
+    }
+
+    &.btn-success {
+      background-color: #10b981;
+      color: #ffffff;
+      border: none;
+    }
+
+    &.btn-outlined-success {
+      background-color: transparent;
+      border: 1px solid #4ade80;
+      color: #4ade80;
+    }
+
+    &.btn-error {
+      background-color: $dark-error;
+      color: #ffffff;
+      border: none;
+    }
+
+    &.btn-outlined-error {
+      background-color: transparent;
+      border: 1px solid $dark-error;
+      color: $dark-error;
+    }
+
+    &.btn-warning {
+      background-color: #eab308;
+      color: #ffffff;
+      border: none;
+    }
+
+    &.btn-outlined-warning {
+      background-color: transparent;
+      border: 1px solid #facc15;
+      color: #facc15;
+    }
+
+    &.btn-neutral {
+      background-color: $flat-dark-surface-alt;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-primary;
+      box-shadow: $dark-shadow-btn;
+
+      &:hover:not(:disabled) {
+        background-color: $flat-dark-surface-hover;
+      }
+    }
+
+    &.btn-outlined-neutral {
+      background-color: transparent;
+      border: 1px solid $dark-border-light;
+      color: $dark-text-secondary;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    &.btn-icon {
+      color: $dark-text-muted;
+
+      &:hover:not(:disabled) {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: $dark-text-primary;
+      }
+    }
+  }
+}

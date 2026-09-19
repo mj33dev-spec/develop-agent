@@ -1,0 +1,50 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 2] 플랫 다크 모드 (Flat + Dark Mode)
+   ======================================================================== */
+
+body.theme-flat.dark-theme {
+  .modalOverlay {
+    background-color: $dark-bg-overlay;
+  }
+
+  .modalContent {
+    background-color: $dark-surface;
+    box-shadow: $dark-modal-shadow;
+    border: 1px solid $dark-border-color;
+  }
+
+  .modalHeader {
+    border-bottom: 1px solid $dark-border-color;
+
+    .closeBtn {
+      color: $dark-text-muted;
+
+      &:hover {
+        background: $dark-border-color;
+        color: $dark-text-primary;
+      }
+    }
+  }
+
+  .modalTitle {
+    color: $dark-text-primary;
+  }
+
+  .modalSubTitle {
+    color: $dark-text-muted;
+  }
+
+  .modalBody {
+    color: $dark-text-secondary;
+
+    &::-webkit-scrollbar-thumb {
+      background: $dark-border-light;
+    }
+  }
+
+  .formActions {
+    border-top: 1px solid $dark-border-color;
+  }
+}

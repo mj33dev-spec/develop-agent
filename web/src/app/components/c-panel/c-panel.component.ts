@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, HostBinding, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, HostBinding, ElementRef, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type CPanelDirection = 'top' | 'right' | 'bottom' | 'left';
@@ -32,7 +32,8 @@ export type CPanelDirection = 'top' | 'right' | 'bottom' | 'left';
       </div>
     </div>
   `,
-  styleUrls: ['./c-panel.component.scss']
+  styleUrls: ['./c-panel.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CPanelComponent implements OnChanges {
   @Input() isOpen: boolean = false;

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, HostListener, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CButtonComponent } from '../c-button/c-button.component';
 
@@ -18,7 +18,8 @@ export type CDropdownVariant = 'outlined' | 'fill' | 'more' | 'multi';
   standalone: true,
   imports: [CommonModule, CButtonComponent],
   templateUrl: './c-dropdown.component.html',
-  styleUrls: ['./c-dropdown.component.scss']
+  styleUrls: ['./c-dropdown.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() variant: CDropdownVariant = 'outlined';

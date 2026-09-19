@@ -1,0 +1,48 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   ======================================================================== */
+
+body.theme-glass:not(.dark-theme) {
+  .badge {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    &[data-variant="success"] {
+      color: $color-success;
+      background: rgba($color-success, 0.15);
+      border: 1px solid rgba($color-success, 0.25);
+    }
+    
+    &[data-variant="warning"] {
+      color: $color-warn;
+      background: rgba($color-warn, 0.15);
+      border: 1px solid rgba($color-warn, 0.25);
+    }
+    
+    &[data-variant="danger"] {
+      color: $color-error;
+      background: rgba($color-error, 0.15);
+      border: 1px solid rgba($color-error, 0.25);
+    }
+    
+    &[data-variant="info"] {
+      color: $color-primary;
+      background: rgba($color-primary, 0.15);
+      border: 1px solid rgba($color-primary, 0.25);
+    }
+    
+    &[data-variant="neutral"] {
+      color: $flat-text-primary;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+    }
+    
+    &[data-variant="purple"] {
+      color: $color-secondary;
+      background: rgba($color-secondary, 0.15);
+      border: 1px solid rgba($color-secondary, 0.25);
+    }
+  }
+}

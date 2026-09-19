@@ -1,0 +1,42 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
+   ======================================================================== */
+
+body.theme-glass.dark-theme {
+  .btn {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    &.btn-neutral {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid $dark-border-light;
+      color: $dark-text-primary;
+      box-shadow: $dark-shadow-md;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    &.btn-outlined-neutral {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid $dark-border-color;
+      color: $dark-text-secondary;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    &.btn-icon {
+      color: $dark-text-muted;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.12);
+        color: $dark-text-primary;
+      }
+    }
+  }
+}

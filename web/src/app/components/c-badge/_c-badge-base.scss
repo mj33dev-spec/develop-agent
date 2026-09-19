@@ -1,0 +1,34 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [골격 (Base)] 뱃지(c-badge) 순수 레이아웃 및 크기 골격
+   ======================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: $radius-circle;
+  @include typo-caption-1;
+  line-height: 1.4;
+  white-space: nowrap;
+  
+  &[data-size="sm"] {
+    padding: 2px $spacing-8;
+    @include typo-caption-2;
+    border-radius: $radius-shallow;
+  }
+  
+  &[data-size="md"] {
+    padding: 3px $spacing-8;
+    @include typo-caption-1;
+    border-radius: $radius-normal;
+  }
+  
+  &[data-size="lg"] {
+    padding: $spacing-4 $spacing-12;
+    @include typo-body-2;
+    border-radius: $radius-circle;
+  }
+}

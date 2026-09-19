@@ -1,0 +1,127 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [골격 (Base)] 슬라이드 패널(c-panel) 순수 레이아웃 및 애니메이션 뼈대
+   ======================================================================== */
+
+.panelOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9990;
+  display: flex;
+  transition: background-color 0.3s ease;
+  pointer-events: none;
+
+  &.active {
+    pointer-events: auto;
+  }
+}
+
+.panelContent {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+
+  &.right {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 460px;
+    height: 100%;
+    transform: translateX(100%);
+
+    &.active {
+      transform: translateX(0);
+    }
+  }
+
+  &.left {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 460px;
+    height: 100%;
+    transform: translateX(-100%);
+
+    &.active {
+      transform: translateX(0);
+    }
+  }
+
+  &.top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 400px;
+    width: 100%;
+    transform: translateY(-100%);
+
+    &.active {
+      transform: translateY(0);
+    }
+  }
+
+  &.bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 400px;
+    width: 100%;
+    transform: translateY(100%);
+
+    &.active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-20 $spacing-24;
+}
+
+.panelTitle {
+  @include typo-title-3;
+  margin: 0;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  @include typo-body-1;
+  cursor: pointer;
+  padding: $spacing-4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-sm;
+  transition: all 0.2s ease;
+}
+
+.panelBody {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: $spacing-24;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $radius-full;
+  }
+}

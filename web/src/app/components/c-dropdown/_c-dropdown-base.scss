@@ -1,0 +1,122 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [골격 (Base)] 드롭다운(c-dropdown) 레이아웃, 크기, 위치 및 애니메이션 골격
+   ======================================================================== */
+
+.dropdownContainer {
+  position: relative;
+  display: inline-block;
+
+  &[style*="width"] {
+    display: block;
+  }
+
+  .dropdownWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    c-button {
+      display: block;
+      width: 100%;
+
+      ::ng-deep .btn {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .multiSelectContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-8;
+    align-items: center;
+
+    .multiChipWrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-8;
+    }
+
+    .multiChip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 12px;
+      @include typo-caption-2;
+
+      i {
+        font-size: $font-size-pc-body-2;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @include hover;
+      }
+    }
+  }
+}
+
+.dropdown-portal-menu {
+  position: fixed;
+  z-index: 10000;
+  top: var(--dropdown-top, auto);
+  bottom: var(--dropdown-bottom, auto);
+  left: var(--dropdown-left, auto);
+  right: var(--dropdown-right, auto);
+  width: var(--dropdown-width, auto);
+  min-width: var(--dropdown-min-width, auto);
+
+  border-radius: 14px;
+  padding: $spacing-8;
+  animation: dropdownIn 150ms ease;
+  max-height: 320px;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  hr {
+    height: 1px;
+    margin: $spacing-8 0;
+    border: none;
+  }
+
+  .dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: $spacing-8;
+    width: 100%;
+    padding: $spacing-8 $spacing-12;
+    border-radius: $radius-md;
+    @include typo-body-3;
+    transition: background $transition-fast;
+    background: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: none;
+    }
+
+    .dropdownItemIcon {
+      @include typo-body-1;
+    }
+  }
+}
+
+@keyframes dropdownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

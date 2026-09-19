@@ -1,0 +1,40 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 2] 플랫 다크 모드 (Flat + Dark Mode)
+   ======================================================================== */
+
+body.theme-flat.dark-theme {
+  .badge {
+    &[data-variant="success"] {
+      color: #4ade80;
+      background: rgba(74, 222, 128, 0.15);
+    }
+    
+    &[data-variant="warning"] {
+      color: #facc15;
+      background: rgba(250, 204, 21, 0.15);
+    }
+    
+    &[data-variant="danger"] {
+      color: $dark-error;
+      background: rgba(252, 129, 129, 0.15);
+    }
+    
+    &[data-variant="info"] {
+      color: $dark-primary;
+      background: rgba(96, 165, 250, 0.15);
+    }
+    
+    &[data-variant="neutral"] {
+      color: $dark-text-secondary;
+      background: $flat-dark-surface-alt;
+      border: 1px solid $dark-border-color;
+    }
+    
+    &[data-variant="purple"] {
+      color: #a78bfa;
+      background: rgba(167, 139, 250, 0.15);
+    }
+  }
+}

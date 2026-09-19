@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ElementRef, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CButtonComponent } from '../c-button/c-button.component';
 
@@ -7,7 +7,8 @@ import { CButtonComponent } from '../c-button/c-button.component';
   standalone: true,
   imports: [CommonModule, CButtonComponent],
   templateUrl: './c-modal.component.html',
-  styleUrls: ['./c-modal.component.scss']
+  styleUrls: ['./c-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CModalComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isOpen: boolean = false;
