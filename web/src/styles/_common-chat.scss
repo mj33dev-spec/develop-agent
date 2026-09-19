@@ -23,7 +23,7 @@
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: #1e293b !important;
+  color: #1e293b;
   user-select: none;
   transition: all 0.2s ease;
 
@@ -45,7 +45,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: #1e293b !important;
+    color: #1e293b;
     font-weight: 600;
   }
 
@@ -84,10 +84,10 @@
     padding: 3px 8px;
     font-size: 13px;
     border-radius: 6px;
-    background-color: #eaf0f8 !important;
+    background-color: #eaf0f8;
     box-shadow: inset 1px 1px 2px rgba(163, 177, 198, 0.3);
     border: 1px solid #dbe2ef;
-    color: #2D3748 !important;
+    color: #2D3748;
     cursor: default;
 
     i {
@@ -95,60 +95,301 @@
     }
 
     .chip-name {
-      color: #2D3748 !important;
+      color: #2D3748;
       font-weight: 600;
     }
   }
 }
 
-/* ── 테마별 첨부 칩 및 채팅 입력 요소 오버라이드 ──────────────── */
-body.dark-theme {
+/* ========================================================================
+   채팅 입력창 공통 테마별 스타일
+   (.chat-input-box, .file-question-box, .copilot-input-box)
+   ======================================================================== */
+
+/* ── 뉴모피즘 다크 테마 ────────────────── */
+body.dark-theme:not(.theme-flat):not(.theme-glass) {
   .attached-chip {
-    background-color: $dark-surface-alt !important;
-    box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light !important;
-    border-color: $dark-border-color !important;
-    color: $dark-text-secondary !important;
+    background-color: $dark-surface-alt;
+    box-shadow: 3px 3px 8px $dark-shadow-dark, -3px -3px 8px $dark-shadow-light;
+    border-color: $dark-border-color;
+    color: $dark-text-secondary;
 
     .chip-name {
-      color: $dark-text-secondary !important;
+      color: $dark-text-secondary;
     }
   }
 
   .msg-attachments .attached-chip.msg-chip {
-    background-color: $dark-surface-alt !important;
-    border-color: $dark-border-color !important;
-    box-shadow: inset 1px 1px 2px $dark-shadow-dark !important;
-    color: $dark-text-secondary !important;
+    background-color: $dark-surface-alt;
+    border-color: $dark-border-color;
+    box-shadow: inset 1px 1px 2px $dark-shadow-dark;
+    color: $dark-text-secondary;
 
     .chip-name {
-      color: $dark-text-secondary !important;
+      color: $dark-text-secondary;
     }
   }
 }
 
+/* ── 플랫 테마 (라이트) ────────────────── */
 body.theme-flat {
   .attached-chip {
-    background-color: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
-    color: #334155 !important;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    color: #334155;
 
     .chip-name {
-      color: #334155 !important;
+      color: #334155;
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    &:focus-within {
+      border-color: #4A86FF;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      box-shadow: none;
+      color: #475569;
+    }
+
+    .model-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      box-shadow: none;
+      color: #334155;
+
+      &:hover {
+        background: #e2e8f0;
+        box-shadow: none;
+      }
+    }
+
+    .send-btn {
+      background: #4A86FF;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25);
+      border: none;
+
+      &:disabled {
+        background: #e2e8f0;
+        box-shadow: none;
+
+        i {
+          color: #94a3b8;
+        }
+      }
     }
   }
 }
 
+/* ── 플랫 다크 테마 ────────────────── */
+body.theme-flat.dark-theme {
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: #1e222d;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    &:focus-within {
+      border-color: #4A86FF;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3);
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: #2b303e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+      color: #f1f5f9;
+    }
+
+    .model-btn {
+      background: #2b303e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+      color: #f1f5f9;
+
+      &:hover {
+        background: #353b4d;
+        box-shadow: none;
+      }
+    }
+
+    .send-btn {
+      background: #4A86FF;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.4);
+      border: none;
+
+      &:disabled {
+        background: #2b303e;
+        box-shadow: none;
+
+        i {
+          color: #64748b;
+        }
+      }
+    }
+  }
+}
+
+/* ── 글래스모피즘 테마 (라이트) ────────────────── */
 body.theme-glass {
   .attached-chip {
-    background-color: rgba(255, 255, 255, 0.6) !important;
-    backdrop-filter: blur(8px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.8) !important;
-    box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06) !important;
-    color: #1e293b !important;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06);
+    color: #1e293b;
 
     .chip-name {
-      color: #1e293b !important;
+      color: #1e293b;
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border-radius: 24px;
+
+    &:focus-within {
+      border-color: #4A86FF;
+      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.25), 0 12px 36px rgba(31, 38, 135, 0.12);
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      color: #334155;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12);
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+
+    .model-btn {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      color: #334155;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12);
+        color: #4A86FF;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, #4A86FF, #3b82f6);
+      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+
+      &:disabled {
+        background: rgba(203, 213, 225, 0.6);
+        box-shadow: none;
+
+        i {
+          color: #94a3b8;
+        }
+      }
+    }
+  }
+}
+
+/* ── 글래스모피즘 다크 테마 ────────────────── */
+body.theme-glass.dark-theme {
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: rgba(30, 35, 48, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+
+    &:focus-within {
+      border-color: #4A86FF;
+      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.35), 0 12px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      color: #f8fafc;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+
+    .model-btn {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      color: #f8fafc;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: #60a5fa;
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, #4A86FF, #6366f1);
+      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      &:disabled {
+        background: rgba(43, 48, 62, 0.6);
+        box-shadow: none;
+
+        i {
+          color: #64748b;
+        }
+      }
     }
   }
 }

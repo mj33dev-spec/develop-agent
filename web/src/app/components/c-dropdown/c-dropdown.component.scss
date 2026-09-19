@@ -156,8 +156,8 @@
   }
 }
 
-body.dark-theme .dropdown-portal-menu,
-:host-context(body.dark-theme) .dropdown-portal-menu {
+body.dark-theme:not(.theme-flat):not(.theme-glass) .dropdown-portal-menu,
+:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)) .dropdown-portal-menu {
   background: $dark-surface-alt;
 
   &.fill {
@@ -200,18 +200,58 @@ body.dark-theme .dropdown-portal-menu,
   }
 }
 
+/* ── 플랫 테마 (라이트) ────────────────── */
+body.theme-flat .dropdown-portal-menu {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  .dropdownItem {
+    &:hover:not(.disabled) {
+      background: #f1f5f9;
+      box-shadow: none;
+    }
+
+    &.selected {
+      background: #e2e8f0;
+      box-shadow: none;
+    }
+  }
+}
+
+/* ── 플랫 다크 테마 ────────────────── */
+body.theme-flat.dark-theme .dropdown-portal-menu {
+  background: #1e222d;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  .dropdownItem {
+    &:hover:not(.disabled) {
+      background: #2b303e;
+      box-shadow: none;
+    }
+
+    &.selected {
+      background: #353b4d;
+      box-shadow: none;
+    }
+  }
+}
+
+/* ── 글래스모피즘 테마 (라이트) ────────────────── */
 body.theme-glass .dropdown-portal-menu {
   background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
   border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+  box-shadow: 0 16px 40px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
 
   .dropdownItem {
     color: $flat-text-primary;
 
     &:hover:not(.disabled) {
-      background: rgba(74, 134, 255, 0.12);
+      background: rgba(255, 255, 255, 0.65);
       box-shadow: none;
       color: $color-primary;
     }
@@ -228,24 +268,26 @@ body.theme-glass .dropdown-portal-menu {
   }
 }
 
+/* ── 글래스모피즘 다크 테마 ────────────────── */
 body.dark-theme.theme-glass .dropdown-portal-menu {
-  background: rgba(30, 34, 45, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid $dark-border-light;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  background: rgba(30, 35, 48, 0.85);
+  backdrop-filter: blur(24px) saturate(190%);
+  -webkit-backdrop-filter: blur(24px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
 
   .dropdownItem {
     color: $dark-text-primary;
 
     &:hover:not(.disabled) {
-      background: rgba(74, 134, 255, 0.2);
+      background: rgba(255, 255, 255, 0.12);
       box-shadow: none;
       color: $color-primary;
     }
 
     &.selected {
-      background: rgba(74, 134, 255, 0.28);
+      background: rgba(74, 134, 255, 0.25);
       color: $color-primary;
       box-shadow: none;
 
@@ -258,4 +300,5 @@ body.dark-theme.theme-glass .dropdown-portal-menu {
       color: $dark-text-muted;
     }
   }
-}
+}
+

@@ -266,59 +266,59 @@
    ========================================================== */
 :host-context(body.theme-flat) {
   .theme-cards-grid .theme-card-item {
-    background: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
     &:hover {
-      border-color: #94a3b8 !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+      border-color: #94a3b8;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     &.selected {
-      background: #f0f7ff !important;
-      border: 2px solid #4A86FF !important;
-      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.15) !important;
+      background: #f0f7ff;
+      border: 2px solid #4A86FF;
+      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.15);
     }
   }
 
   .dark-mode-row {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    box-shadow: none !important;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    box-shadow: none;
   }
 
   .theme-modal-footer ::ng-deep c-button .btn {
-    background: #4A86FF !important;
-    background-image: none !important;
-    border: none !important;
-    box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3) !important;
+    background: #4A86FF;
+    background-image: none;
+    border: none;
+    box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3);
   }
 }
 
 :host-context(body.theme-flat.dark-theme) {
   .theme-cards-grid .theme-card-item {
-    background: #1e222d !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: none !important;
+    background: #1e222d;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: none;
 
     &.selected {
-      background: rgba(96, 165, 250, 0.15) !important;
-      border: 2px solid #60a5fa !important;
-      box-shadow: 0 4px 14px rgba(96, 165, 250, 0.2) !important;
+      background: rgba(96, 165, 250, 0.15);
+      border: 2px solid #60a5fa;
+      box-shadow: 0 4px 14px rgba(96, 165, 250, 0.2);
     }
   }
 
   .dark-mode-row {
-    background: #161922 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: none !important;
+    background: #161922;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
   }
 
   .theme-modal-footer ::ng-deep c-button .btn {
-    background: #3b82f6 !important;
-    border: none !important;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4) !important;
+    background: #3b82f6;
+    border: none;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
   }
 }
 
@@ -327,71 +327,71 @@
    ========================================================== */
 :host-context(body.theme-glass) {
   .theme-cards-grid .theme-card-item {
-    background: rgba(255, 255, 255, 0.45) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.7) !important;
-    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
     &:hover {
-      background: rgba(255, 255, 255, 0.65) !important;
-      border-color: rgba(255, 255, 255, 0.9) !important;
+      background: rgba(255, 255, 255, 0.65);
+      border-color: rgba(255, 255, 255, 0.9);
     }
 
     &.selected {
-      background: rgba(255, 255, 255, 0.8) !important;
-      border: 2px solid #4A86FF !important;
-      box-shadow: 0 8px 24px rgba(74, 134, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid #4A86FF;
+      box-shadow: 0 8px 24px rgba(74, 134, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     }
   }
 
   .dark-mode-row {
-    background: rgba(255, 255, 255, 0.35) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.6) !important;
-    box-shadow: 0 4px 16px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 16px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
   }
 
   .theme-modal-footer ::ng-deep c-button .btn {
-    background: linear-gradient(135deg, rgba(74, 134, 255, 0.95), rgba(41, 98, 255, 0.95)) !important;
-    backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
-    box-shadow: 0 6px 20px rgba(74, 134, 255, 0.35) !important;
+    background: linear-gradient(135deg, rgba(74, 134, 255, 0.95), rgba(41, 98, 255, 0.95));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 6px 20px rgba(74, 134, 255, 0.35);
   }
 }
 
 :host-context(body.theme-glass.dark-theme) {
   .theme-cards-grid .theme-card-item {
-    background: rgba(30, 35, 48, 0.6) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+    background: rgba(30, 35, 48, 0.6);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 
     &.selected {
-      background: rgba(45, 55, 75, 0.8) !important;
-      border: 2px solid #60a5fa !important;
-      box-shadow: 0 8px 24px rgba(96, 165, 250, 0.3) !important;
+      background: rgba(45, 55, 75, 0.8);
+      border: 2px solid #60a5fa;
+      box-shadow: 0 8px 24px rgba(96, 165, 250, 0.3);
     }
   }
 
   .dark-mode-row {
-    background: rgba(22, 25, 34, 0.55) !important;
-    backdrop-filter: blur(16px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: none !important;
+    background: rgba(22, 25, 34, 0.55);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
   }
 
   .theme-modal-footer ::ng-deep c-button .btn {
-    background: linear-gradient(135deg, rgba(96, 165, 250, 0.9), rgba(59, 130, 246, 0.9)) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    box-shadow: 0 6px 20px rgba(96, 165, 250, 0.35) !important;
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.9), rgba(59, 130, 246, 0.9));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 20px rgba(96, 165, 250, 0.35);
   }
 }
 
-:host-context(body.dark-theme) {
+:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)) {
   .theme-cards-grid .theme-card-item {
     background: $dark-surface-alt;
     box-shadow: $dark-neu-shadow-btn;
