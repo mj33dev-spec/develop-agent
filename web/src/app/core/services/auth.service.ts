@@ -249,10 +249,14 @@ export class AuthService {
 
   async updateUserSettings(settings: Partial<{ defaultModel: string; defaultTheme: string; isDarkMode: boolean }>) {
     const user = this.currentUserSubject.value;
-    if (!user) throw new Error('로그인이 필요합니다.');
-
     const current = await this.getUserSettings();
     const mergedSettings = { ...current, ...settings };
+
+    // 로그인된 유저가 없는 경우 로컬스토리지에 저장 후 반환
+    if (!user) {
+      localStorage.setItem('user_app_settings', JSON.stringify(mergedSettings));
+      return mergedSettings;
+    }
 
     // 1. Supabase Auth 사용자 메타데이터 업데이트
     const { data, error } = await this.supabase.auth.updateUser({
