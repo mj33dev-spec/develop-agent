@@ -1,6 +1,8 @@
 @use '../../../styles/config' as *;
 
 :host {
+  display: inline-block;
+
   &[style*="width"] {
     display: block;
     width: 100%;
@@ -12,6 +14,7 @@
   }
 }
 
+// ── c-button 기본 리셋 및 플랫 디자인 스타일 ──
 .btn {
   padding: $spacing-8 $spacing-16;
   display: inline-flex;
@@ -20,15 +23,20 @@
   gap: $spacing-4;
   min-height: 40px;
   border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
   border-radius: 14px;
   @include typo-caption-1;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 4px 4px 10px $neu-shadow-dark, -4px -4px 10px $neu-shadow-light;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
+  box-sizing: border-box;
 
   &:disabled {
-    background: #e2e8f0;
+    background-color: #e2e8f0;
     background-image: none;
     color: #94a3b8;
     cursor: not-allowed;
@@ -40,12 +48,12 @@
   }
 
   &:hover:not(:disabled) {
-    box-shadow: 6px 6px 14px $neu-shadow-dark, -6px -6px 14px $neu-shadow-light;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
     transform: translateY(-1px);
   }
 
   &:active:not(:disabled) {
-    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+    box-shadow: none;
     transform: translateY(0);
   }
 
@@ -53,6 +61,7 @@
     font-size: $font-size-pc-title-3;
   }
 
+  // ── 크기 규격 ──
   &.btn-small {
     padding: $spacing-4 $spacing-8;
     min-height: 32px;
@@ -67,82 +76,90 @@
     @include typo-body-2;
   }
 
+  // ── 테마별 배색 ──
   &.btn-primary {
-    background: $neu-primary-gradient;
-    color: $color-white;
-    box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
-
-    &:active:not(:disabled) {
-      box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.25), inset -3px -3px 6px rgba(255, 255, 255, 0.2);
-    }
+    background-color: #4A86FF;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3);
+    border: none;
   }
 
   &.btn-outlined-primary {
     background-color: transparent;
-    border-color: $color-primary;
-    color: $color-primary;
+    border: 1px solid #4A86FF;
+    color: #4A86FF;
   }
 
   &.btn-secondary {
-    background-color: $color-secondary;
-    color: $color-white;
+    background-color: #6B5CE7;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(107, 92, 231, 0.3);
+    border: none;
   }
 
   &.btn-outlined-secondary {
     background-color: transparent;
-    border-color: $color-secondary;
-    color: $color-secondary;
+    border: 1px solid #6B5CE7;
+    color: #6B5CE7;
   }
 
   &.btn-success {
-    background-color: $color-success;
-    color: $color-white;
+    background-color: #10b981;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    border: none;
   }
 
   &.btn-outlined-success {
     background-color: transparent;
-    border-color: $color-success;
-    color: $color-success;
+    border: 1px solid #10b981;
+    color: #10b981;
   }
 
   &.btn-error {
-    background-color: $color-error;
-    color: $color-white;
+    background-color: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+    border: none;
   }
 
   &.btn-outlined-error {
     background-color: transparent;
-    border-color: $color-error;
-    color: $color-error;
+    border: 1px solid #ef4444;
+    color: #ef4444;
   }
 
   &.btn-warning {
-    background-color: $color-warn;
-    color: $color-white;
+    background-color: #eab308;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(234, 179, 8, 0.3);
+    border: none;
   }
 
   &.btn-outlined-warning {
     background-color: transparent;
-    border-color: $color-warn;
-    color: $color-warn;
+    border: 1px solid #eab308;
+    color: #eab308;
   }
 
   &.btn-neutral {
-    background-color: $color-light-grey; // $color-light-grey
-    color: $color-deep-grey;
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-    &:hover {
-      background-color: $color-grey; // $color-grey
+    &:hover:not(:disabled) {
+      background-color: #e2e8f0;
     }
   }
 
   &.btn-outlined-neutral {
     background-color: transparent;
-    border-color: $color-grey;
-    color: $color-deep-grey;
+    border: 1px solid #cbd5e1;
+    color: #334155;
 
-    &:hover {
-      background-color: $color-light-grey;
+    &:hover:not(:disabled) {
+      background-color: #f1f5f9;
     }
   }
 
@@ -152,75 +169,44 @@
     padding: 0;
     border-radius: $radius-normal;
     background-color: transparent;
-    color: $color-deep-grey;
+    color: #475569;
+    border: none;
 
-    &:hover {
-      background-color: $color-surface;
-      color: $color-dark;
+    &:hover:not(:disabled) {
+      background-color: #f1f5f9;
+      color: #1e293b;
     }
   }
 }
 
+// ── 다크 테마 배색 지원 ──
 :host-context(body.dark-theme) {
   .btn {
-    box-shadow: $dark-neu-shadow-sm;
-
-    &:disabled {
-      background: $dark-disabled-bg;
-      background-image: none;
-      color: $dark-disabled-text;
-      cursor: not-allowed;
-      box-shadow: none;
-      transform: none;
-      border-color: transparent;
-      opacity: 1;
-      filter: none;
-    }
-
-    &:hover:not(:disabled) {
-      box-shadow: $dark-neu-shadow-md;
-    }
-
-    &:active:not(:disabled) {
-      box-shadow: $dark-neu-shadow-inset-sm;
-    }
-
-    &.btn-primary {
-      box-shadow: $dark-neu-shadow-sm;
+    &.btn-neutral {
+      background-color: #2b303e;
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #f1f5f9;
 
       &:hover:not(:disabled) {
-        box-shadow: $dark-neu-shadow-md;
-      }
-
-      &:active:not(:disabled) {
-        box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.4), inset -3px -3px 6px rgba(255, 255, 255, 0.1);
-      }
-    }
-
-    &.btn-neutral {
-      background-color: $dark-surface-card;
-      color: $dark-text-secondary;
-
-      &:hover {
-        background-color: $dark-surface-hover;
+        background-color: #353b4d;
       }
     }
 
     &.btn-outlined-neutral {
-      border-color: $dark-border-light;
-      color: $dark-text-secondary;
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #e2e8f0;
 
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.05);
+      &:hover:not(:disabled) {
+        background-color: rgba(255, 255, 255, 0.08);
       }
     }
 
     &.btn-icon {
-      color: $dark-text-muted;
+      color: #94a3b8;
 
-      &:hover {
-        background-color: $dark-border-color;
-        color: $dark-text-primary;
+      &:hover:not(:disabled) {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #f1f5f9;
       }
     }
   }

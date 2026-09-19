@@ -1,6 +1,165 @@
 @use './config' as *;
 
-/* ── 입력창 첨부파일 칩 컨테이너 ──────────────── */
+/* ========================================================================
+   채팅창 & 코드창 공통 컨테이너 및 레이아웃 모듈화
+   ======================================================================== */
+
+.chat-container,
+.code-viewer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ── 공통 헤더 (Header) ──────────────────────── */
+.chat-header,
+.viewer-header {
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  flex-shrink: 0;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+
+  .header-left {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .icon-btn {
+      flex: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      i {
+        font-size: 20px;
+        color: #334155;
+      }
+
+      &:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+      }
+    }
+
+    .header-center {
+      flex: 1;
+      min-width: 0;
+
+      .chat-title {
+        @include typo-title-2;
+        color: #1e293b;
+        margin: 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        .edit-icon {
+          font-size: 16px;
+          color: #94a3b8;
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+
+        &:hover .edit-icon {
+          opacity: 1;
+        }
+      }
+
+      .chat-title-input {
+        @include typo-title-2;
+        color: #1e293b;
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #4A86FF;
+        outline: none;
+        padding: 2px 4px;
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    .file-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .file-icon {
+        flex: none;
+        font-size: 32px;
+      }
+
+      .file-name {
+        flex: 0 1 auto;
+        min-width: 0;
+        @include typo-title-2;
+        color: #1e293b;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+      }
+
+      .file-size {
+        flex: none;
+        @include typo-caption-1;
+        color: #64748b;
+        background: rgba(0, 0, 0, 0.04);
+        padding: 2px 8px;
+        border-radius: 12px;
+      }
+    }
+  }
+}
+
+/* ── 공통 바디 (Body) ────────────────────────── */
+.chat-body,
+.viewer-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  min-height: 0;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ── 공통 푸터 (Footer Input Area) ───────────── */
+.chat-footer-input,
+.viewer-footer-input {
+  padding: 12px 20px 16px;
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+
+/* ========================================================================
+   입력창 & 첨부파일 칩 공통 스타일
+   ======================================================================== */
+
 .attached-items-container {
   display: flex;
   flex-wrap: wrap;
@@ -11,7 +170,6 @@
   width: 100%;
 }
 
-/* ── 첨부파일 칩 공통 스타일 ──────────────── */
 .attached-chip {
   display: inline-flex;
   align-items: center;
@@ -71,7 +229,6 @@
   }
 }
 
-/* ── 메시지 버블 내 첨부 칩 스타일 ──────────────── */
 .msg-attachments {
   display: flex;
   flex-wrap: wrap;
@@ -99,17 +256,175 @@
   }
 }
 
-/* ── 플랫 테마 (라이트) ────────────────── */
-body.theme-flat {
-  .attached-chip {
-    background-color: #ffffff;
-    border: 1px solid #cbd5e1;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    color: #334155;
+/* ── 공통 채팅/질문 입력 박스 ────────────────── */
+.chat-input-box,
+.file-question-box,
+.copilot-input-box {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
 
-    .chip-name {
-      color: #334155;
+  &:focus-within {
+    border-color: #4A86FF;
+    box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
+  }
+
+  .input-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      padding: 4px;
+      background: transparent;
+      color: #1e293b;
+      resize: none;
+      overflow-y: hidden;
+      min-height: 24px;
+      max-height: 160px;
+      line-height: 1.4;
+      font-family: inherit;
+
+      &::placeholder {
+        color: #94a3b8;
+      }
     }
+
+    .input-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .footer-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .footer-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+
+  .add-btn,
+  .stop-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 20px;
+    }
+
+    &:hover {
+      background: #e2e8f0;
+    }
+  }
+
+  .model-btn {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #e2e8f0;
+    }
+  }
+
+  .send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #4A86FF;
+    border: none;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25);
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 20px;
+      color: #ffffff;
+    }
+
+    &:disabled {
+      background: #e2e8f0;
+      box-shadow: none;
+      cursor: not-allowed;
+
+      i {
+        color: #94a3b8;
+      }
+    }
+  }
+}
+
+
+/* ========================================================================
+   테마별 공통 오버라이드 (플랫 / 글래스모피즘 — 라이트 / 다크)
+   ======================================================================== */
+
+/* ── 플랫 테마 (라이트) ────────────────── */
+body.theme-flat:not(.dark-theme) {
+  .chat-header,
+  .viewer-header {
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+
+    .icon-btn {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      i { color: #334155; }
+      &:hover { background: #f1f5f9; }
+    }
+
+    .chat-title,
+    .file-name {
+      color: #1e293b;
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid #e2e8f0;
   }
 
   .chat-input-box,
@@ -119,50 +434,45 @@ body.theme-flat {
     border: 1px solid #cbd5e1;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
-    }
-
-    .add-btn,
-    .stop-btn {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      box-shadow: none;
-      color: #475569;
-    }
-
-    .model-btn {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      box-shadow: none;
-      color: #334155;
-
-      &:hover {
-        background: #e2e8f0;
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: #4A86FF;
-      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25);
-      border: none;
-
-      &:disabled {
-        background: #e2e8f0;
-        box-shadow: none;
-
-        i {
-          color: #94a3b8;
-        }
-      }
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: #1e293b;
     }
   }
 }
 
 /* ── 플랫 다크 테마 ────────────────── */
 body.theme-flat.dark-theme {
+  .chat-header,
+  .viewer-header {
+    background-color: #1e222d;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    .icon-btn {
+      background: #2b303e;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      i { color: #f1f5f9; }
+      &:hover { background: #353b4d; }
+    }
+
+    .chat-title,
+    .file-name {
+      color: #f1f5f9;
+    }
+
+    .file-size {
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   .chat-input-box,
   .file-question-box,
   .copilot-input-box {
@@ -170,60 +480,51 @@ body.theme-flat.dark-theme {
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3);
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: #f1f5f9;
+      &::placeholder { color: #64748b; }
     }
 
     .add-btn,
-    .stop-btn {
-      background: #2b303e;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: none;
-      color: #f1f5f9;
-    }
-
+    .stop-btn,
     .model-btn {
       background: #2b303e;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: none;
       color: #f1f5f9;
-
-      &:hover {
-        background: #353b4d;
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: #4A86FF;
-      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.4);
-      border: none;
-
-      &:disabled {
-        background: #2b303e;
-        box-shadow: none;
-
-        i {
-          color: #64748b;
-        }
-      }
+      &:hover { background: #353b4d; }
     }
   }
 }
 
 /* ── 글래스모피즘 테마 (라이트) ────────────────── */
-body.theme-glass {
-  .attached-chip {
-    background-color: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06);
-    color: #1e293b;
+body.theme-glass:not(.dark-theme) {
+  .chat-header,
+  .viewer-header {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 
-    .chip-name {
-      color: #1e293b;
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      i { color: #1e293b; }
+      &:hover { background: rgba(255, 255, 255, 0.85); }
     }
+
+    .chat-title,
+    .file-name {
+      color: #0f172a;
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
   }
 
   .chat-input-box,
@@ -234,68 +535,64 @@ body.theme-glass {
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border-radius: 24px;
 
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.25), 0 12px 36px rgba(31, 38, 135, 0.12);
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: #0f172a;
     }
 
     .add-btn,
-    .stop-btn {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      color: #334155;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12);
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
+    .stop-btn,
     .model-btn {
       background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       color: #334155;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12);
-        color: #4A86FF;
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: linear-gradient(135deg, #4A86FF, #3b82f6);
-      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-
-      &:disabled {
-        background: rgba(203, 213, 225, 0.6);
-        box-shadow: none;
-
-        i {
-          color: #94a3b8;
-        }
-      }
+      &:hover { background: rgba(255, 255, 255, 0.95); }
     }
   }
 }
 
 /* ── 글래스모피즘 다크 테마 ────────────────── */
 body.theme-glass.dark-theme {
+  .chat-header,
+  .viewer-header {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      i { color: #f1f5f9; }
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: #60a5fa;
+        i { color: #60a5fa; }
+      }
+    }
+
+    .chat-title,
+    .file-name {
+      color: #f1f5f9;
+    }
+
+    .file-size {
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
   .chat-input-box,
   .file-question-box,
   .copilot-input-box {
@@ -304,59 +601,24 @@ body.theme-glass.dark-theme {
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    border-radius: 24px;
 
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.35), 0 12px 36px rgba(0, 0, 0, 0.5);
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: #f1f5f9;
+      &::placeholder { color: #64748b; }
     }
 
     .add-btn,
-    .stop-btn {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      color: #f8fafc;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.18);
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
+    .stop-btn,
     .model-btn {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       color: #f8fafc;
-
       &:hover {
         background: rgba(255, 255, 255, 0.18);
         color: #60a5fa;
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: linear-gradient(135deg, #4A86FF, #6366f1);
-      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-
-      &:disabled {
-        background: rgba(43, 48, 62, 0.6);
-        box-shadow: none;
-
-        i {
-          color: #64748b;
-        }
       }
     }
   }

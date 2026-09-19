@@ -30,9 +30,7 @@ export class CModalComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private el: ElementRef) {}
 
   ngOnInit() {
-    if (this.el.nativeElement && this.el.nativeElement.parentNode !== document.body) {
-      document.body.appendChild(this.el.nativeElement);
-    }
+    // 뷰포트 고정 오버레이용 컴포넌트 렌더링
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -47,9 +45,6 @@ export class CModalComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     document.body.style.overflow = '';
-    if (this.el.nativeElement && this.el.nativeElement.parentNode) {
-      this.el.nativeElement.parentNode.removeChild(this.el.nativeElement);
-    }
   }
 
   handleOverlayClick(e: MouseEvent) {

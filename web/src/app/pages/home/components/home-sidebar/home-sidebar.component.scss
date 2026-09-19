@@ -3,11 +3,6 @@
 
 $sidebar-width: 260px;
 
-:host {
-  display: block;
-  height: 100%;
-}
-
 .sidebar {
   width: $sidebar-width;
   height: 100%;
@@ -136,9 +131,9 @@ $sidebar-width: 260px;
         > .room-item,
         > .folder-header,
         > .file-item {
-          background: $neu-bg;
-          box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
-          color: $neu-primary;
+          background-color: rgba(74, 134, 255, 0.12);
+          box-shadow: none;
+          color: #4A86FF;
           font-weight: 600;
           i { color: inherit; }
         }
@@ -149,9 +144,9 @@ $sidebar-width: 260px;
         align-items: center;
         padding: 10px 12px;
         cursor: pointer;
-        color: $neu-text;
+        color: inherit;
         border-radius: 12px;
-        background-color: $neu-bg;
+        background-color: transparent;
         transition: all 0.2s ease;
 
         i.bx {
@@ -173,8 +168,9 @@ $sidebar-width: 260px;
         }
 
         &:hover {
-          box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
-          transform: translateY(-1px);
+          background-color: rgba(203, 213, 225, 0.3);
+          box-shadow: none;
+          transform: none;
         }
 
         &.is-empty {
@@ -189,12 +185,12 @@ $sidebar-width: 260px;
       .room-item, .file-item {
         padding: 10px 12px;
         border-radius: 12px;
-        background-color: $neu-bg;
+        background-color: transparent;
         cursor: pointer;
         display: flex;
         align-items: center;
         gap: 8px;
-        color: $neu-text;
+        color: inherit;
         transition: all 0.2s ease;
 
         i {
@@ -463,10 +459,8 @@ $sidebar-width: 260px;
   }
 }
 
-aside.sidebar {
-  ::ng-deep .modalBody {
-    padding: $spacing-16 calc(#{$spacing-20} - #{$spacing-12});
-  }
+::ng-deep c-modal .modalBody {
+  padding: $spacing-16 calc(#{$spacing-20} - #{$spacing-12});
 }
 
 /* 템플릿 모달 스타일 */
@@ -1048,9 +1042,7 @@ aside.sidebar {
   }
 }
 
-
-
-:host-context(body.theme-flat),
+/* 플랫 및 글래스모피즘 테마 전역 제어 (body 클래스 기반) */
 body.theme-flat {
   .sidebar-user-card {
     background: #ffffff;
@@ -1170,7 +1162,6 @@ body.theme-flat {
   }
 }
 
-:host-context(body.theme-flat.dark-theme),
 body.theme-flat.dark-theme {
   .sidebar-user-card {
     background: #242834;
@@ -1296,7 +1287,6 @@ body.theme-flat.dark-theme {
   }
 }
 
-:host-context(body.theme-glass),
 body.theme-glass {
   .sidebar-user-card {
     background: rgba(255, 255, 255, 0.55);
@@ -1427,7 +1417,6 @@ body.theme-glass {
   }
 }
 
-:host-context(body.theme-glass.dark-theme),
 body.theme-glass.dark-theme {
   .sidebar-user-card {
     background: rgba(255, 255, 255, 0.08);
@@ -1557,5 +1546,3 @@ body.theme-glass.dark-theme {
     box-shadow: none;
   }
 }
-
-

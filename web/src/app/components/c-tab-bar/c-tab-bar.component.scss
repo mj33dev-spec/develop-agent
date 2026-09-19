@@ -1,260 +1,207 @@
 @use '../../../styles/config' as *;
 
-// --- Segment Variant ---
-.segmentContainer {
-  display: inline-flex;
-  align-items: center;
-  background-color: $neu-bg;
-  padding: 4px;
-  border-radius: 14px;
-  box-shadow: inset 2px 2px 5px $neu-shadow-dark, inset -2px -2px 5px $neu-shadow-light;
-  width: fit-content;
-  gap: 2px;
+// ── 탭바 전역 모듈화 스타일 ──
+:host {
+  display: inline-block;
 }
 
-.segmentBtn {
-  padding: 6px 16px;
-  border: none;
-  background-color: transparent;
-  color: $neu-text-secondary;
-  @include typo-body-3;
-  font-weight: 500;
-  cursor: pointer;
-  border-radius: 10px;
-  transition: all $transition-fast;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    color: $neu-text;
-  }
-
-  &.active {
-    background-color: $neu-bg;
-    color: $neu-primary;
-    box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
-    font-weight: 700;
-  }
-}
-
-// --- Base Variant ---
-.baseContainer {
-  display: flex;
-  gap: $spacing-16;
-  border-bottom: 1px solid rgba(184, 201, 223, 0.5);
-  width: 100%;
-}
-
-.baseBtn {
-  padding: $spacing-8 $spacing-4;
-  border: none;
-  background-color: transparent;
-  color: $neu-text-secondary;
-  @include typo-body-3;
-  cursor: pointer;
-  position: relative;
-  transition: color $transition-fast;
-
-  &:hover {
-    color: $neu-text;
-  }
-
-  &.active {
-    color: $neu-primary;
-    font-weight: $font-weight-bold;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background-color: $neu-primary;
-      border-radius: 2px;
-    }
-  }
-}
-
-// --- Folder Variant ---
-.folderContainer {
-  display: flex;
-  align-items: flex-end;
-  gap: $spacing-4;
-  width: 100%;
-}
-
-.folderBtn {
-  padding: $spacing-8 $spacing-16;
-  border: 1px solid rgba(184, 201, 223, 0.5);
-  background-color: $neu-bg;
-  color: $neu-text-secondary;
-  @include typo-body-3;
-  cursor: pointer;
-  border-radius: 12px 12px 0 0;
-  margin-right: -1px;
-  margin-bottom: -1px;
-  position: relative;
-  z-index: 1;
-  transition: all 0.15s ease-in-out;
-
-  &:hover {
-    color: $neu-text;
-  }
-
-  &.active {
-    background-color: $neu-bg;
-    color: $neu-primary;
-    font-weight: $font-weight-bold;
-    z-index: 2;
-    border-bottom-color: transparent;
-    box-shadow: 2px -2px 5px $neu-shadow-dark;
-  }
-}
-
-// --- Count Badge ---
-.count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 6px;
-  margin-left: 6px;
-  border-radius: 999px;
-  background-color: rgba(184, 201, 223, 0.4);
-  color: $neu-text-secondary;
-  @include typo-caption-2;
-  line-height: 1;
-  vertical-align: middle;
-
-  .active & {
-    background-color: $neu-primary;
-    color: #ffffff;
-  }
-}
-
-// --- Size Modifiers ---
-[data-size='small'] {
-  &.segmentContainer, .segmentContainer {
+:host ::ng-deep {
+  // ── Segment Variant (세그먼트형 탭) ──
+  .segmentContainer {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f1f5f9;
     padding: 3px;
     border-radius: 12px;
-  }
-  .segmentBtn {
-    padding: 4px 12px;
-    font-size: 13px;
-    border-radius: 8px;
-  }
-  .baseBtn {
-    padding: 6px 4px;
-    font-size: 13px;
-  }
-  .folderBtn {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
-}
-
-[data-size='large'] {
-  &.segmentContainer, .segmentContainer {
-    padding: 6px;
-    border-radius: 16px;
-  }
-  .segmentBtn {
-    padding: 10px 20px;
-    font-size: 15px;
-    border-radius: 12px;
-  }
-  .baseBtn {
-    padding: 12px 6px;
-    font-size: 15px;
-  }
-  .folderBtn {
-    padding: 12px 20px;
-    font-size: 15px;
-  }
-}
-
-
-
-:host-context(body.theme-flat),
-body.theme-flat {
-  .segmentContainer {
-    background-color: #f1f5f9;
-    box-shadow: none;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1;
+    width: fit-content;
+    gap: 2px;
+    box-sizing: border-box;
 
     .segmentBtn {
+      padding: 6px 16px;
+      border: none;
+      outline: none;
+      background-color: transparent;
       color: #64748b;
+      @include typo-body-3;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 9px;
+      transition: all $transition-fast;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: #1e293b;
+      }
 
       &.active {
         background-color: #ffffff;
         color: #4A86FF;
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        font-weight: 700;
       }
     }
   }
-}
 
-:host-context(body.theme-flat.dark-theme),
-body.theme-flat.dark-theme {
-  .segmentContainer {
-    background-color: #181b24;
-    box-shadow: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  // ── Base Variant (기본 하단바형 탭) ──
+  .baseContainer {
+    display: flex;
+    gap: $spacing-16;
+    border-bottom: 1px solid #cbd5e1;
+    width: 100%;
 
-    .segmentBtn {
-      color: #94a3b8;
+    .baseBtn {
+      padding: $spacing-8 $spacing-4;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: #64748b;
+      @include typo-body-3;
+      cursor: pointer;
+      position: relative;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: #1e293b;
+      }
 
       &.active {
-        background-color: #2b303e;
         color: #4A86FF;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        font-weight: $font-weight-bold;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background-color: #4A86FF;
+          border-radius: 2px;
+        }
       }
+    }
+  }
+
+  // ── Folder Variant (폴더 탭) ──
+  .folderContainer {
+    display: flex;
+    align-items: flex-end;
+    gap: $spacing-4;
+    width: 100%;
+
+    .folderBtn {
+      padding: $spacing-8 $spacing-16;
+      border: 1px solid #cbd5e1;
+      background-color: #f8fafc;
+      color: #64748b;
+      @include typo-body-3;
+      cursor: pointer;
+      border-radius: 12px 12px 0 0;
+      margin-right: -1px;
+      margin-bottom: -1px;
+      position: relative;
+      z-index: 1;
+      transition: all 0.15s ease-in-out;
+
+      &:hover {
+        color: #1e293b;
+      }
+
+      &.active {
+        background-color: #ffffff;
+        color: #4A86FF;
+        font-weight: $font-weight-bold;
+        z-index: 2;
+        border-bottom-color: transparent;
+        box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+
+  // ── Count 카운트 뱃지 ──
+  .count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: 999px;
+    background-color: rgba(203, 213, 225, 0.6);
+    color: #475569;
+    @include typo-caption-2;
+    line-height: 1;
+    vertical-align: middle;
+
+    .active & {
+      background-color: #4A86FF;
+      color: #ffffff;
+    }
+  }
+
+  // ── Size Modifiers (사이즈 변경자) ──
+  [data-size='small'] {
+    &.segmentContainer, .segmentContainer {
+      padding: 3px;
+      border-radius: 10px;
+    }
+    .segmentBtn {
+      padding: 4px 12px;
+      font-size: 13px;
+      border-radius: 7px;
+    }
+    .baseBtn {
+      padding: 6px 4px;
+      font-size: 13px;
+    }
+    .folderBtn {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+  }
+
+  [data-size='large'] {
+    &.segmentContainer, .segmentContainer {
+      padding: 5px;
+      border-radius: 14px;
+    }
+    .segmentBtn {
+      padding: 8px 18px;
+      font-size: 15px;
+      border-radius: 10px;
+    }
+    .baseBtn {
+      padding: 10px 6px;
+      font-size: 15px;
+    }
+    .folderBtn {
+      padding: 10px 18px;
+      font-size: 15px;
     }
   }
 }
 
-:host-context(body.theme-glass),
-body.theme-glass {
-  .segmentContainer {
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 16px;
+// ── 테마별 오버라이드 지원 ──
+:host-context(body.dark-theme),
+body.dark-theme {
+  :host ::ng-deep {
+    .segmentContainer {
+      background-color: #181b24;
+      border-color: rgba(255, 255, 255, 0.12);
 
-    .segmentBtn {
-      color: #475569;
+      .segmentBtn {
+        color: #94a3b8;
 
-      &.active {
-        background: rgba(255, 255, 255, 0.85);
-        color: #2563eb;
-        box-shadow: 0 4px 12px rgba(31, 38, 135, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      }
-    }
-  }
-}
-
-:host-context(body.theme-glass.dark-theme),
-body.theme-glass.dark-theme {
-  .segmentContainer {
-    background: rgba(20, 24, 34, 0.5);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-
-    .segmentBtn {
-      color: #94a3b8;
-
-      &.active {
-        background: rgba(74, 134, 255, 0.3);
-        color: #60a5fa;
-        box-shadow: 0 4px 12px rgba(74, 134, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        &.active {
+          background-color: #2b303e;
+          color: #4A86FF;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
       }
     }
   }
