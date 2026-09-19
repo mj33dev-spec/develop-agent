@@ -4,40 +4,65 @@
 // c-modal 리퀴드 글래스모피즘 다크 테마 스타일
 body.theme-glass.dark-theme,
 body.theme-glass.dark-mode {
-  .c-modal-backdrop {
-    background: rgba(15, 12, 32, 0.55);
+  .modalOverlay {
+    background: rgba(10, 14, 26, 0.35);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
   }
 
-  .c-modal-container {
-    @include dark-glass-panel(28px);
+  .modalContent {
+    background: rgba(20, 26, 42, 0.35);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 
+      0 24px 60px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
 
-    .c-modal-header {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    .modalHeader {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 
-      .c-modal-title {
+      .modalTitle {
         color: $dark-text-primary;
       }
 
-      .c-modal-close {
+      .closeBtn {
         color: $dark-text-muted;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
 
         &:hover {
-          background: rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.18);
           color: $color-white;
         }
       }
     }
 
-    .c-modal-body {
-      color: $dark-text-primary;
+    .closeBtn.absoluteCloseBtn {
+      color: $dark-text-muted;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: $color-white;
+      }
     }
 
-    .c-modal-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.18);
+    .modalSubTitle {
+      color: $dark-text-muted;
+    }
+
+    .modalBody {
+      color: $dark-text-primary;
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .formActions {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
   }
 }

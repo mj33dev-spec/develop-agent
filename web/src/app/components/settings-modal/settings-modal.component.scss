@@ -374,14 +374,14 @@
 
     .btn-super-use {
       .c-btn {
-        background: #ffffff !important;
-        color: #000000 !important;
-        border-radius: 20px !important;
-        font-weight: 700 !important;
-        border: none !important;
+        background: #ffffff;
+        color: #000000;
+        border-radius: 20px;
+        font-weight: 700;
+        border: none;
 
         &:hover {
-          background: #f1f5f9 !important;
+          background: #f1f5f9;
         }
       }
     }
@@ -391,49 +391,71 @@
 /* ========================================================================
    다크 모드 전역 스타일 연동 (body.dark-theme 및 body.dark-mode 완벽 대등)
    ======================================================================== */
+body.theme-glass.dark-theme,
+body.theme-glass.dark-mode {
+  .modalContent {
+    background: rgba(20, 26, 42, 0.35);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  .settings-sidebar {
+    background: rgba(0, 0, 0, 0.15);
+    border-right-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .settings-content-panel {
+    background: transparent;
+    color: #f8fafc;
+  }
+}
+
+body.theme-flat.dark-theme,
+body.theme-flat.dark-mode,
 body.dark-theme,
 body.dark-mode {
   .modalContent {
-    background-color: #0f172a !important;
-    border-color: #334155 !important;
+    background-color: #0f172a;
+    border-color: #334155;
 
     .absoluteCloseBtn {
-      color: #94a3b8 !important;
+      color: #94a3b8;
 
       &:hover {
-        background: #1e293b !important;
-        color: #f8fafc !important;
+        background: #1e293b;
+        color: #f8fafc;
       }
     }
   }
 
   .settings-sidebar {
-    background: #1e293b !important;
-    border-right-color: #334155 !important;
+    background: #1e293b;
+    border-right-color: #334155;
 
     .tab-group {
       .group-title {
-        color: #64748b !important;
+        color: #64748b;
       }
 
       .tab-btn {
-        color: #cbd5e1 !important;
+        color: #cbd5e1;
 
         i {
-          color: #94a3b8 !important;
+          color: #94a3b8;
         }
 
         &:hover {
-          background: #334155 !important;
-          color: #f8fafc !important;
+          background: #334155;
+          color: #f8fafc;
         }
 
         &.active {
-          background: #334155 !important;
-          color: #ffffff !important;
+          background: #334155;
+          color: #ffffff;
 
           i {
-            color: #ffffff !important;
+            color: #ffffff;
           }
         }
       }
@@ -441,39 +463,39 @@ body.dark-mode {
   }
 
   .settings-content-panel {
-    background: #0f172a !important;
-    color: #f8fafc !important;
+    background: #0f172a;
+    color: #f8fafc;
 
     .section-title {
-      color: #f8fafc !important;
+      color: #f8fafc;
     }
 
     .sub-section-title {
-      color: #e2e8f0 !important;
+      color: #e2e8f0;
     }
 
     .divider-line {
-      background: #1e293b !important;
+      background: #1e293b;
     }
 
     .setting-item-row {
       .item-label-group {
         .item-name {
-          color: #f8fafc !important;
+          color: #f8fafc;
         }
 
         .icon-brand, .icon-x {
-          color: #f8fafc !important;
+          color: #f8fafc;
         }
       }
 
       .item-info {
         .item-name {
-          color: #f8fafc !important;
+          color: #f8fafc;
         }
 
         .item-desc {
-          color: #94a3b8 !important;
+          color: #94a3b8;
         }
       }
     }
@@ -482,72 +504,72 @@ body.dark-mode {
       .user-profile-info {
         .user-details {
           .user-name {
-            color: #f8fafc !important;
+            color: #f8fafc;
           }
 
           .user-email {
-            color: #94a3b8 !important;
+            color: #94a3b8;
           }
         }
       }
     }
 
     .account-manage-box {
-      background: #1e293b !important;
-      border-color: #334155 !important;
+      background: #1e293b;
+      border-color: #334155;
 
       .manage-section {
         .sub-title {
-          color: #cbd5e1 !important;
+          color: #cbd5e1;
         }
 
         .form-input {
-          background: #0f172a !important;
-          border-color: #475569 !important;
-          color: #f8fafc !important;
+          background: #0f172a;
+          border-color: #475569;
+          color: #f8fafc;
         }
       }
     }
 
     .select-trigger-btn {
-      background: #1e293b !important;
-      border-color: #475569 !important;
-      color: #f8fafc !important;
+      background: #1e293b;
+      border-color: #475569;
+      color: #f8fafc;
     }
 
     .form-textarea {
-      background: #0f172a !important;
-      border-color: #475569 !important;
-      color: #f8fafc !important;
+      background: #0f172a;
+      border-color: #475569;
+      color: #f8fafc;
     }
 
     .theme-preset-grid {
       .theme-card {
-        border-color: #334155 !important;
+        border-color: #334155;
 
         &:hover {
-          border-color: #475569 !important;
+          border-color: #475569;
         }
 
         &.selected {
-          border-color: $color-primary !important;
-          background: rgba(74, 134, 255, 0.15) !important;
+          border-color: $color-primary;
+          background: rgba(74, 134, 255, 0.15);
         }
 
         .card-preview {
-          border-color: #475569 !important;
+          border-color: #475569;
 
           .preview-sidebar {
-            background: #334155 !important;
+            background: #334155;
           }
 
           .preview-content {
-            background: #1e293b !important;
+            background: #1e293b;
           }
         }
 
         .card-title {
-          color: #e2e8f0 !important;
+          color: #e2e8f0;
         }
       }
     }

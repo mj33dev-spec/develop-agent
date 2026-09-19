@@ -10,18 +10,18 @@
 }
 
 .modalOverlay {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   padding: 24px;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 10000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
   box-sizing: border-box;
 }
 
@@ -97,11 +97,11 @@
   box-sizing: border-box;
 
   > * {
-    flex: 1 !important;
-    min-height: 0 !important;
-    height: 100% !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 

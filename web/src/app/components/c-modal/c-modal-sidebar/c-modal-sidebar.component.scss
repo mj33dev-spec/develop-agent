@@ -3,7 +3,7 @@
 
 .c-modal-sidebar-root {
   width: 220px;
-  height: 100% !important;
+  height: 100%;
   flex: none;
   background: $sidebar-light-bg;
   border-right: 1px solid $sidebar-light-border;
@@ -18,7 +18,7 @@
 body.dark-theme,
 body.dark-mode {
   .c-modal-sidebar-root {
-    background: $sidebar-dark-bg !important;
-    border-right-color: $sidebar-dark-border !important;
+    background: $sidebar-dark-bg;
+    border-right-color: $sidebar-dark-border;
   }
 }

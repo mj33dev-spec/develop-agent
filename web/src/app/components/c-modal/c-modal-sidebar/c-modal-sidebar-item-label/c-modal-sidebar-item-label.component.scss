@@ -52,27 +52,27 @@
 body.dark-theme,
 body.dark-mode {
   .c-modal-sidebar-item-btn {
-    color: $sidebar-dark-text !important;
+    color: $sidebar-dark-text;
 
     i {
-      color: $sidebar-dark-icon !important;
+      color: $sidebar-dark-icon;
     }
 
     &:hover:not(:disabled) {
-      background: $sidebar-dark-hover-bg !important;
-      color: $sidebar-dark-text-active !important;
+      background: $sidebar-dark-hover-bg;
+      color: $sidebar-dark-text-active;
 
       i {
-        color: $sidebar-dark-text-active !important;
+        color: $sidebar-dark-text-active;
       }
     }
 
     &.active {
-      background: $sidebar-dark-active-bg !important;
-      color: $sidebar-dark-text-active !important;
+      background: $sidebar-dark-active-bg;
+      color: $sidebar-dark-text-active;
 
       i {
-        color: $sidebar-dark-text-active !important;
+        color: $sidebar-dark-text-active;
       }
     }
   }
