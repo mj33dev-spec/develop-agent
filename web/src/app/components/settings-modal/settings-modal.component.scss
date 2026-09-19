@@ -1,0 +1,555 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ── 좌측 사이드바 ──────────────── */
+.settings-sidebar {
+  width: 220px;
+  height: 100% !important;
+  flex: none;
+  background: #f8fafc;
+  border-right: 1px solid #f1f5f9;
+  padding: 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  .tab-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .group-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      padding: 0 12px 6px 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+
+      i {
+        font-size: 18px;
+        color: #64748b;
+        transition: color 0.15s ease;
+      }
+
+      &:hover {
+        background: #f1f5f9;
+        color: #0f172a;
+      }
+
+      &.active {
+        background: #e2e8f0;
+        color: #0f172a;
+        font-weight: 600;
+
+        i {
+          color: #0f172a;
+        }
+      }
+    }
+  }
+}
+
+/* ── 우측 메인 콘텐트 패널 ──────────────── */
+.settings-content-panel {
+  flex: 1;
+  width: 100%;
+  height: 100% !important;
+  min-height: 0;
+  background: #ffffff;
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 24px 0;
+  }
+
+  .sub-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+    margin: 20px 0 12px 0;
+  }
+
+  .divider-line {
+    height: 1px;
+    background: #f1f5f9;
+    margin: 18px 0;
+    width: 100%;
+  }
+
+  .setting-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    gap: 16px;
+
+    &.column-layout {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .item-label-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .item-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .icon-brand, .icon-x {
+        font-size: 20px;
+        color: #0f172a;
+      }
+
+      .icon-muted {
+        font-size: 18px;
+        color: #94a3b8;
+      }
+    }
+
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .item-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      .item-desc {
+        font-size: 13px;
+        color: #64748b;
+      }
+    }
+  }
+
+  /* 프로필 특수 레이아웃 */
+  .profile-row {
+    margin-bottom: 8px;
+
+    .user-profile-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .profile-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: $color-primary;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        flex: none;
+      }
+
+      .user-details {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .user-name {
+          font-size: 16px;
+          font-weight: 700;
+          color: #0f172a;
+        }
+
+        .user-email {
+          font-size: 13px;
+          color: #64748b;
+        }
+      }
+    }
+  }
+
+  /* 계정 관리 접이식 박스 */
+  .account-manage-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .manage-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .sub-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #475569;
+        margin: 0;
+      }
+
+      .input-inline-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      .input-stack-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-input {
+        flex: 1;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        font-size: 13px;
+        outline: none;
+        transition: border-color 0.2s;
+
+        &:focus {
+          border-color: $color-primary;
+        }
+      }
+    }
+  }
+
+  /* 폼 텍스트에어리어 및 드롭다운 트리거 */
+  .select-trigger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+    box-sizing: border-box;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: $color-primary;
+    }
+  }
+
+  /* 테마 프리셋 카드 */
+  .theme-preset-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 12px;
+
+    .theme-card {
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #cbd5e1;
+      }
+
+      &.selected {
+        border-color: $color-primary;
+        background: rgba(74, 134, 255, 0.04);
+      }
+
+      .card-preview {
+        width: 100%;
+        height: 80px;
+        border-radius: 8px;
+        display: flex;
+        overflow: hidden;
+        border: 1px solid #cbd5e1;
+
+        .preview-sidebar {
+          width: 30%;
+          height: 100%;
+          background: #e2e8f0;
+        }
+
+        .preview-content {
+          width: 70%;
+          height: 100%;
+          background: #ffffff;
+        }
+
+        &.glass-preview {
+          background: linear-gradient(135deg, rgba(74, 134, 255, 0.2), rgba(255, 255, 255, 0.4));
+          backdrop-filter: blur(8px);
+        }
+      }
+
+      .card-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #334155;
+      }
+    }
+  }
+
+  /* SuperGrok 하단 홍보 배너 */
+  .super-grok-banner {
+    margin-top: auto;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    .banner-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .brand-logo-spark {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 700;
+        font-size: 15px;
+
+        i {
+          color: #60a5fa;
+          font-size: 18px;
+        }
+      }
+
+      .banner-desc {
+        font-size: 12px;
+        color: #94a3b8;
+      }
+    }
+
+    .btn-super-use {
+      .c-btn {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border-radius: 20px !important;
+        font-weight: 700 !important;
+        border: none !important;
+
+        &:hover {
+          background: #f1f5f9 !important;
+        }
+      }
+    }
+  }
+}
+
+/* ========================================================================
+   다크 모드 전역 스타일 연동 (body.dark-theme 및 body.dark-mode 완벽 대등)
+   ======================================================================== */
+body.dark-theme,
+body.dark-mode {
+  .modalContent {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+
+    .absoluteCloseBtn {
+      color: #94a3b8 !important;
+
+      &:hover {
+        background: #1e293b !important;
+        color: #f8fafc !important;
+      }
+    }
+  }
+
+  .settings-sidebar {
+    background: #1e293b !important;
+    border-right-color: #334155 !important;
+
+    .tab-group {
+      .group-title {
+        color: #64748b !important;
+      }
+
+      .tab-btn {
+        color: #cbd5e1 !important;
+
+        i {
+          color: #94a3b8 !important;
+        }
+
+        &:hover {
+          background: #334155 !important;
+          color: #f8fafc !important;
+        }
+
+        &.active {
+          background: #334155 !important;
+          color: #ffffff !important;
+
+          i {
+            color: #ffffff !important;
+          }
+        }
+      }
+    }
+  }
+
+  .settings-content-panel {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+
+    .section-title {
+      color: #f8fafc !important;
+    }
+
+    .sub-section-title {
+      color: #e2e8f0 !important;
+    }
+
+    .divider-line {
+      background: #1e293b !important;
+    }
+
+    .setting-item-row {
+      .item-label-group {
+        .item-name {
+          color: #f8fafc !important;
+        }
+
+        .icon-brand, .icon-x {
+          color: #f8fafc !important;
+        }
+      }
+
+      .item-info {
+        .item-name {
+          color: #f8fafc !important;
+        }
+
+        .item-desc {
+          color: #94a3b8 !important;
+        }
+      }
+    }
+
+    .profile-row {
+      .user-profile-info {
+        .user-details {
+          .user-name {
+            color: #f8fafc !important;
+          }
+
+          .user-email {
+            color: #94a3b8 !important;
+          }
+        }
+      }
+    }
+
+    .account-manage-box {
+      background: #1e293b !important;
+      border-color: #334155 !important;
+
+      .manage-section {
+        .sub-title {
+          color: #cbd5e1 !important;
+        }
+
+        .form-input {
+          background: #0f172a !important;
+          border-color: #475569 !important;
+          color: #f8fafc !important;
+        }
+      }
+    }
+
+    .select-trigger-btn {
+      background: #1e293b !important;
+      border-color: #475569 !important;
+      color: #f8fafc !important;
+    }
+
+    .form-textarea {
+      background: #0f172a !important;
+      border-color: #475569 !important;
+      color: #f8fafc !important;
+    }
+
+    .theme-preset-grid {
+      .theme-card {
+        border-color: #334155 !important;
+
+        &:hover {
+          border-color: #475569 !important;
+        }
+
+        &.selected {
+          border-color: $color-primary !important;
+          background: rgba(74, 134, 255, 0.15) !important;
+        }
+
+        .card-preview {
+          border-color: #475569 !important;
+
+          .preview-sidebar {
+            background: #334155 !important;
+          }
+
+          .preview-content {
+            background: #1e293b !important;
+          }
+        }
+
+        .card-title {
+          color: #e2e8f0 !important;
+        }
+      }
+    }
+  }
+}

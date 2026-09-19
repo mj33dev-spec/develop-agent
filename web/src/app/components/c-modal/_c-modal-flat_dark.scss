@@ -4,7 +4,10 @@
    [테마 2] 플랫 다크 모드 (Flat + Dark Mode)
    ======================================================================== */
 
-body.theme-flat.dark-theme {
+body.theme-flat.dark-theme,
+body.theme-flat.dark-mode,
+body.dark-theme,
+body.dark-mode {
   .modalOverlay {
     background-color: $dark-bg-overlay;
   }

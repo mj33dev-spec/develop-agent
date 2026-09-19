@@ -23,6 +23,10 @@ export class CModalComponent implements OnInit, OnChanges, OnDestroy {
   @Input() hideCancel: boolean = false;
   @Input() isForm: boolean = false;
 
+  @Input() hasSidebar: boolean = false;
+  @Input() hideHeader: boolean = false;
+  @Input() hideFooter: boolean = false;
+
   @Input() customFooter: boolean = false;
 
   @Output() onClose = new EventEmitter<void>();

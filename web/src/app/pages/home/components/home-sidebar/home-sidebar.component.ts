@@ -6,6 +6,7 @@ import { CDropdownComponent, CDropdownOption } from '../../../../components/c-dr
 import { CModalComponent } from '../../../../components/c-modal/c-modal.component';
 import { CButtonComponent } from '../../../../components/c-button/c-button.component';
 import { TemplateService, Template, TemplateFile } from '../../../../core/services/template.service';
+import { SettingsTab } from '../../../../components/settings-modal/settings-modal.component';
 import { FolderService, Folder } from '../../../../core/services/folder.service';
 import { RoomService, ChatRoomRecord } from '../../../../core/services/room.service';
 import { FileItemService, FileItem } from '../../../../core/services/file-item.service';
@@ -137,6 +138,15 @@ export class HomeSidebarComponent implements OnInit {
   @Output() activeRoomIdChange = new EventEmitter<string | null>();
   @Output() activeFileIdChange = new EventEmitter<string | null>();
   @Output() dataChanged = new EventEmitter<void>();
+  @Output() openSettingsModal = new EventEmitter<SettingsTab>();
+
+  navigateToAccount() {
+    this.openSettingsModal.emit('account');
+  }
+
+  navigateToSettings() {
+    this.openSettingsModal.emit('appearance');
+  }
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
@@ -207,14 +217,6 @@ export class HomeSidebarComponent implements OnInit {
       }
     });
     await this.loadData();
-  }
-
-  navigateToAccount() {
-    this.router.navigate(['/account']);
-  }
-
-  navigateToSettings() {
-    this.router.navigate(['/settings']);
   }
 
   logout() {

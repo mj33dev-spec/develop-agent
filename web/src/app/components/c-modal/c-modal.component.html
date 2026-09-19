@@ -1,53 +1,72 @@
 <div *ngIf="isOpen" class="modalOverlay" (click)="handleOverlayClick($event)">
-  <div class="modalContent" [style.width]="width" [style.height]="height" (click)="$event.stopPropagation()">
+  <div class="modalContent" [class.has-sidebar]="hasSidebar" [style.width]="width" [style.height]="height" (click)="$event.stopPropagation()">
     
-    <ng-container *ngIf="isForm; else noForm">
-      <form (submit)="handleSubmit($event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0;">
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-      </form>
+    <!-- 닫기 버튼 (hideHeader이거나 hasSidebar일 때도 우측 상단 닫기 기능 지원) -->
+    <button *ngIf="hasSidebar || hideHeader" type="button" class="closeBtn absoluteCloseBtn" (click)="onClose.emit()" aria-label="Close">
+      <i class="bx bx-x"></i>
+    </button>
+
+    <!-- 1. 사이드바가 있는 모달 구조일 때 -->
+    <ng-container *ngIf="hasSidebar; else standardModal">
+      <div class="modalSidebarLayout">
+        <aside class="modalSidebarContainer">
+          <ng-content select="[modal-sidebar]"></ng-content>
+        </aside>
+        <div class="modalMainContainer">
+          <ng-content select="[modal-content], :not([modal-sidebar])"></ng-content>
+        </div>
+      </div>
     </ng-container>
-    
-    <ng-template #noForm>
-      <div style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
-        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-      </div>
-    </ng-template>
 
-    <ng-template #contentTemplate>
-      <div class="modalHeader">
-        <h2 class="modalTitle">
-          <!-- Allow HTML or string for title using a container if needed, but usually it's string in Angular -->
-          <span [innerHTML]="title"></span>
-        </h2>
-        <button type="button" class="closeBtn" (click)="onClose.emit()" aria-label="Close">
-          <i class="bx bx-x"></i>
-        </button>
-      </div>
-      <p *ngIf="subTitle" class="modalSubTitle">{{ subTitle }}</p>
+    <!-- 2. 일반 단일 모달 구조일 때 -->
+    <ng-template #standardModal>
+      <ng-container *ngIf="isForm; else noForm">
+        <form (submit)="handleSubmit($event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0;">
+          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+        </form>
+      </ng-container>
+      
+      <ng-template #noForm>
+        <div style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
+          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+        </div>
+      </ng-template>
 
-      <div class="modalBody">
-        <ng-content></ng-content>
-      </div>
+      <ng-template #contentTemplate>
+        <div class="modalHeader" *ngIf="!hideHeader">
+          <h2 class="modalTitle">
+            <span [innerHTML]="title"></span>
+          </h2>
+          <button type="button" class="closeBtn" (click)="onClose.emit()" aria-label="Close">
+            <i class="bx bx-x"></i>
+          </button>
+        </div>
+        <p *ngIf="subTitle && !hideHeader" class="modalSubTitle">{{ subTitle }}</p>
 
-      <div class="formActions">
-        <ng-content select="[footer]"></ng-content>
-        
-        <ng-container *ngIf="!customFooter">
-          <c-button *ngIf="!hideCancel" theme="neutral" (onClick)="onClose.emit()">
-            {{ cancelLabel }}
-          </c-button>
+        <div class="modalBody">
+          <ng-content></ng-content>
+        </div>
+
+        <div class="formActions" *ngIf="!hideFooter">
+          <ng-content select="[footer]"></ng-content>
           
-          <c-button 
-            [type]="isForm ? 'submit' : 'button'" 
-            [theme]="submitTheme" 
-            [disabled]="submitDisabled"
-            (onClick)="!isForm ? handleSubmit() : null"
-          >
-            {{ submitLabel }}
-          </c-button>
-        </ng-container>
-      </div>
+          <ng-container *ngIf="!customFooter">
+            <c-button *ngIf="!hideCancel" theme="neutral" (onClick)="onClose.emit()">
+              {{ cancelLabel }}
+            </c-button>
+            
+            <c-button 
+              [type]="isForm ? 'submit' : 'button'" 
+              [theme]="submitTheme" 
+              [disabled]="submitDisabled"
+              (onClick)="!isForm ? handleSubmit() : null"
+            >
+              {{ submitLabel }}
+            </c-button>
+          </ng-container>
+        </div>
+      </ng-template>
     </ng-template>
-    
+
   </div>
 </div>

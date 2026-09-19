@@ -1,0 +1,233 @@
+<c-modal 
+  [isOpen]="isOpen" 
+  width="860px" 
+  height="600px" 
+  [hasSidebar]="true" 
+  [hideHeader]="true" 
+  [hideFooter]="true" 
+  (onClose)="closeModal()">
+
+  <!-- 좌측 사이드바 탭 (modal-sidebar DOM 바인딩) -->
+  <aside modal-sidebar class="settings-sidebar">
+    <!-- 그룹 1: 일반 -->
+    <div class="tab-group">
+      <span class="group-title">일반</span>
+      <button type="button" class="tab-btn" [class.active]="activeTab === 'account'" (click)="setTab('account')">
+        <i class="bx bx-user"></i>
+        <span>계정</span>
+      </button>
+      <button type="button" class="tab-btn" [class.active]="activeTab === 'appearance'" (click)="setTab('appearance')">
+        <i class="bx bx-palette"></i>
+        <span>외관</span>
+      </button>
+      <button type="button" class="tab-btn" [class.active]="activeTab === 'behavior'" (click)="setTab('behavior')">
+        <i class="bx bx-slider-alt"></i>
+        <span>행동 유형</span>
+      </button>
+      <button type="button" class="tab-btn" [class.active]="activeTab === 'notifications'" (click)="setTab('notifications')">
+        <i class="bx bx-bell"></i>
+        <span>알림</span>
+      </button>
+    </div>
+
+    <!-- 그룹 2: Grok / AI -->
+    <div class="tab-group">
+      <span class="group-title">Grok</span>
+      <button type="button" class="tab-btn" [class.active]="activeTab === 'custom'" (click)="setTab('custom')">
+        <i class="bx bx-wrench"></i>
+        <span>맞춤 설정</span>
+      </button>
+    </div>
+
+    <!-- 그룹 3: 데이터 및 정보 -->
+    <div class="tab-group">
+      <span class="group-title">데이터 및 정보</span>
+      <button type="button" class="tab-btn" [class.active]="activeTab === 'data'" (click)="setTab('data')">
+        <i class="bx bx-data"></i>
+        <span>데이터 컨트롤</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- 우측 메인 컨텐츠 영역 (modal-content 바인딩) -->
+  <main modal-content class="settings-content-panel">
+    <!-- 1. 계정 탭 -->
+    <ng-container *ngIf="activeTab === 'account'">
+      <h2 class="section-title">계정</h2>
+
+      <!-- 프로필 카드 -->
+      <div class="setting-item-row profile-row">
+        <div class="user-profile-info">
+          <div class="profile-avatar">
+            <i class="bx bxs-user"></i>
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{ nickname || '사용자' }}</span>
+            <span class="user-email">{{ email }}</span>
+          </div>
+        </div>
+        <c-button theme="secondary" size="small" (onClick)="toggleAccountManagement()">
+          {{ isManagingAccount ? '닫기' : '관리' }}
+        </c-button>
+      </div>
+
+      <!-- 닉네임 및 비밀번호 변경 관리 폼 (isManagingAccount 시 노출) -->
+      <div class="account-manage-box" *ngIf="isManagingAccount">
+        <div class="manage-section">
+          <h4 class="sub-title">닉네임 변경</h4>
+          <div class="input-inline-group">
+            <input type="text" [(ngModel)]="editNickname" placeholder="새 닉네임 입력" class="form-input" />
+            <c-button theme="primary" size="small" (onClick)="onUpdateNickname()">저장</c-button>
+          </div>
+        </div>
+
+        <div class="manage-section">
+          <h4 class="sub-title">비밀번호 변경</h4>
+          <div class="input-stack-group">
+            <input type="password" [(ngModel)]="newPassword" placeholder="새 비밀번호 (6자리 이상)" class="form-input" />
+            <input type="password" [(ngModel)]="confirmPassword" placeholder="비밀번호 확인" class="form-input" />
+            <c-button theme="primary" size="small" (onClick)="onUpdatePassword()">비밀번호 변경</c-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider-line"></div>
+
+      <!-- 구독 / 연결 파트 -->
+      <div class="setting-item-row">
+        <div class="item-label-group">
+          <i class="bx bx-refresh icon-brand"></i>
+          <span class="item-name">SuperGrok 얻기</span>
+        </div>
+        <c-button theme="secondary" size="small">업그레이드</c-button>
+      </div>
+
+      <div class="setting-item-row">
+        <div class="item-label-group">
+          <i class="bx bxl-twitter icon-x"></i>
+          <span class="item-name">X 계정</span>
+        </div>
+        <c-button theme="secondary" size="small">연결</c-button>
+      </div>
+
+      <div class="divider-line"></div>
+
+      <!-- 기타 유저 옵션 -->
+      <div class="setting-item-row">
+        <div class="item-label-group">
+          <span class="item-name">언어</span>
+          <i class="bx bx-globe icon-muted"></i>
+        </div>
+        <c-button theme="secondary" size="small">변경</c-button>
+      </div>
+
+      <div class="setting-item-row">
+        <div class="item-label-group">
+          <span class="item-name">출생 연도</span>
+        </div>
+        <c-button theme="secondary" size="small">변경</c-button>
+      </div>
+
+      <!-- 하단 브랜드 프로모션 배너 -->
+      <div class="super-grok-banner">
+        <div class="banner-left">
+          <div class="brand-logo-spark">
+            <i class="bx bxs-sparkles"></i>
+            <span class="brand-name">SuperGrok</span>
+          </div>
+          <span class="banner-desc">제한된 질문 한도에서 벗어나고, 더 많은 기능을 체험해보세요</span>
+        </div>
+        <c-button theme="primary" size="small" class="btn-super-use">Super 사용하기</c-button>
+      </div>
+    </ng-container>
+
+    <!-- 2. 외관 탭 -->
+    <ng-container *ngIf="activeTab === 'appearance'">
+      <h2 class="section-title">외관 설정</h2>
+
+      <div class="setting-item-row">
+        <div class="item-info">
+          <span class="item-name">다크 모드</span>
+          <span class="item-desc">어두운 테마 모드를 적용합니다.</span>
+        </div>
+        <c-toggle [checked]="isDarkMode" (checkedChange)="onDarkModeToggle($event)"></c-toggle>
+      </div>
+
+      <div class="divider-line"></div>
+
+      <h3 class="sub-section-title">디자인 테마 스타일</h3>
+      <div class="theme-preset-grid">
+        <div class="theme-card" [class.selected]="defaultTheme === '플랫'" (click)="onThemeSelect('플랫')">
+          <div class="card-preview flat-preview">
+            <div class="preview-sidebar"></div>
+            <div class="preview-content"></div>
+          </div>
+          <span class="card-title">플랫 (Flat)</span>
+        </div>
+
+        <div class="theme-card" [class.selected]="defaultTheme === '글래스모피즘'" (click)="onThemeSelect('글래스모피즘')">
+          <div class="card-preview glass-preview">
+            <div class="preview-sidebar"></div>
+            <div class="preview-content"></div>
+          </div>
+          <span class="card-title">글래스모피즘 (Glassmorphism)</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- 3. 행동 유형 탭 -->
+    <ng-container *ngIf="activeTab === 'behavior'">
+      <h2 class="section-title">행동 유형 및 AI 설정</h2>
+
+      <div class="setting-item-row column-layout">
+        <div class="item-info">
+          <span class="item-name">기본 AI 모델 선택</span>
+          <span class="item-desc">새 대화 생성 시 기본으로 작동할 AI 엔진을 지정합니다.</span>
+        </div>
+        <c-dropdown [options]="modelOptions" [value]="defaultModel" width="100%">
+          <button type="button" class="form-input select-trigger-btn">
+            <span>{{ defaultModel }}</span>
+            <i class="bx bx-chevron-down"></i>
+          </button>
+        </c-dropdown>
+      </div>
+    </ng-container>
+
+    <!-- 4. 알림 탭 -->
+    <ng-container *ngIf="activeTab === 'notifications'">
+      <h2 class="section-title">알림 설정</h2>
+      <div class="setting-item-row">
+        <div class="item-info">
+          <span class="item-name">시스템 알림</span>
+          <span class="item-desc">작업 완료 및 업데이트 알림을 브라우저로 수신합니다.</span>
+        </div>
+        <c-toggle [checked]="true"></c-toggle>
+      </div>
+    </ng-container>
+
+    <!-- 5. 맞춤 설정 탭 -->
+    <ng-container *ngIf="activeTab === 'custom'">
+      <h2 class="section-title">맞춤 설정 (Customization)</h2>
+      <div class="setting-item-row column-layout">
+        <div class="item-info">
+          <span class="item-name">사용자 커스텀 프롬프트</span>
+          <span class="item-desc">모든 대화 응답에 적용될 기본 가이드 지침을 설정합니다.</span>
+        </div>
+        <textarea class="form-textarea" rows="4" placeholder="예: 언어는 한국어로 답변하고, 친절한 어조로 응답해주세요."></textarea>
+      </div>
+    </ng-container>
+
+    <!-- 6. 데이터 컨트롤 탭 -->
+    <ng-container *ngIf="activeTab === 'data'">
+      <h2 class="section-title">데이터 컨트롤</h2>
+
+      <div class="setting-item-row">
+        <div class="item-info">
+          <span class="item-name">설정 초기화</span>
+          <span class="item-desc">모든 모델 및 테마 설정을 기본 초기 상태로 복원합니다.</span>
+        </div>
+        <c-button theme="error" size="small" (onClick)="onResetDefaults()">기본값 복원</c-button>
+      </div>
+    </ng-container>
+  </main>
+</c-modal>

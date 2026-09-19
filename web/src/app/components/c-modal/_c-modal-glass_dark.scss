@@ -2,7 +2,8 @@
 @use '../../../styles/mixins' as *;
 
 // c-modal 리퀴드 글래스모피즘 다크 테마 스타일
-body.theme-glass.dark-theme {
+body.theme-glass.dark-theme,
+body.theme-glass.dark-mode {
   .c-modal-backdrop {
     background: rgba(15, 12, 32, 0.55);
     backdrop-filter: blur(16px);

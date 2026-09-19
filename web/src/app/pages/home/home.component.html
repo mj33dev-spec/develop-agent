@@ -6,85 +6,84 @@
     [selectedModel]="selectedModel"
     (activeRoomIdChange)="onActiveRoomIdChange($event)"
     (activeFileIdChange)="onActiveFileIdChange($event)"
+    (openSettingsModal)="onOpenSettingsModal($event)"
     (dataChanged)="onSidebarDataChanged()">
   </app-home-sidebar>
 
   <!-- Right Main Area -->
   <main class="main-content">
     
-    <!-- Router Outlet for Child Routes (e.g., /account) -->
-    <router-outlet></router-outlet>
-
-    <ng-container *ngIf="!isSubPage">
-      <!-- Home View (Copilot Style) when no room and no file is selected -->
-      <div class="home-view" *ngIf="!activeRoomId && !activeFileId">
-        <div class="home-container">
-          <h1 class="greeting">
-            저는 자동화 개발에 특화된 AI에이전트 예요. <br>
-            모델을 선택하여 자유롭게 질문해주세요.
-          </h1>
-          
-          <div class="copilot-input-box chat-input-box">
-            <div class="input-body">
-              <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
-              <div class="attached-items-container" *ngIf="attachedItems.length > 0">
-                <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
-                  <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="chip-thumb" />
-                  <i *ngIf="!item.imageUrl" [class]="item.icon || 'bx bx-file'"></i>
-                  <span class="chip-name">{{ item.name }}</span>
-                  <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
-                    <i class="bx bx-x"></i>
-                  </button>
-                </div>
+    <!-- Home View (Copilot Style) when no room and no file is selected -->
+    <div class="home-view" *ngIf="!activeRoomId && !activeFileId">
+      <div class="home-container">
+        <h1 class="greeting">
+          저는 자동화 개발에 특화된 AI에이전트 예요. <br>
+          모델을 선택하여 자유롭게 질문해주세요.
+        </h1>
+        
+        <div class="copilot-input-box chat-input-box">
+          <div class="input-body">
+            <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
+            <div class="attached-items-container" *ngIf="attachedItems.length > 0">
+              <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
+                <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="chip-thumb" />
+                <i *ngIf="!item.imageUrl" [class]="item.icon || 'bx bx-file'"></i>
+                <span class="chip-name">{{ item.name }}</span>
+                <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
+                  <i class="bx bx-x"></i>
+                </button>
               </div>
+            </div>
 
-              <textarea 
-                     [(ngModel)]="homeInput" 
-                     (keydown.enter)="handleEnter($event)"
-                     (input)="autoResize($event)"
-                     placeholder="Copilot에 메시지" 
-                     class="main-textarea"
-                     rows="1"></textarea>
+            <textarea 
+                   [(ngModel)]="homeInput" 
+                   (keydown.enter)="handleEnter($event)"
+                   (input)="autoResize($event)"
+                   placeholder="Copilot에 메시지" 
+                   class="main-textarea"
+                   rows="1"></textarea>
+            
+            <div class="input-footer">
+              <div class="footer-left">
+                <c-dropdown [options]="addMenuOptions" menuWidth="240px" direction="up">
+                  <button class="add-btn" type="button"><i class="bx bx-plus"></i></button>
+                </c-dropdown>
+              </div>
               
-              <div class="input-footer">
-                <div class="footer-left">
-                  <c-dropdown [options]="addMenuOptions" menuWidth="240px" direction="up">
-                    <button class="add-btn" type="button"><i class="bx bx-plus"></i></button>
-                  </c-dropdown>
-                </div>
-                
-                <div class="footer-right">
-                  <c-dropdown [options]="modelOptions" menuWidth="240px" direction="up" align="right">
-                    <button class="model-btn" type="button" title="모델 선택">
-                      {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
-                    </button>
-                  </c-dropdown>
-                  <button class="send-btn" (click)="createRoomFromHome(homeInput)" [disabled]="!homeInput.trim()" [class.active]="homeInput.trim()">
-                    <i class="bx bx-up-arrow-alt"></i>
+              <div class="footer-right">
+                <c-dropdown [options]="modelOptions" menuWidth="240px" direction="up" align="right">
+                  <button class="model-btn" type="button" title="모델 선택">
+                    {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
                   </button>
-                </div>
+                </c-dropdown>
+                <button class="send-btn" (click)="createRoomFromHome(homeInput)" [disabled]="!homeInput.trim()" [class.active]="homeInput.trim()">
+                  <i class="bx bx-up-arrow-alt"></i>
+                </button>
               </div>
             </div>
           </div>
-          
-          <div class="disclaimer">
-            Copilot은 AI이므로 실수를 할 수 있습니다. Copilot을 사용하면, 귀하는 사용 약관에 동의하는 것입니다. 개인정보처리방침을 확인하세요.
-          </div>
+        </div>
+        
+        <div class="disclaimer">
+          Copilot은 AI이므로 실수를 할 수 있습니다. Copilot을 사용하면, 귀하는 사용 약관에 동의하는 것입니다. 개인정보처리방침을 확인하세요.
         </div>
       </div>
+    </div>
 
-      <!-- Chat View when a room is selected -->
-      <div class="chat-view" *ngIf="activeRoomId">
-        <app-chat [room]="activeRoom" (onBack)="onBackToHome()" (roomUpdated)="sidebarComponent.loadData()"></app-chat>
-      </div>
+    <!-- Chat View when a room is selected -->
+    <div class="chat-view" *ngIf="activeRoomId">
+      <app-chat [room]="activeRoom" (onBack)="onBackToHome()" (roomUpdated)="sidebarComponent.loadData()"></app-chat>
+    </div>
 
-      <!-- Code Viewer when a file is selected -->
-      <div class="code-view" *ngIf="activeFileId && activeFile" style="height: 100%; width: 100%;">
-        <app-code-viewer [file]="activeFile" [selectedModel]="selectedModel" (onClose)="onBackToHome()" (sendFileQuestion)="onSendFileQuestion($event)"></app-code-viewer>
-      </div>
-    </ng-container>
+    <!-- Code Viewer when a file is selected -->
+    <div class="code-view" *ngIf="activeFileId && activeFile" style="height: 100%; width: 100%;">
+      <app-code-viewer [file]="activeFile" [selectedModel]="selectedModel" (onClose)="onBackToHome()" (sendFileQuestion)="onSendFileQuestion($event)"></app-code-viewer>
+    </div>
 
   </main>
+
+  <!-- 통합 설정 모달 -->
+  <app-settings-modal [(isOpen)]="isSettingsModalOpen" [activeTab]="settingsModalTab"></app-settings-modal>
 
   <!-- 초기 디자인 테마 선택 모달 -->
   <app-theme-select-modal [isOpen]="isThemeSelectModalOpen" (onClose)="onThemeModalClosed()"></app-theme-select-modal>
@@ -92,5 +91,3 @@
   <!-- 이용 가이드 온보딩 모달 -->
   <app-guide-modal [isOpen]="isGuideModalOpen" (onClose)="isGuideModalOpen = false"></app-guide-modal>
 </div>
-
-

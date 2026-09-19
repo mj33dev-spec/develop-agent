@@ -1,5 +1,6 @@
 import { Component, ViewChild, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { ChatComponent } from '../../components/chat/chat.component';
 import { CodeViewerComponent } from '../../components/code-viewer/code-viewer.component';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import { FileItemService, FileItem } from '../../core/services/file-item.service
 import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
 import { GuideModalComponent } from '../../components/guide-modal/guide-modal.component';
 import { ThemeSelectModalComponent } from '../../components/theme-select-modal/theme-select-modal.component';
+import { SettingsModalComponent, SettingsTab } from '../../components/settings-modal/settings-modal.component';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
@@ -27,7 +29,8 @@ import { AuthService } from '../../core/services/auth.service';
     CBadgeComponent, 
     HomeSidebarComponent,
     GuideModalComponent,
-    ThemeSelectModalComponent
+    ThemeSelectModalComponent,
+    SettingsModalComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -59,6 +62,13 @@ export class HomeComponent implements OnInit {
   attachedItems: AttachedItem[] = [];
   isGuideModalOpen: boolean = false;
   isThemeSelectModalOpen: boolean = false;
+  isSettingsModalOpen: boolean = false;
+  settingsModalTab: SettingsTab = 'account';
+
+  onOpenSettingsModal(tab: SettingsTab) {
+    this.settingsModalTab = tab;
+    this.isSettingsModalOpen = true;
+  }
 
   @ViewChild(HomeSidebarComponent) sidebarComponent!: HomeSidebarComponent;
 
@@ -117,14 +127,13 @@ export class HomeComponent implements OnInit {
     const hasSelectedTheme = localStorage.getItem('has_selected_initial_theme');
     const hasSeenGuide = localStorage.getItem('has_seen_onboarding_guide');
 
-    const sub = this.authService.currentUser.subscribe(user => {
+    this.authService.currentUser.pipe(take(1)).subscribe(user => {
       if (user) {
         if (!hasSelectedTheme) {
           this.isThemeSelectModalOpen = true;
         } else if (!hasSeenGuide) {
           this.isGuideModalOpen = true;
         }
-        sub.unsubscribe();
       }
     });
   }
