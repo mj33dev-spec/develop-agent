@@ -1,0 +1,42 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [골격 (Base)] 스켈레톤(c-skeleton) 순수 레이아웃 및 애니메이션 골격
+   ======================================================================== */
+
+.skeleton {
+  display: inline-block;
+  box-sizing: border-box;
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 4px;
+
+  &.circle {
+    border-radius: 50%;
+  }
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  opacity: 1;
+  transition-property: opacity;
+  transition-timing-function: ease-out;
+  pointer-events: none;
+  border-radius: inherit;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

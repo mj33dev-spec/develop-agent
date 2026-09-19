@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, HostBinding } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, HostBinding, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,7 +14,8 @@ import { CommonModule } from '@angular/common';
       <ng-content></ng-content>
     </div>
   `,
-  styleUrls: ['./c-skeleton-overlay.component.scss']
+  styleUrls: ['./c-skeleton-overlay.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CSkeletonOverlayComponent implements OnChanges {
   @Input() show: boolean = false;

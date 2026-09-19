@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import { Component, Input, HostBinding, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,7 +6,8 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: '',
-  styleUrls: ['./c-skeleton.component.scss']
+  styleUrls: ['./c-skeleton.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CSkeletonComponent {
   @Input() width: string | number = '100%';

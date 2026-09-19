@@ -1,0 +1,17 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 1] 플랫 라이트 모드 (Flat + Light Mode)
+   ======================================================================== */
+
+body.theme-flat:not(.dark-theme) {
+  .skeleton {
+    background: #e2e8f0;
+    background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+    background-size: 200% 100%;
+  }
+
+  .overlay {
+    background: $flat-card-bg;
+  }
+}

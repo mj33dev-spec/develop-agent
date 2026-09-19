@@ -1,0 +1,21 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   ======================================================================== */
+
+body.theme-glass:not(.dark-theme) {
+  .skeleton {
+    background: rgba(255, 255, 255, 0.35);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.35) 25%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0.35) 75%);
+    background-size: 200% 100%;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .overlay {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}

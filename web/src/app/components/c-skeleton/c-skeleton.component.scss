@@ -1,38 +1,15 @@
 @use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
-.skeleton {
-  background: $color-surface-alt;
-  background: linear-gradient(90deg, $color-surface-alt 25%, $color-border 50%, $color-surface-alt 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s linear infinite;
-  border-radius: 4px;
-}
+/* ========================================================================
+   스켈레톤 메인 SCSS 모듈 체인 (C-Skeleton Component Main Entry)
+   ======================================================================== */
 
-.circle {
-  border-radius: 50%;
-}
+/* 1. 기본 레이아웃 및 컴포넌트 골격 (Base) */
+@import "./c-skeleton-base";
 
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 50;
-  background: $color-white;
-  opacity: 1;
-  transition-property: opacity;
-  transition-timing-function: ease-out;
-  pointer-events: none;
-  border-radius: inherit;
-
-  &.hidden {
-    opacity: 0;
-  }
-}
+/* 2. 4가지 독립 테마 모듈 체이닝 (Theme Partial Modules) */
+@import "./c-skeleton-flat_light";
+@import "./c-skeleton-flat_dark";
+@import "./c-skeleton-glass_light";
+@import "./c-skeleton-glass_dark";
