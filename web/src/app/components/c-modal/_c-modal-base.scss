@@ -96,12 +96,16 @@
   overflow: hidden;
   box-sizing: border-box;
 
-  > * {
+  .modalHeader,
+  .modalSubTitle,
+  .formActions {
+    flex: none;
+    height: auto;
+  }
+
+  .modalBody {
     flex: 1;
     min-height: 0;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
   }
 }
 
@@ -148,6 +152,8 @@
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
 
   &::-webkit-scrollbar {
     width: 6px;

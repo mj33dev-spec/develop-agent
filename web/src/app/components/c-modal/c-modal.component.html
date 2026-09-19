@@ -1,38 +1,19 @@
 <div *ngIf="isOpen" class="modalOverlay" (click)="handleOverlayClick($event)">
   <div class="modalContent" [class.has-sidebar]="hasSidebar" [style.width]="width" [style.height]="height" (click)="$event.stopPropagation()">
     
-    <!-- 닫기 버튼 -->
+    <!-- 닫기 버튼 (사이드바가 있거나 헤더가 숨김일 때) -->
     <button *ngIf="hasSidebar || hideHeader" type="button" class="closeBtn absoluteCloseBtn" (click)="onClose.emit()" aria-label="Close">
       <i class="bx bx-x"></i>
     </button>
 
-    <!-- 1. 사이드바가 있는 모달 구조일 때 -->
-    <ng-container *ngIf="hasSidebar; else standardModal">
-      <div class="modalSidebarLayout">
-        <aside class="modalSidebarContainer">
-          <ng-content select="c-modal-sidebar"></ng-content>
-        </aside>
-        <div class="modalMainContainer">
-          <ng-content select=":not(c-modal-sidebar)"></ng-content>
-        </div>
-      </div>
-    </ng-container>
+    <div [class.modalSidebarLayout]="hasSidebar" style="display: flex; flex: 1; min-height: 0; width: 100%;">
+      <!-- 사이드바 영역 (hasSidebar = true 일 때만 렌더링) -->
+      <aside *ngIf="hasSidebar" class="modalSidebarContainer">
+        <ng-content select="c-modal-sidebar"></ng-content>
+      </aside>
 
-    <!-- 2. 일반 단일 모달 구조일 때 -->
-    <ng-template #standardModal>
-      <ng-container *ngIf="isForm; else noForm">
-        <form (submit)="handleSubmit($event)" style="display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0;">
-          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-        </form>
-      </ng-container>
-      
-      <ng-template #noForm>
-        <div style="display: flex; flex-direction: column; flex: 1; min-height: 0;">
-          <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
-        </div>
-      </ng-template>
-
-      <ng-template #contentTemplate>
+      <!-- 메인 메인 영역 (오직 단 1개의 ng-content가 존재하는 유일한 메인 컨테이너) -->
+      <div class="modalMainContainer" style="display: flex; flex-direction: column; flex: 1; min-height: 0; width: 100%;">
         <div class="modalHeader" *ngIf="!hideHeader">
           <h2 class="modalTitle">
             <span [innerHTML]="title"></span>
@@ -43,6 +24,7 @@
         </div>
         <p *ngIf="subTitle && !hideHeader" class="modalSubTitle">{{ subTitle }}</p>
 
+        <!-- 전체 c-modal 템플릿 중 오직 단 1개만 존재하는 메인 ng-content -->
         <div class="modalBody">
           <ng-content></ng-content>
         </div>
@@ -59,14 +41,14 @@
               [type]="isForm ? 'submit' : 'button'" 
               [theme]="submitTheme" 
               [disabled]="submitDisabled"
-              (onClick)="!isForm ? handleSubmit() : null"
+              (onClick)="handleSubmit()"
             >
               {{ submitLabel }}
             </c-button>
           </ng-container>
         </div>
-      </ng-template>
-    </ng-template>
+      </div>
+    </div>
 
   </div>
 </div>
