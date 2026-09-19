@@ -9,29 +9,15 @@
     }
 }
 
-// ── Flat Compatibility Mixins (Neumorphism Removal) ────────────────
-@mixin neu-extruded($radius: 16px, $shadow: none) {
-  background: #ffffff;
-  border-radius: $radius;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-@mixin neu-inset($radius: 12px, $shadow: none) {
-  background: #ffffff;
-  border-radius: $radius;
-  border: 1px solid #cbd5e1;
-  box-shadow: none;
-}
-
-@mixin neu-input($radius: $radius-deep) {
+// ── Flat & UI Common Mixins ────────────────
+@mixin flat-input($radius: $radius-deep) {
   width: 100%;
   min-height: 40px;
   padding: $spacing-8 $spacing-16;
   @include typo-body-3;
-  color: #1e293b;
-  background-color: #ffffff;
-  border: 1px solid #cbd5e1;
+  color: $flat-text-primary;
+  background-color: $flat-card-bg;
+  border: 1px solid $flat-border-dark;
   border-radius: $radius;
   outline: none;
   box-sizing: border-box;
@@ -42,9 +28,9 @@
   }
 }
 
-@mixin neu-circle-btn($size: 38px) {
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
+@mixin flat-circle-btn($size: 38px) {
+  background: $flat-sidebar-bg;
+  border: 1px solid $flat-border-dark;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -53,25 +39,25 @@
   height: $size;
   border-radius: 50%;
   transition: all 0.2s ease;
-  i { font-size: $font-size-pc-title-2; color: #64748b; }
-  &:hover { background: #e2e8f0; color: $color-primary; }
+  i { font-size: $font-size-pc-title-2; color: $flat-text-secondary; }
+  &:hover { background: $flat-border-color; color: $color-primary; }
 }
 
-@mixin neu-icon-btn($size: 40px) {
+@mixin flat-icon-btn($size: 40px) {
   width: $size;
   height: $size;
   border-radius: 50%;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
+  background: $flat-sidebar-bg;
+  border: 1px solid $flat-border-dark;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  &:hover { background: #e2e8f0; }
+  &:hover { background: $flat-border-color; }
 }
 
-@mixin neu-button($primary: true, $radius: 16px) {
+@mixin flat-button($primary: true, $radius: 16px) {
   border: none;
   border-radius: $radius;
   cursor: pointer;
@@ -81,35 +67,23 @@
   transition: all 0.2s ease;
   background: $color-primary;
   color: $color-white;
-  box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3);
+  box-shadow: $flat-shadow-sm;
   &:hover { background: #3b82f6; }
 }
 
-@mixin dark-neu-icon-btn($size: 36px) {
+@mixin dark-icon-btn($size: 36px) {
   width: $size;
   height: $size;
   border-radius: 50%;
-  background: #2b303e;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: $dark-surface-card;
+  border: 1px solid $dark-border-color;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  i { color: #94a3b8; }
-  &:hover { background: #353b4d; i { color: $color-primary; } }
-}
-
-@mixin dark-neu-extruded($radius: 16px, $shadow: none) {
-  background: $dark-surface;
-  border-radius: $radius;
-  border: 1px solid $dark-border-color;
-}
-
-@mixin dark-neu-inset($radius: 12px, $shadow: none) {
-  background: $dark-surface-alt;
-  border-radius: $radius;
-  border: 1px solid $dark-border-color;
+  i { color: $dark-text-muted; }
+  &:hover { background: $dark-surface-hover; i { color: $color-primary; } }
 }
 
 // ── 다크모드 전용 공통 믹스인 ────────────────

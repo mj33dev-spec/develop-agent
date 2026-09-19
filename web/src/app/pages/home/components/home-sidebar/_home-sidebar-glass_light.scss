@@ -1,0 +1,205 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/mixins" as *;
+
+/* ========================================================================
+   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   ======================================================================== */
+
+body.theme-glass:not(.dark-theme) {
+  .sidebar {
+    @include glass-panel(0px);
+    border-right: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 4px 0 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    .sidebar-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .sidebar-block-btn {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: 0 4px 14px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      color: $color-dark;
+
+      i { color: inherit; }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.85);
+        border-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 6px 18px rgba(31, 38, 135, 0.1);
+      }
+
+      &:active {
+        box-shadow: none;
+      }
+
+      &.danger {
+        color: $color-error;
+        i { color: $color-error; }
+      }
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+
+      .sidebar-user-card {
+        background: rgba(255, 255, 255, 0.55);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        box-shadow: 0 6px 20px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+        .user-info {
+          .user-nickname {
+            color: $flat-text-primary;
+          }
+
+          .user-email {
+            color: $neu-text-secondary;
+          }
+
+          &:hover .user-nickname {
+            color: $color-primary;
+          }
+        }
+
+        .user-more-btn {
+          color: $neu-text-secondary;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.75);
+            color: $flat-text-primary;
+          }
+        }
+      }
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent;
+      color: $flat-text-primary;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.6);
+        color: $color-dark;
+      }
+
+      &.active {
+        background-color: rgba(74, 134, 255, 0.18);
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2);
+        color: $color-primary;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        i { color: $color-primary; }
+      }
+    }
+
+    .sidebar-node.active {
+      > .room-item,
+      > .folder-header,
+      > .file-item {
+        background-color: rgba(74, 134, 255, 0.18);
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2);
+        color: $color-primary;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        i { color: $color-primary; }
+      }
+    }
+
+    .empty-rooms {
+      color: $neu-text-secondary;
+    }
+  }
+
+  /* 모달 내부 글래스모피즘 요소 오버라이드 */
+  .category-pills .pill-btn {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 4px 12px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    color: $flat-text-secondary;
+
+    &.active {
+      background: linear-gradient(135deg, rgba(74, 134, 255, 0.9), rgba(59, 130, 246, 0.9));
+      color: $color-white;
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.35);
+    }
+  }
+
+  .preset-item-card {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+
+    .preset-icon {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.06);
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      color: $flat-text-secondary;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &.selected {
+      background: rgba(238, 242, 255, 0.85);
+      border: 1.5px solid $color-primary;
+      box-shadow: 0 8px 28px rgba(74, 134, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+  }
+
+  .card-visual-preview {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 12px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    .card-top-bar {
+      background: rgba(255, 255, 255, 0.5);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .file-badge-item {
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 2px 8px rgba(31, 38, 135, 0.05);
+      color: $flat-text-primary;
+    }
+  }
+
+  .preset-preview-panel.empty-select .preset-inner {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 8px 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    .empty-preset-box {
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+
+  .file-upload-dropzone {
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px dashed rgba(74, 134, 255, 0.4);
+    box-shadow: none;
+  }
+
+  .attached-file-chip {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+}

@@ -18,10 +18,10 @@
 
     .theme-card-item {
       position: relative;
-      background: $neu-bg;
+      background: $flat-card-bg;
       border-radius: 16px;
-      box-shadow: 3px 3px 8px $neu-shadow-dark, -3px -3px 8px $neu-shadow-light;
-      border: 2px solid transparent;
+      box-shadow: $flat-shadow-sm;
+      border: 1px solid $flat-border-color;
       padding: $spacing-16;
       cursor: pointer;
       display: flex;
@@ -32,13 +32,13 @@
 
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 5px 5px 12px $neu-shadow-dark, -5px -5px 12px $neu-shadow-light;
+        box-shadow: $flat-shadow-md;
       }
 
       &.selected {
         border-color: $color-primary;
         background: rgba(74, 134, 255, 0.04);
-        box-shadow: inset 2px 2px 5px $neu-shadow-dark, inset -2px -2px 5px $neu-shadow-light, 0 4px 14px rgba(74, 134, 255, 0.15);
+        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.15);
 
         .card-radio-icon i {
           color: $color-primary;
@@ -52,7 +52,7 @@
 
         i {
           font-size: 20px;
-          color: $neu-text-secondary;
+          color: $flat-text-muted;
           transition: color 0.2s ease;
         }
       }
@@ -79,20 +79,20 @@
             .theme-title {
               @include typo-body-2;
               font-weight: 700;
-              color: $neu-text;
+              color: $flat-text-primary;
               margin: 0;
             }
 
             .theme-subtitle {
               @include typo-caption-2;
-              color: $neu-text-secondary;
+              color: $flat-text-secondary;
             }
           }
         }
 
         .theme-desc {
           @include typo-caption-1;
-          color: $neu-text-secondary;
+          color: $flat-text-secondary;
           line-height: 1.4;
           margin: 0;
           min-height: 40px;
@@ -196,9 +196,10 @@
 
   /* Dark Mode Switch Row */
   .dark-mode-row {
-    background: $neu-bg;
+    background: $flat-card-bg;
     border-radius: 14px;
-    box-shadow: inset 3px 3px 6px $neu-shadow-dark, inset -3px -3px 6px $neu-shadow-light;
+    border: 1px solid $flat-border-color;
+    box-shadow: $flat-shadow-sm;
     padding: $spacing-12 $spacing-16;
     display: flex;
     align-items: center;
@@ -221,12 +222,12 @@
         .mode-title {
           @include typo-body-3;
           font-weight: 700;
-          color: $neu-text;
+          color: $flat-text-primary;
         }
 
         .mode-desc {
           @include typo-caption-2;
-          color: $neu-text-secondary;
+          color: $flat-text-secondary;
         }
       }
     }
@@ -242,7 +243,7 @@
   .footer-left {
     .tip-text {
       font-size: 12px;
-      color: $neu-text-secondary;
+      color: $flat-text-secondary;
       display: inline-flex;
       align-items: center;
       gap: 4px;

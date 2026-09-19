@@ -112,34 +112,6 @@ body.theme-flat:not(.dark-theme) {
     border: 1px solid #e2e8f0;
   }
 
-  .home-sidebar,
-  .sidebar {
-    background-color: #f8fafc;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border-right: 1px solid #e2e8f0;
-    box-shadow: none;
-  }
-
-  .sidebar {
-    .sidebar-block-btn,
-    .user-more-btn,
-    .sidebar-nav-item {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-      &:hover {
-        background: #f1f5f9;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-  }
-
   .icon-btn,
   .viewer-header .icon-btn,
   .chat-header .icon-btn,
@@ -336,31 +308,6 @@ body.theme-flat.dark-theme {
     background: #1e222d;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .home-sidebar,
-  .sidebar {
-    background: rgba(20, 24, 34, 0.55);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-
-    .sidebar-block-btn,
-    .user-more-btn,
-    .sidebar-nav-item {
-      background: #242834;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-
-      &:hover {
-        background: #2b303e;
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
   }
 
   .icon-btn,
@@ -578,83 +525,7 @@ body.theme-glass:not(.dark-theme) {
     border-radius: 20px;
   }
 
-  .home-sidebar {
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
 
-  .sidebar {
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-right: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 4px 0 24px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-
-    .sidebar-block-btn,
-    .user-more-btn,
-    .sidebar-nav-item {
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: 0 4px 14px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-      color: $color-dark;
-
-      i { color: inherit; }
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.85);
-        border-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 6px 18px rgba(31, 38, 135, 0.1);
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .sidebar-user-card {
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: 0 6px 20px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
-
-    .folder-header,
-    .room-item,
-    .file-item {
-      background-color: transparent;
-      box-shadow: none;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.6);
-        box-shadow: none;
-        transform: none;
-      }
-
-      &.active {
-        background-color: rgba(74, 134, 255, 0.18);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2);
-        color: #4A86FF;
-        font-weight: 600;
-        border: 1px solid rgba(255, 255, 255, 0.6);
-      }
-    }
-
-    .sidebar-node.active {
-      > .room-item,
-      > .folder-header,
-      > .file-item {
-        background-color: rgba(74, 134, 255, 0.18);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.2);
-        color: #4A86FF;
-        font-weight: 600;
-        border: 1px solid rgba(255, 255, 255, 0.6);
-      }
-    }
-  }
 
   .viewer-footer-input {
     background-color: transparent;
@@ -857,91 +728,7 @@ body.theme-glass.dark-theme {
     border-radius: 20px;
   }
 
-  .home-sidebar {
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
 
-  .sidebar {
-    background: rgba(20, 24, 34, 0.55);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-right: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-
-    .sidebar-block-btn,
-    .user-more-btn,
-    .sidebar-nav-item {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      color: #f8fafc;
-
-      i { color: #f8fafc; }
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.16);
-        border-color: rgba(255, 255, 255, 0.2);
-        color: #60a5fa;
-
-        i { color: #60a5fa; }
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .sidebar-user-card {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-
-      .user-nickname { color: #f1f5f9; }
-      .user-email { color: #94a3b8; }
-      .user-more-btn { color: #94a3b8; &:hover { color: #f1f5f9; } }
-    }
-
-    .folder-header,
-    .room-item,
-    .file-item {
-      background-color: transparent;
-      box-shadow: none;
-      color: #e2e8f0;
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.08);
-        box-shadow: none;
-        transform: none;
-        color: #f1f5f9;
-      }
-
-      &.active {
-        background-color: rgba(74, 134, 255, 0.25);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3);
-        color: #60a5fa;
-        font-weight: 600;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-      }
-    }
-
-    .sidebar-node.active {
-      > .room-item,
-      > .folder-header,
-      > .file-item {
-        background-color: rgba(74, 134, 255, 0.25);
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.3);
-        color: #60a5fa;
-        font-weight: 600;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-      }
-    }
-  }
 
   .viewer-footer-input {
     background-color: transparent;

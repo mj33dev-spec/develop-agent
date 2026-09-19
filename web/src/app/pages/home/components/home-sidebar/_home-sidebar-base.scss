@@ -1,0 +1,788 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/mixins" as *;
+
+$sidebar-width: 260px;
+
+/* ========================================================================
+   [골격 (Base)] 사이드바 순수 레이아웃 및 크기/위치 전용 스타일
+   (색상, 테두리색, 그림자, 블러 등 테마 요소는 파셜 파일에서 제어)
+   ======================================================================== */
+
+.sidebar {
+  width: $sidebar-width;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  .sidebar-hidden-file-input {
+    display: none;
+  }
+
+  .sidebar-header {
+    padding: $padding-normal;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-12;
+  }
+
+  .sidebar-block-btn {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 14px;
+    @include typo-subtitle-2;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    
+    i { 
+      font-size: 18px; 
+    }
+  }
+
+  .room-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: $padding-small;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-8;
+
+    /* 커스텀 스크롤바 골격 */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+    }
+
+    .sidebar-node {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      border-radius: 12px;
+
+      &.is-dragging {
+        overflow: hidden;
+      }
+
+      .folder-header {
+        display: flex;
+        align-items: center;
+        padding: 10px 12px;
+        cursor: pointer;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+
+        i.bx {
+          font-size: 20px;
+          margin-right: 8px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .node-name {
+          flex: 1;
+          @include typo-body-2;
+          font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .room-item, .file-item {
+        padding: 10px 12px;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+
+        i {
+          font-size: 18px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .room-title, .file-title { 
+          @include typo-body-2;
+          font-weight: 500;
+          white-space: nowrap; 
+          overflow: hidden; 
+          text-overflow: ellipsis; 
+        }
+      }
+    }
+    
+    .empty-rooms {
+      text-align: center;
+      padding: $spacing-28 $padding-small;
+      @include typo-body-3;
+    }
+  }
+
+  .sidebar-footer {
+    padding: $padding-normal;
+
+    .sidebar-user-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      transition: all 0.2s ease;
+
+      .user-info {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        cursor: pointer;
+
+        .user-nickname {
+          @include typo-subtitle-2;
+          font-weight: 600;
+          word-break: break-all;
+        }
+
+        .user-email {
+          @include typo-caption-2;
+          word-break: break-all;
+        }
+      }
+
+      .user-more-btn {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+      }
+    }
+  }
+}
+
+/* 프로필 모달 몸체 골격 */
+.profile-modal-body {
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  .profile-section-title {
+    @include typo-subtitle-1;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    i {
+      font-size: 20px;
+    }
+  }
+
+  .profile-divider {
+    height: 1px;
+    margin: 4px 0;
+  }
+
+  .profile-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .form-label {
+      @include typo-caption-1;
+      font-weight: 600;
+    }
+
+    .profile-input {
+      width: 100%;
+      height: 42px;
+      padding: 0 14px;
+      border-radius: 10px;
+      @include typo-body-2;
+      box-sizing: border-box;
+
+      &.readonly {
+        cursor: not-allowed;
+        opacity: 0.85;
+      }
+    }
+
+    .input-with-btn {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      .profile-input {
+        flex: 1;
+      }
+    }
+  }
+
+  .profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+}
+
+/* 컨텍스트 메뉴 골격 */
+.custom-context-menu {
+  position: fixed;
+  z-index: 9999;
+  border-radius: 16px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  animation: contextMenuFade 0.15s ease-out;
+
+  .context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 10px;
+    @include typo-body-3;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+    
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+@keyframes contextMenuFade {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.inline-edit-input {
+  border-radius: 8px;
+  @include typo-body-2;
+  padding: 4px 8px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  font-family: inherit;
+}
+
+::ng-deep c-modal .modalBody {
+  padding: $spacing-16 calc(#{$spacing-20} - #{$spacing-12});
+}
+
+/* 템플릿 모달 레이아웃 골격 */
+.modal-body-container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-8;
+  padding-top: $spacing-4;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+
+  .category-pills {
+    padding: 0 $spacing-8;
+    display: flex;
+    align-items: center;
+    gap: $spacing-12;
+
+    .pill-btn {
+      border: none;
+      padding: $spacing-8 $spacing-16;
+      border-radius: 20px;
+      @include typo-caption-1;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-4;
+      font-weight: $font-weight-bold;
+
+      i {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .preset-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-16;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+
+    .preset-list {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-16;
+      height: 100%;
+      min-height: 0;
+      overflow-y: auto;
+      padding: $spacing-12;
+
+      .preset-item-card {
+        display: flex;
+        gap: $spacing-16;
+        padding: $spacing-16;
+        border-radius: $spacing-16;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        .preset-icon {
+          width: 42px;
+          height: 42px;
+          border-radius: $radius-deep;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 32px;
+        }
+
+        .preset-info {
+          flex: 1;
+
+          .preset-title-row {
+            display: flex;
+            align-items: center;
+
+            .preset-name {
+              @include typo-body-3;
+              font-weight: $font-weight-bold;
+            }
+          }
+
+          .preset-desc {
+            margin: $spacing-4 0 0 0;
+            @include typo-caption-2;
+            line-height: 1.4;
+          }
+        }
+
+        .preset-action-btns {
+          display: flex;
+          gap: $spacing-8;
+          
+          .template-action-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: $radius-normal;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            i {
+              font-size: 15px;
+            }
+          }
+        }
+      }
+    }
+
+    .preset-preview-panel {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-16;
+      padding: $spacing-12;
+      height: 100%;
+      min-height: 0;
+
+      &.empty-select {
+        padding: $spacing-12;
+        height: 100%;
+        .preset-inner {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: $spacing-16;
+          border-radius: 18px;
+          height: 100%;
+          width: 100%;
+          box-sizing: border-box;
+
+          .empty-preset-box {
+            text-align: center;
+            padding: 0;
+            min-height: auto;
+
+            .empty-icon {
+              font-size: 40px;
+              margin-bottom: $spacing-12;
+              display: block;
+            }
+
+            .empty-text {
+              margin: 0;
+              @include typo-body-3;
+              font-weight: $font-weight-medium;
+            }
+          }
+        }
+      }
+
+      .card-visual-preview {
+        border-radius: 18px;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .card-top-bar {
+          height: 36px;
+          padding: 0 $spacing-16;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .card-dots {
+            display: flex;
+            gap: $spacing-8;
+
+            .dot {
+              width: 10px;
+              height: 10px;
+              border-radius: $radius-circle;
+              &.red { background: #ff5f56; }
+              &.yellow { background: #ffbd2e; }
+              &.green { background: #27c93f; }
+            }
+          }
+
+          .group-folder-tag {
+            font-size: 11px;
+            font-family: monospace;
+            display: flex;
+            align-items: center;
+            gap: $spacing-4;
+          }
+        }
+
+        .card-body-content {
+          padding: $padding-normal;
+          flex: 1;
+          overflow-y: auto;
+
+          .preset-hero-preview {
+            display: flex;
+            gap: $spacing-8;
+            margin-bottom: $spacing-16;
+            padding-bottom: $spacing-16;
+
+            .hero-icon {
+              font-size: 38px;
+            }
+
+            .hero-text {
+              h3 {
+                margin: 0;
+                @include typo-subtitle-2;
+                font-weight: $font-weight-bold;
+              }
+              p {
+                margin: 2px 0 0 0;
+                @include typo-caption-2;
+              }
+            }
+          }
+
+          .preview-files-list {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-8;
+
+            .files-title {
+              @include typo-body-3;
+              font-weight: $font-weight-medium;
+              display: flex;
+              align-items: center;
+              gap: $spacing-8;
+            }
+
+            .file-badge-item {
+              display: flex;
+              align-items: center;
+              gap: $spacing-4;
+              padding: $spacing-4 $spacing-12;
+              border-radius: $radius-normal;
+              @include typo-body-3;
+
+              i {
+                font-size: 18px;
+              }
+
+              .file-name {
+                font-family: monospace;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .empty-preset-box {
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-12;
+    border-radius: 20px;
+    padding: 40px;
+
+    .empty-icon {
+      font-size: 52px;
+    }
+
+    .empty-text {
+      margin: 0;
+      @include typo-body-3;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  .upload-form {
+    padding: 0 calc(#{$spacing-20} - #{$spacing-8});
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-24;
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-16;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-8;
+
+      label {
+        @include typo-subtitle-2;
+        font-weight: $font-weight-medium;
+        display: flex;
+        align-items: center;
+        gap: $spacing-8;
+
+        .required {
+          color: $color-error;
+        }
+      }
+
+      .framework-dropdown-container {
+        width: 180px;
+      }
+
+      .form-input, .form-textarea {
+        resize: vertical;
+      }
+
+      .hidden-file-input {
+        display: none;
+      }
+
+      .file-upload-dropzone {
+        border-radius: $spacing-16;
+        padding: $padding-large;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        .dropzone-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: $spacing-8;
+
+          .upload-icon {
+            font-size: 36px;
+          }
+
+          span {
+            @include typo-body-3;
+            font-weight: $font-weight-medium;
+          }
+
+          small {
+            @include typo-caption-2;
+          }
+        }
+      }
+
+      .attached-files-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-12;
+        margin-top: $spacing-12;
+
+        .attached-file-chip {
+          display: flex;
+          align-items: center;
+          gap: $spacing-8;
+          padding: $spacing-4 $spacing-12;
+          border-radius: $radius-normal;
+          @include typo-body-2;
+
+          i {
+            font-size: 20px;
+          }
+
+          .file-name {
+            font-family: monospace;
+            @include typo-body-3;
+            font-weight: $font-weight-medium;
+          }
+
+          .remove-btn {
+            border: none;
+            background: transparent;
+            color: $color-error;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+.c-modal-footer-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: $spacing-8;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: $spacing-12;
+  }
+}
+
+/* 템플릿 로딩 상태 */
+.template-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-8;
+  min-height: 280px;
+  @include typo-body-3;
+
+  i {
+    font-size: 22px;
+  }
+}
+
+/* 템플릿 카드 삭제 버튼 */
+.template-delete-btn {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  padding: $spacing-4;
+  border-radius: $radius-normal;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+/* 프레임워크 태그 */
+.framework-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-8;
+  @include typo-caption-2;
+  font-weight: $font-weight-medium;
+  padding: $spacing-4 $spacing-12;
+  border-radius: $radius-deep;
+}
+
+/* 파일 없음 메시지 */
+.no-files-msg {
+  @include typo-caption-2;
+  padding: $spacing-8 0;
+  font-style: italic;
+}
+
+/* 빈 목록 서브 텍스트 */
+.empty-sub-text {
+  margin: 0;
+  @include typo-caption-2;
+}
+
+::ng-deep .cdk-drag-preview,
+.cdk-sidebar-drag-preview {
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  @include typo-body-2;
+  font-weight: 500;
+  box-sizing: border-box;
+  pointer-events: none;
+
+  i {
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preview-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -5,7 +5,7 @@
   padding: $spacing-6 $spacing-16;
   border: none;
   background-color: transparent;
-  color: $neu-text-secondary;
+  color: $flat-text-secondary;
   @include typo-body-3;
   font-weight: 500;
   cursor: pointer;
@@ -16,13 +16,13 @@
   justify-content: center;
 
   &:hover {
-    color: $neu-text;
+    color: $flat-text-primary;
   }
 
   &.active {
-    background-color: $neu-bg;
-    color: $neu-primary;
-    box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
+    background-color: $flat-card-bg;
+    color: $color-primary;
+    box-shadow: $flat-shadow-sm;
     font-weight: 700;
   }
 
@@ -42,18 +42,18 @@
   padding: $spacing-8 $spacing-4;
   border: none;
   background-color: transparent;
-  color: $neu-text-secondary;
+  color: $flat-text-secondary;
   @include typo-body-3;
   cursor: pointer;
   position: relative;
   transition: color $transition-fast;
 
   &:hover {
-    color: $neu-text;
+    color: $flat-text-primary;
   }
 
   &.active {
-    color: $neu-primary;
+    color: $color-primary;
     font-weight: $font-weight-bold;
 
     &::after {
@@ -63,7 +63,7 @@
       left: 0;
       right: 0;
       height: 2px;
-      background-color: $neu-primary;
+      background-color: $color-primary;
       border-radius: 2px;
     }
   }
@@ -83,8 +83,8 @@
 .folderBtn {
   padding: $spacing-8 $spacing-16;
   border: 1px solid rgba(184, 201, 223, 0.5);
-  background-color: $neu-bg;
-  color: $neu-text-secondary;
+  background-color: $flat-card-bg;
+  color: $flat-text-secondary;
   @include typo-body-3;
   cursor: pointer;
   border-radius: 12px 12px 0 0;
@@ -95,16 +95,16 @@
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    color: $neu-text;
+    color: $flat-text-primary;
   }
 
   &.active {
-    background-color: $neu-bg;
-    color: $neu-primary;
+    background-color: $flat-card-bg;
+    color: $color-primary;
     font-weight: $font-weight-bold;
     z-index: 2;
     border-bottom-color: transparent;
-    box-shadow: 2px -2px 5px $neu-shadow-dark;
+    box-shadow: $flat-shadow-sm;
   }
 
   &[data-size='small'] {
@@ -160,13 +160,13 @@
   margin-left: 6px;
   border-radius: 999px;
   background-color: rgba(184, 201, 223, 0.4);
-  color: $neu-text-secondary;
+  color: $flat-text-secondary;
   @include typo-caption-2;
   line-height: 1;
   vertical-align: middle;
 
   .active & {
-    background-color: $neu-primary;
+    background-color: $color-primary;
     color: #ffffff;
   }
 }

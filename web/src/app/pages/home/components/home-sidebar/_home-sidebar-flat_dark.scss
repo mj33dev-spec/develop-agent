@@ -1,0 +1,212 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/mixins" as *;
+
+/* ========================================================================
+   [테마 2] 플랫 다크 모드 (Flat + Dark Mode)
+   ======================================================================== */
+
+body.theme-flat.dark-theme {
+  .sidebar {
+    background-color: $flat-dark-bg;
+    border-right: 1px solid $dark-border-color;
+    box-shadow: $dark-shadow-sm;
+
+    .sidebar-header {
+      border-bottom: 1px solid $dark-border-color;
+    }
+
+    .sidebar-block-btn {
+      background: $flat-dark-surface-alt;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-primary;
+      box-shadow: $dark-shadow-btn;
+
+      i {
+        color: $dark-text-primary;
+      }
+
+      &:hover {
+        background: $flat-dark-surface-hover;
+        border-color: $dark-border-light;
+        color: $color-white;
+        
+        i {
+          color: $color-white;
+        }
+      }
+
+      &:active {
+        background: $flat-dark-card-bg;
+        box-shadow: none;
+      }
+
+      &.danger {
+        color: $dark-error;
+        i { color: $dark-error; }
+      }
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid $dark-border-color;
+
+      .sidebar-user-card {
+        background: $flat-dark-surface-alt;
+        box-shadow: $dark-shadow-md;
+        border: 1px solid $dark-border-color;
+
+        .user-info {
+          .user-nickname {
+            color: $dark-text-primary;
+          }
+
+          .user-email {
+            color: $dark-text-muted;
+          }
+
+          &:hover .user-nickname {
+            color: $dark-primary;
+          }
+        }
+
+        .user-more-btn {
+          color: $dark-text-muted;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: $dark-text-primary;
+          }
+
+          &:active {
+            background: rgba(255, 255, 255, 0.12);
+          }
+        }
+      }
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent;
+      color: $dark-text-secondary;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.06);
+        color: $dark-text-primary;
+      }
+
+      &.active {
+        background-color: $dark-active-bg;
+        border: 1px solid $dark-active-border;
+        box-shadow: $dark-shadow-sm;
+        color: $dark-primary;
+        font-weight: 600;
+        i { color: $dark-primary; }
+      }
+    }
+
+    .sidebar-node.active {
+      > .room-item,
+      > .folder-header,
+      > .file-item {
+        background-color: $dark-active-bg;
+        border: 1px solid $dark-active-border;
+        box-shadow: $dark-shadow-sm;
+        color: $dark-primary;
+        font-weight: 600;
+        i { color: $dark-primary; }
+      }
+    }
+
+    .empty-rooms {
+      color: $dark-text-subtle;
+    }
+  }
+
+  /* 모달 내부 요소 오버라이드 (플랫 다크) */
+  .category-pills .pill-btn {
+    background: $flat-dark-surface-alt;
+    border: 1px solid $dark-border-color;
+    box-shadow: $dark-shadow-btn;
+    color: $dark-text-muted;
+
+    &.active {
+      background: $color-primary;
+      color: $color-white;
+      border-color: $color-primary;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.3);
+    }
+  }
+
+  .preset-item-card {
+    background: $flat-dark-surface-alt;
+    border: 1px solid $dark-border-color;
+    box-shadow: $dark-shadow-md;
+
+    .preset-icon {
+      background: $flat-dark-card-bg;
+      border: 1px solid $dark-border-color;
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: $flat-dark-card-bg;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-muted;
+
+      &:hover {
+        background: $flat-dark-surface-hover;
+        color: $dark-text-primary;
+      }
+    }
+
+    &.selected {
+      background: $dark-active-bg;
+      border-color: $color-primary;
+      box-shadow: 0 2px 10px rgba(74, 134, 255, 0.25);
+    }
+  }
+
+  .card-visual-preview {
+    background: $flat-dark-surface-alt;
+    border: 1px solid $dark-border-color;
+    box-shadow: $dark-shadow-md;
+
+    .card-top-bar {
+      background: $flat-dark-card-bg;
+      border-bottom: 1px solid $dark-border-color;
+    }
+
+    .file-badge-item {
+      background: $flat-dark-card-bg;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-secondary;
+    }
+  }
+
+  .preset-preview-panel.empty-select .preset-inner {
+    background: $flat-dark-surface-alt;
+    border: 1px solid $dark-border-color;
+    box-shadow: $dark-shadow-sm;
+
+    .empty-preset-box {
+      background: $flat-dark-card-bg;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-muted;
+    }
+  }
+
+  .file-upload-dropzone {
+    background: $flat-dark-surface-alt;
+    border: 2px dashed $dark-border-light;
+
+    &:hover {
+      border-color: $color-primary;
+      background: rgba(74, 134, 255, 0.08);
+    }
+  }
+
+  .attached-file-chip {
+    background: $flat-dark-card-bg;
+    border: 1px solid $dark-border-color;
+    color: $dark-text-secondary;
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, Input, Output, EventEmitter, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, inject, Input, Output, EventEmitter, HostListener, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -32,7 +32,8 @@ export interface SidebarNode {
   standalone: true,
   imports: [CommonModule, FormsModule, CModalComponent, CButtonComponent, CDropdownComponent],
   templateUrl: './home-sidebar.component.html',
-  styleUrl: './home-sidebar.component.scss'
+  styleUrl: './home-sidebar.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeSidebarComponent implements OnInit {
   @Input() activeRoomId: string | null = null;
