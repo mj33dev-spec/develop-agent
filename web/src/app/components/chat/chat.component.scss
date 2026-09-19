@@ -457,7 +457,7 @@
   }
 }
 
-:host-context(body.dark-theme) {
+:host-context(body.dark-theme:not(.theme-flat):not(.theme-glass)) {
   .chat-container {
     background-color: $dark-bg;
   }

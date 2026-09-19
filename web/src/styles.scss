@@ -47,13 +47,15 @@ body {
 @import './styles/common-chat';
 
 
-
 /* ── 다크 테마 전역 텍스트 색상 ──────────────── */
 body.dark-theme {
   color: $dark-text-secondary;
 }
 
-/* ── 뉴모피즘 다크 테마 배경 및 전용 스타일 ──────────────── */
+/* ========================================================================
+   뉴모피즘 다크 테마 전용 스타일
+   (:not 조건으로 플랫/글래스 테마와 완전히 격리)
+   ======================================================================== */
 body.dark-theme:not(.theme-flat):not(.theme-glass) {
   background-color: $dark-bg;
   background-image: none;
@@ -104,27 +106,6 @@ body.dark-theme:not(.theme-flat):not(.theme-glass) {
     }
   }
 
-  .c-toggle-switch {
-    background: $dark-surface;
-    box-shadow: inset 2px 2px 4px #14171d, inset -2px -2px 4px #282d39;
-
-    .toggle-knob {
-      background: $dark-surface-card;
-      box-shadow: 2px 2px 4px #14171d, -2px -2px 4px #282d39;
-    }
-
-    &.active {
-      background: rgba(74, 134, 255, 0.2);
-
-      .toggle-knob {
-        background: $color-primary;
-        box-shadow: 2px 2px 6px rgba(74, 134, 255, 0.5);
-      }
-    }
-  }
-
-
-
   .greeting,
   .panel-title,
   .section-title,
@@ -168,55 +149,12 @@ body.dark-theme:not(.theme-flat):not(.theme-glass) {
       color: $dark-text-muted;
     }
   }
-
-
-
-
-  .dropdown-portal-menu {
-    background: $dark-surface-alt;
-    box-shadow: 8px 8px 16px $dark-shadow-dark, -8px -8px 16px $dark-shadow-light;
-    border: 1px solid $dark-border-color;
-
-    &.fill, &.outlinedDropdown {
-      box-shadow: 10px 10px 20px $dark-shadow-dark, -10px -10px 20px $dark-shadow-light;
-
-      hr {
-        background: $dark-border-color;
-      }
-    }
-
-    .dropdownItem {
-      color: $dark-text-secondary;
-
-      &:hover:not(.disabled) {
-        background: $dark-surface;
-        box-shadow: $dark-neu-shadow-btn;
-        color: $color-primary;
-
-        .dropdownItemIcon {
-          color: $color-primary;
-        }
-      }
-
-      &.selected {
-        background: $dark-surface;
-        color: $color-primary;
-        box-shadow: $dark-neu-shadow-inset-sm;
-
-        .dropdownItemIcon {
-          color: $color-primary;
-        }
-      }
-
-      .dropdownItemIcon {
-        color: $dark-text-muted;
-      }
-    }
-  }
 }
 
 
-/* ── 플랫 테마 (Flat Theme) ───────────────────── */
+/* ========================================================================
+   플랫 테마 (Flat Theme) — 라이트
+   ======================================================================== */
 body.theme-flat {
   background-color: #eef4fc;
   background-image: none;
@@ -245,7 +183,6 @@ body.theme-flat {
   .preview-panel-wrapper,
   .chat-messages,
   .copilot-input-box,
-  .chat-input-box,
   .file-question-box,
   .modalContent {
     background: #ffffff;
@@ -263,7 +200,6 @@ body.theme-flat {
   }
 
   .sidebar {
-
     .sidebar-block-btn,
     .user-more-btn,
     .sidebar-nav-item {
@@ -280,7 +216,6 @@ body.theme-flat {
         box-shadow: none;
       }
     }
-
   }
 
   .icon-btn,
@@ -322,54 +257,6 @@ body.theme-flat {
     }
   }
 
-  .chat-input-box,
-  .file-question-box,
-  .copilot-input-box {
-    background: #ffffff;
-    border: 1px solid #cbd5e1;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.2);
-    }
-
-    .add-btn,
-    .stop-btn {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      box-shadow: none;
-      color: #475569;
-    }
-
-    .model-btn {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      box-shadow: none;
-      color: #334155;
-
-      &:hover {
-        background: #e2e8f0;
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: #4A86FF;
-      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25);
-      border: none;
-
-      &:disabled {
-        background: #e2e8f0;
-        box-shadow: none;
-
-        i {
-          color: #94a3b8;
-        }
-      }
-    }
-  }
-
   .chat-messages {
     background: #ffffff;
     border: 1px solid #e2e8f0;
@@ -388,47 +275,7 @@ body.theme-flat {
     }
   }
 
-
-  .dropdown-portal-menu {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-
-    .dropdownItem {
-      &:hover:not(.disabled) {
-        background: #f1f5f9;
-        box-shadow: none;
-      }
-
-      &.selected {
-        background: #e2e8f0;
-        box-shadow: none;
-      }
-    }
-  }
-
-  .c-toggle-switch {
-    background: #cbd5e1;
-    box-shadow: none;
-
-    .toggle-knob {
-      background: #ffffff;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    }
-
-    &.active {
-      background: #4A86FF;
-
-      .toggle-knob {
-        background: #ffffff;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-      }
-    }
-  }
-
-
-
-  /* C-Button & Button overrides for Flat Theme */
+  /* C-Button & Button 오버라이드 (플랫 라이트) */
   c-button .btn,
   .btn {
     box-shadow: none;
@@ -505,11 +352,6 @@ body.theme-flat {
     }
   }
 
-  /* DAlert Modal overrides for Flat Theme */
-
-
-
-
   .modal-action-btn,
   .create-custom-btn,
   .upload-trigger-btn,
@@ -534,6 +376,9 @@ body.theme-flat {
   }
 }
 
+/* ========================================================================
+   플랫 테마 — 다크
+   ======================================================================== */
 body.theme-flat.dark-theme {
   background-color: #161922;
   background-image: none;
@@ -562,7 +407,6 @@ body.theme-flat.dark-theme {
   .preview-panel-wrapper,
   .chat-messages,
   .copilot-input-box,
-  .chat-input-box,
   .file-question-box,
   .modalContent {
     background: #1e222d;
@@ -593,7 +437,6 @@ body.theme-flat.dark-theme {
         box-shadow: none;
       }
     }
-
   }
 
   .icon-btn,
@@ -638,54 +481,6 @@ body.theme-flat.dark-theme {
     }
   }
 
-  .chat-input-box,
-  .file-question-box,
-  .copilot-input-box {
-    background: #1e222d;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3);
-    }
-
-    .add-btn,
-    .stop-btn {
-      background: #2b303e;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: none;
-      color: #f1f5f9;
-    }
-
-    .model-btn {
-      background: #2b303e;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: none;
-      color: #f1f5f9;
-
-      &:hover {
-        background: #353b4d;
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: #4A86FF;
-      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.4);
-      border: none;
-
-      &:disabled {
-        background: #2b303e;
-        box-shadow: none;
-
-        i {
-          color: #64748b;
-        }
-      }
-    }
-  }
-
   .chat-messages {
     background: #1e222d;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -704,47 +499,7 @@ body.theme-flat.dark-theme {
     }
   }
 
-
-  .dropdown-portal-menu {
-    background: #1e222d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-
-    .dropdownItem {
-      &:hover:not(.disabled) {
-        background: #2b303e;
-        box-shadow: none;
-      }
-
-      &.selected {
-        background: #353b4d;
-        box-shadow: none;
-      }
-    }
-  }
-
-  .c-toggle-switch {
-    background: #334155;
-    box-shadow: none;
-
-    .toggle-knob {
-      background: #f1f5f9;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-
-    &.active {
-      background: #4A86FF;
-
-      .toggle-knob {
-        background: #ffffff;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-      }
-    }
-  }
-
-
-
-  /* C-Button & Button overrides for Flat Dark Theme */
+  /* C-Button & Button 오버라이드 (플랫 다크) */
   c-button .btn,
   .btn {
     box-shadow: none;
@@ -821,11 +576,6 @@ body.theme-flat.dark-theme {
     }
   }
 
-  /* DAlert Modal overrides for Flat Dark Theme */
-
-
-
-
   .modal-action-btn,
   .create-custom-btn,
   .upload-trigger-btn,
@@ -850,7 +600,9 @@ body.theme-flat.dark-theme {
   }
 }
 
-/* ── 리퀴드 글래스모피즘 테마 (Liquid Glassmorphic Theme) ────── */
+/* ========================================================================
+   리퀴드 글래스모피즘 테마 — 라이트
+   ======================================================================== */
 body.theme-glass {
   background: radial-gradient(at 0% 0%, rgba(147, 197, 253, 0.65) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(74, 134, 255, 0.35) 0px, transparent 50%),
@@ -935,79 +687,11 @@ body.theme-glass {
         box-shadow: none;
       }
     }
-
   }
 
   .viewer-footer-input {
     background-color: transparent;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
-  }
-
-  .chat-input-box,
-  .file-question-box,
-  .copilot-input-box {
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border-radius: 24px;
-
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.25), 0 12px 36px rgba(31, 38, 135, 0.12);
-    }
-
-    .add-btn,
-    .stop-btn {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      color: #334155;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12);
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .model-btn {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      color: #334155;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.95);
-        box-shadow: 0 6px 16px rgba(31, 38, 135, 0.12);
-        color: #4A86FF;
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: linear-gradient(135deg, #4A86FF, #3b82f6);
-      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-
-      &:disabled {
-        background: rgba(203, 213, 225, 0.6);
-        box-shadow: none;
-
-        i {
-          color: #94a3b8;
-        }
-      }
-    }
   }
 
   .chat-messages {
@@ -1016,7 +700,6 @@ body.theme-glass {
     -webkit-backdrop-filter: none;
     border: none;
     box-shadow: none;
-    border-radius: 0;
 
     .message-wrapper.agent-message .message-bubble {
       background: rgba(255, 255, 255, 0.65);
@@ -1072,51 +755,7 @@ body.theme-glass {
     }
   }
 
-
-  .dropdown-portal-menu {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(24px) saturate(190%);
-    -webkit-backdrop-filter: blur(24px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 16px 40px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-
-    .dropdownItem {
-      &:hover:not(.disabled) {
-        background: rgba(255, 255, 255, 0.65);
-        box-shadow: none;
-      }
-
-      &.selected {
-        background: rgba(74, 134, 255, 0.18);
-        box-shadow: none;
-      }
-    }
-  }
-
-  .c-toggle-switch {
-    background: rgba(203, 213, 225, 0.65);
-    backdrop-filter: blur(8px);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-
-    .toggle-knob {
-      background: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    &.active {
-      background: linear-gradient(135deg, #4A86FF, #6366f1);
-      box-shadow: 0 0 16px rgba(74, 134, 255, 0.4);
-
-      .toggle-knob {
-        background: #ffffff;
-      }
-    }
-  }
-
-
-
-  /* C-Button Liquid Glass */
+  /* C-Button 글래스 라이트 */
   c-button .btn,
   .btn {
     backdrop-filter: blur(12px);
@@ -1157,9 +796,6 @@ body.theme-glass {
     }
   }
 
-  /* DAlert & Modal Glass Overlays */
-
-
   .form-input,
   .form-textarea,
   .neu-input {
@@ -1185,10 +821,6 @@ body.theme-glass {
     }
   }
 
-
-
-
-
   .modal-action-btn,
   .create-custom-btn,
   .upload-trigger-btn,
@@ -1204,6 +836,9 @@ body.theme-glass {
   }
 }
 
+/* ========================================================================
+   리퀴드 글래스모피즘 테마 — 다크
+   ======================================================================== */
 body.theme-glass.dark-theme {
   background: radial-gradient(at 0% 0%, rgba(74, 134, 255, 0.3) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(56, 189, 248, 0.25) 0px, transparent 50%),
@@ -1286,77 +921,11 @@ body.theme-glass.dark-theme {
         box-shadow: none;
       }
     }
-
   }
 
   .viewer-footer-input {
     background-color: transparent;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .chat-input-box,
-  .file-question-box,
-  .copilot-input-box {
-    background: rgba(30, 35, 48, 0.6);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    border-radius: 24px;
-
-    &:focus-within {
-      border-color: #4A86FF;
-      box-shadow: 0 0 0 3px rgba(74, 134, 255, 0.35), 0 12px 36px rgba(0, 0, 0, 0.5);
-    }
-
-    .add-btn,
-    .stop-btn {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      color: #f8fafc;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.18);
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .model-btn {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      color: #f8fafc;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.18);
-        color: #60a5fa;
-      }
-
-      &:active {
-        box-shadow: none;
-      }
-    }
-
-    .send-btn {
-      background: linear-gradient(135deg, #4A86FF, #6366f1);
-      box-shadow: 0 6px 18px rgba(74, 134, 255, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-
-      &:disabled {
-        background: rgba(43, 48, 62, 0.6);
-        box-shadow: none;
-
-        i {
-          color: #64748b;
-        }
-      }
-    }
   }
 
   .chat-messages {
@@ -1365,7 +934,6 @@ body.theme-glass.dark-theme {
     -webkit-backdrop-filter: none;
     border: none;
     box-shadow: none;
-    border-radius: 0;
 
     .message-wrapper.agent-message .message-bubble {
       background: rgba(30, 35, 48, 0.65);
@@ -1425,51 +993,7 @@ body.theme-glass.dark-theme {
     }
   }
 
-
-  .dropdown-portal-menu {
-    background: rgba(30, 35, 48, 0.85);
-    backdrop-filter: blur(24px) saturate(190%);
-    -webkit-backdrop-filter: blur(24px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-
-    .dropdownItem {
-      &:hover:not(.disabled) {
-        background: rgba(255, 255, 255, 0.12);
-        box-shadow: none;
-      }
-
-      &.selected {
-        background: rgba(74, 134, 255, 0.25);
-        box-shadow: none;
-      }
-    }
-  }
-
-  .c-toggle-switch {
-    background: rgba(51, 65, 85, 0.7);
-    backdrop-filter: blur(8px);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-
-    .toggle-knob {
-      background: #f8fafc;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    &.active {
-      background: linear-gradient(135deg, #4A86FF, #6366f1);
-      box-shadow: 0 0 16px rgba(74, 134, 255, 0.5);
-
-      .toggle-knob {
-        background: #ffffff;
-      }
-    }
-  }
-
-
-
-  /* C-Button Liquid Glass Dark */
+  /* C-Button 글래스 다크 */
   c-button .btn,
   .btn {
     backdrop-filter: blur(12px);
@@ -1510,8 +1034,6 @@ body.theme-glass.dark-theme {
     }
   }
 
-
-
   .form-input,
   .form-textarea,
   .neu-input {
@@ -1520,8 +1042,6 @@ body.theme-glass.dark-theme {
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.15);
   }
-
-
 
   .modal-action-btn,
   .create-custom-btn,
@@ -1535,158 +1055,5 @@ body.theme-glass.dark-theme {
     &:hover {
       background: rgba(255, 255, 255, 0.18);
     }
-  }
-}
-
-/* ==========================================================================
-   theme-select-modal 전역 테마 스타일 오버라이드
-   ========================================================================== */
-
-/* 1) 플랫 테마 (Flat Theme) */
-body.theme-flat {
-  .theme-select-container {
-    .theme-cards-grid .theme-card-item {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-
-      &:hover {
-        border-color: #94a3b8;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      }
-
-      &.selected {
-        background: #f0f7ff;
-        border: 2px solid #4A86FF;
-        box-shadow: 0 4px 14px rgba(74, 134, 255, 0.15);
-      }
-    }
-
-    .dark-mode-row {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      box-shadow: none;
-    }
-  }
-
-  .theme-modal-footer .btn,
-  .theme-modal-footer c-button .btn {
-    background: #4A86FF;
-    background-image: none;
-    border: none;
-    box-shadow: 0 2px 6px rgba(74, 134, 255, 0.3);
-
-    &:hover:not(:disabled) {
-      background: #3b82f6;
-      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
-    }
-  }
-}
-
-body.theme-flat.dark-theme {
-  .theme-select-container {
-    .theme-cards-grid .theme-card-item {
-      background: #1e222d;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: none;
-
-      &.selected {
-        background: rgba(96, 165, 250, 0.15);
-        border: 2px solid #60a5fa;
-        box-shadow: 0 4px 14px rgba(96, 165, 250, 0.2);
-      }
-    }
-
-    .dark-mode-row {
-      background: #161922;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: none;
-    }
-  }
-
-  .theme-modal-footer .btn,
-  .theme-modal-footer c-button .btn {
-    background: #3b82f6;
-    border: none;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
-  }
-}
-
-/* 2) 글래스모피즘 테마 (Glassmorphism Theme) */
-body.theme-glass {
-  .theme-select-container {
-    .theme-cards-grid .theme-card-item {
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      box-shadow: 0 8px 24px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.65);
-        border-color: rgba(255, 255, 255, 0.9);
-      }
-
-      &.selected {
-        background: rgba(255, 255, 255, 0.8);
-        border: 2px solid #4A86FF;
-        box-shadow: 0 8px 24px rgba(74, 134, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      }
-    }
-
-    .dark-mode-row {
-      background: rgba(255, 255, 255, 0.35);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
-  }
-
-  .theme-modal-footer .btn,
-  .theme-modal-footer c-button .btn {
-    background: linear-gradient(135deg, rgba(74, 134, 255, 0.95), rgba(41, 98, 255, 0.95));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 6px 20px rgba(74, 134, 255, 0.35);
-
-    &:hover:not(:disabled) {
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.95), rgba(59, 130, 246, 0.95));
-      box-shadow: 0 8px 25px rgba(74, 134, 255, 0.45);
-    }
-  }
-}
-
-body.theme-glass.dark-theme {
-  .theme-select-container {
-    .theme-cards-grid .theme-card-item {
-      background: rgba(30, 35, 48, 0.6);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-
-      &.selected {
-        background: rgba(45, 55, 75, 0.8);
-        border: 2px solid #60a5fa;
-        box-shadow: 0 8px 24px rgba(96, 165, 250, 0.3);
-      }
-    }
-
-    .dark-mode-row {
-      background: rgba(22, 25, 34, 0.55);
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: none;
-    }
-  }
-
-  .theme-modal-footer .btn,
-  .theme-modal-footer c-button .btn {
-    background: linear-gradient(135deg, rgba(96, 165, 250, 0.9), rgba(59, 130, 246, 0.9));
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 6px 20px rgba(96, 165, 250, 0.35);
   }
 }

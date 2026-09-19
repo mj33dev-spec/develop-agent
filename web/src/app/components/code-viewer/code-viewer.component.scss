@@ -230,12 +230,12 @@
     font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
     @include typo-body-2;
     line-height: 1.6;
-    user-select: text !important;
-    -webkit-user-select: text !important;
+    user-select: text;
+    -webkit-user-select: text;
 
     tr {
-      user-select: text !important;
-      -webkit-user-select: text !important;
+      user-select: text;
+      -webkit-user-select: text;
 
       &:hover {
         background: rgba(0, 0, 0, 0.02);
@@ -247,8 +247,8 @@
       text-align: right;
       padding-right: 16px;
       color: $neu-text-secondary;
-      user-select: none !important;
-      -webkit-user-select: none !important;
+      user-select: none;
+      -webkit-user-select: none;
       pointer-events: none;
       opacity: 0.6;
       vertical-align: top;
@@ -260,16 +260,16 @@
       white-space: pre-wrap;
       word-break: break-all;
       vertical-align: top;
-      user-select: text !important;
-      -webkit-user-select: text !important;
+      user-select: text;
+      -webkit-user-select: text;
       cursor: text;
 
       code,
       span,
       .token {
         font-family: inherit;
-        user-select: text !important;
-        -webkit-user-select: text !important;
+        user-select: text;
+        -webkit-user-select: text;
         cursor: text;
       }
 
@@ -277,16 +277,16 @@
       code::selection,
       span::selection,
       .token::selection {
-        background: #3178c6 !important;
-        color: #ffffff !important;
+        background: #3178c6;
+        color: #ffffff;
       }
 
       &::-moz-selection,
       code::-moz-selection,
       span::-moz-selection,
       .token::-moz-selection {
-        background: #3178c6 !important;
-        color: #ffffff !important;
+        background: #3178c6;
+        color: #ffffff;
       }
     }
   }
