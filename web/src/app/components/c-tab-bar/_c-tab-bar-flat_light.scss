@@ -1,0 +1,78 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 1] 플랫 라이트 모드 (Flat + Light Mode)
+   ======================================================================== */
+
+body.theme-flat:not(.dark-theme) {
+  .segmentContainer {
+    background-color: $flat-sidebar-bg;
+    border: 1px solid $flat-border-dark;
+
+    .segmentBtn {
+      color: $flat-text-secondary;
+
+      &:hover {
+        color: $flat-text-primary;
+      }
+
+      &.active {
+        background-color: $flat-card-bg;
+        color: $color-primary;
+        box-shadow: $flat-shadow-sm;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .baseContainer {
+    border-bottom: 1px solid $flat-border-color;
+
+    .baseBtn {
+      color: $flat-text-secondary;
+
+      &:hover {
+        color: $flat-text-primary;
+      }
+
+      &.active {
+        color: $color-primary;
+        font-weight: $font-weight-bold;
+
+        &::after {
+          background-color: $color-primary;
+        }
+      }
+    }
+  }
+
+  .folderContainer {
+    .folderBtn {
+      border: 1px solid $flat-border-dark;
+      background-color: $flat-sidebar-bg;
+      color: $flat-text-secondary;
+
+      &:hover {
+        color: $flat-text-primary;
+      }
+
+      &.active {
+        background-color: $flat-card-bg;
+        color: $color-primary;
+        font-weight: $font-weight-bold;
+        border-bottom-color: transparent;
+        box-shadow: $flat-shadow-sm;
+      }
+    }
+  }
+
+  .count {
+    background-color: rgba(203, 213, 225, 0.6);
+    color: $flat-text-secondary;
+
+    .active & {
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+}

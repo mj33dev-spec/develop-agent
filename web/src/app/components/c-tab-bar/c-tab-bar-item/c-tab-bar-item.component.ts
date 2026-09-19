@@ -1,4 +1,4 @@
-import { Component, Input, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, Input, HostListener, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type CTabBarVariant = 'base' | 'segment' | 'folder';
@@ -19,7 +19,8 @@ export type CTabBarSize = 'small' | 'basic' | 'large';
       <span *ngIf="count !== undefined && count !== null" class="count">{{ count }}</span>
     </button>
   `,
-  styleUrls: ['./c-tab-bar-item.component.scss']
+  styleUrls: ['./c-tab-bar-item.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CTabBarItemComponent {
   @Input() value: any;

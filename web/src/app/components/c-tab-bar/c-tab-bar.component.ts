@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, ContentChildren, QueryList, AfterContentInit, OnChanges, SimpleChanges, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CTabBarItemComponent, CTabBarVariant, CTabBarSize } from '../c-tab-bar-item/c-tab-bar-item.component';
+import { CTabBarItemComponent, CTabBarVariant, CTabBarSize } from './c-tab-bar-item/c-tab-bar-item.component';
 import { Subscription } from 'rxjs';
 
-export type { CTabBarSize } from '../c-tab-bar-item/c-tab-bar-item.component';
+export type { CTabBarSize } from './c-tab-bar-item/c-tab-bar-item.component';
 
 @Component({
   selector: 'c-tab-bar',

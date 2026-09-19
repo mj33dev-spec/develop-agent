@@ -1,0 +1,84 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [테마 4] 글래스모피즘 다크 모드 (Glassmorphism + Dark Mode)
+   ======================================================================== */
+
+body.theme-glass.dark-theme {
+  .segmentContainer {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid $dark-border-light;
+    box-shadow: $dark-shadow-sm;
+
+    .segmentBtn {
+      color: $dark-text-muted;
+
+      &:hover {
+        color: $dark-text-primary;
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.18);
+        color: $dark-primary;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        font-weight: 700;
+      }
+    }
+  }
+
+  .baseContainer {
+    border-bottom: 1px solid $dark-border-color;
+
+    .baseBtn {
+      color: $dark-text-muted;
+
+      &:hover {
+        color: $dark-text-primary;
+      }
+
+      &.active {
+        color: $dark-primary;
+        font-weight: $font-weight-bold;
+
+        &::after {
+          background-color: $dark-primary;
+        }
+      }
+    }
+  }
+
+  .folderContainer {
+    .folderBtn {
+      border: 1px solid $dark-border-color;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: $dark-text-muted;
+
+      &:hover {
+        color: $dark-text-primary;
+      }
+
+      &.active {
+        background: rgba(255, 255, 255, 0.18);
+        color: $dark-primary;
+        font-weight: $font-weight-bold;
+        border-bottom-color: transparent;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .count {
+    background: rgba(255, 255, 255, 0.12);
+    color: $dark-text-muted;
+
+    .active & {
+      background: $dark-primary;
+      color: #ffffff;
+    }
+  }
+}
