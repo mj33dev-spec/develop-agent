@@ -38,9 +38,6 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: $neu-bg;
-      border: none;
-      box-shadow: 3px 3px 6px $neu-shadow-dark, -3px -3px 6px $neu-shadow-light;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -49,12 +46,6 @@
 
       i {
         font-size: 20px;
-        color: $neu-text;
-      }
-
-      &:hover {
-        transform: translateY(-1px);
-        box-shadow: 4px 4px 8px $neu-shadow-dark, -4px -4px 8px $neu-shadow-light;
       }
     }
 

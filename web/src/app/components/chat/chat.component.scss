@@ -36,8 +36,6 @@
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        background: #ffffff;
-        border: 1px solid #cbd5e1;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -46,11 +44,9 @@
 
         i {
           font-size: 20px;
-          color: #475569;
         }
 
         &:hover {
-          background: #f1f5f9;
           color: $color-primary;
 
           i {

@@ -22,17 +22,17 @@ body.theme-glass:not(.dark-theme):not(.dark-mode) {
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.8);
-      i { color: #1e293b; }
-      &:hover { background: rgba(255, 255, 255, 0.85); color: #4A86FF; }
+      i { color: $flat-text-primary; }
+      &:hover { background: rgba(255, 255, 255, 0.85); color: $color-primary; }
     }
 
     .chat-title,
     .file-name {
-      color: #0f172a;
+      color: $sidebar-light-text-active;
     }
 
     .file-size {
-      color: #475569;
+      color: $flat-text-secondary;
       background: rgba(255, 255, 255, 0.6);
     }
   }
@@ -42,18 +42,18 @@ body.theme-glass:not(.dark-theme):not(.dark-mode) {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08);
+    box-shadow: $flat-shadow-lg;
 
     .agent-message .message-bubble {
       background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      color: #1e293b;
+      color: $flat-text-primary;
       border: 1px solid rgba(255, 255, 255, 0.8);
     }
 
     .user-message .message-bubble {
-      background: #4A86FF;
+      background: $color-primary;
       color: #ffffff;
     }
   }
@@ -68,10 +68,10 @@ body.theme-glass:not(.dark-theme):not(.dark-mode) {
     background: rgba(255, 255, 255, 0.65);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.8);
-    color: #1e293b;
+    color: $flat-text-primary;
 
     .chip-name {
-      color: #1e293b;
+      color: $flat-text-primary;
     }
   }
 
@@ -82,13 +82,13 @@ body.theme-glass:not(.dark-theme):not(.dark-mode) {
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    box-shadow: $flat-shadow-lg;
 
     .main-textarea,
     .chat-textarea,
     .viewer-textarea {
-      color: #0f172a;
-      &::placeholder { color: #64748b; }
+      color: $sidebar-light-text-active;
+      &::placeholder { color: $flat-text-muted; }
     }
 
     .add-btn,
@@ -96,26 +96,26 @@ body.theme-glass:not(.dark-theme):not(.dark-mode) {
       background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.85);
-      color: #334155;
-      &:hover { background: rgba(255, 255, 255, 0.95); color: #4A86FF; }
+      color: $flat-text-secondary;
+      &:hover { background: rgba(255, 255, 255, 0.95); color: $color-primary; }
     }
 
     .model-btn {
       background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.85);
-      color: #334155;
-      &:hover { background: rgba(255, 255, 255, 0.95); color: #4A86FF; }
+      color: $flat-text-secondary;
+      &:hover { background: rgba(255, 255, 255, 0.95); color: $color-primary; }
     }
 
     .send-btn {
-      background: #4A86FF;
+      background: $color-primary;
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(74, 134, 255, 0.3);
+      box-shadow: $flat-shadow-sm;
 
       &:disabled {
         background: rgba(255, 255, 255, 0.4);
-        i { color: #94a3b8; }
+        i { color: $flat-text-muted; }
       }
     }
   }
