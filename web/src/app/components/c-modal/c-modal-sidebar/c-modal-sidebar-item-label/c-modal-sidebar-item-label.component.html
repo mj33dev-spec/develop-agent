@@ -1,4 +1,5 @@
 <button type="button" class="c-modal-sidebar-item-btn" [class.active]="active" [disabled]="disabled" (click)="handleClick($event)">
   <i *ngIf="icon" [class]="icon"></i>
-  <span class="item-label">{{ label }}</span>
+  <span class="item-label" *ngIf="label">{{ label }}</span>
+  <ng-content></ng-content>
 </button>

@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CDropdownComponent, CDropdownOption } from '../../../../components/c-dropdown/c-dropdown.component';
 import { CModalComponent } from '../../../../components/c-modal/c-modal.component';
+import { CModalSidebarComponent } from '../../../../components/c-modal/c-modal-sidebar/c-modal-sidebar.component';
+import { CModalSidebarItemComponent } from '../../../../components/c-modal/c-modal-sidebar/c-modal-sidebar-item/c-modal-sidebar-item.component';
+import { CModalSidebarItemLabelComponent } from '../../../../components/c-modal/c-modal-sidebar/c-modal-sidebar-item-label/c-modal-sidebar-item-label.component';
 import { CButtonComponent } from '../../../../components/c-button/c-button.component';
 import { TemplateService, Template, TemplateFile } from '../../../../core/services/template.service';
 import { SettingsTab } from '../../../../components/settings-modal/settings-modal.component';
@@ -31,7 +34,16 @@ export interface SidebarNode {
 @Component({
   selector: 'app-home-sidebar',
   standalone: true,
-  imports: [CommonModule, FormsModule, CModalComponent, CButtonComponent, CDropdownComponent],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    CModalComponent, 
+    CModalSidebarComponent,
+    CModalSidebarItemComponent,
+    CModalSidebarItemLabelComponent,
+    CButtonComponent, 
+    CDropdownComponent
+  ],
   templateUrl: './home-sidebar.component.html',
   styleUrl: './home-sidebar.component.scss',
   encapsulation: ViewEncapsulation.None
@@ -358,7 +370,6 @@ export class HomeSidebarComponent implements OnInit {
     this.templateModalMode = 'select';
     this.selectedTemplate = null;
     this.selectedTemplateFiles = [];
-    this.selectedFrameworkFilter = '전체';
     // 업로드 폼 초기화
     this.uploadGroupName = '';
     this.uploadDescription = '';
@@ -367,6 +378,9 @@ export class HomeSidebarComponent implements OnInit {
     this.isTemplateModalOpen = true;
     // DB에서 내 템플릿 목록 로드
     await this.loadMyTemplates();
+    if (this.frameworkGroups.length > 0) {
+      this.selectedFrameworkFilter = this.frameworkGroups[0].framework;
+    }
   }
 
   closeTemplateModal() {
@@ -436,6 +450,40 @@ export class HomeSidebarComponent implements OnInit {
     } else {
       this.selectedTemplateFiles = await this.templateService.getTemplateFiles(template.id);
     }
+  }
+
+  // 프레임워크 그룹별 템플릿 맵 반환 (c-modal-sidebar 렌더링용)
+  get frameworkGroups(): { framework: string; icon: string; templates: Template[] }[] {
+    const map = new Map<string, Template[]>();
+    for (const t of this.myTemplates) {
+      const fw = t.framework || '기타';
+      if (!map.has(fw)) {
+        map.set(fw, []);
+      }
+      map.get(fw)!.push(t);
+    }
+
+    const groups: { framework: string; icon: string; templates: Template[] }[] = [];
+    for (const [fw, templates] of map.entries()) {
+      groups.push({
+        framework: fw,
+        icon: this.getSelectedFrameworkIcon(fw),
+        templates
+      });
+    }
+    return groups;
+  }
+
+  // 선택한 템플릿의 README.md 내용 추출
+  get selectedTemplateReadme(): string {
+    if (!this.selectedTemplate) return '';
+    const readmeFile = this.selectedTemplateFiles.find(
+      f => f.name.toLowerCase() === 'readme.md' || f.name.toLowerCase() === 'readme'
+    );
+    if (readmeFile && readmeFile.content) {
+      return readmeFile.content;
+    }
+    return this.selectedTemplate.description || '등록된 README 설명글이 없습니다.';
   }
 
   // 선택한 템플릿으로 폴더 + 파일 생성

@@ -144,141 +144,112 @@
     </div>
   }
 
-  <!-- 템플릿 모달 (c-modal 사용) -->
+  <!-- 템플릿 모달 (c-modal + c-modal-sidebar 사용) -->
   <c-modal
     [isOpen]="isTemplateModalOpen"
     [title]="templateModalMode === 'select' ? '템플릿 추가' : (templateModalMode === 'edit' ? '템플릿 수정' : '새 템플릿 업로드')"
-    [width]="'820px'"
+    [width]="'880px'"
     [height]="'80vh'"
+    [hasSidebar]="templateModalMode === 'select'"
     [customFooter]="true"
     (onClose)="closeTemplateModal()"
   >
+    <!-- 사이드바 슬롯: 프레임워크(c-modal-sidebar-item) & 소속 템플릿(c-modal-sidebar-item-label) -->
+    <c-modal-sidebar *ngIf="templateModalMode === 'select'">
+      @for (group of frameworkGroups; track group.framework) {
+        <c-modal-sidebar-item 
+          [active]="selectedFrameworkFilter === group.framework"
+          (click)="selectFrameworkFilter(group.framework)">
+          <i [class]="'bx ' + group.icon"></i>
+          <span>{{ group.framework }}</span>
+        </c-modal-sidebar-item>
+
+        @for (tpl of group.templates; track tpl.id) {
+          <c-modal-sidebar-item-label 
+            [active]="selectedTemplate?.id === tpl.id"
+            (click)="selectTemplate(tpl)">
+            <span>{{ tpl.name }}</span>
+          </c-modal-sidebar-item-label>
+        }
+      }
+    </c-modal-sidebar>
+
     @switch (templateModalMode) {
       @case ('select') {
-        <!-- MODE 1: 내 템플릿 선택 -->
-        <div class="modal-body-container">
-          <!-- 프레임워크 필터 탭바 -->
-          @if (!isLoadingTemplates && myTemplates.length > 0) {
-            <div class="category-pills">
-              @for (fw of uniqueFrameworks; track fw) {
-                <button class="pill-btn" 
-                        [class.active]="selectedFrameworkFilter === fw"
-                        (click)="selectFrameworkFilter(fw)">
-                  @if (fw !== '전체') {
-                    <i [class]="'bx ' + getSelectedFrameworkIcon(fw)"></i>
-                  }
-                  <span>{{ fw }}</span>
-                </button>
-              }
-            </div>
-          }
-
-          <!-- 로딩 상태 -->
+        <!-- MODE 1: 템플릿 세부 메인 패널 (구성파일, 요약설명, README) -->
+        <div class="modal-body-container template-main-panel">
           @if (isLoadingTemplates) {
             <div class="template-loading">
               <i class="bx bx-loader-alt bx-spin"></i>
               <span>템플릿 목록을 불러오는 중...</span>
             </div>
-          } @else if (filteredTemplates.length > 0) {
-            <!-- 템플릿 목록이 있을 때 -->
-            <div class="preset-content-grid">
-              <!-- 왼쪽: 템플릿 목록 -->
-              <div class="preset-list">
-                @for (tpl of filteredTemplates; track tpl.id) {
-                  <div class="preset-item-card"
-                       [class.selected]="selectedTemplate?.id === tpl.id"
-                       (click)="selectTemplate(tpl)">
-                    <div class="preset-icon">
-                      <i [class]="getTemplateIcon(tpl)"></i>
-                    </div>
-                    <div class="preset-info">
-                      <div class="preset-title-row">
-                        <span class="preset-name">{{ tpl.name }}</span>
-                      </div>
-                      <p class="preset-desc">{{ tpl.description || '설명 없음' }}</p>
-                    </div>
-                    
-                    <div class="preset-action-btns">
-                      @if (isTemplateOwner(tpl)) {
-                        <button class="template-action-btn edit" (click)="$event.stopPropagation(); startEditTemplate(tpl)">
-                          <i class="bx bx-edit-alt"></i>
-                        </button>
-                        <button class="template-action-btn delete" (click)="$event.stopPropagation(); deleteMyTemplate(tpl)">
-                          <i class="bx bx-trash"></i>
-                        </button>
-                      }
-                    </div>
+          } @else if (selectedTemplate) {
+            <div class="template-detail-wrapper">
+              <!-- 상단: 템플릿 요약 헤더 및 구성 파일 칩 목록 -->
+              <div class="template-detail-header">
+                <div class="detail-hero-row">
+                  <div class="hero-icon-badge">
+                    <i [class]="getTemplateIcon(selectedTemplate)"></i>
                   </div>
-                }
+                  <div class="hero-text-content">
+                    <div class="title-with-tag">
+                      <h3 class="template-title">{{ selectedTemplate.name }}</h3>
+                      <span class="framework-tag">
+                        <i [class]="'bx ' + getSelectedFrameworkIcon(selectedTemplate.framework)"></i>
+                        {{ selectedTemplate.framework || 'HTML5' }}
+                      </span>
+                    </div>
+                    <p class="template-desc">{{ selectedTemplate.description || '등록된 요약 설명이 없습니다.' }}</p>
+                  </div>
+
+                  @if (isTemplateOwner(selectedTemplate)) {
+                    <div class="owner-action-btns">
+                      <button class="action-btn edit" (click)="startEditTemplate(selectedTemplate)" title="수정">
+                        <i class="bx bx-edit-alt"></i>
+                      </button>
+                      <button class="action-btn delete" (click)="deleteMyTemplate(selectedTemplate)" title="삭제">
+                        <i class="bx bx-trash"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+
+                <!-- 구성 파일 목록 (칩 카드) -->
+                <div class="template-files-box">
+                  <div class="files-box-title">
+                    <i class="bx bx-folder"></i>
+                    <span>구성 파일 ({{ selectedTemplateFiles.length }})</span>
+                  </div>
+                  <div class="files-chip-grid">
+                    @for (file of selectedTemplateFiles; track file.name) {
+                      <div class="file-chip-item">
+                        <i [class]="getFileIcon(file.extension)"></i>
+                        <span class="file-name">{{ file.name }}</span>
+                      </div>
+                    } @empty {
+                      <div class="empty-files-msg">구성 파일이 없습니다.</div>
+                    }
+                  </div>
+                </div>
               </div>
 
-              <!-- 오른쪽: 선택한 템플릿 미리보기 -->
-              @if (selectedTemplate) {
-                <div class="preset-preview-panel">
-                  <div class="preset-inner">
-                    <!-- 템플릿 카드 미리보기 -->
-                    <div class="card-visual-preview">
-                      <div class="card-top-bar">
-                        <div class="card-dots">
-                          <span class="dot red"></span>
-                          <span class="dot yellow"></span>
-                          <span class="dot green"></span>
-                        </div>
-                        <span class="group-folder-tag">
-                          {{ selectedTemplate.name }}
-                        </span>
-                      </div>
+              <div class="detail-divider"></div>
 
-                      <div class="card-body-content">
-                        <div class="preset-hero-preview">
-                          <i [class]="getTemplateIcon(selectedTemplate) + ' hero-icon'"></i>
-                          <div class="hero-text">
-                            <h3>{{ selectedTemplate.name }}</h3>
-                            <p>{{ selectedTemplate.description || '등록된 설명 없음' }}</p>
-                          </div>
-                        </div>
-
-                        <div class="preview-files-list">
-                          <div class="files-title">구성 파일</div>
-                          @for (file of selectedTemplateFiles; track file.name) {
-                            <div class="file-badge-item">
-                              <i [class]="getFileIcon(file.extension)"></i>
-                              <span class="file-name">{{ file.name }}</span>
-                            </div>
-                          } @empty {
-                            <div class="no-files-msg">
-                              구성 파일이 없습니다.
-                            </div>
-                          }
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <!-- 하단: README.md 및 세부 정보 -->
+              <div class="template-readme-section">
+                <div class="readme-section-title">
+                  <i class="bx bx-file-blank"></i>
+                  <span>README.md 문서 프리뷰</span>
                 </div>
-              } @else {
-                <!-- 선택 안 됐을 때 안내 -->
-                <div class="preset-preview-panel empty-select">
-                  <div class="preset-inner">
-                    <div class="empty-preset-box">
-                      <i class="bx bx-pointer empty-icon"></i>
-                      <p class="empty-text">왼쪽 목록에서 템플릿을 선택하세요</p>
-                    </div>
-                  </div>
+                <div class="readme-preview-box">
+                  <pre class="readme-text">{{ selectedTemplateReadme }}</pre>
                 </div>
-              }
-            </div>
-          } @else if (myTemplates.length > 0 && filteredTemplates.length === 0) {
-            <!-- 필터된 결과가 없을 때 -->
-            <div class="empty-preset-box">
-              <i class="bx bx-filter-alt empty-icon"></i>
-              <p class="empty-text">'{{ selectedFrameworkFilter }}' 프레임워크로 등록된 템플릿이 없습니다.</p>
+              </div>
             </div>
           } @else {
-            <!-- 빈 목록 안내 -->
             <div class="empty-preset-box">
-              <i class="bx bx-folder-open empty-icon"></i>
-              <p class="empty-text">등록된 템플릿이 없습니다.</p>
-              <p class="empty-sub-text">아래 "템플릿 직접 만들기" 버튼을 눌러 업로드하세요.</p>
+              <i class="bx bx-pointer empty-icon"></i>
+              <p class="empty-text">사이드바에서 템플릿을 선택해 주세요</p>
             </div>
           }
         </div>

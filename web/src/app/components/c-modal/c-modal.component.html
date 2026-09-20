@@ -1,8 +1,8 @@
 <div *ngIf="isOpen" class="modalOverlay" (click)="handleOverlayClick($event)">
   <div class="modalContent" [class.has-sidebar]="hasSidebar" [style.width]="width" [style.height]="height" (click)="$event.stopPropagation()">
     
-    <!-- 닫기 버튼 (사이드바가 있거나 헤더가 숨김일 때) -->
-    <button *ngIf="hasSidebar || hideHeader" type="button" class="closeBtn absoluteCloseBtn" (click)="onClose.emit()" aria-label="Close">
+    <!-- 절대 위치 닫기 버튼 (헤더가 숨김 처리된 모달용) -->
+    <button *ngIf="hideHeader" type="button" class="closeBtn absoluteCloseBtn" (click)="onClose.emit()" aria-label="Close">
       <i class="bx bx-x"></i>
     </button>
 

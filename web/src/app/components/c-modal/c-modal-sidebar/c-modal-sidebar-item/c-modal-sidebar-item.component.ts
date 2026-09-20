@@ -11,4 +11,5 @@ import { CommonModule } from '@angular/common';
 })
 export class CModalSidebarItemComponent {
   @Input() label: string = '';
+  @Input() active: boolean = false;
 }
