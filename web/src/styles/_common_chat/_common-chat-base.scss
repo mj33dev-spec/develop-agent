@@ -1,0 +1,342 @@
+@use '../config' as *;
+
+/* ========================================================================
+   채팅창 & 코드창 공통 컨테이너 및 레이아웃 뼈대 (Base)
+   ======================================================================== */
+
+app-chat,
+app-code-viewer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.chat-container,
+.code-viewer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* ── 공통 헤더 (Header) ──────────────────────── */
+.chat-header,
+.viewer-header {
+  height: 64px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+
+  .header-left {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .icon-btn {
+      flex: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+
+      i {
+        font-size: 20px;
+      }
+    }
+
+    .header-center {
+      flex: 1;
+      min-width: 0;
+
+      .chat-title {
+        @include typo-title-2;
+        margin: 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        .edit-icon {
+          font-size: 16px;
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+
+        &:hover .edit-icon {
+          opacity: 1;
+        }
+      }
+
+      .chat-title-input {
+        @include typo-title-2;
+        background: transparent;
+        border: none;
+        outline: none;
+        padding: 2px 4px;
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    .file-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .file-icon {
+        flex: none;
+        font-size: 32px;
+      }
+
+      .file-name {
+        flex: 0 1 auto;
+        min-width: 0;
+        @include typo-title-2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+      }
+
+      .file-size {
+        flex: none;
+        @include typo-caption-1;
+        padding: 2px 8px;
+        border-radius: 12px;
+      }
+    }
+  }
+}
+
+/* ── 공통 바디 (Body) ────────────────────────── */
+.chat-body,
+.viewer-body,
+.split-viewer-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  min-height: 0;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ── 공통 푸터 (Footer Input Area) ───────────── */
+.chat-footer-input,
+.viewer-footer-input {
+  padding: 12px 20px 16px;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+/* ── 첨부파일 칩 목록 ───────────────────────── */
+.attached-items-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.attached-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  user-select: none;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+
+  .chip-thumb {
+    width: 22px;
+    height: 22px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  .chip-name {
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .remove-chip-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-left: 4px;
+    cursor: pointer;
+    color: #ef4444;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 50%;
+    line-height: 1;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+
+    &:hover {
+      transform: scale(1.25);
+      opacity: 0.85;
+    }
+  }
+}
+
+.msg-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  .attached-chip.msg-chip {
+    gap: 4px;
+    padding: 3px 8px;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: default;
+
+    i {
+      font-size: 16px;
+    }
+
+    .chip-name {
+      font-weight: 600;
+    }
+  }
+}
+
+/* ── 공통 채팅/질문 입력 박스 ────────────────── */
+.chat-input-box,
+.file-question-box,
+.copilot-input-box {
+  width: 100%;
+  border-radius: 24px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+
+  .input-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      padding: 4px;
+      background: transparent;
+      resize: none;
+      overflow-y: hidden;
+      min-height: 24px;
+      max-height: 160px;
+      line-height: 1.4;
+      font-family: inherit;
+    }
+
+    .input-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .footer-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .footer-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+
+  .add-btn,
+  .stop-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 20px;
+    }
+  }
+
+  .model-btn {
+    border-radius: 20px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    i {
+      font-size: 20px;
+    }
+  }
+}

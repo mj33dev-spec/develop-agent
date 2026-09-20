@@ -1,0 +1,191 @@
+@use '../config' as *;
+
+/* ========================================================================
+   채팅창 & 코드창 플랫 다크 모드 (Flat Dark Theme)
+   ======================================================================== */
+
+body.dark-theme:not(.theme-glass),
+body.dark-mode:not(.theme-glass),
+body.theme-flat.dark-theme,
+body.theme-flat.dark-mode {
+  .chat-container,
+  .code-viewer-container {
+    background-color: $dark-bg;
+    color: $dark-text-primary;
+  }
+
+  .chat-header,
+  .viewer-header {
+    background-color: $dark-surface;
+    border-bottom: 1px solid $dark-border-light;
+
+    .icon-btn {
+      background: $dark-surface-alt;
+      border: 1px solid $dark-border-color;
+      i { color: $dark-text-primary; }
+      &:hover {
+        background: $dark-surface-card;
+        border-color: $dark-border-light;
+        i { color: $color-primary; }
+      }
+    }
+
+    .chat-title,
+    .file-name {
+      color: $dark-text-primary;
+    }
+
+    .file-size {
+      color: $dark-text-secondary;
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .chat-body,
+  .viewer-body,
+  .split-viewer-body {
+    background-color: $dark-bg;
+  }
+
+  .chat-messages {
+    background: $dark-surface;
+    border: 1px solid $dark-border-color;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .agent-message .message-bubble {
+      background: $dark-surface-alt;
+      color: $dark-text-primary;
+      border: 1px solid $dark-border-color;
+    }
+
+    .user-message .message-bubble {
+      background: #4A86FF;
+      color: #ffffff;
+    }
+
+    .agent-name {
+      color: $dark-text-secondary;
+    }
+
+    .time-stamp {
+      color: $dark-text-muted;
+    }
+  }
+
+  /* 코드 뷰어 전용 패널 다크모드 */
+  .code-panel {
+    background: $dark-surface;
+    border: 1px solid $dark-border-color;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+    .floating-actions {
+      background: rgba(30, 35, 48, 0.9);
+      border-color: $dark-border-color;
+
+      .floating-btn {
+        background: $dark-surface-alt;
+        border-color: $dark-border-color;
+        color: $dark-text-primary;
+
+        &:hover {
+          background: $dark-surface-card;
+          color: $color-primary;
+        }
+      }
+    }
+
+    .code-table {
+      .line-number {
+        color: $dark-text-muted;
+      }
+
+      .line-code {
+        color: $dark-text-primary;
+      }
+    }
+  }
+
+  .preview-panel-wrapper {
+    background: $dark-surface;
+    border: 1px solid $dark-border-color;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+    .preview-panel-header {
+      border-bottom-color: $dark-border-light;
+
+      .preview-panel-title {
+        color: $dark-text-primary;
+      }
+    }
+
+    .iframe-container {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid $dark-border-light;
+  }
+
+  .attached-chip {
+    background-color: $dark-surface-alt;
+    border: 1px solid $dark-border-color;
+    color: $dark-text-primary;
+
+    .chip-name {
+      color: $dark-text-primary;
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: $dark-surface;
+    border: 1px solid $dark-border-color;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+    &:focus-within {
+      border-color: #4A86FF;
+      box-shadow: 0 0 0 2px rgba(74, 134, 255, 0.3);
+    }
+
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: $dark-text-primary;
+      &::placeholder { color: $dark-text-muted; }
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: $dark-surface-alt;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-secondary;
+      &:hover { background: $dark-surface-card; color: #4A86FF; }
+    }
+
+    .model-btn {
+      background: $dark-surface-alt;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-secondary;
+      &:hover { background: $dark-surface-card; color: #4A86FF; }
+    }
+
+    .send-btn {
+      background: #4A86FF;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(74, 134, 255, 0.4);
+
+      &:disabled {
+        background: $dark-surface-alt;
+        i { color: $dark-text-subtle; }
+      }
+    }
+  }
+}

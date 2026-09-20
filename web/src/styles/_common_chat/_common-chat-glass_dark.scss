@@ -1,0 +1,207 @@
+@use '../config' as *;
+
+/* ========================================================================
+   채팅창 & 코드창 글래스모피즘 다크 모드 (Glass Dark Theme)
+   ======================================================================== */
+
+body.theme-glass.dark-theme,
+body.theme-glass.dark-mode {
+  .chat-container,
+  .code-viewer-container {
+    background: transparent;
+    color: #f1f5f9;
+  }
+
+  .chat-header,
+  .viewer-header {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      i { color: #f1f5f9; }
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: #60a5fa;
+        i { color: #60a5fa; }
+      }
+    }
+
+    .chat-title,
+    .file-name {
+      color: #f1f5f9;
+    }
+
+    .file-size {
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .chat-body,
+  .viewer-body,
+  .split-viewer-body {
+    background: transparent;
+  }
+
+  .chat-messages {
+    background: rgba(30, 35, 48, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .agent-message .message-bubble {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .user-message .message-bubble {
+      background: #4A86FF;
+      color: #ffffff;
+    }
+
+    .agent-name {
+      color: #94a3b8;
+    }
+
+    .time-stamp {
+      color: #64748b;
+    }
+  }
+
+  .code-panel {
+    background: rgba(30, 35, 48, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
+
+    .floating-actions {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-color: rgba(255, 255, 255, 0.15);
+
+      .floating-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.15);
+        color: #f1f5f9;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+          color: #60a5fa;
+        }
+      }
+    }
+
+    .code-table {
+      .line-number {
+        color: #64748b;
+      }
+
+      .line-code {
+        color: #f1f5f9;
+      }
+    }
+  }
+
+  .preview-panel-wrapper {
+    background: rgba(30, 35, 48, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
+
+    .preview-panel-header {
+      border-bottom-color: rgba(255, 255, 255, 0.12);
+
+      .preview-panel-title {
+        color: #f1f5f9;
+      }
+    }
+
+    .iframe-container {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .attached-chip {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f1f5f9;
+
+    .chip-name {
+      color: #f1f5f9;
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: rgba(30, 35, 48, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: #f1f5f9;
+      &::placeholder { color: #64748b; }
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8fafc;
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: #60a5fa;
+      }
+    }
+
+    .model-btn {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f8fafc;
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: #60a5fa;
+      }
+    }
+
+    .send-btn {
+      background: #4A86FF;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(74, 134, 255, 0.4);
+
+      &:disabled {
+        background: rgba(255, 255, 255, 0.08);
+        i { color: #64748b; }
+      }
+    }
+  }
+}

@@ -1,0 +1,122 @@
+@use '../config' as *;
+
+/* ========================================================================
+   채팅창 & 코드창 글래스모피즘 라이트 모드 (Glass Light Theme)
+   ======================================================================== */
+
+body.theme-glass:not(.dark-theme):not(.dark-mode) {
+  .chat-container,
+  .code-viewer-container {
+    background: transparent;
+  }
+
+  .chat-header,
+  .viewer-header {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      i { color: #1e293b; }
+      &:hover { background: rgba(255, 255, 255, 0.85); color: #4A86FF; }
+    }
+
+    .chat-title,
+    .file-name {
+      color: #0f172a;
+    }
+
+    .file-size {
+      color: #475569;
+      background: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .chat-messages {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08);
+
+    .agent-message .message-bubble {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .user-message .message-bubble {
+      background: #4A86FF;
+      color: #ffffff;
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .attached-chip {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: #1e293b;
+
+    .chip-name {
+      color: #1e293b;
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .copilot-input-box {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 32px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: #0f172a;
+      &::placeholder { color: #64748b; }
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      color: #334155;
+      &:hover { background: rgba(255, 255, 255, 0.95); color: #4A86FF; }
+    }
+
+    .model-btn {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      color: #334155;
+      &:hover { background: rgba(255, 255, 255, 0.95); color: #4A86FF; }
+    }
+
+    .send-btn {
+      background: #4A86FF;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(74, 134, 255, 0.3);
+
+      &:disabled {
+        background: rgba(255, 255, 255, 0.4);
+        i { color: #94a3b8; }
+      }
+    }
+  }
+}

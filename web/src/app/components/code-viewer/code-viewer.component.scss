@@ -3,15 +3,7 @@
 
 
 
-:host {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-}
+
 
 .code-viewer-container {
   display: flex;
@@ -19,7 +11,6 @@
   width: 100%;
   height: 100%;
   min-height: 0;
-  background-color: $color-bg;
   position: relative;
   overflow: hidden;
 }
@@ -112,7 +103,6 @@
         flex: 0 1 auto;
         min-width: 0;
         @include typo-title-2;
-        color: $neu-text;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -122,8 +112,6 @@
       .file-size {
         flex: none;
         @include typo-caption-1;
-        color: $neu-text-secondary;
-        background: rgba(0, 0, 0, 0.04);
         padding: 2px 8px;
         border-radius: 12px;
       }
@@ -160,10 +148,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background: #ffffff;
     border-radius: 20px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     padding: 16px;
     overflow: auto;
     box-sizing: border-box;
@@ -176,12 +161,9 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(8px);
       padding: 6px;
       border-radius: 16px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       margin-left: 16px;
       margin-bottom: 8px;
 
@@ -189,13 +171,10 @@
         width: 36px;
         height: 36px;
         border-radius: 50%;
-        background: #f1f5f9;
-        border: 1px solid #cbd5e1;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #475569;
         transition: all 0.2s ease;
 
         i {
@@ -203,7 +182,6 @@
         }
 
         &:hover {
-          background: #e2e8f0;
           color: $color-primary;
         }
 
@@ -252,7 +230,6 @@
       width: 50px;
       text-align: right;
       padding-right: 16px;
-      color: $neu-text-secondary;
       user-select: none;
       -webkit-user-select: none;
       pointer-events: none;
@@ -262,7 +239,6 @@
 
     .line-code {
       padding-left: 12px;
-      color: $neu-text;
       white-space: pre-wrap;
       word-break: break-all;
       vertical-align: top;
@@ -652,7 +628,8 @@
   }
 }
 
-body.dark-theme {
+:host-context(body.dark-theme),
+:host-context(body.dark-mode) {
   /* 다크모드 시 구문 강조 (Syntax Highlighting) 선명하고 밝은 색상 정의 */
   ::ng-deep {
 
