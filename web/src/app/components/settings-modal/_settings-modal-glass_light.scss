@@ -1,0 +1,206 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 3] 글래스모피즘 라이트 모드 (Glassmorphism + Light Mode)
+   ======================================================================== */
+
+body.theme-glass:not(.dark-theme):not(.dark-mode) {
+  .modalContent {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(235, 243, 255, 0.68));
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 
+      0 20px 50px rgba(100, 116, 139, 0.15),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  .settings-sidebar {
+    background: rgba(255, 255, 255, 0.35);
+    border-right-color: rgba(255, 255, 255, 0.5);
+
+    .tab-group {
+      .group-title {
+        color: $flat-text-muted;
+      }
+
+      .tab-btn {
+        color: $sidebar-light-text;
+
+        i {
+          color: $sidebar-light-icon;
+        }
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.5);
+          color: $sidebar-light-text-active;
+        }
+
+        &.active {
+          background: rgba(255, 255, 255, 0.75);
+          color: $sidebar-light-text-active;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+          i {
+            color: $sidebar-light-text-active;
+          }
+        }
+      }
+    }
+  }
+
+  .settings-content-panel {
+    background: transparent;
+    color: $sidebar-light-text-active;
+
+    .section-title {
+      color: $sidebar-light-text-active;
+    }
+
+    .sub-section-title {
+      color: $flat-text-secondary;
+    }
+
+    .divider-line {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .setting-item-row {
+      .item-label-group {
+        .item-name {
+          color: $sidebar-light-text-active;
+        }
+
+        .icon-brand, .icon-x {
+          color: $sidebar-light-text-active;
+        }
+
+        .icon-muted {
+          color: $flat-text-muted;
+        }
+      }
+
+      .item-info {
+        .item-name {
+          color: $sidebar-light-text-active;
+        }
+
+        .item-desc {
+          color: $flat-text-secondary;
+        }
+      }
+    }
+
+    .profile-row {
+      .user-details {
+        .user-name {
+          color: $sidebar-light-text-active;
+        }
+
+        .user-email {
+          color: $flat-text-secondary;
+        }
+      }
+    }
+
+    .account-manage-box {
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+
+      .manage-section {
+        .sub-title {
+          color: $flat-text-secondary;
+        }
+
+        .form-input {
+          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid rgba(255, 255, 255, 0.8);
+          color: $sidebar-light-text-active;
+
+          &:focus {
+            border-color: $color-primary;
+          }
+        }
+      }
+    }
+
+    .select-trigger-btn {
+      background: rgba(255, 255, 255, 0.6);
+      color: $sidebar-light-text-active;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .form-textarea {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      color: $sidebar-light-text-active;
+
+      &:focus {
+        border-color: $color-primary;
+      }
+    }
+
+    .theme-preset-grid {
+      .theme-card {
+        background: rgba(255, 255, 255, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 4px 16px rgba(100, 116, 139, 0.08);
+
+        &:hover {
+          border-color: rgba(74, 134, 255, 0.5);
+          background: rgba(255, 255, 255, 0.6);
+        }
+
+        &.selected {
+          border-color: $color-primary;
+          background: rgba(74, 134, 255, 0.12);
+          box-shadow: 0 6px 20px rgba(74, 134, 255, 0.18);
+        }
+
+        .card-preview {
+          border: 1px solid rgba(255, 255, 255, 0.8);
+
+          .preview-sidebar {
+            background: rgba(226, 232, 240, 0.7);
+          }
+
+          .preview-content {
+            background: rgba(255, 255, 255, 0.85);
+          }
+
+          &.glass-preview {
+            background: linear-gradient(135deg, rgba(74, 134, 255, 0.25), rgba(255, 255, 255, 0.5));
+            backdrop-filter: blur(8px);
+          }
+        }
+
+        .card-title {
+          color: $sidebar-light-text-active;
+        }
+      }
+    }
+
+    .super-grok-banner {
+      background: #000000;
+      color: $color-white;
+
+      .banner-left {
+        .brand-logo-spark i {
+          color: $dark-primary;
+        }
+        .banner-desc {
+          color: $dark-text-muted;
+        }
+      }
+
+      .btn-super-use .c-btn {
+        background: $color-white;
+        color: #000000;
+
+        &:hover {
+          background: $sidebar-light-hover-bg;
+        }
+      }
+    }
+  }
+}

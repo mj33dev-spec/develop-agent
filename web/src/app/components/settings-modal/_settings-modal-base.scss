@@ -1,0 +1,310 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [설정 모달 뼈대 (Base)] 순수 레이아웃, 치수 및 배치
+   ======================================================================== */
+
+.settings-sidebar {
+  width: 220px;
+  height: 100%;
+  flex: none;
+  padding: $spacing-28 $spacing-16;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-24;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  .tab-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+
+    .group-title {
+      @include typo-caption-2;
+      font-weight: $font-weight-bold;
+      padding: 0 $spacing-12 $spacing-6 $spacing-12;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: $spacing-12;
+      width: 100%;
+      padding: $spacing-10 $spacing-14;
+      border-radius: $radius-lg;
+      border: none;
+      background: transparent;
+      @include typo-body-3;
+      font-weight: $font-weight-medium;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+
+      i {
+        font-size: 18px;
+        transition: color 0.15s ease;
+      }
+    }
+  }
+}
+
+.settings-content-panel {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: $spacing-32 36px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
+
+  .section-title {
+    @include typo-title-2;
+    font-weight: $font-weight-bold;
+    margin: 0 0 $spacing-24 0;
+  }
+
+  .sub-section-title {
+    @include typo-subtitle-2;
+    font-weight: $font-weight-semibold;
+    margin: $spacing-20 0 $spacing-12 0;
+  }
+
+  .divider-line {
+    height: 1px;
+    margin: 18px 0;
+    width: 100%;
+  }
+
+  .setting-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-12 0;
+    gap: $spacing-16;
+
+    &.column-layout {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-12;
+    }
+
+    .item-label-group {
+      display: flex;
+      align-items: center;
+      gap: $spacing-12;
+
+      .item-name {
+        @include typo-body-3;
+        font-weight: $font-weight-semibold;
+      }
+
+      .icon-brand, .icon-x {
+        font-size: 20px;
+      }
+
+      .icon-muted {
+        font-size: 18px;
+      }
+    }
+
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-4;
+
+      .item-name {
+        @include typo-body-3;
+        font-weight: $font-weight-semibold;
+      }
+
+      .item-desc {
+        @include typo-caption-1;
+      }
+    }
+  }
+
+  .profile-row {
+    margin-bottom: $spacing-8;
+
+    .user-profile-info {
+      display: flex;
+      align-items: center;
+      gap: $spacing-16;
+
+      .profile-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: $radius-circle;
+        background: $color-primary;
+        color: $color-white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        flex: none;
+      }
+
+      .user-details {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-2;
+
+        .user-name {
+          @include typo-subtitle-2;
+          font-weight: $font-weight-bold;
+        }
+
+        .user-email {
+          @include typo-caption-1;
+        }
+      }
+    }
+  }
+
+  .account-manage-box {
+    border-radius: $radius-lg;
+    padding: $spacing-16;
+    margin: $spacing-12 0 $spacing-16 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-16;
+
+    .manage-section {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-8;
+
+      .sub-title {
+        @include typo-caption-1;
+        font-weight: $font-weight-semibold;
+        margin: 0;
+      }
+
+      .input-inline-group {
+        display: flex;
+        gap: $spacing-8;
+      }
+
+      .input-stack-group {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-8;
+      }
+
+      .form-input {
+        flex: 1;
+        padding: $spacing-8 $spacing-12;
+        border-radius: $radius-normal;
+        @include typo-caption-1;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+    }
+  }
+
+  .select-trigger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: $spacing-12;
+    border-radius: $radius-deep;
+    @include typo-body-3;
+    box-sizing: border-box;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+
+  .theme-preset-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-16;
+    margin-top: $spacing-12;
+
+    .theme-card {
+      border-radius: $radius-xl;
+      padding: $spacing-12;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-10;
+      transition: all 0.2s ease;
+
+      .card-preview {
+        width: 100%;
+        height: 80px;
+        border-radius: $radius-normal;
+        display: flex;
+        overflow: hidden;
+
+        .preview-sidebar {
+          width: 30%;
+          height: 100%;
+        }
+
+        .preview-content {
+          width: 70%;
+          height: 100%;
+        }
+      }
+
+      .card-title {
+        @include typo-caption-1;
+        font-weight: $font-weight-semibold;
+      }
+    }
+  }
+
+  .super-grok-banner {
+    margin-top: auto;
+    border-radius: $radius-lg;
+    padding: $spacing-14 $spacing-20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-16;
+
+    .banner-left {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-4;
+
+      .brand-logo-spark {
+        display: flex;
+        align-items: center;
+        gap: $spacing-6;
+        font-weight: $font-weight-bold;
+        font-size: 15px;
+
+        i {
+          font-size: 18px;
+        }
+      }
+
+      .banner-desc {
+        @include typo-caption-2;
+      }
+    }
+
+    .btn-super-use {
+      .c-btn {
+        border-radius: 20px;
+        font-weight: $font-weight-bold;
+        border: none;
+      }
+    }
+  }
+}

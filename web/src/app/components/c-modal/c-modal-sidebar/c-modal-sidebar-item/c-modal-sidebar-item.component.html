@@ -1,5 +1,8 @@
 <div class="c-modal-sidebar-group" [class.active]="active">
-  <span class="c-modal-sidebar-group-label" *ngIf="label">{{ label }}</span>
+  <span class="c-modal-sidebar-group-label" *ngIf="label">
+    <i *ngIf="icon" [class]="icon"></i>
+    <span>{{ label }}</span>
+  </span>
   <div class="c-modal-sidebar-group-items">
     <ng-content></ng-content>
   </div>

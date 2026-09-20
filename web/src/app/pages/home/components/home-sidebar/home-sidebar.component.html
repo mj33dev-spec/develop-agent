@@ -154,23 +154,21 @@
     [customFooter]="true"
     (onClose)="closeTemplateModal()"
   >
-    <!-- 사이드바 슬롯: 프레임워크(c-modal-sidebar-item) & 소속 템플릿(c-modal-sidebar-item-label) -->
+    <!-- 사이드바 슬롯: 프레임워크 그룹(c-modal-sidebar-item) & 소속 템플릿 항목들(c-modal-sidebar-item-label) -->
     <c-modal-sidebar *ngIf="templateModalMode === 'select'">
       @for (group of frameworkGroups; track group.framework) {
         <c-modal-sidebar-item 
-          [active]="selectedFrameworkFilter === group.framework"
-          (click)="selectFrameworkFilter(group.framework)">
-          <i [class]="'bx ' + group.icon"></i>
-          <span>{{ group.framework }}</span>
+          [label]="group.framework"
+          [icon]="'bx ' + group.icon">
+          
+          @for (tpl of group.templates; track tpl.id) {
+            <c-modal-sidebar-item-label 
+              [active]="selectedTemplate?.id === tpl.id"
+              [label]="tpl.name"
+              (click)="selectTemplate(tpl)">
+            </c-modal-sidebar-item-label>
+          }
         </c-modal-sidebar-item>
-
-        @for (tpl of group.templates; track tpl.id) {
-          <c-modal-sidebar-item-label 
-            [active]="selectedTemplate?.id === tpl.id"
-            (click)="selectTemplate(tpl)">
-            <span>{{ tpl.name }}</span>
-          </c-modal-sidebar-item-label>
-        }
       }
     </c-modal-sidebar>
 
