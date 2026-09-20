@@ -136,9 +136,9 @@ serve(async (req) => {
 
       try {
         const genAI = new GoogleGenerativeAI(geminiKey);
-        let geminiModelName = model || 'gemini-1.5-flash';
-        if (geminiModelName === 'gemini-3.6-flash') geminiModelName = 'gemini-1.5-flash';
-        if (geminiModelName === 'gemini-3.1-pro-preview') geminiModelName = 'gemini-1.5-pro';
+        let geminiModelName = model || 'gemini-2.5-flash';
+        if (geminiModelName === 'gemini-3.6-flash') geminiModelName = 'gemini-2.5-flash';
+        if (geminiModelName === 'gemini-3.1-pro-preview') geminiModelName = 'gemini-2.5-pro';
 
         const geminiModel = genAI.getGenerativeModel({ 
           model: geminiModelName,
