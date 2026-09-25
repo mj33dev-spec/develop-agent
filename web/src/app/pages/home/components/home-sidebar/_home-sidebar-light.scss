@@ -1,0 +1,199 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/mixins" as *;
+
+/* ========================================================================
+   [테마 1] 라이트 모드 (Light Mode)
+   ======================================================================== */
+
+body:not(.dark-theme) {
+  .sidebar {
+    background-color: $neu-bg;
+    border-right: 1px solid $flat-border-color;
+    box-shadow: $flat-shadow-sm;
+
+    .sidebar-header {
+      border-bottom: 1px solid $flat-border-color;
+    }
+
+    .sidebar-block-btn {
+      background: $neu-bg;
+      border: 1px solid $flat-border-dark;
+      color: $flat-text-primary;
+      box-shadow: $flat-shadow-sm;
+
+      i {
+        color: $flat-text-primary;
+      }
+
+      &:hover {
+        background: $flat-sidebar-bg;
+        box-shadow: $flat-shadow-md;
+      }
+
+      &:active {
+        background: $flat-border-color;
+        box-shadow: none;
+      }
+
+      &.danger {
+        color: $color-error;
+        i { color: $color-error; }
+      }
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid $flat-border-color;
+
+      .sidebar-user-card {
+        background: $neu-bg;
+        box-shadow: $flat-shadow-sm;
+        border: 1px solid $flat-border-color;
+
+        .user-info {
+          .user-nickname {
+            color: $flat-text-primary;
+          }
+
+          .user-email {
+            color: $flat-text-secondary;
+          }
+
+          &:hover .user-nickname {
+            color: $color-primary;
+          }
+        }
+
+        .user-more-btn {
+          color: $flat-text-secondary;
+
+          &:hover {
+            background: $flat-sidebar-bg;
+            color: $flat-text-primary;
+          }
+        }
+      }
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent;
+      color: $flat-text-secondary;
+
+      &:hover {
+        background-color: $flat-sidebar-bg;
+        color: $flat-text-primary;
+      }
+
+      &.active {
+        background-color: $flat-border-color;
+        color: $color-primary;
+        font-weight: 600;
+        i { color: $color-primary; }
+      }
+    }
+
+    .sidebar-node.active {
+      > .room-item,
+      > .folder-header,
+      > .file-item {
+        background-color: $flat-border-color;
+        color: $color-primary;
+        font-weight: 600;
+        i { color: $color-primary; }
+      }
+    }
+
+    .empty-rooms {
+      color: $flat-text-muted;
+    }
+  }
+
+  /* 모달 내부 요소 오버라이드 (라이트 모드) */
+  .category-pills .pill-btn {
+    background: $neu-bg;
+    border: 1px solid $flat-border-dark;
+    box-shadow: none;
+    color: $flat-text-secondary;
+
+    &.active {
+      background: $color-primary;
+      color: $color-white;
+      border-color: $color-primary;
+      box-shadow: 0 2px 4px rgba(74, 134, 255, 0.25);
+    }
+  }
+
+  .preset-item-card {
+    background: $neu-bg;
+    border: 1px solid $flat-border-color;
+    box-shadow: $flat-shadow-sm;
+
+    .preset-icon {
+      background: $flat-sidebar-bg;
+      border: 1px solid $flat-border-dark;
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: $neu-bg;
+      border: 1px solid $flat-border-dark;
+      color: $flat-text-secondary;
+
+      &:hover {
+        background: $flat-sidebar-bg;
+        color: $flat-text-primary;
+      }
+    }
+
+    &.selected {
+      background: #f0f7ff;
+      border-color: $color-primary;
+      box-shadow: $flat-shadow-md;
+    }
+  }
+
+  .card-visual-preview {
+    background: $neu-bg;
+    border: 1px solid $flat-border-color;
+    box-shadow: $flat-shadow-md;
+
+    .card-top-bar {
+      background: $flat-sidebar-bg;
+      border-bottom: 1px solid $flat-border-color;
+    }
+
+    .file-badge-item {
+      background: $flat-sidebar-bg;
+      border: 1px solid $flat-border-color;
+      color: $flat-text-primary;
+    }
+  }
+
+  .preset-preview-panel.empty-select .preset-inner {
+    background: $neu-bg;
+    border: 1px solid $flat-border-color;
+    box-shadow: $flat-shadow-sm;
+
+    .empty-preset-box {
+      background: $flat-sidebar-bg;
+      border: 1px solid $flat-border-color;
+      color: $flat-text-secondary;
+    }
+  }
+
+  .file-upload-dropzone {
+    background: $neu-bg;
+    border: 2px dashed $flat-border-dark;
+
+    &:hover {
+      border-color: $color-primary;
+      background: rgba(74, 134, 255, 0.05);
+    }
+  }
+
+  .attached-file-chip {
+    background: $flat-sidebar-bg;
+    border: 1px solid $flat-border-dark;
+    color: $flat-text-primary;
+  }
+}

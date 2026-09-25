@@ -1,0 +1,223 @@
+@use '../config' as *;
+
+/* ========================================================================
+   채팅창 & 코드창 다크 모드 (Glass Dark Theme)
+   ======================================================================== */
+
+body.dark-theme,
+body.dark-mode {
+
+  .chat-container,
+  .code-viewer-container {
+    background: transparent;
+    color: $dark-text-primary;
+  }
+
+  .chat-header,
+  .viewer-header {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid $dark-border-light;
+
+    .icon-btn {
+      background: $dark-border-color;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid $dark-border-light;
+
+      i {
+        color: $dark-text-primary;
+      }
+
+      &:hover {
+        background: $dark-border-light;
+        color: $dark-primary;
+
+        i {
+          color: $dark-primary;
+        }
+      }
+    }
+
+    .chat-title,
+    .file-name {
+      color: $dark-text-primary;
+    }
+
+    .file-size {
+      color: $dark-text-muted;
+      background: $dark-border-color;
+    }
+  }
+
+  .chat-body,
+  .viewer-body,
+  .split-viewer-body {
+    background: transparent;
+  }
+
+  .chat-messages {
+    background: rgba(30, 35, 48, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid $dark-border-light;
+    box-shadow: $dark-shadow-lg;
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $dark-border-light;
+    }
+
+    .agent-message .message-bubble {
+      background: $dark-border-color;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: $dark-text-primary;
+      border: 1px solid $dark-border-light;
+    }
+
+    .user-message .message-bubble {
+      background: $color-primary;
+      color: $dark-text-primary;
+    }
+
+    .agent-name {
+      color: $dark-text-muted;
+    }
+
+    .time-stamp {
+      color: $dark-text-subtle;
+    }
+  }
+
+  .code-panel {
+    background: rgba(30, 35, 48, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid $dark-border-light;
+    box-shadow: $dark-shadow-lg;
+
+    .floating-actions {
+      background: $dark-border-color;
+      backdrop-filter: blur(12px);
+      border-color: $dark-border-light;
+
+      .floating-btn {
+        background: $dark-border-color;
+        border-color: $dark-border-light;
+        color: $dark-text-primary;
+
+        &:hover {
+          background: $dark-border-light;
+          color: $dark-primary;
+        }
+      }
+    }
+
+    .code-table {
+      .line-number {
+        color: $dark-text-subtle;
+      }
+
+      .line-code {
+        color: $dark-text-primary;
+      }
+    }
+  }
+
+  .preview-panel-wrapper {
+    background: rgba(30, 35, 48, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid $dark-border-light;
+    box-shadow: $dark-shadow-lg;
+
+    .preview-panel-header {
+      border-bottom-color: $dark-border-light;
+
+      .preview-panel-title {
+        color: $dark-text-primary;
+      }
+    }
+
+    .iframe-container {
+      background: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .chat-footer-input,
+  .viewer-footer-input {
+    background-color: transparent;
+    border-top: 1px solid $dark-border-color;
+  }
+
+  .attached-chip {
+    background: $dark-border-color;
+    backdrop-filter: blur(12px);
+    border: 1px solid $dark-border-light;
+    color: $dark-text-primary;
+
+    .chip-name {
+      color: $dark-text-primary;
+    }
+  }
+
+  .chat-input-box,
+  .file-question-box,
+  .tempgent-input-box {
+    background: rgba(30, 35, 48, 0.6);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid $dark-border-light;
+    box-shadow: $dark-shadow-lg;
+
+    .main-textarea,
+    .chat-textarea,
+    .viewer-textarea {
+      color: $dark-text-primary;
+
+      &::placeholder {
+        color: $dark-text-muted;
+      }
+    }
+
+    .add-btn,
+    .stop-btn {
+      background: $dark-border-color;
+      backdrop-filter: blur(12px);
+      border: 1px solid $dark-border-light;
+      color: $dark-text-primary;
+
+      &:hover {
+        background: $dark-border-light;
+        color: $dark-primary;
+      }
+    }
+
+    .model-btn {
+      background: $dark-border-color;
+      backdrop-filter: blur(12px);
+      border: 1px solid $dark-border-light;
+      color: $dark-text-primary;
+
+      &:hover {
+        background: $dark-border-light;
+        color: $dark-primary;
+      }
+    }
+
+    .send-btn {
+      background: $color-primary;
+      color: $dark-text-primary;
+      box-shadow: $dark-shadow-md;
+
+      &:disabled {
+        background: $dark-border-color;
+
+        i {
+          color: $dark-text-subtle;
+        }
+      }
+    }
+  }
+}

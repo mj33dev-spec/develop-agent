@@ -181,8 +181,8 @@
 
 
 
-body.theme-flat,
-:host-context(body.theme-flat) {
+body:not(.dark-theme),
+:host-context(body:not(.dark-theme)) {
   .alertOverlay.active {
     background-color: rgba(15, 23, 42, 0.35);
     backdrop-filter: blur(4px);
@@ -203,55 +203,10 @@ body.theme-flat,
   }
 }
 
-body.theme-flat.dark-theme,
-:host-context(body.theme-flat.dark-theme) {
-  .alertOverlay.active {
-    background-color: rgba(15, 17, 23, 0.75);
-    backdrop-filter: blur(4px);
-  }
-
-  .alertBox {
-    background-color: #1e222d;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
-
-    .alertInput {
-      background: #161922;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: none;
-      color: #f1f5f9;
-    }
-  }
-}
-
-body.theme-glass,
-:host-context(body.theme-glass) {
-  .alertOverlay.active {
-    background-color: rgba(15, 23, 42, 0.3);
-    backdrop-filter: blur(12px);
-  }
-
-  .alertBox {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(24px) saturate(190%);
-    -webkit-backdrop-filter: blur(24px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 24px 48px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border-radius: 24px;
-
-    .alertInput {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.75);
-      box-shadow: none;
-      color: #1e293b;
-    }
-  }
-}
-
-body.theme-glass.dark-theme,
-:host-context(body.theme-glass.dark-theme) {
+body.dark-theme,
+body.dark-mode,
+:host-context(body.dark-theme),
+:host-context(body.dark-mode) {
   .alertOverlay.active {
     background-color: rgba(10, 14, 23, 0.65);
     backdrop-filter: blur(12px);

@@ -1,0 +1,183 @@
+@use '../../../styles/variables' as *;
+
+/* ========================================================================
+   [테마 1] 라이트 모드 (Light Mode)
+   ======================================================================== */
+
+body:not(.dark-theme):not(.dark-mode) {
+  .settings-sidebar {
+    background: $sidebar-light-bg;
+    border-right: 1px solid $sidebar-light-border;
+
+    .tab-group {
+      .group-title {
+        color: $flat-text-muted;
+      }
+
+      .tab-btn {
+        color: $sidebar-light-text;
+
+        i {
+          color: $sidebar-light-icon;
+        }
+
+        &:hover {
+          background: $sidebar-light-hover-bg;
+          color: $sidebar-light-text-active;
+        }
+
+        &.active {
+          background: $sidebar-light-active-bg;
+          color: $sidebar-light-text-active;
+          font-weight: $font-weight-semibold;
+
+          i {
+            color: $sidebar-light-text-active;
+          }
+        }
+      }
+    }
+  }
+
+  .settings-content-panel {
+    background: $flat-card-bg;
+    color: $flat-text-primary;
+
+    .section-title {
+      color: $flat-text-primary;
+    }
+
+    .sub-section-title {
+      color: $flat-text-secondary;
+    }
+
+    .divider-line {
+      background: $flat-border-color;
+    }
+
+    .setting-item-row {
+      .item-label-group {
+        .item-name {
+          color: $flat-text-primary;
+        }
+        .icon-brand, .icon-x {
+          color: $flat-text-primary;
+        }
+        .icon-muted {
+          color: $flat-text-muted;
+        }
+      }
+
+      .item-info {
+        .item-name {
+          color: $flat-text-primary;
+        }
+        .item-desc {
+          color: $flat-text-secondary;
+        }
+      }
+    }
+
+    .profile-row {
+      .user-details {
+        .user-name {
+          color: $flat-text-primary;
+        }
+        .user-email {
+          color: $flat-text-secondary;
+        }
+      }
+    }
+
+    .account-manage-box {
+      background: $flat-sidebar-bg;
+      border: 1px solid $flat-border-color;
+
+      .manage-section {
+        .sub-title {
+          color: $flat-text-secondary;
+        }
+
+        .form-input {
+          background: $flat-card-bg;
+          border: 1px solid $flat-border-dark;
+          color: $flat-text-primary;
+
+          &:focus {
+            border-color: $color-primary;
+          }
+        }
+      }
+    }
+
+    .select-trigger-btn {
+      background: $flat-card-bg;
+      color: $flat-text-primary;
+      border: 1px solid $flat-border-dark;
+    }
+
+    .form-textarea {
+      background: $flat-card-bg;
+      border: 1px solid $flat-border-dark;
+      color: $flat-text-primary;
+
+      &:focus {
+        border-color: $color-primary;
+      }
+    }
+
+    .theme-preset-grid {
+      .theme-card {
+        border: 2px solid $flat-border-color;
+
+        &:hover {
+          border-color: $flat-border-dark;
+        }
+
+        &.selected {
+          border-color: $color-primary;
+          background: rgba(74, 134, 255, 0.04);
+        }
+
+        .card-preview {
+          border: 1px solid $flat-border-dark;
+
+          .preview-sidebar {
+            background: $flat-border-color;
+          }
+
+          .preview-content {
+            background: $flat-card-bg;
+          }
+        }
+
+        .card-title {
+          color: $flat-text-secondary;
+        }
+      }
+    }
+
+    .super-grok-banner {
+      background: #000000;
+      color: $color-white;
+
+      .banner-left {
+        .brand-logo-spark i {
+          color: $dark-primary;
+        }
+        .banner-desc {
+          color: $dark-text-muted;
+        }
+      }
+
+      .btn-super-use .c-btn {
+        background: $color-white;
+        color: #000000;
+
+        &:hover {
+          background: $sidebar-light-hover-bg;
+        }
+      }
+    }
+  }
+}

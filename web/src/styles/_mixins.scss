@@ -112,7 +112,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
-// ── 플랫 테마 공통 믹스인 ──
+// ── 라이트 테마 공통 믹스인 ──
 @mixin flat-panel {
   background: $flat-card-bg !important;
   box-shadow: $flat-shadow-lg !important;
@@ -130,7 +130,7 @@
   }
 }
 
-// ── 리퀴드 글래스모피즘(Liquid Glassmorphism) 공통 믹스인 ──
+// ── 다크 테마 공통 믹스인 ──
 @mixin glass-panel($radius: 24px) {
   background: rgba(255, 255, 255, 0.28) !important;
   backdrop-filter: blur(28px) saturate(210%) !important;

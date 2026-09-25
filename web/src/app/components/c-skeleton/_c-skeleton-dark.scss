@@ -1,0 +1,35 @@
+@use '../../../styles/config' as *;
+
+// c-skeleton 다크 테마 (Dark Mode) 스타일
+body.dark-theme,
+body.dark-mode {
+  .c-skeleton {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    &::after {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.22),
+        transparent
+      );
+    }
+  }
+
+  .c-skeleton-overlay {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      border-top-color: $dark-primary;
+    }
+
+    .overlay-text {
+      color: $dark-text-primary;
+    }
+  }
+}

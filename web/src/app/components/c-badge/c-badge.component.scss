@@ -9,7 +9,5 @@
 @import "./c-badge-base";
 
 /* 2. 4가지 독립 테마 모듈 체이닝 (Theme Partial Modules) */
-@import "./c-badge-flat_light";
-@import "./c-badge-flat_dark";
-@import "./c-badge-glass_light";
-@import "./c-badge-glass_dark";
+@import "./c-badge-light";
+@import "./c-badge-dark";

@@ -196,22 +196,26 @@ export class AuthService {
     return data;
   }
 
-  async getUserSettings(): Promise<{ defaultModel: string; defaultTheme: string; isDarkMode: boolean }> {
+  async getUserSettings(): Promise<{ defaultModel: string; isDarkMode: boolean }> {
     const user = this.currentUserSubject.value;
     if (!user) {
       const saved = localStorage.getItem('user_app_settings');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          return {
+            defaultModel: parsed.defaultModel || 'Gemini 3.6 Flash',
+            isDarkMode: parsed.isDarkMode ?? false
+          };
         } catch (e) {}
       }
-      return { defaultModel: 'Gemini 3.6 Flash', defaultTheme: '뉴모피즘', isDarkMode: false };
+      return { defaultModel: 'Gemini 3.6 Flash', isDarkMode: false };
     }
 
     try {
       const { data: dbUser } = await this.supabase
         .from('users')
-        .select('default_model, default_theme, is_dark_mode, settings')
+        .select('default_model, is_dark_mode, settings')
         .eq('id', user.id)
         .maybeSingle();
 
@@ -219,7 +223,6 @@ export class AuthService {
         const metaSettings = user.user_metadata?.['user_settings'];
         const settings = {
           defaultModel: dbUser.default_model || dbUser.settings?.defaultModel || metaSettings?.defaultModel || 'Gemini 3.6 Flash',
-          defaultTheme: dbUser.default_theme || dbUser.settings?.defaultTheme || metaSettings?.defaultTheme || '뉴모피즘',
           isDarkMode: dbUser.is_dark_mode ?? dbUser.settings?.isDarkMode ?? metaSettings?.isDarkMode ?? false
         };
         return settings;
@@ -232,7 +235,6 @@ export class AuthService {
     if (metaSettings) {
       return {
         defaultModel: metaSettings.defaultModel || 'Gemini 3.6 Flash',
-        defaultTheme: metaSettings.defaultTheme || '뉴모피즘',
         isDarkMode: metaSettings.isDarkMode ?? false
       };
     }
@@ -240,14 +242,18 @@ export class AuthService {
     const saved = localStorage.getItem('user_app_settings');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        return {
+          defaultModel: parsed.defaultModel || 'Gemini 3.6 Flash',
+          isDarkMode: parsed.isDarkMode ?? false
+        };
       } catch (e) {}
     }
 
-    return { defaultModel: 'Gemini 3.6 Flash', defaultTheme: '뉴모피즘', isDarkMode: false };
+    return { defaultModel: 'Gemini 3.6 Flash', isDarkMode: false };
   }
 
-  async updateUserSettings(settings: Partial<{ defaultModel: string; defaultTheme: string; isDarkMode: boolean }>) {
+  async updateUserSettings(settings: Partial<{ defaultModel: string; isDarkMode: boolean }>) {
     const user = this.currentUserSubject.value;
     const current = await this.getUserSettings();
     const mergedSettings = { ...current, ...settings };
@@ -269,14 +275,17 @@ export class AuthService {
       this.currentUserSubject.next(data.user);
     }
 
-    // 2. DB public.users 테이블 연동
+    // 2. DB public.users 테이블 연동 (is_dark_mode, default_model 및 settings JSONB 동기화)
     try {
       await this.supabase
         .from('users')
         .update({
           default_model: mergedSettings.defaultModel,
-          default_theme: mergedSettings.defaultTheme,
-          is_dark_mode: mergedSettings.isDarkMode
+          is_dark_mode: mergedSettings.isDarkMode,
+          settings: {
+            defaultModel: mergedSettings.defaultModel,
+            isDarkMode: mergedSettings.isDarkMode
+          }
         })
         .eq('id', user.id);
     } catch (dbErr) {

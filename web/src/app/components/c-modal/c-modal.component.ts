@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, OnDestroy, ElementRef, ViewEncapsulation, booleanAttribute } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CButtonComponent } from '../c-button/c-button.component';
 
@@ -11,23 +11,23 @@ import { CButtonComponent } from '../c-button/c-button.component';
   encapsulation: ViewEncapsulation.None
 })
 export class CModalComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() isOpen: boolean = false;
+  @Input({ transform: booleanAttribute }) isOpen: boolean = false;
   @Input() title: string = '';
   @Input() subTitle?: string;
   @Input() submitLabel: string = '저장';
   @Input() cancelLabel: string = '취소';
   @Input() submitTheme: 'primary' | 'error' | 'success' | 'warn' | 'neutral' | 'secondary' = 'primary';
-  @Input() submitDisabled: boolean = false;
+  @Input({ transform: booleanAttribute }) submitDisabled: boolean = false;
   @Input() width?: string;
   @Input() height?: string;
-  @Input() hideCancel: boolean = false;
-  @Input() isForm: boolean = false;
+  @Input({ transform: booleanAttribute }) hideCancel: boolean = false;
+  @Input({ transform: booleanAttribute }) isForm: boolean = false;
 
-  @Input() hasSidebar: boolean = false;
-  @Input() hideHeader: boolean = false;
-  @Input() hideFooter: boolean = false;
+  @Input({ transform: booleanAttribute }) hasSidebar: boolean = false;
+  @Input({ transform: booleanAttribute }) hideHeader: boolean = false;
+  @Input({ transform: booleanAttribute }) hideFooter: boolean = false;
 
-  @Input() customFooter: boolean = false;
+  @Input({ transform: booleanAttribute }) customFooter: boolean = false;
 
   @Output() onClose = new EventEmitter<void>();
   @Output() onSubmit = new EventEmitter<Event>();

@@ -9,7 +9,5 @@
 @import "./home-sidebar-base";
 
 /* 2. 4가지 독립 테마 모듈 체이닝 (Theme Partial Modules) */
-@import "./home-sidebar-flat_light";
-@import "./home-sidebar-flat_dark";
-@import "./home-sidebar-glass_light";
-@import "./home-sidebar-glass_dark";
+@import "./home-sidebar-light";
+@import "./home-sidebar-dark";

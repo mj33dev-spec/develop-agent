@@ -50,7 +50,6 @@ export class SettingsModalComponent implements OnInit {
 
   // AI 및 시스템 설정
   defaultModel: string = 'Gemini 3.6 Flash';
-  defaultTheme: string = '플랫';
   isDarkMode: boolean = false;
 
   modelOptions: CDropdownOption[] = [
@@ -79,7 +78,6 @@ export class SettingsModalComponent implements OnInit {
     try {
       const settings = await this.authService.getUserSettings();
       this.defaultModel = settings.defaultModel || this.defaultModel;
-      this.defaultTheme = settings.defaultTheme || this.defaultTheme;
       this.isDarkMode = settings.isDarkMode ?? false;
     } catch (e) {
       console.error('설정 로드 오류:', e);
@@ -172,18 +170,11 @@ export class SettingsModalComponent implements OnInit {
     await this.autoSaveSettings();
   }
 
-  async onThemeSelect(theme: string) {
-    this.defaultTheme = theme;
-    this.themeService.setStyleTheme(theme);
-    await this.autoSaveSettings();
-  }
-
   private async autoSaveSettings() {
     this.dLoading.show('설정 저장 중...');
     try {
       await this.authService.updateUserSettings({
         defaultModel: this.defaultModel,
-        defaultTheme: this.defaultTheme,
         isDarkMode: this.isDarkMode
       });
       this.dLoading.dismiss();
@@ -199,15 +190,12 @@ export class SettingsModalComponent implements OnInit {
       try {
         const defaultSettings = {
           defaultModel: 'Gemini 3.6 Flash',
-          defaultTheme: '플랫',
           isDarkMode: false
         };
         await this.authService.updateUserSettings(defaultSettings);
         this.defaultModel = defaultSettings.defaultModel;
-        this.defaultTheme = defaultSettings.defaultTheme;
         this.isDarkMode = defaultSettings.isDarkMode;
         this.themeService.setDarkMode(false);
-        this.themeService.setStyleTheme('플랫');
         this.dLoading.dismiss();
       } catch (e: any) {
         this.dLoading.dismiss();

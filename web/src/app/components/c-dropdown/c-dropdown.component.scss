@@ -9,7 +9,5 @@
 @import "./c-dropdown-base";
 
 /* 2. 4가지 독립 테마 모듈 체이닝 (Theme Partial Modules) */
-@import "./c-dropdown-flat_light";
-@import "./c-dropdown-flat_dark";
-@import "./c-dropdown-glass_light";
-@import "./c-dropdown-glass_dark";
+@import "./c-dropdown-light";
+@import "./c-dropdown-dark";

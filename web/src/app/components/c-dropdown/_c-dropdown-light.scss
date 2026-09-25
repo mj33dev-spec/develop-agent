@@ -1,0 +1,44 @@
+@use '../../../styles/config' as *;
+
+// c-dropdown 라이트 테마 스타일
+body:not(.dark-theme) {
+  .dropdownContainer {
+    c-button {
+      ::ng-deep .btn {
+        background: $flat-card-bg;
+        border: 1px solid $flat-border-dark;
+        color: $flat-text-primary;
+
+        &:hover {
+          background: $flat-sidebar-bg;
+        }
+      }
+    }
+  }
+
+  .dropdown-portal-menu {
+    background: $flat-card-bg;
+    border: 1px solid $flat-border-dark;
+    box-shadow: $flat-shadow-lg;
+    color: $flat-text-primary;
+
+    hr {
+      background-color: $flat-border-color;
+    }
+
+    .dropdownItem {
+      color: $flat-text-primary;
+
+      &:hover:not(.disabled) {
+        background: $flat-sidebar-bg;
+        color: $color-primary;
+      }
+
+      &.selected {
+        background: rgba(74, 134, 255, 0.1);
+        color: $color-primary;
+        font-weight: 600;
+      }
+    }
+  }
+}

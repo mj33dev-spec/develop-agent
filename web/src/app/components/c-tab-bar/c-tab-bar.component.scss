@@ -9,7 +9,5 @@
 @import "./c-tab-bar-base";
 
 /* 2. 4가지 독립 테마 모듈 체이닝 (Theme Partial Modules) */
-@import "./c-tab-bar-flat_light";
-@import "./c-tab-bar-flat_dark";
-@import "./c-tab-bar-glass_light";
-@import "./c-tab-bar-glass_dark";
+@import "./c-tab-bar-light";
+@import "./c-tab-bar-dark";

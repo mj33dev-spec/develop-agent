@@ -12,7 +12,6 @@ import { RoomService, ChatRoomRecord } from '../../core/services/room.service';
 import { FileItemService, FileItem } from '../../core/services/file-item.service';
 import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
 import { GuideModalComponent } from '../../components/guide-modal/guide-modal.component';
-import { ThemeSelectModalComponent } from '../../components/theme-select-modal/theme-select-modal.component';
 import { SettingsModalComponent, SettingsTab } from '../../components/settings-modal/settings-modal.component';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -29,7 +28,6 @@ import { AuthService } from '../../core/services/auth.service';
     CBadgeComponent, 
     HomeSidebarComponent,
     GuideModalComponent,
-    ThemeSelectModalComponent,
     SettingsModalComponent
   ],
   templateUrl: './home.component.html',
@@ -61,7 +59,6 @@ export class HomeComponent implements OnInit {
   addMenuOptions: CDropdownOption[] = [];
   attachedItems: AttachedItem[] = [];
   isGuideModalOpen: boolean = false;
-  isThemeSelectModalOpen: boolean = false;
   isSettingsModalOpen: boolean = false;
   settingsModalTab: SettingsTab = 'account';
 
@@ -124,28 +121,13 @@ export class HomeComponent implements OnInit {
   }
 
   checkOnboardingGuide() {
-    const hasSelectedTheme = localStorage.getItem('has_selected_initial_theme');
     const hasSeenGuide = localStorage.getItem('has_seen_onboarding_guide');
 
     this.authService.currentUser.pipe(take(1)).subscribe(user => {
-      if (user) {
-        if (!hasSelectedTheme) {
-          this.isThemeSelectModalOpen = true;
-        } else if (!hasSeenGuide) {
-          this.isGuideModalOpen = true;
-        }
+      if (user && !hasSeenGuide) {
+        this.isGuideModalOpen = true;
       }
     });
-  }
-
-  onThemeModalClosed() {
-    this.isThemeSelectModalOpen = false;
-    const hasSeenGuide = localStorage.getItem('has_seen_onboarding_guide');
-    if (!hasSeenGuide) {
-      setTimeout(() => {
-        this.isGuideModalOpen = true;
-      }, 300);
-    }
   }
 
   async onActiveRoomIdChange(roomId: string | null) {

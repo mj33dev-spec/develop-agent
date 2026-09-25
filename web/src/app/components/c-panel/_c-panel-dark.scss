@@ -1,0 +1,19 @@
+@use '../../../styles/config' as *;
+@use '../../../styles/mixins' as *;
+
+// c-panel 다크 테마 (Dark Mode) 스타일
+body.dark-theme,
+body.dark-mode {
+  .c-panel {
+    @include dark-glass-panel(24px);
+
+    .c-panel-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      color: $dark-text-primary;
+    }
+
+    .c-panel-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+    }
+  }
+}

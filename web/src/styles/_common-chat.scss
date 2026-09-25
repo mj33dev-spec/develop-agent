@@ -1,9 +1,3 @@
-/* ========================================================================
-   _common-chat 메인 진입점 모듈
-   ======================================================================== */
-
 @use './_common_chat/common-chat-base';
-@use './_common_chat/common-chat-flat_light';
-@use './_common_chat/common-chat-flat_dark';
-@use './_common_chat/common-chat-glass_light';
-@use './_common_chat/common-chat-glass_dark';
+@use './_common_chat/common-chat-light';
+@use './_common_chat/common-chat-dark';

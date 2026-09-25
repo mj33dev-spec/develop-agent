@@ -169,40 +169,8 @@
               }
             }
 
-            :host-context(body.dark-theme) & {
-              background: $dark-surface-alt;
-              border: 1px solid $dark-border-color;
-              color: $dark-text-secondary;
-
-              i {
-                color: $dark-text-muted;
-              }
-
-              &:hover {
-                background: $dark-surface-card;
-                color: $color-primary;
-              }
-            }
-
-            :host-context(body.theme-glass) & {
-              background: rgba(255, 255, 255, 0.65);
-              backdrop-filter: blur(12px);
-              -webkit-backdrop-filter: blur(12px);
-              border: 1px solid rgba(255, 255, 255, 0.75);
-              box-shadow: 0 4px 12px rgba(31, 38, 135, 0.06);
-              color: $flat-text-primary;
-
-              i {
-                color: $flat-text-secondary;
-              }
-
-              &:hover {
-                background: rgba(255, 255, 255, 0.85);
-                color: $color-primary;
-              }
-            }
-
-            :host-context(body.theme-glass.dark-theme) & {
+            :host-context(body.dark-theme) &,
+            :host-context(body.dark-mode) & {
               background: rgba(255, 255, 255, 0.1);
               backdrop-filter: blur(12px);
               -webkit-backdrop-filter: blur(12px);

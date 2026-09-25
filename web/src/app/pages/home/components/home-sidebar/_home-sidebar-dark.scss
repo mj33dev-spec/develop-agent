@@ -1,0 +1,231 @@
+@use "../../../../../styles/variables" as *;
+@use "../../../../../styles/mixins" as *;
+
+/* ========================================================================
+   [테마 4] 리퀴드 다크 모드 (Liquid Glassmorphism + Dark Mode)
+   ======================================================================== */
+
+body.dark-theme,
+body.dark-mode {
+  .sidebar {
+    background: $sidebar-dark-bg;
+    border-right: 1px solid $sidebar-dark-border;
+    box-shadow: 
+      8px 0 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+
+    .sidebar-header {
+      border-bottom: 1px solid $sidebar-dark-border;
+    }
+
+    .sidebar-block-btn {
+      background: $sidebar-dark-hover-bg;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid $sidebar-dark-border;
+      color: $sidebar-dark-text-active;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+      i {
+        color: $sidebar-dark-text-active;
+      }
+
+      &:hover {
+        background: #475569;
+        border-color: #475569;
+        color: #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        
+        i {
+          color: #ffffff;
+        }
+      }
+
+      &:active {
+        background: $sidebar-dark-bg;
+        box-shadow: none;
+      }
+
+      &.danger {
+        color: $dark-error;
+        i { color: $dark-error; }
+      }
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid $sidebar-dark-border;
+
+      .sidebar-user-card {
+        background: $sidebar-dark-hover-bg;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid $sidebar-dark-border;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+        .user-info {
+          .user-nickname {
+            color: $sidebar-dark-text-active;
+          }
+
+          .user-email {
+            color: $sidebar-dark-icon;
+          }
+
+          &:hover .user-nickname {
+            color: $dark-primary;
+          }
+        }
+
+        .user-more-btn {
+          color: $sidebar-dark-icon;
+
+          &:hover {
+            background: #475569;
+            color: $sidebar-dark-text-active;
+          }
+
+          &:active {
+            background: $sidebar-dark-bg;
+          }
+        }
+      }
+    }
+
+    .folder-header,
+    .room-item,
+    .file-item {
+      background-color: transparent;
+      color: $sidebar-dark-text;
+
+      i {
+        color: $sidebar-dark-icon;
+      }
+
+      &:hover {
+        background-color: $sidebar-dark-hover-bg;
+        color: $sidebar-dark-text-active;
+
+        i {
+          color: $sidebar-dark-text-active;
+        }
+      }
+
+      &.active {
+        background: $sidebar-dark-active-bg;
+        color: $sidebar-dark-text-active;
+        font-weight: 600;
+        border: 1px solid $sidebar-dark-border;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+        i { color: $sidebar-dark-text-active; }
+      }
+    }
+
+    .sidebar-node.active {
+      > .room-item,
+      > .folder-header,
+      > .file-item {
+        background: $sidebar-dark-active-bg;
+        color: $sidebar-dark-text-active;
+        font-weight: 600;
+        border: 1px solid $sidebar-dark-border;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+        i { color: $sidebar-dark-text-active; }
+      }
+    }
+
+    .empty-rooms {
+      color: $sidebar-dark-icon;
+    }
+  }
+
+  .category-pills .pill-btn {
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    color: $dark-text-muted;
+
+    &.active {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.85), rgba(236, 72, 153, 0.85));
+      color: $color-white;
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 6px 24px rgba(168, 85, 247, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  .preset-item-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+
+    .preset-icon {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: none;
+    }
+
+    .preset-action-btns .template-action-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: none;
+      color: $dark-text-muted;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.22);
+        color: $dark-text-primary;
+      }
+    }
+
+    &.selected {
+      background: rgba(168, 85, 247, 0.25);
+      border: 1.5px solid $dark-primary;
+      box-shadow: 0 12px 36px rgba(168, 85, 247, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+  }
+
+  .card-visual-preview {
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+
+    .card-top-bar {
+      background: rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .file-badge-item {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: $dark-text-secondary;
+    }
+  }
+
+  .preset-preview-panel.empty-select .preset-inner {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    .empty-preset-box {
+      background: transparent;
+      color: $dark-text-muted;
+    }
+  }
+
+  .file-upload-dropzone {
+    background: rgba(15, 23, 42, 0.45);
+    border: 2px dashed rgba(255, 255, 255, 0.25);
+
+    &:hover {
+      border-color: $dark-primary;
+      background: rgba(96, 165, 250, 0.12);
+    }
+  }
+
+  .attached-file-chip {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: $dark-text-secondary;
+  }
+}

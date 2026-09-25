@@ -9,7 +9,5 @@
 @import "./c-modal-base";
 
 /* 2. 4가지 독립 테마 모듈 체이닝 (Theme Partial Modules) */
-@import "./c-modal-flat_light";
-@import "./c-modal-flat_dark";
-@import "./c-modal-glass_light";
-@import "./c-modal-glass_dark";
+@import "./c-modal-light";
+@import "./c-modal-dark";

@@ -60,12 +60,12 @@ export class GuideModalComponent {
       ]
     },
     {
-      title: '커스텀 테마 & 다크모드',
+      title: '라이트 & 다크 모드',
       icon: 'bx bx-palette',
       badge: 'Step 4 / 4',
       description: '사용자 환경에 알맞은 시각적 테마를 설정하세요.',
       details: [
-        '환경 설정에서 플랫, 글래스모피즘, 뉴모피즘 테마 제공',
+        '환경 설정에서 라이트 모드 및 다크 모드 제공',
         '눈의 피로를 줄여주는 다크 모드 원클릭 전환',
         '설정 변경 시 계정 DB 및 브라우저에 자동 반영'
       ]

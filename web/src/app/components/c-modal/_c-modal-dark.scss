@@ -1,0 +1,168 @@
+@use '../../../styles/config' as *;
+@use '../../../styles/mixins' as *;
+
+// c-modal 다크 테마 (Dark Mode) 스타일
+body.dark-theme,
+body.dark-mode {
+  .modalOverlay {
+    background: rgba(10, 14, 26, 0.35);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .modalContent {
+    background: rgba(20, 26, 42, 0.35);
+    // backdrop-filter: blur(28px) saturate(180%);
+    // -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 
+      0 24px 60px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+
+    .modalHeader {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+      .modalTitle {
+        color: $dark-text-primary;
+      }
+
+      .closeBtn {
+        color: $dark-text-muted;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.18);
+          color: $color-white;
+        }
+      }
+    }
+
+    .closeBtn.absoluteCloseBtn {
+      color: $dark-text-muted;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: $color-white;
+      }
+    }
+
+    .modalSubTitle {
+      color: $dark-text-muted;
+    }
+
+    .modalBody {
+      color: $dark-text-primary;
+
+      .upload-form-grid,
+      .template-form {
+        color: $dark-text-primary;
+
+        .form-group {
+          label {
+            color: $dark-text-primary;
+          }
+
+          input,
+          textarea,
+          select {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: $dark-text-primary;
+
+            &::placeholder {
+              color: $dark-text-muted;
+            }
+
+            &:focus {
+              border-color: $dark-primary;
+              background: rgba(255, 255, 255, 0.12);
+            }
+          }
+
+          .help-text {
+            color: $dark-text-muted;
+          }
+        }
+      }
+
+      .template-main-panel {
+        color: $dark-text-primary;
+
+        .template-detail-header {
+          .detail-hero-row {
+            .hero-icon-badge {
+              background: rgba(255, 255, 255, 0.1);
+              color: $dark-primary;
+              border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+
+            .hero-text-content {
+              .template-title {
+                color: $dark-text-primary;
+              }
+              .template-desc {
+                color: $dark-text-muted;
+              }
+            }
+
+            .owner-action-btns .action-btn {
+              background: rgba(255, 255, 255, 0.1);
+              color: $dark-text-muted;
+              border: 1px solid rgba(255, 255, 255, 0.15);
+
+              &:hover {
+                background: rgba(255, 255, 255, 0.2);
+                color: $dark-text-primary;
+              }
+            }
+          }
+
+          .template-files-box {
+            .files-box-title {
+              color: $dark-text-muted;
+            }
+
+            .files-chip-grid {
+              .file-chip-item {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                color: $dark-text-primary;
+
+                i {
+                  color: $dark-primary;
+                }
+              }
+            }
+          }
+        }
+
+        .detail-divider {
+          background: rgba(255, 255, 255, 0.12);
+        }
+
+        .template-readme-section {
+          .readme-section-title {
+            color: $dark-text-muted;
+          }
+
+          .readme-preview-box {
+            background: rgba(15, 23, 42, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: $dark-text-primary;
+          }
+        }
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .formActions {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+  }
+}

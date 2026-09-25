@@ -131,27 +131,6 @@
         </div>
         <c-toggle [checked]="isDarkMode" (checkedChange)="onDarkModeToggle($event)"></c-toggle>
       </div>
-
-      <div class="divider-line"></div>
-
-      <h3 class="sub-section-title">디자인 테마 스타일</h3>
-      <div class="theme-preset-grid">
-        <div class="theme-card" [class.selected]="defaultTheme === '플랫'" (click)="onThemeSelect('플랫')">
-          <div class="card-preview flat-preview">
-            <div class="preview-sidebar"></div>
-            <div class="preview-content"></div>
-          </div>
-          <span class="card-title">플랫 (Flat)</span>
-        </div>
-
-        <div class="theme-card" [class.selected]="defaultTheme === '글래스모피즘'" (click)="onThemeSelect('글래스모피즘')">
-          <div class="card-preview glass-preview">
-            <div class="preview-sidebar"></div>
-            <div class="preview-content"></div>
-          </div>
-          <span class="card-title">글래스모피즘 (Glassmorphism)</span>
-        </div>
-      </div>
     </ng-container>
 
     <!-- 3. 행동 유형 탭 -->
