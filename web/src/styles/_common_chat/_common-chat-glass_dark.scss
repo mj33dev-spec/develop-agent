@@ -6,6 +6,7 @@
 
 body.theme-glass.dark-theme,
 body.theme-glass.dark-mode {
+
   .chat-container,
   .code-viewer-container {
     background: transparent;
@@ -24,11 +25,18 @@ body.theme-glass.dark-mode {
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid $dark-border-light;
-      i { color: $dark-text-primary; }
+
+      i {
+        color: $dark-text-primary;
+      }
+
       &:hover {
         background: $dark-border-light;
         color: $dark-primary;
-        i { color: $dark-primary; }
+
+        i {
+          color: $dark-primary;
+        }
       }
     }
 
@@ -156,7 +164,7 @@ body.theme-glass.dark-mode {
 
   .chat-input-box,
   .file-question-box,
-  .copilot-input-box {
+  .tempgent-input-box {
     background: rgba(30, 35, 48, 0.6);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -167,7 +175,10 @@ body.theme-glass.dark-mode {
     .chat-textarea,
     .viewer-textarea {
       color: $dark-text-primary;
-      &::placeholder { color: $dark-text-muted; }
+
+      &::placeholder {
+        color: $dark-text-muted;
+      }
     }
 
     .add-btn,
@@ -176,6 +187,7 @@ body.theme-glass.dark-mode {
       backdrop-filter: blur(12px);
       border: 1px solid $dark-border-light;
       color: $dark-text-primary;
+
       &:hover {
         background: $dark-border-light;
         color: $dark-primary;
@@ -187,6 +199,7 @@ body.theme-glass.dark-mode {
       backdrop-filter: blur(12px);
       border: 1px solid $dark-border-light;
       color: $dark-text-primary;
+
       &:hover {
         background: $dark-border-light;
         color: $dark-primary;
@@ -200,7 +213,10 @@ body.theme-glass.dark-mode {
 
       &:disabled {
         background: $dark-border-color;
-        i { color: $dark-text-subtle; }
+
+        i {
+          color: $dark-text-subtle;
+        }
       }
     }
   }

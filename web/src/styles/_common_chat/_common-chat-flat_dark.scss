@@ -8,6 +8,7 @@ body.dark-theme:not(.theme-glass),
 body.dark-mode:not(.theme-glass),
 body.theme-flat.dark-theme,
 body.theme-flat.dark-mode {
+
   .chat-container,
   .code-viewer-container {
     background-color: $dark-bg;
@@ -22,11 +23,18 @@ body.theme-flat.dark-mode {
     .icon-btn {
       background: $dark-surface-alt;
       border: 1px solid $dark-border-color;
-      i { color: $dark-text-primary; }
+
+      i {
+        color: $dark-text-primary;
+      }
+
       &:hover {
         background: $dark-surface-card;
         border-color: $dark-border-light;
-        i { color: $color-primary; }
+
+        i {
+          color: $color-primary;
+        }
       }
     }
 
@@ -145,7 +153,7 @@ body.theme-flat.dark-mode {
 
   .chat-input-box,
   .file-question-box,
-  .copilot-input-box {
+  .tempgent-input-box {
     background: $dark-surface;
     border: 1px solid $dark-border-color;
     box-shadow: $dark-shadow-md;
@@ -159,7 +167,10 @@ body.theme-flat.dark-mode {
     .chat-textarea,
     .viewer-textarea {
       color: $dark-text-primary;
-      &::placeholder { color: $dark-text-muted; }
+
+      &::placeholder {
+        color: $dark-text-muted;
+      }
     }
 
     .add-btn,
@@ -167,14 +178,22 @@ body.theme-flat.dark-mode {
       background: $dark-surface-alt;
       border: 1px solid $dark-border-color;
       color: $dark-text-secondary;
-      &:hover { background: $dark-surface-card; color: $color-primary; }
+
+      &:hover {
+        background: $dark-surface-card;
+        color: $color-primary;
+      }
     }
 
     .model-btn {
       background: $dark-surface-alt;
       border: 1px solid $dark-border-color;
       color: $dark-text-secondary;
-      &:hover { background: $dark-surface-card; color: $color-primary; }
+
+      &:hover {
+        background: $dark-surface-card;
+        color: $color-primary;
+      }
     }
 
     .send-btn {
@@ -184,7 +203,10 @@ body.theme-flat.dark-mode {
 
       &:disabled {
         background: $dark-surface-alt;
-        i { color: $dark-text-subtle; }
+
+        i {
+          color: $dark-text-subtle;
+        }
       }
     }
   }

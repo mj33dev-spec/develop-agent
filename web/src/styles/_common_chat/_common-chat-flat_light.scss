@@ -6,6 +6,7 @@
 
 body:not(.dark-theme):not(.dark-mode):not(.theme-glass),
 body.theme-flat:not(.dark-theme):not(.dark-mode) {
+
   .chat-container,
   .code-viewer-container {
     background-color: $flat-bg;
@@ -20,8 +21,15 @@ body.theme-flat:not(.dark-theme):not(.dark-mode) {
     .icon-btn {
       background: $flat-card-bg;
       border: 1px solid $flat-border-dark;
-      i { color: $flat-text-secondary; }
-      &:hover { background: $sidebar-light-hover-bg; border-color: $flat-text-muted; }
+
+      i {
+        color: $flat-text-secondary;
+      }
+
+      &:hover {
+        background: $sidebar-light-hover-bg;
+        border-color: $flat-text-muted;
+      }
     }
 
     .chat-title,
@@ -70,7 +78,7 @@ body.theme-flat:not(.dark-theme):not(.dark-mode) {
 
   .chat-input-box,
   .file-question-box,
-  .copilot-input-box {
+  .tempgent-input-box {
     background: $flat-card-bg;
     border: 1px solid $flat-border-dark;
     box-shadow: $flat-shadow-md;
@@ -84,7 +92,10 @@ body.theme-flat:not(.dark-theme):not(.dark-mode) {
     .chat-textarea,
     .viewer-textarea {
       color: $flat-text-primary;
-      &::placeholder { color: $flat-text-muted; }
+
+      &::placeholder {
+        color: $flat-text-muted;
+      }
     }
 
     .add-btn,
@@ -92,14 +103,22 @@ body.theme-flat:not(.dark-theme):not(.dark-mode) {
       background: $sidebar-light-hover-bg;
       border: 1px solid $flat-border-dark;
       color: $flat-text-secondary;
-      &:hover { background: $flat-border-color; color: $color-primary; }
+
+      &:hover {
+        background: $flat-border-color;
+        color: $color-primary;
+      }
     }
 
     .model-btn {
       background: $sidebar-light-hover-bg;
       border: 1px solid $flat-border-dark;
       color: $flat-text-secondary;
-      &:hover { background: $flat-border-color; color: $color-primary; }
+
+      &:hover {
+        background: $flat-border-color;
+        color: $color-primary;
+      }
     }
 
     .send-btn {
@@ -109,7 +128,10 @@ body.theme-flat:not(.dark-theme):not(.dark-mode) {
 
       &:disabled {
         background: $flat-border-color;
-        i { color: $flat-text-muted; }
+
+        i {
+          color: $flat-text-muted;
+        }
       }
     }
   }
