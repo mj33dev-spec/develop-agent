@@ -1,52 +1,71 @@
 @use '../../../styles/config' as *;
 
-// c-dropdown 다크 테마 (Dark Mode) 스타일
+/* ========================================================================
+   [테마 2] 다크 모드 (Dark Mode) - c-dropdown 공통 단일 스타일
+   ======================================================================== */
+
 body.dark-theme,
 body.dark-mode {
+  /* 드롭다운 컨테이너 및 c-button 다크모드 커스텀 */
   .dropdownContainer {
     c-button {
-      ::ng-deep .btn {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(24px) saturate(200%);
-        -webkit-backdrop-filter: blur(24px) saturate(200%);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+      .btn {
+        background: $dark-surface-alt;
+        border: 1px solid $dark-border-color;
         color: $dark-text-primary;
 
         &:hover {
-          background: rgba(255, 255, 255, 0.18);
-          border-color: rgba(255, 255, 255, 0.38);
+          background: lighten($dark-surface-alt, 4%);
+          border-color: rgba(255, 255, 255, 0.2);
         }
       }
     }
   }
 
+  /* 드롭다운 포털 팝업 메뉴 (전역 단일 스타일) */
   .dropdown-portal-menu {
-    background: rgba(20, 24, 38, 0.92);
-    backdrop-filter: blur(32px) saturate(210%);
-    -webkit-backdrop-filter: blur(32px) saturate(210%);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: 
-      0 20px 48px rgba(0, 0, 0, 0.55),
-      inset 0 1px 1px rgba(255, 255, 255, 0.25);
+    background: $dark-surface;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
     color: $dark-text-primary;
 
     hr {
       background-color: rgba(255, 255, 255, 0.12);
     }
 
+    /* 드롭다운 개별 아이템 스타일 */
     .dropdownItem {
       color: $dark-text-primary;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
+      /* 일반 호버 상태 */
       &:hover:not(.disabled) {
-        background: rgba(255, 255, 255, 0.14);
-        color: $dark-primary;
+        background: rgba(255, 255, 255, 0.08);
+        color: #60a5fa;
       }
 
+      /* 🌟 선택된 옵션 항목의 공통 하이라이트 단일 UI 스타일 (다크 보라 톤 선명 보장) 🌟 */
       &.selected {
-        background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(168, 85, 247, 0.3));
-        color: $color-white;
-        font-weight: 600;
+        background: linear-gradient(135deg, rgba(96, 165, 250, 0.35), rgba(168, 85, 247, 0.35)) !important;
+        border: 1px solid rgba(147, 197, 253, 0.4) !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        box-shadow: 0 2px 10px rgba(96, 165, 250, 0.25);
+
+        &:hover {
+          background: linear-gradient(135deg, rgba(96, 165, 250, 0.45), rgba(168, 85, 247, 0.45)) !important;
+          color: #ffffff !important;
+        }
+
+        .dropdownItemIcon {
+          color: #93c5fd;
+        }
+      }
+
+      /* 비활성화 상태 */
+      &.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
       }
     }
   }

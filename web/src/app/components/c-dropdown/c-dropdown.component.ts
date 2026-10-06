@@ -118,11 +118,16 @@ export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
+  /** 드롭다운 팝업 메뉴 위치 및 너비 동적 계산 */
   updatePosition() {
     if (!this.anchorRef || !this.anchorRef.nativeElement) return;
     
     const nativeEl = this.anchorRef.nativeElement;
-    const clickableChild = nativeEl.querySelector('.dropdownWrapper') || nativeEl.querySelector('button') || nativeEl;
+    /** 실제 트리거 버튼 요소 위치 및 크기 수집 */
+    const clickableChild = nativeEl.querySelector('.dropdownWrapper button') || 
+                           nativeEl.querySelector('button') || 
+                           nativeEl.querySelector('.dropdownWrapper') || 
+                           nativeEl;
     const rect = clickableChild.getBoundingClientRect();
     
     const vars: Record<string, string> = {};
@@ -191,20 +196,41 @@ export class CDropdownComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this.isStringOption(opt) ? '' : (opt.icon || '');
   }
 
+  /** 옵션 활성화/비활성화 판단 */
   isOptionDisabled(opt: any): boolean {
     const label = this.getOptionLabel(opt);
     return (opt && opt.disabled) || this.disabledList.includes(label);
   }
 
+  /** 선택된 옵션 항목 판단 로직 (label 및 value 교차 매칭으로 단일 공통 하이라이트 표현) */
   isOptionSelected(opt: any): boolean {
-    const label = this.getOptionLabel(opt);
-    const val = this.isStringOption(opt) ? opt : (opt.value !== undefined ? opt.value : opt.label);
+    if (!opt) return false;
+    
+    /* 객체 형태의 옵션에 selected 속성이 명시적으로 지정된 경우 */
+    if (typeof opt === 'object' && opt.selected === true) {
+      return true;
+    }
+
+    const label = this.isStringOption(opt) ? opt : (opt.label !== undefined ? opt.label : '');
+    const value = this.isStringOption(opt) ? opt : (opt.value !== undefined ? opt.value : opt.label);
+
+    /* 멀티 셀렉트 모드인 경우 */
     if (this.variant === 'multi') {
-      return this.selectedValues.includes(val) || this.selectedValues.includes(label);
+      return (
+        (value !== undefined && this.selectedValues.includes(value)) ||
+        (label !== '' && this.selectedValues.includes(label))
+      );
     }
-    if (this.value !== undefined) {
-      return this.value === val || this.value === label;
+
+    /* 단일 셀렉트 모드인 경우 바인딩된 value와 opt의 label 및 value 교차 비교 */
+    if (this.value !== undefined && this.value !== null) {
+      const curStr = String(this.value).trim().toLowerCase();
+      const valStr = value !== undefined ? String(value).trim().toLowerCase() : '';
+      const labelStr = label !== undefined ? String(label).trim().toLowerCase() : '';
+
+      return (valStr !== '' && curStr === valStr) || (labelStr !== '' && curStr === labelStr);
     }
+
     return false;
   }
 

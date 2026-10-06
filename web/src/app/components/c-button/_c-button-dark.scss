@@ -1,75 +1,162 @@
-@use '../../../styles/config' as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
-// c-button 다크 테마 (Dark Mode) 스타일
+/* ========================================================================
+   [테마 2] 다크 모드 (Dark Mode) - c-button 스타일 정의
+   ======================================================================== */
+
 body.dark-theme,
 body.dark-mode {
-  .c-button {
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  .btn {
+    color: $dark-text-primary;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
-    &[data-variant='primary'] {
-      background: linear-gradient(135deg, rgba(96, 165, 250, 0.5), rgba(168, 85, 247, 0.5));
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      box-shadow: 0 8px 28px rgba(96, 165, 250, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-      color: #ffffff;
+    &:disabled {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: $dark-text-muted;
+      cursor: not-allowed;
+      box-shadow: none;
+      border-color: transparent;
+    }
 
-      &:hover:not([data-disabled='true']) {
-        background: linear-gradient(135deg, rgba(96, 165, 250, 0.65), rgba(236, 72, 153, 0.6));
-        box-shadow: 0 12px 36px rgba(96, 165, 250, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-        transform: translateY(-1px);
+    /* 기본 프라이머리 버튼 */
+    &.btn-primary {
+      background: $color-primary;
+      color: $color-white;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 14px rgba(74, 134, 255, 0.4);
+
+      &:hover:not(:disabled) {
+        background: lighten($color-primary, 5%);
+        box-shadow: 0 6px 18px rgba(74, 134, 255, 0.5);
       }
     }
 
-    &[data-variant='secondary'] {
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-      color: $dark-text-primary;
-
-      &:hover:not([data-disabled='true']) {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: rgba(255, 255, 255, 0.4);
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-        transform: translateY(-1px);
-      }
-    }
-
-    &[data-variant='outline'] {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1.5px solid rgba(96, 165, 250, 0.5);
-      box-shadow: 0 4px 18px rgba(96, 165, 250, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-      color: $dark-primary;
-
-      &:hover:not([data-disabled='true']) {
-        background: rgba(96, 165, 250, 0.2);
-        border-color: rgba(96, 165, 250, 0.8);
-        transform: translateY(-1px);
-      }
-    }
-
-    &[data-variant='ghost'] {
+    &.btn-outlined-primary {
       background: transparent;
-      border: 1px solid transparent;
-      color: $dark-text-primary;
+      border: 1px solid $color-primary;
+      color: #60a5fa;
 
-      &:hover:not([data-disabled='true']) {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      &:hover:not(:disabled) {
+        background: rgba(74, 134, 255, 0.15);
       }
     }
 
-    &[data-variant='danger'] {
-      background: linear-gradient(135deg, rgba(248, 113, 113, 0.5), rgba(244, 63, 94, 0.5));
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      box-shadow: 0 8px 28px rgba(248, 113, 113, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-      color: #ffffff;
+    /* 세컨더리 버튼 */
+    &.btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: $dark-text-primary;
 
-      &:hover:not([data-disabled='true']) {
-        background: linear-gradient(135deg, rgba(248, 113, 113, 0.65), rgba(225, 29, 72, 0.65));
-        box-shadow: 0 12px 36px rgba(248, 113, 113, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.5);
-        transform: translateY(-1px);
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.18);
+      }
+    }
+
+    &.btn-outlined-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: $dark-text-secondary;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    /* 성공 버튼 */
+    &.btn-success {
+      background: #059669;
+      color: $color-white;
+      border: none;
+
+      &:hover:not(:disabled) {
+        background: #10b981;
+      }
+    }
+
+    &.btn-outlined-success {
+      background: transparent;
+      border: 1px solid #10b981;
+      color: #34d399;
+
+      &:hover:not(:disabled) {
+        background: rgba(16, 185, 129, 0.15);
+      }
+    }
+
+    /* 에러 버튼 */
+    &.btn-error {
+      background: #dc2626;
+      color: $color-white;
+      border: none;
+
+      &:hover:not(:disabled) {
+        background: #ef4444;
+      }
+    }
+
+    &.btn-outlined-error {
+      background: transparent;
+      border: 1px solid #ef4444;
+      color: #f87171;
+
+      &:hover:not(:disabled) {
+        background: rgba(239, 68, 68, 0.15);
+      }
+    }
+
+    /* 경고 버튼 */
+    &.btn-warning {
+      background: #d97706;
+      color: $color-white;
+      border: none;
+
+      &:hover:not(:disabled) {
+        background: #f59e0b;
+      }
+    }
+
+    &.btn-outlined-warning {
+      background: transparent;
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+
+      &:hover:not(:disabled) {
+        background: rgba(245, 158, 11, 0.15);
+      }
+    }
+
+    /* 중립 버튼 (Neutral / Outlined Neutral - 드롭다운 기본 스타일) */
+    &.btn-neutral {
+      background: $dark-surface-alt;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-primary;
+
+      &:hover:not(:disabled) {
+        background: lighten($dark-surface-alt, 4%);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    &.btn-outlined-neutral {
+      background: $dark-surface-alt;
+      border: 1px solid $dark-border-color;
+      color: $dark-text-primary;
+
+      &:hover:not(:disabled) {
+        background: lighten($dark-surface-alt, 4%);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    /* 아이콘 버튼 */
+    &.btn-icon {
+      color: $dark-text-secondary;
+      background: transparent;
+
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.1);
+        color: $dark-text-primary;
       }
     }
   }

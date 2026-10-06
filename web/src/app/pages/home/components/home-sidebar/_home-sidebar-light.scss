@@ -196,4 +196,33 @@ body:not(.dark-theme) {
     border: 1px solid $flat-border-dark;
     color: $flat-text-primary;
   }
+
+  /* 사이드바 우클릭 컨텍스트 메뉴 (라이트 테마) */
+  .custom-context-menu {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12), 0 4px 10px rgba(15, 23, 42, 0.05);
+
+    .context-menu-item {
+      color: #334155;
+      background: transparent;
+
+      i {
+        color: #64748b;
+      }
+
+      &:hover {
+        background: #f1f5f9;
+        color: $color-primary;
+
+        i {
+          color: $color-primary;
+        }
+      }
+
+      &:active {
+        background: #e2e8f0;
+      }
+    }
+  }
 }

@@ -228,4 +228,35 @@ body.dark-mode {
     border: 1px solid rgba(255, 255, 255, 0.25);
     color: $dark-text-secondary;
   }
+
+  /* 사이드바 우클릭 컨텍스트 메뉴 (다크 테마) */
+  .custom-context-menu {
+    background: rgba(22, 28, 45, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    .context-menu-item {
+      color: $dark-text-primary;
+      background: transparent;
+
+      i {
+        color: $dark-text-secondary;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #60a5fa;
+
+        i {
+          color: #60a5fa;
+        }
+      }
+
+      &:active {
+        background: rgba(255, 255, 255, 0.14);
+      }
+    }
+  }
 }

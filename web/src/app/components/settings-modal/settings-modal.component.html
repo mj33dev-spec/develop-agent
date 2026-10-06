@@ -12,13 +12,13 @@
     <!-- 그룹 1: 일반 (c-modal-sidebar-item) -->
     <c-modal-sidebar-item label="일반">
       <c-modal-sidebar-item-label icon="bx bx-user" label="계정" [active]="activeTab === 'account'" (onClick)="setTab('account')"></c-modal-sidebar-item-label>
-      <c-modal-sidebar-item-label icon="bx bx-palette" label="외관" [active]="activeTab === 'appearance'" (onClick)="setTab('appearance')"></c-modal-sidebar-item-label>
-      <c-modal-sidebar-item-label icon="bx bx-slider-alt" label="행동 유형" [active]="activeTab === 'behavior'" (onClick)="setTab('behavior')"></c-modal-sidebar-item-label>
+      <c-modal-sidebar-item-label icon="bx bx-palette" label="디자인" [active]="activeTab === 'appearance'" (onClick)="setTab('appearance')"></c-modal-sidebar-item-label>
       <c-modal-sidebar-item-label icon="bx bx-bell" label="알림" [active]="activeTab === 'notifications'" (onClick)="setTab('notifications')"></c-modal-sidebar-item-label>
     </c-modal-sidebar-item>
 
-    <!-- 그룹 2: GROK (c-modal-sidebar-item) -->
-    <c-modal-sidebar-item label="GROK">
+    <!-- 그룹 2: 프롬프트 (c-modal-sidebar-item) -->
+    <c-modal-sidebar-item label="프롬프트">
+      <c-modal-sidebar-item-label icon="bx bx-slider-alt" label="행동 유형" [active]="activeTab === 'behavior'" (onClick)="setTab('behavior')"></c-modal-sidebar-item-label>
       <c-modal-sidebar-item-label icon="bx bx-wrench" label="맞춤 설정" [active]="activeTab === 'custom'" (onClick)="setTab('custom')"></c-modal-sidebar-item-label>
     </c-modal-sidebar-item>
 
@@ -120,9 +120,9 @@
       </div>
     </ng-container>
 
-    <!-- 2. 외관 탭 -->
+    <!-- 2. 디자인 탭 -->
     <ng-container *ngIf="activeTab === 'appearance'">
-      <h2 class="section-title">외관 설정</h2>
+      <h2 class="section-title">디자인 설정</h2>
 
       <div class="setting-item-row">
         <div class="item-info">
@@ -133,25 +133,7 @@
       </div>
     </ng-container>
 
-    <!-- 3. 행동 유형 탭 -->
-    <ng-container *ngIf="activeTab === 'behavior'">
-      <h2 class="section-title">행동 유형 및 AI 설정</h2>
-
-      <div class="setting-item-row column-layout">
-        <div class="item-info">
-          <span class="item-name">기본 AI 모델 선택</span>
-          <span class="item-desc">새 대화 생성 시 기본으로 작동할 AI 엔진을 지정합니다.</span>
-        </div>
-        <c-dropdown [options]="modelOptions" [value]="defaultModel" width="100%">
-          <button type="button" class="form-input select-trigger-btn">
-            <span>{{ defaultModel }}</span>
-            <i class="bx bx-chevron-down"></i>
-          </button>
-        </c-dropdown>
-      </div>
-    </ng-container>
-
-    <!-- 4. 알림 탭 -->
+    <!-- 3. 알림 탭 -->
     <ng-container *ngIf="activeTab === 'notifications'">
       <h2 class="section-title">알림 설정</h2>
       <div class="setting-item-row">
@@ -160,6 +142,20 @@
           <span class="item-desc">작업 완료 및 업데이트 알림을 브라우저로 수신합니다.</span>
         </div>
         <c-toggle [checked]="true"></c-toggle>
+      </div>
+    </ng-container>
+
+    <!-- 4. 행동 유형 탭 (프롬프트 그룹) -->
+    <ng-container *ngIf="activeTab === 'behavior'">
+      <h2 class="section-title">행동 유형 및 AI 설정</h2>
+
+      <div class="setting-item-row column-layout">
+        <div class="item-info">
+          <span class="item-name">기본 AI 모델 선택</span>
+          <span class="item-desc">새 대화 생성 시 기본으로 작동할 AI 엔진을 지정합니다.</span>
+        </div>
+        <c-dropdown [options]="modelOptions" [value]="defaultModel" width="280px">
+        </c-dropdown>
       </div>
     </ng-container>
 

@@ -18,17 +18,30 @@ export type CButtonSize = 'small' | 'medium' | 'large' | 'more';
   imports: [CommonModule],
   templateUrl: './c-button.component.html',
   styleUrls: ['./c-button.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    '[style.width]': 'width ? width : null'
+  }
 })
 export class CButtonComponent {
+  /** 버튼 테마 종류 */
   @Input() theme: CButtonTheme = 'primary';
+  /** 버튼 크기 규격 */
   @Input() size: CButtonSize = 'medium';
+  /** 버튼 아이콘 클래스명 */
   @Input() icon?: string;
+  /** 아이콘 위치 정렬 */
   @Input() iconAlign: 'left' | 'right' = 'left';
+  /** 버튼 비활성화 여부 */
   @Input() disabled = false;
+  /** 커스텀 클래스 */
   @Input() customClass = '';
+  /** 버튼 타입 */
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  /** 유효성 검사 함수 */
   @Input() validate?: () => string | undefined | null | false;
+  /** 버튼 너비 지정 */
+  @Input() width?: string;
 
   @Output() onClick = new EventEmitter<MouseEvent>();
 
