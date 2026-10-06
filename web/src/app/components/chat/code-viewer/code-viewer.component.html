@@ -16,79 +16,27 @@
 
   <!-- 2. Body with Central Main Card (대화창과 동일한 위계 및 선택자) -->
   <div class="chat-body">
-    <div class="chat-main-card split-viewer-body" [class.is-resizing]="isResizing">
-      <!-- Left: Code Panel -->
-      <div class="code-panel-wrapper" [style.width]="isPreviewOpen ? leftWidthPercent + '%' : '100%'">
-        <div class="code-panel" [ngClass]="'theme-' + themeClass">
-          <!-- Absolute Top Right Floating Icon Action Buttons -->
-          <div class="floating-actions">
-            <button 
-              *ngIf="isHtmlFile" 
-              type="button" 
-              class="floating-btn play-btn" 
-              [class.active]="isPreviewOpen"
-              (click)="togglePreview()" 
-              [title]="isPreviewOpen ? '미리보기 닫기' : '미리보기'"
-            >
-              <i class="bx bx-play-circle"></i>
-            </button>
+    <div class="chat-main-card">
+      <div class="code-panel" [ngClass]="'theme-' + themeClass">
+        <!-- Absolute Top Right Floating Icon Action Buttons -->
+        <div class="floating-actions">
+          <button type="button" class="floating-btn" (click)="copyAllCode()" title="전체 복사">
+            <i class="bx bx-copy"></i>
+          </button>
 
-            <button type="button" class="floating-btn" (click)="copyAllCode()" title="전체 복사">
-              <i class="bx bx-copy"></i>
-            </button>
-
-            <button type="button" class="floating-btn primary" (click)="downloadFile()" title="다운로드">
-              <i class="bx bx-download"></i>
-            </button>
-          </div>
-
-          <table class="code-table">
-            <tbody>
-              <tr *ngFor="let line of highlightedLines; trackBy: trackByLineNum">
-                <td class="line-number">{{ line.lineNum }}</td>
-                <td class="line-code"><code [innerHTML]="line.html"></code></td>
-              </tr>
-            </tbody>
-          </table>
+          <button type="button" class="floating-btn primary" (click)="downloadFile()" title="다운로드">
+            <i class="bx bx-download"></i>
+          </button>
         </div>
-      </div>
 
-      <!-- Center Resizer Divider -->
-      <div 
-        *ngIf="isPreviewOpen" 
-        class="resizer-divider" 
-        (mousedown)="startResizing($event)"
-        title="드래그하여 크기 조절"
-      >
-        <div class="resizer-handle"></div>
-      </div>
-
-      <!-- Right: Preview Panel -->
-      <div 
-        *ngIf="isPreviewOpen" 
-        class="preview-panel-wrapper" 
-        [style.width]="(100 - leftWidthPercent) + '%'"
-      >
-        <div class="preview-panel-header">
-          <span class="preview-panel-title">
-            <i class="bx bx-play-circle text-orange"></i> 미리보기
-          </span>
-          <div class="linked-badges">
-            <span *ngFor="let file of linkedFiles" [class]="'badge ' + file.class" [title]="file.name">
-              <i [class]="file.icon"></i> {{ file.name }}
-            </span>
-            <span *ngIf="linkedFiles.length === 0" class="badge none-badge">
-              연동 파일 없음
-            </span>
-          </div>
-        </div>
-        <div class="iframe-container">
-          <iframe 
-            [srcdoc]="previewSrcDoc" 
-            class="preview-iframe"
-            sandbox="allow-scripts allow-modals allow-forms allow-same-origin"
-          ></iframe>
-        </div>
+        <table class="code-table">
+          <tbody>
+            <tr *ngFor="let line of highlightedLines; trackBy: trackByLineNum">
+              <td class="line-number">{{ line.lineNum }}</td>
+              <td class="line-code"><code [innerHTML]="line.html"></code></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

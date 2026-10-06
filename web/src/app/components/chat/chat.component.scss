@@ -33,11 +33,7 @@
       }
 
       .message-bubble {
-        background: $color-primary;
-        color: #ffffff;
         border-radius: 20px 20px 4px 20px;
-        box-shadow: 0 2px 6px rgba(74, 134, 255, 0.25);
-        border: none;
         font-weight: 500;
       }
     }
@@ -193,6 +189,13 @@ body:not(.dark-theme) {
       border: 1px solid $flat-border-color;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     }
+
+    .user-message .message-bubble {
+      background: #ffffff;
+      color: $flat-text-primary;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
   }
 }
 
@@ -217,6 +220,13 @@ body.dark-mode {
       color: $dark-text-primary;
       border: 1px solid $dark-border-light;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .user-message .message-bubble {
+      background: rgba(43, 50, 68, 0.85);
+      color: $dark-text-primary;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
     }
   }
 }
