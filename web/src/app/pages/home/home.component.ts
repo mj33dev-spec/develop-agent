@@ -115,9 +115,33 @@ export class HomeComponent implements OnInit {
     this.attachedItems.splice(index, 1);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadAddMenuOptions();
     this.checkOnboardingGuide();
+    await this.loadUserDefaultModel();
+  }
+
+  // 사용자 계정 DB의 기본 AI 모델 불러오기
+  async loadUserDefaultModel() {
+    try {
+      const settings = await this.authService.getUserSettings();
+      if (settings?.defaultModel) {
+        this.selectedModel = settings.defaultModel;
+        if (this.sidebarComponent) {
+          this.sidebarComponent.selectedModel = settings.defaultModel;
+        }
+      }
+    } catch (e) {
+      console.warn('기본 모델 로드 오류:', e);
+    }
+  }
+
+  async onSettingsModalOpenChange(isOpen: boolean) {
+    this.isSettingsModalOpen = isOpen;
+    if (!isOpen) {
+      // 설정 모달이 닫힐 때 변경된 기본 모델 즉시 동기화
+      await this.loadUserDefaultModel();
+    }
   }
 
   checkOnboardingGuide() {

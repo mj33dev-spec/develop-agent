@@ -196,7 +196,7 @@ export class AuthService {
     return data;
   }
 
-  async getUserSettings(): Promise<{ defaultModel: string; isDarkMode: boolean }> {
+  async getUserSettings(): Promise<{ defaultModel: string; isDarkMode: boolean; customPrompt: string }> {
     const user = this.currentUserSubject.value;
     if (!user) {
       const saved = localStorage.getItem('user_app_settings');
@@ -205,17 +205,18 @@ export class AuthService {
           const parsed = JSON.parse(saved);
           return {
             defaultModel: parsed.defaultModel || 'Gemini 3.6 Flash',
-            isDarkMode: parsed.isDarkMode ?? false
+            isDarkMode: parsed.isDarkMode ?? false,
+            customPrompt: parsed.customPrompt || ''
           };
         } catch (e) {}
       }
-      return { defaultModel: 'Gemini 3.6 Flash', isDarkMode: false };
+      return { defaultModel: 'Gemini 3.6 Flash', isDarkMode: false, customPrompt: '' };
     }
 
     try {
       const { data: dbUser } = await this.supabase
         .from('users')
-        .select('default_model, is_dark_mode, settings')
+        .select('default_model, is_dark_mode, custom_prompt, settings')
         .eq('id', user.id)
         .maybeSingle();
 
@@ -223,7 +224,8 @@ export class AuthService {
         const metaSettings = user.user_metadata?.['user_settings'];
         const settings = {
           defaultModel: dbUser.default_model || dbUser.settings?.defaultModel || metaSettings?.defaultModel || 'Gemini 3.6 Flash',
-          isDarkMode: dbUser.is_dark_mode ?? dbUser.settings?.isDarkMode ?? metaSettings?.isDarkMode ?? false
+          isDarkMode: dbUser.is_dark_mode ?? dbUser.settings?.isDarkMode ?? metaSettings?.isDarkMode ?? false,
+          customPrompt: dbUser.custom_prompt ?? dbUser.settings?.customPrompt ?? metaSettings?.customPrompt ?? ''
         };
         return settings;
       }
@@ -235,7 +237,8 @@ export class AuthService {
     if (metaSettings) {
       return {
         defaultModel: metaSettings.defaultModel || 'Gemini 3.6 Flash',
-        isDarkMode: metaSettings.isDarkMode ?? false
+        isDarkMode: metaSettings.isDarkMode ?? false,
+        customPrompt: metaSettings.customPrompt || ''
       };
     }
 
@@ -245,15 +248,16 @@ export class AuthService {
         const parsed = JSON.parse(saved);
         return {
           defaultModel: parsed.defaultModel || 'Gemini 3.6 Flash',
-          isDarkMode: parsed.isDarkMode ?? false
+          isDarkMode: parsed.isDarkMode ?? false,
+          customPrompt: parsed.customPrompt || ''
         };
       } catch (e) {}
     }
 
-    return { defaultModel: 'Gemini 3.6 Flash', isDarkMode: false };
+    return { defaultModel: 'Gemini 3.6 Flash', isDarkMode: false, customPrompt: '' };
   }
 
-  async updateUserSettings(settings: Partial<{ defaultModel: string; isDarkMode: boolean }>) {
+  async updateUserSettings(settings: Partial<{ defaultModel: string; isDarkMode: boolean; customPrompt: string }>) {
     const user = this.currentUserSubject.value;
     const current = await this.getUserSettings();
     const mergedSettings = { ...current, ...settings };
@@ -275,16 +279,18 @@ export class AuthService {
       this.currentUserSubject.next(data.user);
     }
 
-    // 2. DB public.users 테이블 연동 (is_dark_mode, default_model 및 settings JSONB 동기화)
+    // 2. DB public.users 테이블 연동 (is_dark_mode, default_model, custom_prompt 및 settings JSONB 동기화)
     try {
       await this.supabase
         .from('users')
         .update({
           default_model: mergedSettings.defaultModel,
           is_dark_mode: mergedSettings.isDarkMode,
+          custom_prompt: mergedSettings.customPrompt,
           settings: {
             defaultModel: mergedSettings.defaultModel,
-            isDarkMode: mergedSettings.isDarkMode
+            isDarkMode: mergedSettings.isDarkMode,
+            customPrompt: mergedSettings.customPrompt
           }
         })
         .eq('id', user.id);

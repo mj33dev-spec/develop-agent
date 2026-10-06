@@ -51,14 +51,17 @@ export class SettingsModalComponent implements OnInit {
   // AI 및 시스템 설정
   defaultModel: string = 'Gemini 3.6 Flash';
   isDarkMode: boolean = false;
+  customPrompt: string = '';
 
   modelOptions: CDropdownOption[] = [
-    { label: 'Gemini 3.6 Flash', value: 'gemini-flash', onClick: () => this.onModelSelect('Gemini 3.6 Flash') },
-    { label: 'Gemini 3.1 Pro', value: 'gemini-pro', onClick: () => this.onModelSelect('Gemini 3.1 Pro') },
-    { label: 'Groq Qwen 3.8', value: 'groq-qwen', onClick: () => this.onModelSelect('Groq Qwen 3.8') },
-    { label: 'Groq GPT-OSS', value: 'groq-gpt', onClick: () => this.onModelSelect('Groq GPT-OSS') },
-    { label: 'Groq Llama 3.3 70B', value: 'groq-llama', onClick: () => this.onModelSelect('Groq Llama 3.3 70B') },
-    { label: 'Groq DeepSeek R1 70B', value: 'groq-deepseek', onClick: () => this.onModelSelect('Groq DeepSeek R1 70B') }
+    { label: 'Gemini 3.6 Flash', value: 'Gemini 3.6 Flash', onClick: () => this.onModelSelect('Gemini 3.6 Flash') },
+    { label: 'Gemini 3.1 Pro', value: 'Gemini 3.1 Pro', onClick: () => this.onModelSelect('Gemini 3.1 Pro') },
+    { label: 'Groq Qwen 3.8', value: 'Groq Qwen 3.8', onClick: () => this.onModelSelect('Groq Qwen 3.8') },
+    { label: 'Groq GPT-OSS', value: 'Groq GPT-OSS', onClick: () => this.onModelSelect('Groq GPT-OSS') },
+    { label: 'Groq Llama 3.3 70B', value: 'Groq Llama 3.3 70B', onClick: () => this.onModelSelect('Groq Llama 3.3 70B') },
+    { label: 'Groq DeepSeek R1 70B', value: 'Groq DeepSeek R1 70B', onClick: () => this.onModelSelect('Groq DeepSeek R1 70B') },
+    { label: 'OpenRouter Gemma 4 31B (Free)', value: 'OpenRouter Gemma 4 31B (Free)', onClick: () => this.onModelSelect('OpenRouter Gemma 4 31B (Free)') },
+    { label: 'OpenRouter Cohere Code (Free)', value: 'OpenRouter Cohere Code (Free)', onClick: () => this.onModelSelect('OpenRouter Cohere Code (Free)') }
   ];
 
   private authService = inject(AuthService);
@@ -79,6 +82,7 @@ export class SettingsModalComponent implements OnInit {
       const settings = await this.authService.getUserSettings();
       this.defaultModel = settings.defaultModel || this.defaultModel;
       this.isDarkMode = settings.isDarkMode ?? false;
+      this.customPrompt = settings.customPrompt || '';
     } catch (e) {
       console.error('설정 로드 오류:', e);
     }
@@ -170,12 +174,33 @@ export class SettingsModalComponent implements OnInit {
     await this.autoSaveSettings();
   }
 
+  async onCustomPromptChange(newPrompt: string) {
+    this.customPrompt = newPrompt;
+  }
+
+  // 사용자 맞춤 커스텀 프롬프트 저장
+  async onSaveCustomPrompt() {
+    this.dLoading.show('프롬프트 설정 저장 중...');
+    try {
+      await this.authService.updateUserSettings({
+        defaultModel: this.defaultModel,
+        isDarkMode: this.isDarkMode,
+        customPrompt: this.customPrompt
+      });
+      this.dLoading.dismiss('맞춤 프롬프트가 성공적으로 저장되었습니다.');
+    } catch (e: any) {
+      this.dLoading.dismiss();
+      this.dAlert.error('프롬프트 저장 실패: ' + (e.message || ''), '오류');
+    }
+  }
+
   private async autoSaveSettings() {
     this.dLoading.show('설정 저장 중...');
     try {
       await this.authService.updateUserSettings({
         defaultModel: this.defaultModel,
-        isDarkMode: this.isDarkMode
+        isDarkMode: this.isDarkMode,
+        customPrompt: this.customPrompt
       });
       this.dLoading.dismiss();
     } catch (e: any) {
@@ -190,11 +215,13 @@ export class SettingsModalComponent implements OnInit {
       try {
         const defaultSettings = {
           defaultModel: 'Gemini 3.6 Flash',
-          isDarkMode: false
+          isDarkMode: false,
+          customPrompt: ''
         };
         await this.authService.updateUserSettings(defaultSettings);
         this.defaultModel = defaultSettings.defaultModel;
         this.isDarkMode = defaultSettings.isDarkMode;
+        this.customPrompt = defaultSettings.customPrompt;
         this.themeService.setDarkMode(false);
         this.dLoading.dismiss();
       } catch (e: any) {

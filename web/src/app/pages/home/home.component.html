@@ -77,7 +77,7 @@
   </main>
 
   <!-- 통합 설정 모달 -->
-  <app-settings-modal [(isOpen)]="isSettingsModalOpen" [activeTab]="settingsModalTab"></app-settings-modal>
+  <app-settings-modal [(isOpen)]="isSettingsModalOpen" (isOpenChange)="onSettingsModalOpenChange($event)" [activeTab]="settingsModalTab"></app-settings-modal>
 
   <!-- 이용 가이드 온보딩 모달 -->
   <app-guide-modal [isOpen]="isGuideModalOpen" (onClose)="isGuideModalOpen = false"></app-guide-modal>

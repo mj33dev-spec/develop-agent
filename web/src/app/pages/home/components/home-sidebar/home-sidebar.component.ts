@@ -1063,17 +1063,21 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     });
   }
 
-  // --- Drag & Drop ---
+  /** 사이드바 노드 드래그 시작 이벤트 */
   onDragStart(event: DragEvent, node: SidebarNode) {
     if (event.dataTransfer) {
       event.dataTransfer.effectAllowed = 'move';
       event.dataTransfer.setData('text/plain', node.id);
+      
+      const targetEl = (event.target as HTMLElement);
+      if (targetEl) {
+        event.dataTransfer.setDragImage(targetEl, 20, 20);
+      }
     }
-    setTimeout(() => {
-      this.draggedNode = node;
-    }, 0);
+    this.draggedNode = node;
   }
 
+  /** 사이드바 노드 드래그 종료 이벤트 */
   onDragEnd(event: DragEvent) {
     this.draggedNode = null;
     this.dragOverNodeId = null;
@@ -1123,6 +1127,7 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     }
   }
 
+  /** 사이드바 노드 드롭 이벤트 (폴더/채팅방/파일 통합 교차 이동 및 순서 정렬) */
   async onDrop(event: DragEvent, targetNode: SidebarNode) {
     event.preventDefault();
     if (!this.draggedNode || this.draggedNode.id === targetNode.id || !this.dragOverMode) {
@@ -1138,12 +1143,13 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     this.dragOverMode = null;
     this.draggedNode = null;
 
-    let newParentId = targetNode.parent_id;
+    // 타겟의 부모 ID 결정
+    let newParentId: string | null = targetNode.parent_id;
     if (mode === 'inside' && targetNode.type === 'folder') {
       newParentId = targetNode.id;
     }
 
-    // 1. Update target item's parent id strictly by type
+    // 1. 드래그된 아이템의 parent_id (또는 folder_id) 업데이트
     if (dragged.type === 'folder') {
       const item = this.folders.find(f => f.id === dragged.id);
       if (item) item.parent_id = newParentId;
@@ -1155,26 +1161,73 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
       if (item) item.folder_id = newParentId;
     }
 
-    // 2. Re-calculate order_index for all items under newParentId
-    const childFolders = this.folders.filter(f => f.parent_id === newParentId);
-    const childRooms = this.rooms.filter(r => r.folder_id === newParentId);
-    const childFiles = this.files.filter(f => f.folder_id === newParentId);
+    // 2. 신규 부모(newParentId) 아래의 모든 이종 아이템(폴더, 채팅방, 파일) 통합 수집 및 정렬
+    const childFolders = this.folders.filter(f => f.parent_id === newParentId).map(f => ({ item: f, type: 'folder', id: f.id, order_index: f.order_index || 0 }));
+    const childRooms = this.rooms.filter(r => r.folder_id === newParentId).map(r => ({ item: r, type: 'room', id: r.id, order_index: r.order_index || 0 }));
+    const childFiles = this.files.filter(f => f.folder_id === newParentId).map(f => ({ item: f, type: 'file', id: f.id, order_index: f.order_index || 0 }));
 
-    const folderUpdates = childFolders.map((f, i) => ({ id: f.id, parent_id: newParentId, order_index: i }));
-    const roomUpdates = childRooms.map((r, i) => ({ id: r.id, folder_id: newParentId, order_index: i }));
-    const fileUpdates = childFiles.map((f, i) => ({ id: f.id, folder_id: newParentId, order_index: i }));
+    // 드래그 아이템을 제외한 기존 통합 목록을 order_index 순으로 정렬
+    let combinedChildren = [...childFolders, ...childRooms, ...childFiles]
+      .filter(entry => entry.id !== dragged.id)
+      .sort((a, b) => a.order_index - b.order_index);
+
+    // 드래그된 아이템의 래퍼 엔트리 생성
+    let draggedEntry: any;
+    if (dragged.type === 'folder') {
+      const f = this.folders.find(x => x.id === dragged.id);
+      if (f) draggedEntry = { item: f, type: 'folder', id: f.id, order_index: 0 };
+    } else if (dragged.type === 'room') {
+      const r = this.rooms.find(x => x.id === dragged.id);
+      if (r) draggedEntry = { item: r, type: 'room', id: r.id, order_index: 0 };
+    } else if (dragged.type === 'file') {
+      const fl = this.files.find(x => x.id === dragged.id);
+      if (fl) draggedEntry = { item: fl, type: 'file', id: fl.id, order_index: 0 };
+    }
+
+    if (draggedEntry) {
+      if (mode === 'inside') {
+        // 폴더 내부로 이동 시 맨 뒤에 삽입
+        combinedChildren.push(draggedEntry);
+      } else {
+        // 타겟 노드의 ID를 기준으로 통합 목록에서 정확한 인덱스 탐색 (타입 무관)
+        const targetIndex = combinedChildren.findIndex(entry => entry.id === targetNode.id);
+        if (targetIndex !== -1) {
+          const insertIndex = mode === 'before' ? targetIndex : targetIndex + 1;
+          combinedChildren.splice(insertIndex, 0, draggedEntry);
+        } else {
+          combinedChildren.push(draggedEntry);
+        }
+      }
+    }
+
+    // 3. 통합 목록에 순차적 order_index 재부여
+    combinedChildren.forEach((entry, index) => {
+      entry.item.order_index = index;
+    });
+
+    // 4. 각 서비스 업데이트 페이로드 생성
+    const folderUpdates = combinedChildren
+      .filter(entry => entry.type === 'folder')
+      .map(entry => ({ id: entry.id, parent_id: newParentId, order_index: entry.item.order_index }));
+
+    const roomUpdates = combinedChildren
+      .filter(entry => entry.type === 'room')
+      .map(entry => ({ id: entry.id, folder_id: newParentId, order_index: entry.item.order_index }));
+
+    const fileUpdates = combinedChildren
+      .filter(entry => entry.type === 'file')
+      .map(entry => ({ id: entry.id, folder_id: newParentId, order_index: entry.item.order_index }));
 
     this.buildSidebarNodes();
 
     try {
       this.dLoading.show('위치를 변경하는 중입니다...');
-      if (dragged.type === 'folder' && folderUpdates.length > 0) {
-        await this.folderService.updateFolderOrders(folderUpdates);
-      } else if (dragged.type === 'room' && roomUpdates.length > 0) {
-        await this.roomService.updateRoomOrders(roomUpdates);
-      } else if (dragged.type === 'file' && fileUpdates.length > 0) {
-        await this.fileService.updateFileOrders(fileUpdates);
-      }
+      const promises: Promise<any>[] = [];
+      if (folderUpdates.length > 0) promises.push(this.folderService.updateFolderOrders(folderUpdates));
+      if (roomUpdates.length > 0) promises.push(this.roomService.updateRoomOrders(roomUpdates));
+      if (fileUpdates.length > 0) promises.push(this.fileService.updateFileOrders(fileUpdates));
+
+      await Promise.all(promises);
       await this.loadData();
       this.dLoading.dismiss('위치가 변경되었습니다.');
     } catch (e: any) {

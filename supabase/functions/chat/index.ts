@@ -40,7 +40,13 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt, provider = 'gemini', model } = await req.json();
+    const { prompt, provider = 'gemini', model, customPrompt } = await req.json();
+
+    // 기본 시스템 프롬프트와 사용자 맞춤 커스텀 프롬프트 결합
+    let effectiveSystemPrompt = systemPrompt;
+    if (customPrompt && typeof customPrompt === 'string' && customPrompt.trim()) {
+      effectiveSystemPrompt = `${systemPrompt}\n\n[사용자 맞춤 커스텀 지침 (최우선 준수)]\n${customPrompt.trim()}`;
+    }
 
     if (provider === 'groq') {
       const groqKey = Deno.env.get('GROQ_API_KEY');
@@ -53,28 +59,76 @@ serve(async (req) => {
 
       const groq = new Groq({ apiKey: groqKey });
       
-      let groqModel = model || 'qwen/qwen3.8-27b';
-      if (groqModel === 'llama-3.1-8b-instant' || groqModel === 'llama-3.3-70b-versatile' || groqModel === 'deepseek-r1-distill-llama-70b') {
-        groqModel = 'qwen/qwen3.8-27b';
+      // Groq 실시간 가용 모델 동적 탐색
+      let availableGroqModels: string[] = [];
+      try {
+        const modelsRes = await fetch('https://api.groq.com/openai/v1/models', {
+          headers: { 'Authorization': `Bearer ${groqKey}` }
+        });
+        if (modelsRes.ok) {
+          const modelsData = await modelsRes.json();
+          availableGroqModels = (modelsData.data || []).map((m: any) => m.id);
+        }
+      } catch (_e) {
+        // 모델 목록 조회 실패 시 기본 모델 후보군 활용
       }
 
-      try {
-        const chatCompletion = await groq.chat.completions.create({
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: prompt }
-          ],
-          model: groqModel,
-        });
+      // 후보 모델 우선순위 결정
+      let targetModel = model || '';
+      const candidateGroqModels: string[] = [];
+      if (targetModel && availableGroqModels.includes(targetModel)) {
+        candidateGroqModels.push(targetModel);
+      }
+      
+      // 가용 모델 목록 중 매칭되는 모델 및 기본 모델 추가
+      for (const mId of availableGroqModels) {
+        if (!candidateGroqModels.includes(mId)) {
+          candidateGroqModels.push(mId);
+        }
+      }
+      
+      // 만약 목록이 비어있으면 기본 후보군 사용
+      if (candidateGroqModels.length === 0) {
+        candidateGroqModels.push(
+          'llama-3.1-8b-instant',
+          'llama-3.3-70b-versatile',
+          'llama3-70b-8192',
+          'gemma2-9b-it'
+        );
+      }
 
-        const text = chatCompletion.choices[0]?.message?.content || '응답이 없습니다.';
+      let lastGroqError: any = null;
+      let groqText: string | null = null;
+
+      // 사용 가능한 Groq 모델 순차 호출
+      for (const currentGroqModel of candidateGroqModels) {
+        try {
+          const chatCompletion = await groq.chat.completions.create({
+            messages: [
+              { role: 'system', content: effectiveSystemPrompt },
+              { role: 'user', content: prompt }
+            ],
+            model: currentGroqModel,
+          });
+
+          groqText = chatCompletion.choices[0]?.message?.content || null;
+          if (groqText) {
+            break;
+          }
+        } catch (err: any) {
+          lastGroqError = err;
+          continue;
+        }
+      }
+
+      if (groqText !== null) {
         return new Response(
-          JSON.stringify({ response: text }),
+          JSON.stringify({ response: groqText }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
-      } catch (err: any) {
+      } else {
         return new Response(
-          JSON.stringify({ response: `[Groq 오류] ${err.message || 'Groq API 호출 실패'}` }),
+          JSON.stringify({ response: `[Groq 오류] ${lastGroqError?.message || 'Groq 모델 응답 생성에 실패했습니다.'}` }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -88,42 +142,93 @@ serve(async (req) => {
         );
       }
 
-      let openrouterModel = 'liquid/lfm-2.5-2.6b:free';
-      if (model && (model.includes('cohere') || model.includes('Cohere') || model.includes('qwen') || model.includes('code'))) {
-        openrouterModel = 'inclusionai/ling-3.0-flash-vl:free';
+      // OpenRouter 실시간 무료 모델 동적 탐색
+      let availableFreeModels: string[] = [];
+      try {
+        const orModelsRes = await fetch('https://openrouter.ai/api/v1/models');
+        if (orModelsRes.ok) {
+          const orData = await orModelsRes.json();
+          availableFreeModels = (orData.data || [])
+            .map((m: any) => m.id)
+            .filter((id: string) => id.endsWith(':free'));
+        }
+      } catch (_e) {
+        // 목록 조회 실패 시 기본 후보군 활용
       }
 
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openrouterKey}`,
-          'HTTP-Referer': 'http://localhost:4200',
-          'X-Title': 'DevelopAgent',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: openrouterModel,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: prompt }
-          ]
-        })
-      });
+      const candidateModels: string[] = [];
+      if (model && availableFreeModels.includes(model)) {
+        candidateModels.push(model);
+      }
+      
+      // 실시간 무료 모델 추가
+      for (const freeId of availableFreeModels) {
+        if (!candidateModels.includes(freeId)) {
+          candidateModels.push(freeId);
+        }
+      }
 
-      const data = await res.json();
-      if (!res.ok) {
-        const errMsg = data?.error?.message || data?.message || 'OpenRouter API 호출 오류가 발생했습니다.';
+      // 기본 폴백 무료 모델 목록
+      const fallbackList = [
+        'qwen/qwen-2.5-coder-32b-instruct:free',
+        'meta-llama/llama-3.3-70b-instruct:free',
+        'google/gemma-2-9b-it:free',
+        'meta-llama/llama-3.2-3b-instruct:free',
+        'meta-llama/llama-3.2-1b-instruct:free',
+        'deepseek/deepseek-chat:free'
+      ];
+      for (const fb of fallbackList) {
+        if (!candidateModels.includes(fb)) {
+          candidateModels.push(fb);
+        }
+      }
+
+      let lastErrorMsg = '';
+      let responseText: string | null = null;
+
+      // 사용 가능한 무료 모델을 순차적으로 시도
+      for (const currentModel of candidateModels) {
+        try {
+          const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${openrouterKey}`,
+              'HTTP-Referer': 'http://localhost:4200',
+              'X-Title': 'DevelopAgent',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              model: currentModel,
+              messages: [
+                { role: 'system', content: effectiveSystemPrompt },
+                { role: 'user', content: prompt }
+              ]
+            })
+          });
+
+          const data = await res.json();
+          if (res.ok && data.choices?.[0]?.message?.content) {
+            responseText = data.choices[0].message.content;
+            break;
+          } else {
+            lastErrorMsg = data?.error?.message || data?.message || '응답 생성 실패';
+          }
+        } catch (err: any) {
+          lastErrorMsg = err?.message || '네트워크 호출 실패';
+        }
+      }
+
+      if (responseText !== null) {
         return new Response(
-          JSON.stringify({ response: `[OpenRouter 오류] ${errMsg}` }),
+          JSON.stringify({ response: responseText }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      } else {
+        return new Response(
+          JSON.stringify({ response: `[OpenRouter 오류] ${lastErrorMsg || 'OpenRouter 무료 모델 응답 생성에 실패했습니다.'}` }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-
-      const text = data.choices?.[0]?.message?.content || 'OpenRouter 응답이 없습니다.';
-      return new Response(
-        JSON.stringify({ response: text }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
 
     } else {
       const geminiKey = Deno.env.get('GEMINI_API_KEY');
@@ -136,22 +241,84 @@ serve(async (req) => {
 
       try {
         const genAI = new GoogleGenerativeAI(geminiKey);
-        let geminiModelName = model || 'gemini-2.5-flash';
-        if (geminiModelName === 'gemini-3.6-flash') geminiModelName = 'gemini-2.5-flash';
-        if (geminiModelName === 'gemini-3.1-pro-preview') geminiModelName = 'gemini-2.5-pro';
-
-        const geminiModel = genAI.getGenerativeModel({ 
-          model: geminiModelName,
-          systemInstruction: systemPrompt
-        });
-
-        const result = await geminiModel.generateContent(prompt);
-        const text = await result.response.text();
         
-        return new Response(
-          JSON.stringify({ response: text }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        // Google Gemini 실시간 가용 모델 동적 탐색
+        let availableGeminiModels: string[] = [];
+        try {
+          const geminiListRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${geminiKey}`);
+          if (geminiListRes.ok) {
+            const listData = await geminiListRes.json();
+            availableGeminiModels = (listData.models || [])
+              .filter((m: any) => m.supportedGenerationMethods?.includes('generateContent'))
+              .map((m: any) => m.name.replace(/^models\//, ''));
+          }
+        } catch (_e) {
+          // 조회 실패 시 기본 후보군 활용
+        }
+
+        const candidateGeminiModels: string[] = [];
+        // 사용자가 요청한 모델과 유사한 모델 우선 추가
+        const isPro = model?.includes('pro');
+        if (isPro) {
+          const proModels = availableGeminiModels.filter(m => m.includes('pro'));
+          candidateGeminiModels.push(...proModels);
+        } else {
+          const flashModels = availableGeminiModels.filter(m => m.includes('flash'));
+          candidateGeminiModels.push(...flashModels);
+        }
+
+        // 전체 가용 모델 추가
+        for (const gm of availableGeminiModels) {
+          if (!candidateGeminiModels.includes(gm)) {
+            candidateGeminiModels.push(gm);
+          }
+        }
+
+        // 가용 모델 조회가 안될 경우 기본 폴백
+        if (candidateGeminiModels.length === 0) {
+          candidateGeminiModels.push(
+            'gemini-1.5-flash-latest',
+            'gemini-1.5-flash-002',
+            'gemini-1.5-flash-8b',
+            'gemini-1.5-flash',
+            'gemini-1.5-pro-latest',
+            'gemini-1.5-pro'
+          );
+        }
+
+        let lastError: any = null;
+        let responseText: string | null = null;
+
+        // 실시간 가용 모델 순차 시도
+        for (const candidate of candidateGeminiModels) {
+          try {
+            const geminiModel = genAI.getGenerativeModel({ 
+              model: candidate,
+              systemInstruction: effectiveSystemPrompt
+            });
+
+            const result = await geminiModel.generateContent(prompt);
+            responseText = await result.response.text();
+            if (responseText) {
+              break;
+            }
+          } catch (err: any) {
+            lastError = err;
+            continue;
+          }
+        }
+
+        if (responseText !== null) {
+          return new Response(
+            JSON.stringify({ response: responseText }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        } else {
+          return new Response(
+            JSON.stringify({ response: `[Gemini 오류] ${lastError?.message || 'Gemini 가용 모델 응답 생성에 실패했습니다.'}` }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
       } catch (err: any) {
         return new Response(
           JSON.stringify({ response: `[Gemini 오류] ${err.message || 'Gemini API 호출 실패'}` }),

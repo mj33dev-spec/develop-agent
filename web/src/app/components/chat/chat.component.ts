@@ -10,6 +10,7 @@ import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.co
 import { CBadgeComponent } from '../c-badge/c-badge.component';
 
 import { ChatInputService, AttachedItem } from '../../core/services/chat-input.service';
+import { AuthService } from '../../core/services/auth.service';
 
 export interface Message {
   text: string;
@@ -38,6 +39,7 @@ export class ChatComponent implements OnChanges, OnDestroy {
   
   private chatService = inject(ChatService);
   private roomService = inject(RoomService);
+  private authService = inject(AuthService);
   private dAlert = inject(DAlertService);
   private dLoading = inject(DLoadingService);
   private chatInputService = inject(ChatInputService);
@@ -298,7 +300,7 @@ export class ChatComponent implements OnChanges, OnDestroy {
     return 'Gemini 3.6 Flash';
   }
 
-  processMessage(prompt: string) {
+  async processMessage(prompt: string) {
     this.isLoading = true;
     const currentModelName = this.selectedProvider || 'Gemini 3.6 Flash';
     
@@ -347,7 +349,14 @@ export class ChatComponent implements OnChanges, OnDestroy {
         break;
     }
 
-    this.chatSubscription = this.chatService.sendMessage(prompt, providerValue, modelValue).subscribe({
+    // 사용자 맞춤 프롬프트(커스텀 지침) 조회
+    let userCustomPrompt = '';
+    try {
+      const userSettings = await this.authService.getUserSettings();
+      userCustomPrompt = userSettings?.customPrompt || '';
+    } catch (_e) {}
+
+    this.chatSubscription = this.chatService.sendMessage(prompt, providerValue, modelValue, userCustomPrompt).subscribe({
       next: async (response) => {
         this.room.messages.pop(); // Remove loading message
         this.room.messages.push({ text: response, isUser: false, timestamp: new Date(), model: currentModelName });

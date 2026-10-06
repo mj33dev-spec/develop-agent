@@ -72,9 +72,54 @@ $sidebar-width: 260px;
       flex-direction: column;
       position: relative;
       border-radius: 12px;
+      transition: background 0.15s ease, transform 0.15s ease;
 
+      /* 드래그 중인 원본 노드 (반투명 및 점선 테두리) */
       &.is-dragging {
-        overflow: hidden;
+        opacity: 0.35;
+        border: 1px dashed rgba(74, 134, 255, 0.6);
+      }
+
+      /* 폴더 내부 이동 대상 (하이라이트 박스) */
+      &.drag-over-inside {
+        background: rgba(74, 134, 255, 0.15) !important;
+        outline: 2px solid $color-primary;
+        outline-offset: -2px;
+        border-radius: 12px;
+      }
+
+      /* 상단 삽입 대상 (상단 파란색 가이드라인 표시선) */
+      &.drag-over-before {
+        &::before {
+          content: '';
+          position: absolute;
+          top: -2px;
+          left: 4px;
+          right: 4px;
+          height: 3px;
+          background: $color-primary;
+          border-radius: 9999px;
+          box-shadow: 0 0 6px rgba(74, 134, 255, 0.8);
+          z-index: 100;
+          pointer-events: none;
+        }
+      }
+
+      /* 하단 삽입 대상 (하단 파란색 가이드라인 표시선) */
+      &.drag-over-after {
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 4px;
+          right: 4px;
+          height: 3px;
+          background: $color-primary;
+          border-radius: 9999px;
+          box-shadow: 0 0 6px rgba(74, 134, 255, 0.8);
+          z-index: 100;
+          pointer-events: none;
+        }
       }
 
       .folder-header {

@@ -10,9 +10,9 @@ import { environment } from '../../../environments/environment';
 export class ChatService {
   private supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
 
-  sendMessage(prompt: string, provider: 'gemini' | 'groq' | 'openrouter' = 'gemini', model?: string): Observable<string> {
+  sendMessage(prompt: string, provider: 'gemini' | 'groq' | 'openrouter' = 'gemini', model?: string, customPrompt?: string): Observable<string> {
     const invokePromise = this.supabase.functions.invoke('chat', {
-      body: { prompt, provider, model }
+      body: { prompt, provider, model, customPrompt }
     }).then(({ data, error }) => {
       if (error) {
         console.error('Supabase function error:', error);

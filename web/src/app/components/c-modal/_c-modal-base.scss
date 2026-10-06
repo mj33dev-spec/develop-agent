@@ -61,6 +61,13 @@
   }
 }
 
+.modalInnerWrapper {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
 .modalSidebarLayout {
   display: flex;
   flex-direction: row;

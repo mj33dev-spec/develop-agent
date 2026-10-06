@@ -167,7 +167,10 @@
           <span class="item-name">사용자 커스텀 프롬프트</span>
           <span class="item-desc">모든 대화 응답에 적용될 기본 가이드 지침을 설정합니다.</span>
         </div>
-        <textarea class="form-textarea" rows="4" placeholder="예: 언어는 한국어로 답변하고, 친절한 어조로 응답해주세요."></textarea>
+        <textarea class="form-textarea" rows="4" [(ngModel)]="customPrompt" placeholder="예: 언어는 한국어로 답변하고, 친절한 어조로 응답해주세요."></textarea>
+        <div class="form-action-row">
+          <c-button theme="primary" size="medium" (onClick)="onSaveCustomPrompt()">저장</c-button>
+        </div>
       </div>
     </ng-container>
 

@@ -227,6 +227,13 @@
     transition: border-color 0.2s;
   }
 
+  .form-action-row {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: $spacing-12;
+  }
+
   .theme-preset-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

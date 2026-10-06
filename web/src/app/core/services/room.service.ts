@@ -115,7 +115,9 @@ export class RoomService {
     localStorage.removeItem(`chat_messages_${id}`);
   }
 
+  /** 채팅방 위치 및 순서 일괄 업데이트 */
   async updateRoomOrders(updates: { id: string, folder_id: string | null, order_index: number }[]): Promise<void> {
+    const localRooms = this.getLocalRooms();
     for (const update of updates) {
       try {
         await this.supabase
@@ -123,7 +125,14 @@ export class RoomService {
           .update({ folder_id: update.folder_id, order_index: update.order_index })
           .eq('id', update.id);
       } catch (e) {}
+
+      const idx = localRooms.findIndex(r => r.id === update.id);
+      if (idx !== -1) {
+        localRooms[idx].folder_id = update.folder_id;
+        localRooms[idx].order_index = update.order_index;
+      }
     }
+    this.saveLocalRooms(localRooms);
   }
 
   // --- Message Persistence (Supabase + localStorage Fallback) ---

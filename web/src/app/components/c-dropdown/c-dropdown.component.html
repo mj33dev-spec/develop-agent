@@ -16,11 +16,11 @@
         [width]="width ? '100%' : undefined"
         [disabled]="disabled"
       >
-        <span style="display: flex; align-items: center; gap: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;">
-          <i *ngIf="icon" class="bx" [ngClass]="icon" style="font-size: 20px;"></i>
-          <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ value }}</span>
+        <span class="dropdownLabelGroup">
+          <i *ngIf="icon" class="bx dropdownIcon" [ngClass]="icon"></i>
+          <span class="dropdownLabelText">{{ value }}</span>
         </span>
-        <i class="bx bx-chevron-down" style="margin-left: 8px; font-size: 20px; flex-shrink: 0;"></i>
+        <i class="bx bx-chevron-down dropdownChevron"></i>
       </c-button>
     </div>
 
@@ -35,7 +35,7 @@
 
   <!-- Pure Anchor Variant -->
   <ng-container *ngIf="variant !== 'more' && value === undefined && variant !== 'multi'">
-    <div (click)="toggleDropdown()" style="display: inline-block;">
+    <div class="dropdownAnchorTrigger" (click)="toggleDropdown()">
       <ng-content></ng-content>
     </div>
   </ng-container>
