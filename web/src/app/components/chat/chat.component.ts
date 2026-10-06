@@ -349,14 +349,29 @@ export class ChatComponent implements OnChanges, OnDestroy {
         break;
     }
 
-    // 사용자 맞춤 프롬프트(커스텀 지침) 조회
-    let userCustomPrompt = '';
+    // 사용자 맞춤 프롬프트 및 방 전용 연차/지침 조합
+    let combinedPrompt = '';
     try {
       const userSettings = await this.authService.getUserSettings();
-      userCustomPrompt = userSettings?.customPrompt || '';
+      if (userSettings?.customPrompt) {
+        combinedPrompt += `[전역 맞춤 지침]:\n${userSettings.customPrompt}\n\n`;
+      }
     } catch (_e) {}
 
-    this.chatSubscription = this.chatService.sendMessage(prompt, providerValue, modelValue, userCustomPrompt).subscribe({
+    // 대화방별 개발자 연차(티어) 지침 적용
+    const roomTier = this.room?.developer_tier || '주니어 개발자';
+    if (roomTier === '시니어 개발자') {
+      combinedPrompt += `[개발자 수준 지침]:\n당신은 15년차 이상의 최고위 시니어 소프트웨어 아키텍트입니다. 심층적인 시스템 아키텍처, 확장성, 성능 최적화, 보안 및 엣지 케이스를 모두 고려하여 깊이 있고 전문적인 답변과 코드를 제공하세요.\n\n`;
+    } else {
+      combinedPrompt += `[개발자 수준 지침]:\n당신은 5년차 수준의 주니어/미들 개발자입니다. 실무적이고 간결하며 핵심 구현에 집중된 직관적인 답변과 코드를 제공하세요.\n\n`;
+    }
+
+    // 대화방 전용 맞춤 지침 적용
+    if (this.room?.custom_prompt) {
+      combinedPrompt += `[현재 대화방 맞춤 지침]:\n${this.room.custom_prompt}\n\n`;
+    }
+
+    this.chatSubscription = this.chatService.sendMessage(prompt, providerValue, modelValue, combinedPrompt.trim()).subscribe({
       next: async (response) => {
         this.room.messages.pop(); // Remove loading message
         this.room.messages.push({ text: response, isUser: false, timestamp: new Date(), model: currentModelName });

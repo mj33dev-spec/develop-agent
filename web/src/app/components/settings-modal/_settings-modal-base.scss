@@ -197,15 +197,6 @@
         flex-direction: column;
         gap: $spacing-8;
       }
-
-      .form-input {
-        flex: 1;
-        padding: $spacing-8 $spacing-12;
-        border-radius: $radius-normal;
-        @include typo-caption-1;
-        outline: none;
-        transition: border-color 0.2s;
-      }
     }
   }
 
@@ -214,17 +205,6 @@
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-  }
-
-  .form-textarea {
-    width: 100%;
-    padding: $spacing-12;
-    border-radius: $radius-deep;
-    @include typo-body-3;
-    box-sizing: border-box;
-    outline: none;
-    resize: vertical;
-    transition: border-color 0.2s;
   }
 
   .form-action-row {
@@ -271,46 +251,6 @@
       .card-title {
         @include typo-caption-1;
         font-weight: $font-weight-semibold;
-      }
-    }
-  }
-
-  .super-grok-banner {
-    margin-top: auto;
-    border-radius: $radius-lg;
-    padding: $spacing-14 $spacing-20;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: $spacing-16;
-
-    .banner-left {
-      display: flex;
-      flex-direction: column;
-      gap: $spacing-4;
-
-      .brand-logo-spark {
-        display: flex;
-        align-items: center;
-        gap: $spacing-6;
-        font-weight: $font-weight-bold;
-        font-size: 15px;
-
-        i {
-          font-size: 18px;
-        }
-      }
-
-      .banner-desc {
-        @include typo-caption-2;
-      }
-    }
-
-    .btn-super-use {
-      .c-btn {
-        border-radius: 20px;
-        font-weight: $font-weight-bold;
-        border: none;
       }
     }
   }

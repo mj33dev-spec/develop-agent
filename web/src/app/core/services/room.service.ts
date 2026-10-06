@@ -10,6 +10,9 @@ export interface ChatRoomRecord {
   provider: string | null;
   order_index: number;
   created_at: string;
+  developer_tier?: string;
+  custom_prompt?: string;
+  messages?: any[];
 }
 
 export interface ChatMessageRecord {
@@ -210,6 +213,25 @@ export class RoomService {
     } catch (e) {
       console.warn('Supabase chat_messages exception:', e);
     }
+  }
+
+  /** 모든 채팅방 및 메시지 삭제 */
+  async deleteAllRooms(): Promise<void> {
+    try {
+      const { data: { user } } = await this.supabase.auth.getUser();
+      if (user) {
+        await this.supabase
+          .from('rooms')
+          .delete()
+          .eq('user_id', user.id);
+      }
+    } catch (e) {}
+
+    const localRooms = this.getLocalRooms();
+    for (const r of localRooms) {
+      localStorage.removeItem(`chat_messages_${r.id}`);
+    }
+    localStorage.removeItem('local_chat_rooms');
   }
 
   private getLocalRooms(): ChatRoomRecord[] {

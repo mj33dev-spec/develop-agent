@@ -314,4 +314,23 @@ export class HomeComponent implements OnInit {
       this.activeRoom = room;
     }
   }
+
+  // 모든 대화방 및 폴더 삭제 후 홈 화면 및 사이드바 갱신
+  async onChatsDeleted() {
+    this.activeRoomId = null;
+    this.activeRoom = null;
+    this.activeFileId = null;
+    this.activeFile = null;
+    if (this.sidebarComponent) {
+      await this.sidebarComponent.loadData();
+    }
+    this.router.navigate(['/']);
+  }
+
+  // 대화방 정보(이름, 티어, 프롬프트) 수정 시 활성 방 객체 동기화
+  onRoomUpdated(updatedRoom: ChatRoomRecord) {
+    if (this.activeRoomId === updatedRoom.id && this.activeRoom) {
+      this.activeRoom = { ...this.activeRoom, ...updatedRoom };
+    }
+  }
 }

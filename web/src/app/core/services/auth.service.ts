@@ -20,6 +20,11 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   private isInitializedSubject = new BehaviorSubject<boolean>(false);
   private userNicknameSubject = new BehaviorSubject<string>('');
+  private userPlanTierSubject = new BehaviorSubject<string>('default');
+
+  get planTier$(): Observable<string> {
+    return this.userPlanTierSubject.asObservable();
+  }
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
@@ -44,6 +49,7 @@ export class AuthService {
         await this.syncUserProfile(user);
       } else {
         this.userNicknameSubject.next('');
+        this.userPlanTierSubject.next('default');
       }
       if (!this.isInitializedSubject.value) {
         this.isInitializedSubject.next(true);
@@ -54,16 +60,20 @@ export class AuthService {
   private async syncUserProfile(user: User | null) {
     if (!user) {
       this.userNicknameSubject.next('');
+      this.userPlanTierSubject.next('default');
       return;
     }
 
     try {
-      // 1. public.users DB 테이블에서 닉네임 최우선 조회
+      // 1. public.users DB 테이블에서 닉네임 및 plan_tier 최우선 조회
       const { data: dbUser, error } = await this.supabase
         .from('users')
-        .select('nickname')
+        .select('nickname, plan_tier')
         .eq('id', user.id)
         .maybeSingle();
+
+      const planTier = dbUser?.plan_tier || user.user_metadata?.['plan_tier'] || 'default';
+      this.userPlanTierSubject.next(planTier);
 
       if (!error && dbUser && dbUser.nickname) {
         this.userNicknameSubject.next(dbUser.nickname);
@@ -79,13 +89,37 @@ export class AuthService {
         id: user.id,
         email: user.email,
         nickname: fallbackNickname,
+        plan_tier: planTier,
         updated_at: new Date().toISOString()
       });
     } catch (e) {
       console.error('syncUserProfile error:', e);
       const fallback = user.user_metadata?.['nickname'] || user.email?.split('@')[0] || '사용자';
       this.userNicknameSubject.next(fallback);
+      this.userPlanTierSubject.next('default');
     }
+  }
+
+  async getUserPlanTier(): Promise<string> {
+    const user = this.currentUserSubject.value;
+    if (!user) return 'default';
+
+    try {
+      const { data, error } = await this.supabase
+        .from('users')
+        .select('plan_tier')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (!error && data && data.plan_tier) {
+        this.userPlanTierSubject.next(data.plan_tier);
+        return data.plan_tier;
+      }
+    } catch (e) {}
+
+    const metaTier = user.user_metadata?.['plan_tier'] || 'default';
+    this.userPlanTierSubject.next(metaTier);
+    return metaTier;
   }
 
   get isInitialized(): Observable<boolean> {

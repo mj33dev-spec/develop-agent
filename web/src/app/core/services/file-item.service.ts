@@ -172,4 +172,19 @@ export class FileItemService {
     }
     this.saveLocalFiles(localFiles);
   }
+
+  /** 모든 파일 삭제 */
+  async deleteAllFiles(): Promise<void> {
+    try {
+      const { data: { user } } = await this.supabase.auth.getUser();
+      if (user) {
+        await this.supabase
+          .from('file_items')
+          .delete()
+          .eq('user_id', user.id);
+      }
+    } catch (e) {}
+
+    localStorage.removeItem(this.localKey);
+  }
 }

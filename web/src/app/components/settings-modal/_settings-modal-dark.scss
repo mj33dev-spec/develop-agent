@@ -50,8 +50,72 @@ body.dark-mode {
     background: transparent;
     color: $dark-text-primary;
 
+    .section-title {
+      color: $dark-text-primary;
+    }
+
+    .sub-section-title {
+      color: $dark-text-secondary;
+    }
+
     .divider-line {
       background: rgba(255, 255, 255, 0.1);
     }
+
+    .setting-item-row {
+      .item-label-group {
+        .item-name {
+          color: $dark-text-primary;
+        }
+        .icon-brand, .icon-x {
+          color: $dark-text-primary;
+        }
+        .icon-muted {
+          color: $dark-text-muted;
+        }
+      }
+
+      .item-info {
+        .item-name {
+          color: $dark-text-primary;
+        }
+        .item-desc {
+          color: $dark-text-muted;
+        }
+      }
+    }
+
+    .profile-row {
+      .user-details {
+        .user-name {
+          color: $dark-text-primary;
+        }
+        .user-email {
+          color: $dark-text-muted;
+        }
+      }
+    }
+
+    .account-manage-box {
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+
+      .manage-section {
+        .sub-title {
+          color: $dark-text-secondary;
+        }
+      }
+    }
+
+    .select-trigger-btn {
+      background: rgba(255, 255, 255, 0.06);
+      color: $dark-text-primary;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
   }
 }
+

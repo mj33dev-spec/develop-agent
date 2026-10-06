@@ -97,16 +97,6 @@ body:not(.dark-theme):not(.dark-mode) {
         .sub-title {
           color: $flat-text-secondary;
         }
-
-        .form-input {
-          background: $flat-card-bg;
-          border: 1px solid $flat-border-dark;
-          color: $flat-text-primary;
-
-          &:focus {
-            border-color: $color-primary;
-          }
-        }
       }
     }
 
@@ -114,16 +104,6 @@ body:not(.dark-theme):not(.dark-mode) {
       background: $flat-card-bg;
       color: $flat-text-primary;
       border: 1px solid $flat-border-dark;
-    }
-
-    .form-textarea {
-      background: $flat-card-bg;
-      border: 1px solid $flat-border-dark;
-      color: $flat-text-primary;
-
-      &:focus {
-        border-color: $color-primary;
-      }
     }
 
     .theme-preset-grid {
@@ -153,29 +133,6 @@ body:not(.dark-theme):not(.dark-mode) {
 
         .card-title {
           color: $flat-text-secondary;
-        }
-      }
-    }
-
-    .super-grok-banner {
-      background: #000000;
-      color: $color-white;
-
-      .banner-left {
-        .brand-logo-spark i {
-          color: $dark-primary;
-        }
-        .banner-desc {
-          color: $dark-text-muted;
-        }
-      }
-
-      .btn-super-use .c-btn {
-        background: $color-white;
-        color: #000000;
-
-        &:hover {
-          background: $sidebar-light-hover-bg;
         }
       }
     }

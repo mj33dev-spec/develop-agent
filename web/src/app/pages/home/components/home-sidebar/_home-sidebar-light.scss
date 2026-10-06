@@ -225,4 +225,48 @@ body:not(.dark-theme) {
       }
     }
   }
+
+  .room-settings-modal-body {
+    .field-label {
+      color: $flat-text-primary;
+    }
+
+    .field-desc {
+      color: $flat-text-muted;
+    }
+
+    .tier-select-grid {
+      .tier-card {
+        background: $flat-sidebar-bg;
+        border: 1px solid $flat-border-color;
+        color: $flat-text-primary;
+
+        &:hover {
+          border-color: $flat-border-dark;
+          background: #f1f5f9;
+        }
+
+        &.active {
+          border-color: $color-primary;
+          background: rgba(74, 134, 255, 0.05);
+          box-shadow: 0 0 0 1px $color-primary;
+        }
+
+        .tier-badge {
+          background: #e2e8f0;
+          color: $flat-text-secondary;
+
+          &.featured {
+            background: #e8f0fe;
+            color: #1a73e8;
+          }
+        }
+
+        .tier-desc {
+          color: $flat-text-secondary;
+        }
+      }
+    }
+  }
 }
+

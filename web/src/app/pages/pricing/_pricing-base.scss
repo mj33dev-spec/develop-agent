@@ -1,0 +1,213 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+/* ========================================================================
+   [골격 (Base)] 플랜/구독 페이지(Pricing) 레이아웃 및 컴포넌트 뼈대
+   ======================================================================== */
+
+.pricing-page-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// 상단 내비게이션 바
+.pricing-header-nav {
+  height: 64px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+
+    .brand-logo {
+      font-size: 22px;
+      font-weight: $font-weight-bold;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+// 메인 컨테이너
+.pricing-container {
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+// 상단 타이틀 섹션
+.pricing-hero {
+  text-align: center;
+  margin-bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  .hero-title {
+    font-size: 40px;
+    font-weight: $font-weight-bold;
+    line-height: 1.25;
+    letter-spacing: -0.8px;
+    margin: 0;
+
+    .title-highlight {
+      color: $color-primary;
+    }
+  }
+
+  .hero-subtitle {
+    @include typo-body-2;
+    max-width: 600px;
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+// 요금제 카드 그리드
+.pricing-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 880px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+  }
+}
+
+// 개별 요금제 카드
+.pricing-card {
+  border-radius: 28px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+  border: 1px solid transparent;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &.featured {
+    border-width: 2px;
+  }
+
+  .card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+
+    .plan-name {
+      font-size: 26px;
+      font-weight: $font-weight-bold;
+      margin: 0;
+      letter-spacing: -0.4px;
+    }
+
+    .plan-desc {
+      @include typo-body-3;
+      margin: 0;
+      line-height: 1.5;
+      min-height: 42px;
+    }
+
+    .plan-price-box {
+      margin-top: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+
+      .currency {
+        font-size: 20px;
+        font-weight: $font-weight-bold;
+      }
+
+      .price-number {
+        font-size: 38px;
+        font-weight: $font-weight-bold;
+        letter-spacing: -1px;
+      }
+
+      .billing-period {
+        @include typo-caption-1;
+      }
+    }
+  }
+
+  .card-action {
+    margin-bottom: 32px;
+
+    c-button {
+      width: 100%;
+      display: block;
+
+      ::ng-deep .btn {
+        width: 100%;
+        justify-content: center;
+        height: 48px;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: $font-weight-semibold;
+      }
+    }
+  }
+
+  .card-features-divider {
+    height: 1px;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .card-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      @include typo-body-3;
+      line-height: 1.5;
+
+      i {
+        font-size: 20px;
+        margin-top: 1px;
+        flex-shrink: 0;
+      }
+    }
+  }
+}

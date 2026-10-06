@@ -35,16 +35,15 @@
   @include typo-caption-1;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
   box-sizing: border-box;
 
   &:hover:not(:disabled) {
-    transform: translateY(-1px);
+    opacity: 0.85;
   }
 
   &:active:not(:disabled) {
-    box-shadow: none;
-    transform: translateY(0);
+    opacity: 0.7;
   }
 
   i.bx {

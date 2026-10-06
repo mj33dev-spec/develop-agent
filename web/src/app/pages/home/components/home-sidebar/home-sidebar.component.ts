@@ -151,6 +151,7 @@ export class HomeSidebarComponent implements OnInit {
   @Output() activeFileIdChange = new EventEmitter<string | null>();
   @Output() dataChanged = new EventEmitter<void>();
   @Output() openSettingsModal = new EventEmitter<SettingsTab>();
+  @Output() roomUpdated = new EventEmitter<ChatRoomRecord>();
 
   navigateToAccount() {
     this.openSettingsModal.emit('account');
@@ -171,6 +172,13 @@ export class HomeSidebarComponent implements OnInit {
   contextMenuPosition = { x: 0, y: 0 };
   contextMenuOptions: CDropdownOption[] = [];
   contextMenuNode: SidebarNode | null = null;
+
+  // --- 대화방 설정 모달 상태 ---
+  isRoomSettingsModalOpen = false;
+  currentSettingsRoom: ChatRoomRecord | null = null;
+  roomSettingsTitle: string = '';
+  roomSettingsTier: string = '주니어 개발자';
+  roomSettingsCustomPrompt: string = '';
 
   editingNodeId: string | null = null;
   editInputValue: string = '';
@@ -800,6 +808,11 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     } else if (node.type === 'room') {
       this.contextMenuOptions = [
         {
+          label: '대화방 설정',
+          icon: 'bx bx-cog',
+          onClick: () => this.openRoomSettingsModal(node.data)
+        },
+        {
           label: '이름 변경',
           icon: 'bx bx-rename',
           onClick: () => this.startEditing(new Event('click'), node)
@@ -833,6 +846,74 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     if (opt.onClick) {
       opt.onClick();
     }
+  }
+
+  // --- 대화방 설정 모달 ---
+  userPlanTier: string = 'default';
+
+  async openRoomSettingsModal(room: ChatRoomRecord) {
+    this.currentSettingsRoom = room;
+    this.roomSettingsTitle = room.title || '';
+    this.roomSettingsTier = room.developer_tier || '주니어 개발자';
+    this.roomSettingsCustomPrompt = room.custom_prompt || '';
+    this.userPlanTier = await this.authService.getUserPlanTier();
+    this.isRoomSettingsModalOpen = true;
+  }
+
+  async selectRoomTier(tier: string) {
+    if (tier === '시니어 개발자') {
+      const currentPlan = await this.authService.getUserPlanTier();
+      if (currentPlan !== 'senior') {
+        this.dAlert.confirm(
+          '시니어 개발자 답변은 시니어 플랜으로 업그레이드 후 이용 가능합니다.\n요금제 페이지로 이동하시겠습니까?',
+          '플랜 업그레이드 필요',
+          () => {
+            window.open('/pricing', '_blank');
+          }
+        );
+        return;
+      }
+    }
+    this.roomSettingsTier = tier;
+  }
+
+  closeRoomSettingsModal() {
+    this.isRoomSettingsModalOpen = false;
+    this.currentSettingsRoom = null;
+  }
+
+  saveRoomSettings() {
+    if (!this.currentSettingsRoom) return;
+    const trimmedTitle = this.roomSettingsTitle.trim();
+    if (!trimmedTitle) {
+      this.dAlert.warn('대화방 이름을 입력해주세요.', '필수 입력 누락');
+      return;
+    }
+
+    this.dAlert.confirm('대화방 설정을 저장하시겠습니까?', '대화방 설정', async () => {
+      this.dLoading.show('대화방 설정 저장 중...');
+      try {
+        const updated = await this.roomService.updateRoom(this.currentSettingsRoom!.id, {
+          title: trimmedTitle,
+          developer_tier: this.roomSettingsTier,
+          custom_prompt: this.roomSettingsCustomPrompt
+        });
+
+        const target = this.rooms.find(r => r.id === updated.id);
+        if (target) {
+          target.title = updated.title;
+          target.developer_tier = updated.developer_tier;
+          target.custom_prompt = updated.custom_prompt;
+        }
+        this.buildSidebarNodes();
+        this.roomUpdated.emit(updated);
+        this.dLoading.dismiss('대화방 설정이 저장되었습니다.');
+        this.closeRoomSettingsModal();
+      } catch (e: any) {
+        this.dLoading.dismiss();
+        this.dAlert.error('대화방 설정 저장 실패: ' + (e.message || ''), '오류');
+      }
+    });
   }
 
   // --- File Upload ---

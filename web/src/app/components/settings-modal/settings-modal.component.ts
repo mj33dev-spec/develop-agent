@@ -5,6 +5,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { DAlertService } from '../../core/services/d-alert.service';
 import { DLoadingService } from '../../core/services/d-loading.service';
+import { FolderService } from '../../core/services/folder.service';
+import { RoomService } from '../../core/services/room.service';
+import { FileItemService } from '../../core/services/file-item.service';
 import { CDropdownComponent, CDropdownOption } from '../c-dropdown/c-dropdown.component';
 import { CButtonComponent } from '../c-button/c-button.component';
 import { CToggleComponent } from '../c-toggle/c-toggle.component';
@@ -37,6 +40,7 @@ export class SettingsModalComponent implements OnInit {
   @Input() isOpen: boolean = false;
   @Input() activeTab: SettingsTab = 'account';
   @Output() isOpenChange = new EventEmitter<boolean>();
+  @Output() chatsDeleted = new EventEmitter<void>();
 
   // 유저 정보
   email: string = '';
@@ -52,6 +56,7 @@ export class SettingsModalComponent implements OnInit {
   defaultModel: string = 'Gemini 3.6 Flash';
   isDarkMode: boolean = false;
   customPrompt: string = '';
+  developerTier: string = '미들 개발자';
 
   modelOptions: CDropdownOption[] = [
     { label: 'Gemini 3.6 Flash', value: 'Gemini 3.6 Flash', onClick: () => this.onModelSelect('Gemini 3.6 Flash') },
@@ -68,6 +73,11 @@ export class SettingsModalComponent implements OnInit {
   private themeService = inject(ThemeService);
   private dAlert = inject(DAlertService);
   private dLoading = inject(DLoadingService);
+  private folderService = inject(FolderService);
+  private roomService = inject(RoomService);
+  private fileItemService = inject(FileItemService);
+
+  isSeniorPlan: boolean = false;
 
   async ngOnInit() {
     this.authService.currentUser.subscribe(user => {
@@ -78,7 +88,16 @@ export class SettingsModalComponent implements OnInit {
       }
     });
 
+    this.authService.planTier$.subscribe(tier => {
+      this.isSeniorPlan = (tier === 'senior');
+      this.developerTier = this.isSeniorPlan ? '시니어 개발자' : '주니어 개발자';
+    });
+
     try {
+      const tier = await this.authService.getUserPlanTier();
+      this.isSeniorPlan = (tier === 'senior');
+      this.developerTier = this.isSeniorPlan ? '시니어 개발자' : '주니어 개발자';
+
       const settings = await this.authService.getUserSettings();
       this.defaultModel = settings.defaultModel || this.defaultModel;
       this.isDarkMode = settings.isDarkMode ?? false;
@@ -174,6 +193,11 @@ export class SettingsModalComponent implements OnInit {
     await this.autoSaveSettings();
   }
 
+  // 개발자 플랜 업그레이드 (새 탭으로 요금제 플랜 페이지 오픈)
+  onUpgradePlan() {
+    window.open('/pricing', '_blank');
+  }
+
   async onCustomPromptChange(newPrompt: string) {
     this.customPrompt = newPrompt;
   }
@@ -229,5 +253,28 @@ export class SettingsModalComponent implements OnInit {
         this.dAlert.error('기본값 복원 실패: ' + (e.message || ''), '오류');
       }
     });
+  }
+
+  // 모든 폴더 및 대화창 일괄 삭제
+  onDeleteAllChats() {
+    this.dAlert.confirm(
+      '생성된 모든 폴더와 대화 내역 및 파일이 완전히 삭제됩니다.\n정말로 삭제하시겠습니까?',
+      '모든 대화창 삭제',
+      async () => {
+        this.dLoading.show('모든 대화창 및 폴더 삭제 중...');
+        try {
+          await Promise.all([
+            this.roomService.deleteAllRooms(),
+            this.folderService.deleteAllFolders(),
+            this.fileItemService.deleteAllFiles()
+          ]);
+          this.dLoading.dismiss('모든 대화 내역이 성공적으로 삭제되었습니다.');
+          this.chatsDeleted.emit();
+        } catch (e: any) {
+          this.dLoading.dismiss();
+          this.dAlert.error('대화 내역 삭제 실패: ' + (e.message || ''), '오류');
+        }
+      }
+    );
   }
 }

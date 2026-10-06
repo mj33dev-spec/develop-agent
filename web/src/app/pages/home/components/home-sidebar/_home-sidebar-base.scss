@@ -1,4 +1,5 @@
 @use "../../../../../styles/variables" as *;
+@use "../../../../../styles/config" as *;
 @use "../../../../../styles/mixins" as *;
 
 $sidebar-width: 260px;
@@ -100,7 +101,7 @@ $sidebar-width: 260px;
           background: $color-primary;
           border-radius: 9999px;
           box-shadow: 0 0 6px rgba(74, 134, 255, 0.8);
-          z-index: 100;
+          z-index: 2;
           pointer-events: none;
         }
       }
@@ -117,7 +118,7 @@ $sidebar-width: 260px;
           background: $color-primary;
           border-radius: 9999px;
           box-shadow: 0 0 6px rgba(74, 134, 255, 0.8);
-          z-index: 100;
+          z-index: 2;
           pointer-events: none;
         }
       }
@@ -298,7 +299,7 @@ $sidebar-width: 260px;
 /* 컨텍스트 메뉴 골격 */
 .custom-context-menu {
   position: fixed;
-  z-index: 9999;
+  z-index: $z-dropdown-portal;
   border-radius: 12px;
   padding: 6px;
   display: flex;
@@ -1006,4 +1007,80 @@ $sidebar-width: 260px;
       }
     }
   }
+}
+
+/* 대화방 설정 모달 레이아웃 */
+.room-settings-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-24;
+  padding: $spacing-4 0;
+
+  .setting-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-8;
+
+    .field-label {
+      @include typo-subtitle-2;
+      font-weight: $font-weight-semibold;
+    }
+
+    .field-desc {
+      @include typo-caption-1;
+      margin-top: -2px;
+      margin-bottom: $spacing-4;
+    }
+  }
+
+  .tier-select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-12;
+
+    .tier-card {
+      padding: $spacing-16;
+      border-radius: $radius-deep;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-8;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+
+      .tier-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-8;
+
+        .tier-title {
+          @include typo-body-2;
+          font-weight: $font-weight-bold;
+        }
+
+        .tier-badge {
+          font-size: 11px;
+          padding: 2px 8px;
+          border-radius: 999px;
+          font-weight: $font-weight-semibold;
+        }
+      }
+
+      .tier-desc {
+        @include typo-caption-2;
+        margin: 0;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+.modal-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-8;
+  width: 100%;
 }

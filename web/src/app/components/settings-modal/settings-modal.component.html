@@ -72,52 +72,16 @@
 
       <div class="divider-line"></div>
 
-      <!-- 구독 / 연결 파트 -->
+      <!-- 개발자 등급 플랜 파트 -->
       <div class="setting-item-row">
-        <div class="item-label-group">
-          <i class="bx bx-refresh icon-brand"></i>
-          <span class="item-name">SuperGrok 얻기</span>
+        <div class="item-info">
+          <span class="item-name">{{ developerTier }}</span>
+          <span class="item-desc">현재 사용 중인 개발자 플랜 등급입니다.</span>
         </div>
-        <c-button theme="secondary" size="small">업그레이드</c-button>
+        <c-button *ngIf="!isSeniorPlan" theme="primary" size="small" (onClick)="onUpgradePlan()">개발자 업그레이드</c-button>
+        <span *ngIf="isSeniorPlan" class="plan-active-badge">최고 등급 이용 중</span>
       </div>
 
-      <div class="setting-item-row">
-        <div class="item-label-group">
-          <i class="bx bxl-twitter icon-x"></i>
-          <span class="item-name">X 계정</span>
-        </div>
-        <c-button theme="secondary" size="small">연결</c-button>
-      </div>
-
-      <div class="divider-line"></div>
-
-      <!-- 기타 유저 옵션 -->
-      <div class="setting-item-row">
-        <div class="item-label-group">
-          <span class="item-name">언어</span>
-          <i class="bx bx-globe icon-muted"></i>
-        </div>
-        <c-button theme="secondary" size="small">변경</c-button>
-      </div>
-
-      <div class="setting-item-row">
-        <div class="item-label-group">
-          <span class="item-name">출생 연도</span>
-        </div>
-        <c-button theme="secondary" size="small">변경</c-button>
-      </div>
-
-      <!-- 하단 브랜드 프로모션 배너 -->
-      <div class="super-grok-banner">
-        <div class="banner-left">
-          <div class="brand-logo-spark">
-            <i class="bx bxs-sparkles"></i>
-            <span class="brand-name">SuperGrok</span>
-          </div>
-          <span class="banner-desc">제한된 질문 한도에서 벗어나고, 더 많은 기능을 체험해보세요</span>
-        </div>
-        <c-button theme="primary" size="small" class="btn-super-use">Super 사용하기</c-button>
-      </div>
     </ng-container>
 
     <!-- 2. 디자인 탭 -->
@@ -185,6 +149,17 @@
         </div>
         <c-button theme="error" size="small" (onClick)="onResetDefaults()">기본값 복원</c-button>
       </div>
+
+      <div class="divider-line"></div>
+
+      <div class="setting-item-row">
+        <div class="item-info">
+          <span class="item-name">모든 대화창 삭제</span>
+          <span class="item-desc">모든 폴더와 대화 내역 및 파일을 완전히 삭제합니다.</span>
+        </div>
+        <c-button theme="error" size="small" (onClick)="onDeleteAllChats()">모두 삭제</c-button>
+      </div>
     </ng-container>
   </main>
 </c-modal>
+

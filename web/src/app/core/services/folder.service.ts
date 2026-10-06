@@ -157,4 +157,19 @@ export class FolderService {
     }
     this.saveLocalFolders(localFolders);
   }
+
+  /** 모든 폴더 삭제 */
+  async deleteAllFolders(): Promise<void> {
+    try {
+      const { data: { user } } = await this.supabase.auth.getUser();
+      if (user) {
+        await this.supabase
+          .from('folders')
+          .delete()
+          .eq('user_id', user.id);
+      }
+    } catch (e) {}
+
+    localStorage.removeItem(this.localKey);
+  }
 }

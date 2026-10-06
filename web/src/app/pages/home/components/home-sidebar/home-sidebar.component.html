@@ -435,4 +435,70 @@
       </div>
     </div>
   </c-modal>
+
+  <!-- 대화방 설정 모달 (c-modal) -->
+  <c-modal
+    [isOpen]="isRoomSettingsModalOpen"
+    [title]="'대화방 설정'"
+    [width]="'540px'"
+    [customFooter]="true"
+    (onClose)="closeRoomSettingsModal()"
+  >
+    <div class="room-settings-modal-body">
+      <!-- 1. 대화방 이름 -->
+      <div class="setting-field-group">
+        <label class="field-label">대화방 이름</label>
+        <input type="text" class="form-input" [(ngModel)]="roomSettingsTitle" placeholder="대화방 이름을 입력하세요" />
+      </div>
+
+      <!-- 2. 개발자 연차 수준 설정 -->
+      <div class="setting-field-group">
+        <label class="field-label">개발자 답변 수준 (티어)</label>
+        <span class="field-desc">해당 대화방에서 AI가 제공할 답변의 깊이와 연차별 지식 수준을 선택합니다.</span>
+        
+        <div class="tier-select-grid">
+          <button 
+            type="button" 
+            class="tier-card" 
+            [class.active]="roomSettingsTier === '주니어 개발자'"
+            (click)="selectRoomTier('주니어 개발자')">
+            <div class="tier-card-header">
+              <span class="tier-title">주니어 개발자</span>
+              <span class="tier-badge">5년차 수준</span>
+            </div>
+            <p class="tier-desc">실무 중심의 핵심 구현 및 간결하고 명확한 코드와 가이드를 제공합니다.</p>
+          </button>
+
+          <button 
+            type="button" 
+            class="tier-card" 
+            [class.active]="roomSettingsTier === '시니어 개발자'"
+            (click)="selectRoomTier('시니어 개발자')">
+            <div class="tier-card-header">
+              <span class="tier-title">시니어 개발자</span>
+              <span class="tier-badge featured">15년차 수준</span>
+            </div>
+            <p class="tier-desc">심층 아키텍처 설계, 대규모 확장성, 성능 최적화 및 엣지 케이스까지 고려한 고도화된 설계를 제공합니다.</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. 대화방 전용 커스텀 프롬프트 -->
+      <div class="setting-field-group">
+        <label class="field-label">대화방 맞춤 지침 (커스텀 프롬프트)</label>
+        <span class="field-desc">이 대화방에서만 적용될 역할, 어조(말투), 필수 규칙 지침을 지정합니다.</span>
+        <textarea 
+          class="form-textarea" 
+          rows="4" 
+          [(ngModel)]="roomSettingsCustomPrompt" 
+          placeholder="예: 백엔드 스프링부트 전문가로서 답변하고, 코드 예시와 함께 친절하고 명확한 어조로 설명해줘."></textarea>
+      </div>
+    </div>
+
+    <div modal-footer class="modal-footer-actions">
+      <c-button theme="neutral" (onClick)="closeRoomSettingsModal()">취소</c-button>
+      <c-button theme="primary" (onClick)="saveRoomSettings()">저장</c-button>
+    </div>
+  </c-modal>
 </aside>
+
