@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { CModalComponent } from '../c-modal/c-modal.component';
 import { CButtonComponent } from '../c-button/c-button.component';
 
+/**
+ * 이용 가이드 단계 인터페이스
+ */
 export interface GuideStep {
   title: string;
   icon: string;
@@ -19,12 +22,17 @@ export interface GuideStep {
   styleUrls: ['./guide-modal.component.scss']
 })
 export class GuideModalComponent {
+  /** 모달 열림 여부 */
   @Input() isOpen: boolean = false;
+  /** 모달 닫기 이벤트 발송 */
   @Output() onClose = new EventEmitter<void>();
 
+  /** 현재 선택된 스텝 인덱스 */
   currentStepIndex: number = 0;
+  /** 다시 보지 않기 여부 */
   dontShowAgain: boolean = true;
 
+  /** 온보딩 가이드 단계 데이터 목록 */
   steps: GuideStep[] = [
     {
       title: '스마트 AI 멀티모델 대화',
@@ -72,10 +80,12 @@ export class GuideModalComponent {
     }
   ];
 
+  /** 현재 단계 데이터 반환 */
   get currentStep(): GuideStep {
     return this.steps[this.currentStepIndex];
   }
 
+  /** 다음 단계 이동 */
   nextStep() {
     if (this.currentStepIndex < this.steps.length - 1) {
       this.currentStepIndex++;
@@ -84,20 +94,24 @@ export class GuideModalComponent {
     }
   }
 
+  /** 이전 단계 이동 */
   prevStep() {
     if (this.currentStepIndex > 0) {
       this.currentStepIndex--;
     }
   }
 
+  /** 특정 단계 설정 */
   setStep(index: number) {
     this.currentStepIndex = index;
   }
 
+  /** 다시 보지 않기 옵션 토글 */
   toggleDontShowAgain() {
     this.dontShowAgain = !this.dontShowAgain;
   }
 
+  /** 가이드 종료 처리 */
   finish() {
     if (this.dontShowAgain) {
       localStorage.setItem('has_seen_onboarding_guide', 'true');

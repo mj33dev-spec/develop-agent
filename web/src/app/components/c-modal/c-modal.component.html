@@ -15,14 +15,16 @@
       <!-- 메인 메인 영역 (오직 단 1개의 ng-content가 존재하는 유일한 메인 컨테이너) -->
       <div class="modalMainContainer" style="display: flex; flex-direction: column; flex: 1; min-height: 0; width: 100%;">
         <div class="modalHeader" *ngIf="!hideHeader">
-          <h2 class="modalTitle">
-            <span [innerHTML]="title"></span>
-          </h2>
+          <div class="modalTitleGroup">
+            <h2 class="modalTitle">
+              <span [innerHTML]="title"></span>
+            </h2>
+            <p *ngIf="subTitle" class="modalSubTitle">{{ subTitle }}</p>
+          </div>
           <button type="button" class="closeBtn" (click)="onClose.emit()" aria-label="Close">
             <i class="bx bx-x"></i>
           </button>
         </div>
-        <p *ngIf="subTitle && !hideHeader" class="modalSubTitle">{{ subTitle }}</p>
 
         <!-- 전체 c-modal 템플릿 중 오직 단 1개만 존재하는 메인 ng-content -->
         <div class="modalBody">

@@ -97,7 +97,6 @@
   box-sizing: border-box;
 
   .modalHeader,
-  .modalSubTitle,
   .formActions {
     flex: none;
     height: auto;
@@ -110,13 +109,19 @@
 }
 
 .modalHeader {
-  padding: $padding-small $padding-normal;
+  padding: $spacing-16 $padding-normal;
   min-height: 52px;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: $spacing-8;
+
+  .modalTitleGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
   .closeBtn {
     background: transparent;
@@ -130,7 +135,7 @@
     transition: all 0.2s ease;
 
     i {
-      font-size: 28px;
+      font-size: 24px;
     }
   }
 }
@@ -145,6 +150,8 @@
 
 .modalSubTitle {
   @include typo-caption-1;
+  margin: 0;
+  opacity: 0.8;
 }
 
 .modalBody {

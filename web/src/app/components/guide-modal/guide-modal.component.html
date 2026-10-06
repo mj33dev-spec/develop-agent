@@ -7,7 +7,7 @@
   (onClose)="finish()"
 >
   <div class="guide-modal-container">
-    <!-- Step Navigation Tabs / Dots -->
+    <!-- 단계 네비게이션 탭 영역 -->
     <div class="step-nav-bar">
       <button 
         *ngFor="let step of steps; let i = index" 
@@ -21,10 +21,10 @@
       </button>
     </div>
 
-    <!-- Active Step Content Card -->
+    <!-- 활성화된 단계 메인 카드 영역 -->
     <div class="guide-card-content">
       <div class="card-header">
-        <div class="badge-tag">{{ currentStep.badge }}</div>
+        <span class="badge-tag">{{ currentStep.badge }}</span>
         <div class="title-row">
           <i [class]="currentStep.icon + ' icon-main'"></i>
           <h3 class="step-title">{{ currentStep.title }}</h3>
@@ -43,10 +43,10 @@
     </div>
   </div>
 
-  <!-- Custom Footer -->
+  <!-- 커스텀 푸터 영역 -->
   <div footer class="guide-modal-footer">
     <div class="footer-left">
-      <label class="checkbox-label" (click)="toggleDontShowAgain()">
+      <label class="checkbox-label">
         <input type="checkbox" [checked]="dontShowAgain" (change)="toggleDontShowAgain()" />
         <span>다시 보지 않기</span>
       </label>
