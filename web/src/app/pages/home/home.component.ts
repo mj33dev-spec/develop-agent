@@ -2,7 +2,8 @@ import { Component, ViewChild, inject, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { ChatComponent } from '../../components/chat/chat.component';
-import { CodeViewerComponent } from '../../components/code-viewer/code-viewer.component';
+import { CodeViewerComponent } from '../../components/chat/code-viewer/code-viewer.component';
+import { ImageViewerComponent } from '../../components/chat/image-viewer/image-viewer.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CDropdownComponent, CDropdownOption } from '../../components/c-dropdown/c-dropdown.component';
@@ -24,6 +25,7 @@ import { AuthService } from '../../core/services/auth.service';
     FormsModule, 
     ChatComponent, 
     CodeViewerComponent, 
+    ImageViewerComponent,
     CDropdownComponent, 
     CBadgeComponent, 
     HomeSidebarComponent,
@@ -332,5 +334,13 @@ export class HomeComponent implements OnInit {
     if (this.activeRoomId === updatedRoom.id && this.activeRoom) {
       this.activeRoom = { ...this.activeRoom, ...updatedRoom };
     }
+  }
+
+  // 이미지 파일 여부 판별 (이미지 뷰어 컴포넌트 렌더링용)
+  isImageFile(file: FileItem | null): boolean {
+    if (!file) return false;
+    const ext = (file.extension || '').toLowerCase();
+    const imageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'ico'];
+    return imageExtensions.includes(ext);
   }
 }

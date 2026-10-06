@@ -5,7 +5,8 @@
    ======================================================================== */
 
 app-chat,
-app-code-viewer {
+app-code-viewer,
+app-image-viewer {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -16,7 +17,8 @@ app-code-viewer {
 }
 
 .chat-container,
-.code-viewer-container {
+.code-viewer-container,
+.image-viewer-container {
   display: flex;
   flex-direction: column;
   width: 100%;

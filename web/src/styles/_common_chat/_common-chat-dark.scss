@@ -8,7 +8,8 @@ body.dark-theme,
 body.dark-mode {
 
   .chat-container,
-  .code-viewer-container {
+  .code-viewer-container,
+  .image-viewer-container {
     background: transparent;
     color: $dark-text-primary;
   }

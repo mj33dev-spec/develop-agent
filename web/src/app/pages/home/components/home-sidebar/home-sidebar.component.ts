@@ -936,7 +936,8 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
 
     this.dLoading.show(`'${fileName}' 파일을 읽는 중입니다...`);
     try {
-      const content = await this.readFileAsText(file);
+      const isImage = ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg', 'bmp', 'ico'].includes((ext || '').toLowerCase());
+      const content = isImage ? await this.readFileAsDataUrl(file) : await this.readFileAsText(file);
       const folderId = this.targetAttachFolderId;
       const order = this.files.filter(f => f.folder_id === folderId).length;
 
@@ -960,12 +961,23 @@ ${this.uploadedCustomFiles.map(f => `- \`${f.name}\``).join('\n') || '- 첨부�
     }
   }
 
+  // 텍스트 파일 읽기
   private readFileAsText(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result as string || '');
       reader.onerror = (err) => reject(err);
       reader.readAsText(file);
+    });
+  }
+
+  // 이미지 등 바이너리 파일 Base64 Data URL 읽기
+  private readFileAsDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string || '');
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
     });
   }
 

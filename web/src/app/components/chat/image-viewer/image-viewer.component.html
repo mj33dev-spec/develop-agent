@@ -1,0 +1,123 @@
+<div class="image-viewer-container">
+  <!-- Header -->
+  <div class="viewer-header">
+    <div class="header-left">
+      <button type="button" class="icon-btn" (click)="goBack()" title="닫기">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+
+      <div class="file-info">
+        <i [class]="fileIconClass" class="file-icon"></i>
+        <h2 class="file-name">{{ file.name }}</h2>
+        <span class="file-size">{{ formattedSize }}</span>
+        <span class="file-size dimension-tag" *ngIf="imageDimensions">
+          {{ imageDimensions.width }} × {{ imageDimensions.height }} px
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Viewer Body with Central Main Card (Matches Code Viewer Layout) -->
+  <div class="viewer-body">
+    <div class="chat-main-card image-viewer-card">
+      <div class="image-panel-wrapper">
+        <div class="image-panel">
+          <!-- Top Right Floating Actions (Identical to Code Viewer) -->
+          <div class="floating-actions">
+            <!-- 줌 컨트롤 버튼 그룹 -->
+            <div class="zoom-btn-group">
+              <button type="button" class="floating-btn" (click)="zoomOut()" [disabled]="zoomLevel <= 25" title="축소">
+                <i class="bx bx-minus"></i>
+              </button>
+              <button type="button" class="zoom-value-btn" (click)="resetZoom()" title="원본 크기(100%)로 초기화">
+                {{ zoomLevel }}%
+              </button>
+              <button type="button" class="floating-btn" (click)="zoomIn()" [disabled]="zoomLevel >= 300" title="확대">
+                <i class="bx bx-plus"></i>
+              </button>
+            </div>
+
+            <button type="button" class="floating-btn" (click)="copyImage()" title="이미지 복사">
+              <i class="bx bx-copy"></i>
+            </button>
+
+            <button type="button" class="floating-btn primary" (click)="downloadImage()" title="다운로드">
+              <i class="bx bx-download"></i>
+            </button>
+          </div>
+
+          <!-- Central Image Canvas Stage -->
+          <div class="image-stage-content">
+            <div class="canvas-checkerboard">
+              <img 
+                *ngIf="!imageLoadError"
+                [src]="imageSrc" 
+                [alt]="file.name"
+                class="stage-image"
+                [style.transform]="'scale(' + (zoomLevel / 100) + ')'"
+                (load)="onImageLoaded($event)"
+                (error)="onImageError()"
+              />
+
+              <div class="image-error-state" *ngIf="imageLoadError">
+                <i class="bx bx-error-circle error-icon"></i>
+                <p class="error-title">이미지를 불러올 수 없습니다.</p>
+                <span class="error-desc">지원하지 않는 형식이거나 손상된 이미지 파일입니다.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Chat Input Area for Image Analysis Question -->
+  <div class="chat-footer-input">
+    <div class="chat-input-box">
+      <div class="input-body">
+        <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
+        <div class="attached-items-container" *ngIf="attachedItems.length > 0">
+          <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
+            <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="chip-thumb" />
+            <i *ngIf="!item.imageUrl" [class]="item.icon || 'bx bx-file'"></i>
+            <span class="chip-name">{{ item.name }}</span>
+            <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+        </div>
+
+        <textarea 
+          [(ngModel)]="userInput" 
+          (keydown.enter)="handleEnter($event)"
+          (input)="autoResize($event)"
+          [placeholder]="'\'' + file.name + '\' 이미지에 대해 AI 질문하기...'" 
+          class="viewer-textarea"
+          rows="1">
+        </textarea>
+        
+        <div class="input-footer">
+          <div class="footer-left">
+            <c-dropdown [options]="addMenuOptions" menuWidth="240px" direction="up">
+              <button class="add-btn" type="button" title="추가 옵션">
+                <i class="bx bx-plus"></i>
+              </button>
+            </c-dropdown>
+          </div>
+          
+          <div class="footer-right">
+            <c-dropdown [options]="modelOptions" [value]="selectedModel" menuWidth="240px" direction="up" align="right">
+              <button class="model-btn" type="button" title="모델 선택">
+                {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
+              </button>
+            </c-dropdown>
+            
+            <button (click)="sendQuestion()" class="send-btn" [disabled]="!userInput.trim() && attachedItems.length === 0" [class.active]="userInput.trim() || attachedItems.length > 0">
+              <i class="bx bx-up-arrow-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

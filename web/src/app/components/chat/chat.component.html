@@ -37,7 +37,7 @@
 
   <!-- Messages Body -->
   <div class="chat-body">
-    <div class="chat-messages" #chatMessages>
+    <div class="chat-messages chat-main-card" #chatMessages>
       <div *ngFor="let msg of room?.messages" 
            class="message-wrapper" 
            [class.user-message]="msg.isUser"

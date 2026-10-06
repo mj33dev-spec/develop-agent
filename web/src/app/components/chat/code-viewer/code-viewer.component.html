@@ -1,0 +1,148 @@
+<div class="code-viewer-container">
+  <!-- Header -->
+  <div class="viewer-header">
+    <div class="header-left">
+      <button type="button" class="icon-btn" (click)="goBack()" title="닫기">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+
+      <div class="file-info">
+        <i [class]="fileIconClass" class="file-icon"></i>
+        <h2 class="file-name">{{ file.name }}</h2>
+        <span class="file-size">{{ formattedSize }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Viewer Body with Central Main Card -->
+  <div class="viewer-body">
+    <div class="chat-main-card split-viewer-body" [class.is-resizing]="isResizing">
+      <!-- Left: Code Panel -->
+      <div class="code-panel-wrapper" [style.width]="isPreviewOpen ? leftWidthPercent + '%' : '100%'">
+        <div class="code-panel" [ngClass]="'theme-' + themeClass">
+          <!-- Absolute Top Right Floating Icon Action Buttons -->
+          <div class="floating-actions">
+            <button 
+              *ngIf="isHtmlFile" 
+              type="button" 
+              class="floating-btn play-btn" 
+              [class.active]="isPreviewOpen"
+              (click)="togglePreview()" 
+              [title]="isPreviewOpen ? '미리보기 닫기' : '미리보기'"
+            >
+              <i class="bx bx-play-circle"></i>
+            </button>
+
+            <button type="button" class="floating-btn" (click)="copyAllCode()" title="전체 복사">
+              <i class="bx bx-copy"></i>
+            </button>
+
+            <button type="button" class="floating-btn primary" (click)="downloadFile()" title="다운로드">
+              <i class="bx bx-download"></i>
+            </button>
+          </div>
+
+          <table class="code-table">
+            <tbody>
+              <tr *ngFor="let line of highlightedLines; trackBy: trackByLineNum">
+                <td class="line-number">{{ line.lineNum }}</td>
+                <td class="line-code"><code [innerHTML]="line.html"></code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Center Resizer Divider -->
+      <div 
+        *ngIf="isPreviewOpen" 
+        class="resizer-divider" 
+        (mousedown)="startResizing($event)"
+        title="드래그하여 크기 조절"
+      >
+        <div class="resizer-handle"></div>
+      </div>
+
+      <!-- Right: Preview Panel -->
+      <div 
+        *ngIf="isPreviewOpen" 
+        class="preview-panel-wrapper" 
+        [style.width]="(100 - leftWidthPercent) + '%'"
+      >
+        <div class="preview-panel-header">
+          <span class="preview-panel-title">
+            <i class="bx bx-play-circle text-orange"></i> 미리보기
+          </span>
+          <div class="linked-badges">
+            <span *ngFor="let cssName of linkedCssNames" class="badge css-badge" [title]="cssName">
+              <i class="bx bxl-css3"></i> {{ cssName }}
+            </span>
+            <span *ngFor="let jsName of linkedJsNames" class="badge js-badge" [title]="jsName">
+              <i class="bx bxl-javascript"></i> {{ jsName }}
+            </span>
+            <span *ngIf="linkedCssNames.length === 0 && linkedJsNames.length === 0" class="badge none-badge">
+              연동 파일 없음
+            </span>
+          </div>
+        </div>
+        <div class="iframe-container">
+          <iframe 
+            [srcdoc]="previewSrcDoc" 
+            class="preview-iframe"
+            sandbox="allow-scripts allow-modals allow-forms allow-same-origin"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Chat Input Area for File Analysis Question -->
+  <div class="chat-footer-input">
+    <div class="chat-input-box">
+      <div class="input-body">
+        <!-- 첨부된 파일/채팅방 칩 뱃지 목록 -->
+        <div class="attached-items-container" *ngIf="attachedItems.length > 0">
+          <div class="attached-chip" *ngFor="let item of attachedItems; let i = index">
+            <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="chip-thumb" />
+            <i *ngIf="!item.imageUrl" [class]="item.icon || 'bx bx-file'"></i>
+            <span class="chip-name">{{ item.name }}</span>
+            <button type="button" class="remove-chip-btn" (click)="removeAttachedItem(i)">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+        </div>
+
+        <textarea 
+               [(ngModel)]="userInput" 
+               (keydown.enter)="handleEnter($event)"
+               (input)="autoResize($event)"
+               [placeholder]="'\'' + file.name + '\' 파일에 대해 AI 질문하기...'" 
+               class="viewer-textarea"
+               rows="1">
+        </textarea>
+        
+        <div class="input-footer">
+          <div class="footer-left">
+            <c-dropdown [options]="addMenuOptions" menuWidth="240px" direction="up">
+              <button class="add-btn" type="button" title="추가 옵션">
+                <i class="bx bx-plus"></i>
+              </button>
+            </c-dropdown>
+          </div>
+          
+          <div class="footer-right">
+            <c-dropdown [options]="modelOptions" [value]="selectedModel" menuWidth="240px" direction="up" align="right">
+              <button class="model-btn" type="button" title="모델 선택">
+                {{ selectedModel }} <i class="bx bx-chevron-down" style="vertical-align: middle; margin-left: 2px;"></i>
+              </button>
+            </c-dropdown>
+            
+            <button (click)="sendQuestion()" class="send-btn" [disabled]="!userInput.trim() && attachedItems.length === 0" [class.active]="userInput.trim() || attachedItems.length > 0">
+              <i class="bx bx-up-arrow-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
