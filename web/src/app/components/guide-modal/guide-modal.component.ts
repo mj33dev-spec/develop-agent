@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CModalComponent } from '../c-modal/c-modal.component';
 import { CButtonComponent } from '../c-button/c-button.component';
@@ -19,7 +19,8 @@ export interface GuideStep {
   standalone: true,
   imports: [CommonModule, CModalComponent, CButtonComponent],
   templateUrl: './guide-modal.component.html',
-  styleUrls: ['./guide-modal.component.scss']
+  styleUrls: ['./guide-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class GuideModalComponent {
   /** 모달 열림 여부 */

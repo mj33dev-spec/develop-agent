@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CButtonComponent } from '../../components/c-button/c-button.component';
@@ -9,7 +9,8 @@ import { DAlertService } from '../../core/services/d-alert.service';
   standalone: true,
   imports: [CommonModule, CButtonComponent],
   templateUrl: './pricing.component.html',
-  styleUrl: './pricing.component.scss'
+  styleUrl: './pricing.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class PricingComponent {
   private router = inject(Router);

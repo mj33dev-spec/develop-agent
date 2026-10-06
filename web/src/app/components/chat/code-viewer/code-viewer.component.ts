@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, inject, HostListener, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, HostListener, OnInit, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -20,6 +20,7 @@ import 'prismjs/components/prism-sql';
 import 'prismjs/components/prism-markdown';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-dart';
 
 import { BaseViewerDirective } from '../../../core/base/base-viewer.directive';
 
@@ -28,7 +29,8 @@ import { BaseViewerDirective } from '../../../core/base/base-viewer.directive';
   standalone: true,
   imports: [CommonModule, FormsModule, CDropdownComponent],
   templateUrl: './code-viewer.component.html',
-  styleUrl: './code-viewer.component.scss'
+  styleUrl: './code-viewer.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class CodeViewerComponent extends BaseViewerDirective {
   isPreviewOpen = false;
@@ -64,6 +66,7 @@ export class CodeViewerComponent extends BaseViewerDirective {
       case 'json': return 'json';
       case 'sql': return 'sql';
       case 'md': case 'markdown': return 'md';
+      case 'dart': return 'dart';
       default: return 'default';
     }
   }
@@ -81,6 +84,7 @@ export class CodeViewerComponent extends BaseViewerDirective {
       case 'json': return 'json';
       case 'sql': return 'sql';
       case 'md': case 'markdown': return 'markdown';
+      case 'dart': return 'dart';
       default: return 'clike';
     }
   }

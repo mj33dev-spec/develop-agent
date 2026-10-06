@@ -1,6 +1,6 @@
 <div class="code-viewer-container">
-  <!-- Header -->
-  <div class="viewer-header">
+  <!-- 1. Header (대화창과 동일한 위계 및 선택자) -->
+  <div class="chat-header">
     <div class="header-left">
       <button type="button" class="icon-btn" (click)="goBack()" title="닫기">
         <i class="bx bx-chevron-left"></i>
@@ -14,8 +14,8 @@
     </div>
   </div>
 
-  <!-- Viewer Body with Central Main Card -->
-  <div class="viewer-body">
+  <!-- 2. Body with Central Main Card (대화창과 동일한 위계 및 선택자) -->
+  <div class="chat-body">
     <div class="chat-main-card split-viewer-body" [class.is-resizing]="isResizing">
       <!-- Left: Code Panel -->
       <div class="code-panel-wrapper" [style.width]="isPreviewOpen ? leftWidthPercent + '%' : '100%'">
@@ -96,7 +96,7 @@
     </div>
   </div>
 
-  <!-- Footer Chat Input Area for File Analysis Question -->
+  <!-- 3. Footer Input Area (대화창과 동일한 위계 및 선택자) -->
   <div class="chat-footer-input">
     <div class="chat-input-box">
       <div class="input-body">
@@ -117,7 +117,7 @@
                (keydown.enter)="handleEnter($event)"
                (input)="autoResize($event)"
                [placeholder]="'\'' + file.name + '\' 파일에 대해 AI 질문하기...'" 
-               class="viewer-textarea"
+               class="chat-textarea"
                rows="1">
         </textarea>
         

@@ -4,8 +4,8 @@
    [테마 2] 다크 모드 (Dark Mode / Glassmorphism)
    ======================================================================== */
 
-:host-context(.dark-theme),
-:host-context(.dark-mode) {
+body.dark-theme,
+body.dark-mode {
   .pricing-page-wrapper {
     background: #0f131c;
     color: $dark-text-primary;

@@ -88,13 +88,15 @@
 
 // ── 다크모드 전용 공통 믹스인 ────────────────
 @mixin dark-theme {
-  :host-context(body.dark-theme) {
+  body.dark-theme &,
+  body.dark-mode & {
     @content;
   }
 }
 
 @mixin dark-theme-context {
-  :host-context(body.dark-theme) & {
+  body.dark-theme &,
+  body.dark-mode & {
     @content;
   }
 }

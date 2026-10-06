@@ -31,91 +31,7 @@
       display: flex;
       flex-direction: column;
 
-      /* Top Right Floating Actions (Absolute Position) */
-      .floating-actions {
-        position: absolute;
-        top: 16px;
-        right: 20px;
-        z-index: 20;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 6px;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid $flat-border-color;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
-        .zoom-btn-group {
-          display: flex;
-          align-items: center;
-          gap: 2px;
-
-          .zoom-value-btn {
-            border: none;
-            background: transparent;
-            @include typo-caption-1;
-            font-weight: 600;
-            padding: 4px 8px;
-            min-width: 44px;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 8px;
-            color: $flat-text-primary;
-            transition: opacity 0.2s ease;
-
-            &:hover {
-              opacity: 0.85;
-              background: $sidebar-light-hover-bg;
-            }
-          }
-        }
-
-        .floating-btn {
-          width: 34px;
-          height: 34px;
-          border-radius: 50%;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid transparent;
-          background: transparent;
-          transition: opacity 0.2s ease;
-
-          i {
-            font-size: 18px;
-            color: $flat-text-secondary;
-          }
-
-          &:hover:not(:disabled) {
-            opacity: 0.85;
-            background: $sidebar-light-hover-bg;
-            border-color: $flat-border-dark;
-          }
-
-          &:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-          }
-
-          &.primary {
-            background: $color-primary;
-            border: none;
-
-            i {
-              color: #ffffff;
-            }
-
-            &:hover {
-              opacity: 0.85;
-              background: $color-primary;
-            }
-          }
-        }
-      }
 
       /* Image Stage Content */
       .image-stage-content {
@@ -189,25 +105,6 @@
 /* ── 테마별 스타일 ──────────────────────── */
 body:not(.dark-theme) {
   .image-viewer-card {
-    .floating-actions {
-      background: rgba(255, 255, 255, 0.85);
-
-      .zoom-btn-group {
-        background: $flat-card-bg;
-        border: 1px solid $flat-border-dark;
-
-        .zoom-value-btn {
-          color: $flat-text-primary;
-        }
-      }
-
-      .floating-btn:not(.primary) {
-        background: $flat-card-bg;
-        border: 1px solid $flat-border-dark;
-        color: $flat-text-secondary;
-      }
-    }
-
     .canvas-checkerboard {
       border: 1px solid $flat-border-color;
     }
@@ -217,25 +114,6 @@ body:not(.dark-theme) {
 body.dark-theme,
 body.dark-mode {
   .image-viewer-card {
-    .floating-actions {
-      background: rgba(30, 41, 59, 0.7);
-
-      .zoom-btn-group {
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid $dark-border-light;
-
-        .zoom-value-btn {
-          color: $dark-text-primary;
-        }
-      }
-
-      .floating-btn:not(.primary) {
-        background: $dark-border-color;
-        border: 1px solid $dark-border-light;
-        color: $dark-text-primary;
-      }
-    }
-
     .canvas-checkerboard {
       background-color: #1e293b;
       border: 1px solid $dark-border-color;

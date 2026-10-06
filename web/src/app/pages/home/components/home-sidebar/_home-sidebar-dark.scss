@@ -114,8 +114,8 @@ body.dark-mode {
         background: $sidebar-dark-active-bg;
         color: $sidebar-dark-text-active;
         font-weight: 600;
-        border: 1px solid $sidebar-dark-border;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        border: none;
+        box-shadow: none;
 
         i { color: $sidebar-dark-text-active; }
       }
@@ -128,8 +128,8 @@ body.dark-mode {
         background: $sidebar-dark-active-bg;
         color: $sidebar-dark-text-active;
         font-weight: 600;
-        border: 1px solid $sidebar-dark-border;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        border: none;
+        box-shadow: none;
 
         i { color: $sidebar-dark-text-active; }
       }
@@ -299,6 +299,23 @@ body.dark-mode {
         .tier-desc {
           color: $dark-text-muted;
         }
+      }
+    }
+
+    .form-input,
+    .form-textarea {
+      background: rgba(20, 24, 34, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: $dark-text-primary;
+
+      &:focus {
+        border-color: #60a5fa;
+        box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.25);
+      }
+
+      &::placeholder {
+        color: $dark-text-muted;
+        opacity: 0.85;
       }
     }
   }

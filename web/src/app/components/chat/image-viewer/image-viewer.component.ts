@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BaseViewerDirective } from '../../../core/base/base-viewer.directive';
@@ -12,7 +12,8 @@ import { CDropdownComponent } from '../../c-dropdown/c-dropdown.component';
   standalone: true,
   imports: [CommonModule, FormsModule, CDropdownComponent],
   templateUrl: './image-viewer.component.html',
-  styleUrl: './image-viewer.component.scss'
+  styleUrl: './image-viewer.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ImageViewerComponent extends BaseViewerDirective {
   zoomLevel: number = 100;

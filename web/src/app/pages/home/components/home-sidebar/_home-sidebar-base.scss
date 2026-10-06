@@ -129,7 +129,10 @@ $sidebar-width: 260px;
         padding: 10px 12px;
         cursor: pointer;
         border-radius: 12px;
-        transition: all 0.2s ease;
+        border: none;
+        outline: none;
+        user-select: none;
+        transition: background-color 0.2s ease, color 0.2s ease;
 
         i.bx {
           font-size: 20px;
@@ -152,11 +155,14 @@ $sidebar-width: 260px;
       .room-item, .file-item {
         padding: 10px 12px;
         border-radius: 12px;
+        border: none;
+        outline: none;
+        user-select: none;
         cursor: pointer;
         display: flex;
         align-items: center;
         gap: 8px;
-        transition: all 0.2s ease;
+        transition: background-color 0.2s ease, color 0.2s ease;
 
         i {
           font-size: 18px;
@@ -359,7 +365,7 @@ $sidebar-width: 260px;
   font-family: inherit;
 }
 
-::ng-deep c-modal .modalBody {
+c-modal .modalBody {
   padding: $spacing-16 calc(#{$spacing-20} - #{$spacing-12});
 }
 
@@ -819,7 +825,7 @@ $sidebar-width: 260px;
   @include typo-caption-2;
 }
 
-::ng-deep .cdk-drag-preview,
+.cdk-drag-preview,
 .cdk-sidebar-drag-preview {
   border-radius: 12px;
   padding: 10px 14px;

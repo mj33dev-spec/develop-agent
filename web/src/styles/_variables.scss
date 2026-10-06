@@ -99,6 +99,26 @@ $sidebar-dark-text: #cbd5e1;
 $sidebar-dark-text-active: #ffffff;
 $sidebar-dark-icon: #94a3b8;
 
+// ── DAlert 알림창 통합 디자인 토큰 ──────────────────────
+// 라이트모드 DAlert 토큰
+$alert-light-bg: #ffffff;
+$alert-light-border: #e2e8f0;
+$alert-light-title: #1e293b;
+$alert-light-message: #475569;
+$alert-light-input-bg: #ffffff;
+$alert-light-input-border: #cbd5e1;
+$alert-light-input-text: #1e293b;
+
+// 다크모드 DAlert 토큰
+$alert-dark-bg: rgba(30, 35, 48, 0.92);
+$alert-dark-border: rgba(255, 255, 255, 0.18);
+$alert-dark-title: #ffffff;
+$alert-dark-message: #cbd5e1;
+$alert-dark-input-bg: rgba(20, 24, 34, 0.75);
+$alert-dark-input-border: rgba(255, 255, 255, 0.18);
+$alert-dark-input-text: #ffffff;
+$alert-dark-input-placeholder: #94a3b8;
+
 // ── Glassmorphism Theme Tokens (Liquid Glass Concept) ─────────────────
 $glass-bg-gradient: 
   radial-gradient(circle at 15% 20%, rgba(244, 114, 182, 0.45) 0%, transparent 45%),

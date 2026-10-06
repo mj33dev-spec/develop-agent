@@ -1,4 +1,4 @@
-import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, inject, Input, Output, EventEmitter, OnChanges, SimpleChanges, ElementRef, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +25,8 @@ export interface Message {
   standalone: true,
   imports: [CommonModule, FormsModule, CDropdownComponent, CBadgeComponent],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrl: './chat.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ChatComponent implements OnChanges, OnDestroy {
   @Input() room: any;

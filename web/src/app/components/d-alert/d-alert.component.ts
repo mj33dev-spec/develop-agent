@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, HostListener, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CButtonComponent, CButtonTheme } from '../c-button/c-button.component';
@@ -26,7 +26,8 @@ export interface DAlertConfig {
   standalone: true,
   imports: [CommonModule, FormsModule, CButtonComponent],
   templateUrl: './d-alert.component.html',
-  styleUrls: ['./d-alert.component.scss']
+  styleUrls: ['./d-alert.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DAlertComponent implements OnInit, OnDestroy {
   @Input() config!: DAlertConfig;

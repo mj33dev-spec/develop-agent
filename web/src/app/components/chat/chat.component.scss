@@ -2,289 +2,136 @@
 @use "../../../styles/mixins" as *;
 @use "./chat" as *;
 
+/* ========================================================================
+   채팅 컴포넌트 전용 스타일 (메시지 렌더링 및 버블 스타일)
+   - 3단 공통 골격(헤더, 본문 카드, 풋터 입력창)은 _chat.scss에서 전담
+   ======================================================================== */
 
-
-
-
-.chat-container {
+.chat-messages {
+  padding: 24px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  position: relative;
-  font-family: $font-family;
-  overflow: hidden;
+  gap: 16px;
+  box-sizing: border-box;
 
-  /* 헤더 바 */
-  .chat-header {
-    flex: none;
-    height: 64px;
-    padding: 0 24px;
+  .message-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #cbd5e1;
+    gap: 12px;
+    max-width: 100%;
 
-    .header-left {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    &.user-message {
+      align-self: flex-end;
+      flex-direction: row-reverse;
 
-      .icon-btn {
-        flex: none;
-        width: 36px;
-        height: 36px;
+      .message-content {
+        align-items: flex-end;
+      }
+
+      .bubble-group {
+        flex-direction: row-reverse;
+      }
+
+      .message-bubble {
+        background: $color-primary;
+        color: #ffffff;
+        border-radius: 20px 20px 4px 20px;
+        box-shadow: 0 2px 6px rgba(74, 134, 255, 0.25);
+        border: none;
+        font-weight: 500;
+      }
+    }
+
+    &.agent-message {
+      align-self: flex-start;
+
+      .message-content {
+        align-items: flex-start;
+      }
+
+      .message-bubble {
+        border-radius: 20px 20px 20px 4px;
+      }
+    }
+
+    .agent-profile {
+      padding-top: 4px;
+      flex: none;
+
+      .avatar-small {
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
-        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s ease;
+        background-color: #fff;
 
-        i {
-          font-size: 20px;
-        }
-
-        &:hover {
-          color: $color-primary;
-
-          i {
-            color: $color-primary;
-          }
-        }
-      }
-
-      .header-center {
-        display: flex;
-        align-items: center;
-
-        .chat-title {
-          margin: 0;
-          @include typo-title-3;
-          font-weight: 700;
-          display: inline-flex;
-          align-items: center;
-          gap: $spacing-4;
-          padding: $spacing-4 $spacing-12;
-          border-radius: $radius-normal;
-          transition: all 0.2s ease;
-          cursor: pointer;
-
-          .edit-icon {
-            opacity: 0;
-            font-size: 18px;
-            color: #64748b;
-            transition: opacity 0.2s ease;
-          }
-
-          &:hover {
-            background: rgba(203, 213, 225, 0.4);
-
-            .edit-icon {
-              opacity: 1;
-              color: $color-primary;
-            }
-          }
-        }
-
-        .chat-title-input {
-          @include typo-title-3;
-          font-weight: 700;
-          background: transparent;
-          border: 1px solid #cbd5e1;
-          border-radius: $radius-normal;
-          padding: $spacing-4 $spacing-12;
-          outline: none;
-          max-width: 280px;
+        img {
+          width: 24px;
+          height: 24px;
+          object-fit: contain;
         }
       }
     }
 
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-
-      .icon-btn {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: transparent;
-        border: 1px solid #cbd5e1;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s ease;
-
-        i {
-          font-size: 18px;
-          color: #64748b;
-        }
-
-        &:hover {
-          background: #f1f5f9;
-
-          i {
-            color: $color-primary;
-          }
-        }
-      }
-    }
-  }
-
-  /* 본문 메시지 뷰어 영역 */
-  .chat-body {
-    flex: 1;
-    min-height: 0;
-    padding: 20px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-
-    .chat-messages {
-      flex: 1;
-      min-height: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      padding: 20px;
-      overflow-y: auto;
+    .message-content {
       display: flex;
       flex-direction: column;
-      gap: $spacing-16;
-      box-sizing: border-box;
+      max-width: 680px;
 
-      &::-webkit-scrollbar {
-        width: 6px;
+      @media (max-width: 768px) {
+        max-width: 88%;
       }
 
-      &::-webkit-scrollbar-thumb {
-        background-color: rgba(194, 209, 229, 0.6);
-        border-radius: $radius-normal;
+      .agent-name {
+        @include typo-caption-1;
+        font-weight: 600;
+        margin-bottom: 4px;
+        margin-left: 4px;
       }
 
-      .message-wrapper {
+      .bubble-group {
         display: flex;
-        gap: $spacing-12;
-        max-width: 100%;
+        align-items: flex-end;
+        gap: 8px;
 
-        &.user-message {
-          align-self: flex-end;
-          flex-direction: row-reverse;
-
-          .message-content {
-            align-items: flex-end;
-          }
-
-          .bubble-group {
-            flex-direction: row-reverse;
-          }
-
-          .message-bubble {
-            background: #4A86FF;
-            color: #ffffff;
-            border-radius: 20px 20px 4px 20px;
-            box-shadow: 0 2px 6px rgba(74, 134, 255, 0.25);
-            border: none;
-            font-weight: 500;
-          }
+        .time-stamp {
+          @include typo-caption-2;
+          white-space: nowrap;
+          margin-bottom: 4px;
         }
 
-        &.agent-message {
-          align-self: flex-start;
+        .message-bubble {
+          padding: 12px 18px;
+          @include typo-body-2;
+          line-height: 1.55;
+          white-space: pre-wrap;
+          word-break: break-word;
 
-          .message-content {
-            align-items: flex-start;
-          }
-
-          .message-bubble {
-            border-radius: 20px 20px 20px 4px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-          }
-        }
-
-        .agent-profile {
-          padding-top: $spacing-4;
-
-          .avatar-small {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid #cbd5e1;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+          .msg-attachments {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #ffffff;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
 
-            svg,
-            img {
-              width: 28px;
-              height: 28px;
-              object-fit: contain;
+            .msg-chip {
+              cursor: default;
             }
           }
-        }
 
-        .message-content {
-          display: flex;
-          flex-direction: column;
-          max-width: 640px;
-
-          @media (max-width: 768px) {
-            max-width: 85%;
-          }
-
-          .agent-name {
-            @include typo-caption-1;
-            font-weight: 600;
-            color: #64748b;
-            margin-bottom: $spacing-4;
-            margin-left: 4px;
-          }
-
-          .bubble-group {
-            display: flex;
-            align-items: flex-end;
-            gap: $spacing-8;
-
-            .time-stamp {
-              @include typo-caption-2;
-              color: #94a3b8;
-              white-space: nowrap;
-              margin-bottom: 4px;
-            }
-
-            .message-bubble {
-              padding: 12px 18px;
-              @include typo-body-2;
-              line-height: 1.5;
-              white-space: pre-wrap;
-              word-break: break-word;
-
-              img {
-                max-width: 100%;
-                max-height: 300px;
-                height: auto;
-                object-fit: contain;
-                border-radius: 8px;
-                margin: 8px 0;
-                display: block;
-              }
-            }
+          img {
+            max-width: 100%;
+            max-height: 300px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            margin: 8px 0;
+            display: block;
           }
         }
       }
     }
-  }
-
-  /* 하단 입력 폼 영역 컨테이너 */
-  .chat-footer-input {
-    padding: 12px 20px 16px;
-    border-top: 1px solid #e2e8f0;
   }
 }
 
@@ -324,4 +171,52 @@
   }
 }
 
+/* ── 테마별 메시지 버블 스타일 ──────────────────────── */
+body:not(.dark-theme) {
+  .chat-messages {
+    .agent-profile .avatar-small {
+      background-color: #ffffff;
+      border: 1px solid $flat-border-dark;
+    }
 
+    .agent-name {
+      color: $flat-text-muted;
+    }
+
+    .time-stamp {
+      color: $flat-text-muted;
+    }
+
+    .agent-message .message-bubble {
+      background: $flat-sidebar-bg;
+      color: $flat-text-primary;
+      border: 1px solid $flat-border-color;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+  }
+}
+
+body.dark-theme,
+body.dark-mode {
+  .chat-messages {
+    .agent-profile .avatar-small {
+      background-color: #fff;
+      border: 1px solid $dark-border-light;
+    }
+
+    .agent-name {
+      color: $dark-text-muted;
+    }
+
+    .time-stamp {
+      color: $dark-text-muted;
+    }
+
+    .agent-message .message-bubble {
+      background: rgba(20, 24, 34, 0.65);
+      color: $dark-text-primary;
+      border: 1px solid $dark-border-light;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+  }
+}

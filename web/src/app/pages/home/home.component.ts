@@ -1,4 +1,4 @@
-import { Component, ViewChild, inject, OnInit } from '@angular/core';
+import { Component, ViewChild, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { ChatComponent } from '../../components/chat/chat.component';
@@ -33,7 +33,8 @@ import { AuthService } from '../../core/services/auth.service';
     SettingsModalComponent
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
   title = 'temp-web';

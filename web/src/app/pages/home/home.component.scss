@@ -2,7 +2,7 @@
 @use "../../../styles/config" as *;
 @use "../../../styles/mixins" as *;
 
-:host {
+app-home {
   display: block;
   height: 100vh;
   width: 100vw;
@@ -170,8 +170,8 @@
               }
             }
 
-            :host-context(body.dark-theme) &,
-            :host-context(body.dark-mode) & {
+            body.dark-theme &,
+            body.dark-mode & {
               background: rgba(255, 255, 255, 0.1);
               backdrop-filter: blur(12px);
               -webkit-backdrop-filter: blur(12px);
@@ -262,16 +262,15 @@
 @keyframes roomEnter {
   from {
     opacity: 0;
-    transform: translateY(20px) scale(0.98);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }
 
-:host-context(body.dark-theme) {
+body.dark-theme,
+body.dark-mode {
   .main-content {
     background-color: $dark-bg;
   }

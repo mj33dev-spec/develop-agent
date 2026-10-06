@@ -13,7 +13,7 @@
     <c-modal-sidebar-item label="일반">
       <c-modal-sidebar-item-label icon="bx bx-user" label="계정" [active]="activeTab === 'account'" (onClick)="setTab('account')"></c-modal-sidebar-item-label>
       <c-modal-sidebar-item-label icon="bx bx-palette" label="디자인" [active]="activeTab === 'appearance'" (onClick)="setTab('appearance')"></c-modal-sidebar-item-label>
-      <c-modal-sidebar-item-label icon="bx bx-bell" label="알림" [active]="activeTab === 'notifications'" (onClick)="setTab('notifications')"></c-modal-sidebar-item-label>
+      <!-- <c-modal-sidebar-item-label icon="bx bx-bell" label="알림" [active]="activeTab === 'notifications'" (onClick)="setTab('notifications')"></c-modal-sidebar-item-label> -->
     </c-modal-sidebar-item>
 
     <!-- 그룹 2: 프롬프트 (c-modal-sidebar-item) -->
@@ -98,7 +98,7 @@
     </ng-container>
 
     <!-- 3. 알림 탭 -->
-    <ng-container *ngIf="activeTab === 'notifications'">
+    <!-- <ng-container *ngIf="activeTab === 'notifications'">
       <h2 class="section-title">알림 설정</h2>
       <div class="setting-item-row">
         <div class="item-info">
@@ -107,7 +107,7 @@
         </div>
         <c-toggle [checked]="true"></c-toggle>
       </div>
-    </ng-container>
+    </ng-container> -->
 
     <!-- 4. 행동 유형 탭 (프롬프트 그룹) -->
     <ng-container *ngIf="activeTab === 'behavior'">
@@ -144,20 +144,20 @@
 
       <div class="setting-item-row">
         <div class="item-info">
-          <span class="item-name">설정 초기화</span>
-          <span class="item-desc">모든 모델 및 테마 설정을 기본 초기 상태로 복원합니다.</span>
+          <span class="item-name">모든 대화창 삭제</span>
+          <span class="item-desc">모든 폴더와 대화 내역 및 파일을 완전히 삭제합니다.</span>
         </div>
-        <c-button theme="error" size="small" (onClick)="onResetDefaults()">기본값 복원</c-button>
+        <c-button theme="outlinedError" size="small" (onClick)="onDeleteAllChats()">모두 삭제</c-button>
       </div>
 
       <div class="divider-line"></div>
 
       <div class="setting-item-row">
         <div class="item-info">
-          <span class="item-name">모든 대화창 삭제</span>
-          <span class="item-desc">모든 폴더와 대화 내역 및 파일을 완전히 삭제합니다.</span>
+          <span class="item-name">설정 초기화</span>
+          <span class="item-desc">모든 모델 및 테마 설정을 기본 초기 상태로 복원합니다.</span>
         </div>
-        <c-button theme="error" size="small" (onClick)="onDeleteAllChats()">모두 삭제</c-button>
+        <c-button theme="error" size="small" (onClick)="onResetDefaults()">기본값 복원</c-button>
       </div>
     </ng-container>
   </main>

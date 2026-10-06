@@ -138,13 +138,13 @@
 
 .alertTitle {
   @include typo-title-3;
-  color: $color-text;
+  color: $alert-light-title;
   margin: 0 0 6px 0;
 }
 
 .alertMessage {
   @include typo-body-3;
-  color: $color-text-secondary;
+  color: $alert-light-message;
   line-height: 1.5;
   margin: 0;
   white-space: pre-wrap;
@@ -154,12 +154,12 @@
   margin-top: 12px;
   width: 100%;
   padding: 12px 16px;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
+  background: $alert-light-input-bg;
+  border: 1px solid $alert-light-input-border;
   border-radius: 12px;
   box-shadow: none;
   @include typo-body-3;
-  color: #1e293b;
+  color: $alert-light-input-text;
   box-sizing: border-box;
 
   &:focus {
@@ -180,53 +180,67 @@
   gap: 10px;
 }
 
-
-
-body:not(.dark-theme),
-:host-context(body:not(.dark-theme)) {
+/* ── 테마별 DAlert 스타일 ──────────────────────── */
+body:not(.dark-theme) {
   .alertOverlay.active {
     background-color: rgba(15, 23, 42, 0.35);
     backdrop-filter: blur(4px);
   }
 
   .alertBox {
-    background-color: #ffffff;
+    background-color: $alert-light-bg;
     border-radius: 20px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid $alert-light-border;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 
+    .alertTitle {
+      color: $alert-light-title;
+    }
+
+    .alertMessage {
+      color: $alert-light-message;
+    }
+
     .alertInput {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      box-shadow: none;
-      color: #1e293b;
+      background: $alert-light-input-bg;
+      border: 1px solid $alert-light-input-border;
+      color: $alert-light-input-text;
     }
   }
 }
 
 body.dark-theme,
-body.dark-mode,
-:host-context(body.dark-theme),
-:host-context(body.dark-mode) {
+body.dark-mode {
   .alertOverlay.active {
     background-color: rgba(10, 14, 23, 0.65);
     backdrop-filter: blur(12px);
   }
 
   .alertBox {
-    background: rgba(30, 35, 48, 0.8);
+    background: $alert-dark-bg;
     backdrop-filter: blur(24px) saturate(190%);
     -webkit-backdrop-filter: blur(24px) saturate(190%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid $alert-dark-border;
     box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
     border-radius: 24px;
 
+    .alertTitle {
+      color: $alert-dark-title;
+    }
+
+    .alertMessage {
+      color: $alert-dark-message;
+    }
+
     .alertInput {
-      background: rgba(20, 24, 34, 0.6);
+      background: $alert-dark-input-bg;
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: none;
-      color: #f8fafc;
+      border: 1px solid $alert-dark-input-border;
+      color: $alert-dark-input-text;
+
+      &::placeholder {
+        color: $alert-dark-input-placeholder;
+      }
     }
   }
 }

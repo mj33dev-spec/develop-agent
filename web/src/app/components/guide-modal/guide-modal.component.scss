@@ -216,7 +216,8 @@
 /* ========================================================================
    다크 모드 스타일 지원 (Dark Theme Overrides)
    ======================================================================== */
-:host-context(body.dark-theme) {
+body.dark-theme,
+body.dark-mode {
   .step-nav-bar .step-pill-btn {
     background: $dark-surface-alt;
     border-color: rgba(255, 255, 255, 0.1);
