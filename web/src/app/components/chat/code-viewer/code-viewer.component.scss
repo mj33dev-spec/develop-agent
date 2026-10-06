@@ -113,15 +113,16 @@
 
 /* Split Viewer Body inside chat-main-card */
 .split-viewer-body {
-  flex: 1;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  padding: 0;
-  gap: 0;
-  overflow: hidden;
-  position: relative;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  overflow: hidden !important;
+  position: relative !important;
 
   &.is-resizing {
     user-select: none;
@@ -135,11 +136,13 @@
 
 /* Left: Code Panel Wrapper */
 .code-panel-wrapper {
-  height: 100%;
-  min-height: 0;
-  flex: 1;
-  overflow: hidden;
-  box-sizing: border-box;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
 
   .code-panel {
     position: relative;
@@ -149,8 +152,6 @@
     padding: 20px 24px;
     overflow: auto;
     box-sizing: border-box;
-
-
   }
 
   .code-table {
@@ -229,6 +230,7 @@
   justify-content: center;
   z-index: 10;
   user-select: none;
+  flex-shrink: 0;
 
   .resizer-handle {
     width: 4px;
@@ -247,22 +249,26 @@
 
 /* Right: Preview Panel Wrapper */
 .preview-panel-wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  height: 100% !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-shrink: 0 !important;
   background: $neu-bg;
-  border-radius: 20px;
-  box-shadow: 6px 6px 16px $neu-shadow-dark, -6px -6px 16px $neu-shadow-light;
-  overflow: hidden;
-  box-sizing: border-box;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0 20px 20px 0;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 
   .preview-panel-header {
-    height: 44px;
+    height: 48px;
     padding: 0 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(0, 0, 0, 0.02);
+    flex-shrink: 0;
 
     .preview-panel-title {
       @include typo-subtitle-2;
@@ -291,7 +297,8 @@
         @include typo-caption-2;
         font-weight: 500;
 
-        &.css-badge {
+        &.css-badge,
+        &.scss-badge {
           background: rgba(#264de4, 0.1);
           color: #264de4;
         }
@@ -299,6 +306,16 @@
         &.js-badge {
           background: rgba(#d9a406, 0.15);
           color: #d9a406;
+        }
+
+        &.ts-badge {
+          background: rgba(#3178c6, 0.15);
+          color: #3178c6;
+        }
+
+        &.json-badge {
+          background: rgba(#0d9488, 0.15);
+          color: #0d9488;
         }
 
         &.none-badge {
@@ -311,8 +328,10 @@
 
   .iframe-container {
     flex: 1;
+    min-height: 0;
     padding: 12px;
     background: rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
 
     .preview-iframe {
       width: 100%;
@@ -321,6 +340,7 @@
       border: none;
       border-radius: 12px;
       box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.08);
+      display: block;
     }
   }
 }
@@ -818,6 +838,47 @@ body.dark-mode {
       .token.url {
         color: #79c0ff;
       }
+    }
+  }
+
+  /* 다크모드 미리보기 패널 및 리사이저 스타일 */
+  .preview-panel-wrapper {
+    background: rgba(20, 24, 34, 0.65);
+    border-left: 1px solid $dark-border-light;
+
+    .preview-panel-header {
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid $dark-border-light;
+
+      .preview-panel-title {
+        color: $dark-text-primary;
+      }
+
+      .linked-badges {
+        .badge.none-badge {
+          background: rgba(255, 255, 255, 0.08);
+          color: $dark-text-muted;
+        }
+      }
+    }
+
+    .iframe-container {
+      background: rgba(0, 0, 0, 0.25);
+
+      .preview-iframe {
+        background: #ffffff;
+      }
+    }
+  }
+
+  .resizer-divider {
+    .resizer-handle {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    &:hover .resizer-handle,
+    &.active .resizer-handle {
+      background: $color-primary;
     }
   }
 }
